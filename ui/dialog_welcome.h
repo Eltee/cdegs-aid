@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    main.cpp
+* Nom/Name:    name_here.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -12,7 +12,7 @@
 * Auteur:      Renaud Bigras, Hydro-Québec Transénergie
 *  /Author
 *
-* Créé:        12-05-2014
+* Créé:        07-05-2014
 *  /Created
 *
 * Copyright:   (c) Renaud Bigras 2014
@@ -33,17 +33,25 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#include <QApplication>
-#include <QtWidgets>
-#include "ui/dialog_welcome.h"
+#ifndef DIALOG_WELCOME_H
+#define DIALOG_WELCOME_H
 
-int main(int argc, char* argv[])
-{
-    QApplication app(argc, argv);
+#include <QDialog>
 
-    Dialog_Welcome splash;
-
-    return splash.exec();
-
-    //return app.exec();
+namespace Ui {
+    class Dialog_Welcome;
 }
+
+class Dialog_Welcome : public QDialog
+{
+        Q_OBJECT
+
+    public:
+        explicit Dialog_Welcome(QWidget *parent = 0);
+        ~Dialog_Welcome();
+
+    private:
+        Ui::Dialog_Welcome *ui;
+};
+
+#endif // DIALOG_WELCOME_H
