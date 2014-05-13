@@ -40,6 +40,9 @@
 
 int main(int argc, char* argv[])
 {
-    YAML::Node config = YAML::Load("[1,2,3]");
-    return 0;
+    QApplication app(argc, argv);
+
+    Dialog_Welcome diag;
+
+    return diag.exec();
 }
