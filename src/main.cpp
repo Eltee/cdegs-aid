@@ -38,16 +38,15 @@
 #include "ui/dialog_welcome.h"
 
 
-int main(int argc, char* argv[])
+/*int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
     Dialog_Welcome diag;
 
     return diag.exec();
-}
+}*/
 
-/*
 
 #include "pugixml.hpp"
 #include <iostream>
@@ -73,7 +72,7 @@ void readXML(pugi::xml_node toIter, int iteration=0){
 
 
         if(it->text()){
-            std::cout << " Value: " << it->first_child().value() << std::endl;
+            std::cout << " Text: " << it->first_child().value() << std::endl;
         }
         else if(it->first_child()){ //has children
             std::cout << std::endl;
@@ -138,7 +137,6 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-*/
 
 // vim:et
 

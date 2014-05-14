@@ -12,7 +12,6 @@ SOURCES += \
     classes/settings.cpp \
     classes/viewsettings.cpp \
     classes/configuration.cpp \
-    classes/conductorcluster.cpp \
     classes/building.cpp
 
 HEADERS += \
@@ -26,7 +25,6 @@ HEADERS += \
     classes/settings.h \
     classes/viewsettings.h \
     classes/configuration.h \
-    classes/conductorcluster.h \
     classes/building.h
 
 OTHER_FILES +=

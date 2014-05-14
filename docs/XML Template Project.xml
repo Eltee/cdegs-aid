@@ -5,12 +5,12 @@ et les bâtiments.
 
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Project Id="P000001">
-	<AbsPath Os="Windows">D:\</AbsPath>
-	<RelPath Os="Windows">/</RelPath>
-	<DefaultConfig>NULL</DefaultConfig>
-	<LastConfig>NULL</LastConfig>
-	<DefaultWindow>LastWindow</DefaultWindow>
-	<LastWindow>NULL</LastWindow>
+	<AbsPath Os="Windows" Value="D:\" />
+	<RelPath Os="Windows" Value="/" />
+	<DefaultConfig Value="NULL" />
+	<LastConfig Value = "NULL" />
+	<DefaultWindow Value="LastWindow" />
+	<LastWindow Value="NULL" />
 	<Metadata>
 		<Name></Name>
 		<Date></Date>
@@ -24,33 +24,44 @@ et les bâtiments.
 		<Set4></Set4>
 	</ProjectSettings>
 </Project>
-<Configuration Id="C000001">
-	<ConductorCluster Id="CL000001">
-		<Conductor Id="CD000001">
-		</Conductor>
-	</ConductorCluster>
-	<Building Id="B000001">
-	</Building>
-</Configuration>
-<Configuration Id="C000002">
-	<ConductorCluster Id="CL000002">
-		<Conductor Id="CD000002">
-		</Conductor>
-	</ConductorCluster>
-	<Building Id="B000002">
-	</Building>
-</Configuration>
-<Configuration Id="C000003">
-	<ConductorCluster Id="CL000003">
-		<Conductor Id="CD000003">
-		</Conductor>
-	</ConductorCluster>
-	<Building Id="B000003">
-	</Building>
-</Configuration>
-<Configuration Id="C000004">
-	<Conductor Id="CD000004">
-	</Conductor>
-	<Building Id="B000004">
-	</Building>
-</Configuration>
+<Configurations>
+	<Configuration Id="C000001">
+		<Identifier Value="Template" />
+		<Units Value="Metric" />
+		<Frequency Value="AC" />
+		<Energizations>
+			<Energization Type="PhaseA0" Category="GPR-POTENTIAL" Angle="0" Value="424400" />
+		</Energizations>
+		<Tolerances>
+			<Tolerance Value="0.001" />
+		</Tolerances>
+		<ConductorTypes>
+			<ConductorType Type="Computed" Name="Aluminium" Val1="1.64" Val2="1" /> <!-- Trouver les vrai noms de Val1 et Val2 -->
+		</ConductorTypes>
+		<Conductors>
+			<Conductor Id="CD000001" Type="Conductor">
+			</Conductor>
+			<Conductor Id="BCD000001" Type="BuildingConductor">
+			</Conductor>
+		</Conductors>
+		<Buildings>
+			<Building Id="B000001">
+			</Building>
+		</Buildings>
+		<Computations>
+			<GPR Value="False" />
+			<POTENTIAL-SCALAR Value="False" />
+			<ELECTRIC Value="True" />
+			<MAGNETIC Value="False" />
+			<VECTOR-POTENTIAL Value="False" />
+			<GRADIENT-SCALAR Value="False" />
+		</Computations>
+		<Profiles>
+			<Profile>
+				<Val1 />
+				<Val2 />
+				<Val3 />
+			</Profile>
+		</Profiles>
+	</Configuration>
+</Configurations>
