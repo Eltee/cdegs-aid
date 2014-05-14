@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    project.cpp
+* Nom/Name:    building.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,12 +33,13 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#include "project.h"
+#ifndef BUILDING_H
+#define BUILDING_H
 
-Project::Project()
+class Building
 {
-}
+    public:
+        Building();
+};
 
-Project::~Project()
-{
-}
+#endif // BUILDING_H

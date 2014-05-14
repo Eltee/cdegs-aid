@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    project.cpp
+* Nom/Name:    conductorcluster.cpp
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,12 +33,8 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#include "project.h"
+#include "conductorcluster.h"
 
-Project::Project()
-{
-}
-
-Project::~Project()
+ConductorCluster::ConductorCluster()
 {
 }

@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    project.cpp
+* Nom/Name:    project.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -36,10 +36,35 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
+#include <string>
+#include <QDate>
+#include <QTextDocument>
+
 class Project
 {
     public:
         Project();
+        ~Project();
+    private:
+        std::string m_id;
+        std::string m_absPath;
+        std::string m_relPath;
+        //Configuration* m_defaultConfig;
+        //Configuration* m_lastConfig;
+        std::string m_defaultWindow;
+        std::string m_lastWindow;
+        struct m_metadata{
+            std::string name;
+            QDate date;
+            std::string author;
+            QTextDocument description;
+        };
+        struct m_projectSettings{
+            std::string set1;
+            std::string set2;
+            std::string set3;
+            std::string set4;
+        };
 };
 
 #endif // PROJECT_H

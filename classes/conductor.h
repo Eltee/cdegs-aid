@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    conductor.cpp
+* Nom/Name:    conductor.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des

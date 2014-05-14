@@ -1,0 +1,7 @@
+<!-- Modèle pour les fichiers XML de sauvegarde de paramÃ¨tres application. -->
+
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Settings Id="S000001">
+</Settings>
+<ViewSettings Id="V000001">
+</ViewSettings>

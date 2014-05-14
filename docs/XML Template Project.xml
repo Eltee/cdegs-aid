@@ -1,0 +1,56 @@
+<!-- Modèle pour les fichiers XML de sauvegarde de projets.
+Sauvegardés sont: le projet, les configurations (avec ou sans cluster), les clusters de celles-ci, leur conducteurs
+et les bâtiments.
+-->
+
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project Id="P000001">
+	<AbsPath Os="Windows">D:\</AbsPath>
+	<RelPath Os="Windows">/</RelPath>
+	<DefaultConfig>NULL</DefaultConfig>
+	<LastConfig>NULL</LastConfig>
+	<DefaultWindow>LastWindow</DefaultWindow>
+	<LastWindow>NULL</LastWindow>
+	<Metadata>
+		<Name></Name>
+		<Date></Date>
+		<Author></Author>
+		<Description></Description>
+	</Metadata>
+	<ProjectSettings>
+		<Set1></Set1>
+		<Set2></Set2>
+		<Set3></Set3>
+		<Set4></Set4>
+	</ProjectSettings>
+</Project>
+<Configuration Id="C000001">
+	<ConductorCluster Id="CL000001">
+		<Conductor Id="CD000001">
+		</Conductor>
+	</ConductorCluster>
+	<Building Id="B000001">
+	</Building>
+</Configuration>
+<Configuration Id="C000002">
+	<ConductorCluster Id="CL000002">
+		<Conductor Id="CD000002">
+		</Conductor>
+	</ConductorCluster>
+	<Building Id="B000002">
+	</Building>
+</Configuration>
+<Configuration Id="C000003">
+	<ConductorCluster Id="CL000003">
+		<Conductor Id="CD000003">
+		</Conductor>
+	</ConductorCluster>
+	<Building Id="B000003">
+	</Building>
+</Configuration>
+<Configuration Id="C000004">
+	<Conductor Id="CD000004">
+	</Conductor>
+	<Building Id="B000004">
+	</Building>
+</Configuration>

@@ -6,9 +6,14 @@ SOURCES += \
     qcustomplot.cpp \
     ui/dialog_welcome.cpp \
     pugixml.cpp \
-    src/xml_test.cpp \
     classes/project.cpp \
-    classes/conductor.cpp
+    classes/conductor.cpp \
+    classes/saveutils.cpp \
+    classes/settings.cpp \
+    classes/viewsettings.cpp \
+    classes/configuration.cpp \
+    classes/conductorcluster.cpp \
+    classes/building.cpp
 
 HEADERS += \
     qcustomplot.h \
@@ -16,7 +21,13 @@ HEADERS += \
     pugiconfig.hpp \
     pugixml.hpp \
     classes/project.h \
-    classes/conductor.h
+    classes/conductor.h \
+    classes/saveutils.h \
+    classes/settings.h \
+    classes/viewsettings.h \
+    classes/configuration.h \
+    classes/conductorcluster.h \
+    classes/building.h
 
 OTHER_FILES +=
 

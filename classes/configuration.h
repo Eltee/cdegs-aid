@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    project.cpp
+* Nom/Name:    configuration.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,12 +33,13 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#include "project.h"
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 
-Project::Project()
+class Configuration
 {
-}
+    public:
+        Configuration();
+};
 
-Project::~Project()
-{
-}
+#endif // CONFIGURATION_H

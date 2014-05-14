@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    project.cpp
+* Nom/Name:    viewsettings.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,12 +33,13 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#include "project.h"
+#ifndef VIEWSETTINGS_H
+#define VIEWSETTINGS_H
 
-Project::Project()
+class ViewSettings
 {
-}
+    public:
+        ViewSettings();
+};
 
-Project::~Project()
-{
-}
+#endif // VIEWSETTINGS_H
