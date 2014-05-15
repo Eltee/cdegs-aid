@@ -36,10 +36,16 @@
 #ifndef CONDUCTORTYPE_H
 #define CONDUCTORTYPE_H
 
+#include <string>
+
 class ConductorType
 {
     public:
         ConductorType();
+        ~ConductorType();
+    private:
+        std::string m_id, m_type, m_name;
+        double m_resistivity, m_permeability;
 };
 
 #endif // CONDUCTORTYPE_H

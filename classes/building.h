@@ -46,10 +46,7 @@ class Building
     private:
         std::string m_id;
         int m_faces;
-        double m_height;
-        double m_distanceMin;
-        double m_distanceMax;
-        double m_step;
+        double m_height, m_distanceMin, m_distanceMax, m_step;
 };
 
 #endif // BUILDING_H

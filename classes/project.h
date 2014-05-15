@@ -48,13 +48,8 @@ class Project
         Project();
         ~Project();
     private:
-        std::string m_id;
-        std::string m_absPath;
-        std::string m_relPath;
-        Configuration* m_defaultConfig;
-        Configuration* m_lastConfig;
-        std::string m_defaultWindow;
-        std::string m_lastWindow;
+        std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow;
+        Configuration* m_defaultConfig, m_lastConfig;
         struct metadata{
             std::string name;
             QDate date;

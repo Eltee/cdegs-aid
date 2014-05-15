@@ -42,13 +42,23 @@ et les bâtiments.
 			<Tolerance Value="0.001" />
 		</Tolerances>
 		<ConductorTypes>
-			<ConductorType Id="CT000001" Type="Computed" Name="Aluminium" Val1="1.64" Val2="1" /> <!-- Trouver les vrai noms de Val1 et Val2 -->
+			<ConductorType Id="CT000001" Type="Computed" Name="Aluminium" Resistivity="1.64" Permeability="1" /> 
 		</ConductorTypes>
 		<CableTypes>
 			<CableType Id="CBT000001" Name="(Not a cable)" />
 		</CableTypes>
 		<Conductors>
 			<Conductor Id="CD000001" Type="Conductor">
+				<LeadTypeId Value="LT000001" />
+				<ConductorTypeId Value="CT000001" />
+				<CoatingId Value="CO000001" />
+				<EnergizationId Value="E000001" />
+				<CoordsSurface Start="-800.0" End="800.0" />
+				<DistanceFromCenter Value="5.65" />
+				<Height Value="10.0" />
+				<Radius Value="0.356" />
+				<SubDiv Value="1" />
+				<CabtleTypeId Value="CBT000001" />
 			</Conductor>
 		</Conductors>
 		<BuildingConductors>

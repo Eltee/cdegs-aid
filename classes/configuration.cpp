@@ -38,3 +38,7 @@
 Configuration::Configuration()
 {
 }
+
+Configuration::~Configuration()
+{
+}

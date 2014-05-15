@@ -51,17 +51,13 @@ class Configuration
         Configuration();
         ~Configuration();
     private:
-        std::string m_id;
-        std::string m_identifier;
-        std::string m_units;
-        std::string m_frequency;
+        std::string m_id, m_identifier, m_units, m_frequency;
         std::vector <LeadType*> m_leadTypes;
         std::vector <Coating*> m_coatings;
         std::vector<Energization*> m_energizations;
         std::vector<double> m_tolerances;
         std::vector<ConductorType*> m_conductorTypes;
-        std::vector<Conductor*> m_conductors;
-        std::vector<Conductor*> m_buildingConductors;
+        std::vector<Conductor*> m_conductors, m_buildingConductors;
         std::vector<Building*> m_buildings;
         struct computations{
             bool GPR;

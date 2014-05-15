@@ -44,6 +44,7 @@ namespace utils
     std::vector<double> drange(double start, double end, double step);
     std::string getOsName();
     void readXML(pugi::xml_node toIter, int iteration=0);
+    std::string uniqueIdGenerator(std::string type);
 };
 
 #endif // UTILS_H

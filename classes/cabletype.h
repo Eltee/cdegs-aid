@@ -36,10 +36,15 @@
 #ifndef CABLETYPE_H
 #define CABLETYPE_H
 
+#include <string>
+
 class CableType
 {
     public:
         CableType();
+        ~CableType();
+    private:
+        std::string m_id, m_name;
 };
 
 #endif // CABLETYPE_H

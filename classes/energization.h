@@ -36,10 +36,17 @@
 #ifndef ENERGIZATION_H
 #define ENERGIZATION_H
 
+#include <string>
+
 class Energization
 {
     public:
         Energization();
+        ~Energization();
+    private:
+        std::string m_id, m_type, m_category;
+        int angle;
+        double value;
 };
 
 #endif // ENERGIZATION_H

@@ -36,10 +36,15 @@
 #ifndef COATING_H
 #define COATING_H
 
+#include <string>
+
 class Coating
 {
     public:
         Coating();
+        ~Coating();
+    private:
+        std::string m_id, m_name;
 };
 
 #endif // COATING_H

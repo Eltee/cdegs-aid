@@ -36,10 +36,15 @@
 #ifndef LEADTYPE_H
 #define LEADTYPE_H
 
+#include <string>
+
 class LeadType
 {
     public:
         LeadType();
+        ~LeadType();
+    private:
+        std::string m_id, m_name;
 };
 
 #endif // LEADTYPE_H

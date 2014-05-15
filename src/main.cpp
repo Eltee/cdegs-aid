@@ -37,6 +37,11 @@
 #include <QtWidgets>
 #include "namespaces/utils.h"
 #include <iostream>
+#include <limits>
+#include "lib/pugixml.hpp"
+#include <QDir>
+#include <QtGlobal>
+#include <cstdlib>
 
 
 /*int main(int argc, char* argv[])
@@ -82,7 +87,7 @@ int main(int argc, char* argv[])
     return 0;
 }*/
 
-int main(int argc, char* argv[])
+/*int main(int argc, char* argv[])
 {
     std::vector<double> range;
 
@@ -95,5 +100,23 @@ int main(int argc, char* argv[])
     std::cout << std::endl << std::endl << "Length: " << range.size() << std::endl;
 
     return 0;
-}
+}*/
 
+int main(int argc, char* argv[]){
+
+    pugi::xml_document doc;
+    QString pathToFolder = qgetenv("APPDATA").constData();
+    pathToFolder += "/CDEGS-AID";
+    QDir appFolder(pathToFolder);
+    const wchar_t* path = appFolder.absoluteFilePath("XML Template Ids.xml").toStdWString().c_str();
+    if (!doc.load_file(path)){
+        std::cout << "Failure";
+        return -1;
+    }
+
+    utils::readXML(doc);
+
+    delete(path);
+
+    return 0;
+}
