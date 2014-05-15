@@ -36,10 +36,35 @@
 #ifndef CONDUCTOR_H
 #define CONDUCTOR_H
 
+#include <string>
+#include "leadtype.h"
+#include "conductortype.h"
+#include "coating.h"
+#include "energization.h"
+#include "cabletype.h"
+
 class Conductor
 {
     public:
         Conductor();
+        ~Conductor();
+    private:
+        std::string m_id;
+        LeadType* m_leadType;
+        ConductorType* m_conductorType;
+        Coating* m_coating;
+        Energization* m_energization;
+        struct coords{
+            double x;
+            double y;
+            double z;
+        } m_startCoords, m_endCoords;
+        double m_radius;
+        struct subDivision{
+            std::string method;
+            int number;
+        } m_subDivision;
+        CableType* m_cableType;
 };
 
 #endif // CONDUCTOR_H

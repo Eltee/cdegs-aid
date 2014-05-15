@@ -29,23 +29,38 @@ et les bâtiments.
 		<Identifier Value="Template" />
 		<Units Value="Metric" />
 		<Frequency Value="AC" />
+		<LeadTypes>
+			<LeadType Id="LT000001" Name="Default Impedance" />
+		</LeadTypes>
+		<Coatings>
+			<Coating Id="CO000001" Name="Default Coating" />
+		</Coatings>
 		<Energizations>
-			<Energization Type="PhaseA0" Category="GPR-POTENTIAL" Angle="0" Value="424400" />
+			<Energization Id="E000001" Type="PhaseA0" Category="GPR-POTENTIAL" Angle="0" Value="424400" />
 		</Energizations>
 		<Tolerances>
 			<Tolerance Value="0.001" />
 		</Tolerances>
 		<ConductorTypes>
-			<ConductorType Type="Computed" Name="Aluminium" Val1="1.64" Val2="1" /> <!-- Trouver les vrai noms de Val1 et Val2 -->
+			<ConductorType Id="CT000001" Type="Computed" Name="Aluminium" Val1="1.64" Val2="1" /> <!-- Trouver les vrai noms de Val1 et Val2 -->
 		</ConductorTypes>
+		<CableTypes>
+			<CableType Id="CBT000001" Name="(Not a cable)" />
+		</CableTypes>
 		<Conductors>
 			<Conductor Id="CD000001" Type="Conductor">
 			</Conductor>
+		</Conductors>
+		<BuildingConductors>
 			<Conductor Id="BCD000001" Type="BuildingConductor">
 			</Conductor>
-		</Conductors>
+		</BuildingConductors>
 		<Buildings>
 			<Building Id="B000001">
+				<Faces Value="3" />
+				<Height Value="23" />
+				<Distance Min="2" Max="22" />
+				<Step Value="1" />
 			</Building>
 		</Buildings>
 		<Computations>
@@ -57,10 +72,11 @@ et les bâtiments.
 			<GRADIENT-SCALAR Value="False" />
 		</Computations>
 		<Profiles>
-			<Profile>
-				<Val1 />
-				<Val2 />
-				<Val3 />
+			<Profile Id="PR000001">
+				<XCoords Start="-30.0" End="30.0" Step="1.0" />
+				<YCoords Start="-60.0" End="60.0" Step="2.5" />
+				<NLine Value="49" />
+				<MCol Value="61" />
 			</Profile>
 		</Profiles>
 	</Configuration>

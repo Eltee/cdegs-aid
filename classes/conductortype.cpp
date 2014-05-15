@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    configuration.h
+* Nom/Name:    conductortype.cpp
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,50 +33,8 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
-
-#include <string>
-#include <vector>
-#include "energization.h"
 #include "conductortype.h"
-#include "conductor.h"
-#include "building.h"
 
-class Configuration
+ConductorType::ConductorType()
 {
-    public:
-        Configuration();
-        ~Configuration();
-    private:
-        std::string m_id;
-        std::string m_identifier;
-        std::string m_units;
-        std::string m_frequency;
-        std::vector<Energization*> m_energizations;
-        std::vector<double> m_tolerances;
-        std::vector<ConductorType*> m_conductorTypes;
-        std::vector<Conductor*> m_conductors;
-        std::vector<Conductor*> m_buildingConductors;
-        std::vector<Building*> m_buildings;
-        struct computations{
-            bool GPR;
-            bool POTENTIAL_SCALAR;
-            bool ELECTRIC;
-            bool MAGNETIC;
-            bool VECTOR_POTENTIAL;
-            bool GRADIENT_SCALAR;
-        } m_computations;
-        struct profile{
-            struct coords{
-                double start;
-                double end;
-                double step;
-            } xCoords, yCoords;
-            double NLine;
-            double MCol;
-        };
-        std::vector<profile> m_profiles;
-};
-
-#endif // CONFIGURATION_H
+}

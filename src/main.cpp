@@ -35,7 +35,13 @@
 
 #include <QApplication>
 #include <QtWidgets>
-#include "ui/dialog_welcome.h"
+//#include "ui/dialog_welcome.h"
+//#include "lib/pugixml.hpp"
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdlib.h>
+#include <QtGlobal>
 
 
 /*int main(int argc, char* argv[])
@@ -47,13 +53,7 @@
     return diag.exec();
 }*/
 
-
-#include "pugixml.hpp"
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <stdlib.h>
-#include <QtGlobal>
+/*
 
 void readXML(pugi::xml_node toIter, int iteration=0){
     std::string whitespace = "";
@@ -133,6 +133,31 @@ int main(int argc, char* argv[])
         std::cout << s << std::endl;
         s = *(environ+i);
     }
+
+    return 0;
+}*/
+
+std::vector<double> drange(double start, double end, double step){
+    std::vector<double> range;
+
+    for(double i=start; i<=end; i+=step){
+        range.push_back(i);
+    }
+
+    return range;
+}
+
+int main(int argc, char* argv[])
+{
+    std::vector<double> range;
+
+    range = drange(-60.0, 60.0, 2.5);
+
+    for(double i : range){
+        std::cout << i << " ";
+    }
+
+    std::cout << std::endl << std::endl << "Length: " << range.size() << std::endl;
 
     return 0;
 }

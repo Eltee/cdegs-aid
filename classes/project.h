@@ -39,6 +39,7 @@
 #include <string>
 #include <QDate>
 #include <QTextDocument>
+#include "configuration.h"
 
 class Project
 {
@@ -49,22 +50,22 @@ class Project
         std::string m_id;
         std::string m_absPath;
         std::string m_relPath;
-        //Configuration* m_defaultConfig;
-        //Configuration* m_lastConfig;
+        Configuration* m_defaultConfig;
+        Configuration* m_lastConfig;
         std::string m_defaultWindow;
         std::string m_lastWindow;
-        struct m_metadata{
+        struct metadata{
             std::string name;
             QDate date;
             std::string author;
             QTextDocument description;
-        };
-        struct m_projectSettings{
+        } m_metadata;
+        struct projectSettings{
             std::string set1;
             std::string set2;
             std::string set3;
             std::string set4;
-        };
+        } m_projectSettings;
 };
 
 #endif // PROJECT_H
