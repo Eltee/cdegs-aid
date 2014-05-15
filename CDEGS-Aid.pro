@@ -8,7 +8,6 @@ SOURCES += \
     lib/pugixml.cpp \
     classes/project.cpp \
     classes/conductor.cpp \
-    classes/saveutils.cpp \
     classes/settings.cpp \
     classes/viewsettings.cpp \
     classes/configuration.cpp \
@@ -18,7 +17,7 @@ SOURCES += \
     classes/leadtype.cpp \
     classes/coating.cpp \
     classes/cabletype.cpp \
-    classes/utils.cpp
+    namespaces/utils.cpp
 
 HEADERS += \
     lib/qcustomplot.h \
@@ -27,7 +26,6 @@ HEADERS += \
     lib/pugixml.hpp \
     classes/project.h \
     classes/conductor.h \
-    classes/saveutils.h \
     classes/settings.h \
     classes/viewsettings.h \
     classes/configuration.h \
@@ -37,7 +35,7 @@ HEADERS += \
     classes/leadtype.h \
     classes/coating.h \
     classes/cabletype.h \
-    classes/utils.h
+    namespaces/utils.h
 
 OTHER_FILES +=
 

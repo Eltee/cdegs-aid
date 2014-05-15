@@ -42,6 +42,8 @@
 #include "conductortype.h"
 #include "conductor.h"
 #include "building.h"
+#include "leadtype.h"
+#include "coating.h"
 
 class Configuration
 {
@@ -53,6 +55,8 @@ class Configuration
         std::string m_identifier;
         std::string m_units;
         std::string m_frequency;
+        std::vector <LeadType*> m_leadTypes;
+        std::vector <Coating*> m_coatings;
         std::vector<Energization*> m_energizations;
         std::vector<double> m_tolerances;
         std::vector<ConductorType*> m_conductorTypes;

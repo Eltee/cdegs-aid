@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    saveutils.h
+* Nom/Name:    utils.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,13 +33,17 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef SAVEUTILS_H
-#define SAVEUTILS_H
+#ifndef UTILS_H
+#define UTILS_H
 
-class SaveUtils
+#include <vector>
+#include "../lib/pugixml.hpp"
+
+namespace utils
 {
-    public:
-        SaveUtils();
+    std::vector<double> drange(double start, double end, double step);
+    std::string getOsName();
+    void readXML(pugi::xml_node toIter, int iteration=0);
 };
 
-#endif // SAVEUTILS_H
+#endif // UTILS_H

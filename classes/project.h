@@ -39,6 +39,7 @@
 #include <string>
 #include <QDate>
 #include <QTextDocument>
+#include <vector>
 #include "configuration.h"
 
 class Project
@@ -66,6 +67,7 @@ class Project
             std::string set3;
             std::string set4;
         } m_projectSettings;
+        std::vector<Configuration*> m_configurations;
 };
 
 #endif // PROJECT_H
