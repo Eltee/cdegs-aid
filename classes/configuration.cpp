@@ -42,3 +42,7 @@ Configuration::Configuration()
 Configuration::~Configuration()
 {
 }
+
+std::string const& Configuration::getId() const{
+    return m_id;
+}

@@ -35,7 +35,8 @@
 
 #include <QApplication>
 #include <QtWidgets>
-#include "namespaces/utils.h"
+#include "classes/project.h"
+#include "util/apputils.h"
 #include <iostream>
 #include <limits>
 #include "lib/pugixml.hpp"
@@ -103,20 +104,13 @@ int main(int argc, char* argv[])
 }*/
 
 int main(int argc, char* argv[]){
+    Project* p = new Project("Test", "1999-04-18", "Dudebro", "test please");
 
-    pugi::xml_document doc;
-    QString pathToFolder = qgetenv("APPDATA").constData();
-    pathToFolder += "/CDEGS-AID";
-    QDir appFolder(pathToFolder);
-    const wchar_t* path = appFolder.absoluteFilePath("XML Template Ids.xml").toStdWString().c_str();
-    if (!doc.load_file(path)){
-        std::cout << "Failure";
-        return -1;
-    }
+    qDebug() << p->getMetadata().date.toString();
 
-    utils::readXML(doc);
+    //AppUtils::getInstance().saveProject(*p);
 
-    delete(path);
+    delete(p);
 
     return 0;
 }

@@ -40,28 +40,69 @@
 #include <QDate>
 #include <QTextDocument>
 #include <vector>
+#include <QDir>
+#include <QString>
+#include "util/apputils.h"
 #include "configuration.h"
+
+
+struct project_metadata{
+        std::string name;
+        QDate date;
+        std::string author;
+        QTextDocument description;
+};
+
+struct project_settings{
+        std::string set1;
+        std::string set2;
+        std::string set3;
+        std::string set4;
+};
 
 class Project
 {
     public:
         Project();
+        Project(std::string name, std::string date, std::string author, std::string description);
         ~Project();
+    //Setters start---------------------------------------------------------------
+        Project& setAbsPath(std::string const& absPath);
+        Project& setRelPath(std::string const& relPath);
+        Project& setDefaultWindow(std::string const& defaultWindow);
+        Project& setLastWindow(std::string const& lastWindow);
+        Project& setDefaultConfig(Configuration* defaultConfig);
+        Project& setLastConfig(Configuration* lastConfig);
+        Project& setMetaName(std::string const& name);
+        Project& setMetaAuthor(std::string const& author);
+        Project& setMetaDescription(std::string const& description);
+        Project& setMetaDate(std::string const& date);
+        Project& setMetaDate(QDate const& date);
+        Project& setProjSet1(std::string const& set1);
+        Project& setProjSet2(std::string const& set2);
+        Project& setProjSet3(std::string const& set3);
+        Project& setProjSet4(std::string const& set4);
+        Project& addConfiguration(Configuration* config);
+        Project& removeConfiguration(Configuration* config);
+    //Setters end-----------------------------------------------------------------
+    //Getters start---------------------------------------------------------------
+        std::string const& getId() const;
+        std::string const& getAbsPath() const;
+        std::string const& getRelPath() const;
+        std::string const& getDefaultWindow() const;
+        std::string const& getLastWindow() const;
+        Configuration const* getDefaultConfig() const;
+        Configuration const* getLastConfig() const;
+        project_metadata const& getMetadata() const;
+        project_settings const& getSettings() const;
+        std::vector<Configuration*> getConfigurations() const;
+    //Getters end-----------------------------------------------------------------
     private:
         std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow;
-        Configuration* m_defaultConfig, m_lastConfig;
-        struct metadata{
-            std::string name;
-            QDate date;
-            std::string author;
-            QTextDocument description;
-        } m_metadata;
-        struct projectSettings{
-            std::string set1;
-            std::string set2;
-            std::string set3;
-            std::string set4;
-        } m_projectSettings;
+        Configuration* m_defaultConfig;
+        Configuration* m_lastConfig;
+        project_metadata m_metadata;
+        project_settings m_projectSettings;
         std::vector<Configuration*> m_configurations;
 };
 

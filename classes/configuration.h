@@ -45,37 +45,41 @@
 #include "leadtype.h"
 #include "coating.h"
 
+struct computations{
+    bool GPR;
+    bool POTENTIAL_SCALAR;
+    bool ELECTRIC;
+    bool MAGNETIC;
+    bool VECTOR_POTENTIAL;
+    bool GRADIENT_SCALAR;
+};
+
+struct profile{
+    struct coords{
+        double start;
+        double end;
+        double step;
+    } xCoords, yCoords;
+    double NLine;
+    double MCol;
+};
+
 class Configuration
 {
     public:
         Configuration();
         ~Configuration();
+        std::string const& getId() const;
     private:
         std::string m_id, m_identifier, m_units, m_frequency;
-        std::vector <LeadType*> m_leadTypes;
-        std::vector <Coating*> m_coatings;
+        std::vector<LeadType*> m_leadTypes;
+        std::vector<Coating*> m_coatings;
         std::vector<Energization*> m_energizations;
         std::vector<double> m_tolerances;
         std::vector<ConductorType*> m_conductorTypes;
         std::vector<Conductor*> m_conductors, m_buildingConductors;
         std::vector<Building*> m_buildings;
-        struct computations{
-            bool GPR;
-            bool POTENTIAL_SCALAR;
-            bool ELECTRIC;
-            bool MAGNETIC;
-            bool VECTOR_POTENTIAL;
-            bool GRADIENT_SCALAR;
-        } m_computations;
-        struct profile{
-            struct coords{
-                double start;
-                double end;
-                double step;
-            } xCoords, yCoords;
-            double NLine;
-            double MCol;
-        };
+        computations m_computations;
         std::vector<profile> m_profiles;
 };
 
