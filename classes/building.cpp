@@ -35,6 +35,72 @@
 
 #include "building.h"
 
-Building::Building()
-{
+Building::Building(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("BuildingId");
+    m_faces = 2;
+    m_height = 6.0;
+    m_distanceMin = 4.0;
+    m_distanceMax = 6.0;
+    m_step = 0.5;
 }
+
+Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("BuildingId");
+    m_faces = faces;
+    m_height = height;
+    m_distanceMin = distanceMin;
+    m_distanceMax = distanceMax;
+    m_step = step;
+}
+
+Building::~Building(){}
+
+std::string const& Building::getId() const{
+    return m_id;
+}
+
+int const& Building::getFaces() const{
+    return m_faces;
+}
+
+double const& Building::getHeight() const{
+    return m_height;
+}
+
+double const& Building::getDistanceMin() const{
+    return m_distanceMin;
+}
+
+double const& Building::getDistanceMax() const{
+    return m_distanceMax;
+}
+
+double const& Building::getStep() const{
+    return m_step;
+}
+
+Building& Building::setFaces(int const& faces){
+    m_faces = faces;
+    return *this;
+}
+
+Building& Building::setHeight(double const& height){
+    m_height = height;
+    return *this;
+}
+
+Building& Building::setDistanceMin(double const& distanceMin){
+    m_distanceMin = distanceMin;
+    return *this;
+}
+
+Building& Building::setDistanceMax(double const& distanceMax){
+    m_distanceMax = distanceMax;
+    return *this;
+}
+
+Building& Building::setStep(double const& step){
+    m_step = step;
+    return *this;
+}
+

@@ -45,6 +45,7 @@
 #include "util/apputils.h"
 #include "configuration.h"
 
+class Configuration;
 
 struct project_metadata{
         std::string name;
@@ -64,7 +65,7 @@ class Project
 {
     public:
         Project();
-        Project(std::string name, std::string date, std::string author, std::string description);
+        Project(std::string const& name, std::string const& date, std::string const& author, std::string const& description);
         ~Project();
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);

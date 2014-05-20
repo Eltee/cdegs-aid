@@ -42,7 +42,7 @@
 #include "lib/pugixml.hpp"
 #include <QDir>
 #include <QtGlobal>
-#include <cstdlib>
+#include <memory>
 
 
 /*int main(int argc, char* argv[])

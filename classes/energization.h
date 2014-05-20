@@ -37,16 +37,31 @@
 #define ENERGIZATION_H
 
 #include <string>
+#include "util/apputils.h"
 
 class Energization
 {
     public:
         Energization();
+        Energization(std::string const& identification, std::string const& type, int const& angle, double const& magnitude);
         ~Energization();
+    //Getters start----------------------------------------------------
+        std::string const& getId() const;
+        std::string const& getIdentification() const;
+        std::string const& getType() const;
+        int const& getAngle() const;
+        double const& getMagnitude() const;
+    //Getters end------------------------------------------------------
+    //Setters start----------------------------------------------------
+        Energization& setIdentification(std::string const& identification);
+        Energization& setType(std::string const& type);
+        Energization& setAngle(int const& angle);
+        Energization& setMagnitude(double const& magnitude);
+    //Setters end------------------------------------------------------
     private:
-        std::string m_id, m_type, m_category;
-        int angle;
-        double value;
+        std::string m_id, m_identification, m_type;
+        int m_angle;
+        double m_magnitude;
 };
 
 #endif // ENERGIZATION_H

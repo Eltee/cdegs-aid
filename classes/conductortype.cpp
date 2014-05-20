@@ -35,6 +35,72 @@
 
 #include "conductortype.h"
 
-ConductorType::ConductorType()
-{
+ConductorType::ConductorType(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("ConductorTypeId");
+    m_type = "default";
+    m_name = "default";
+    m_number = 1;
+    m_resistivity = 1.64;
+    m_permeability = 1.0;
 }
+
+ConductorType::ConductorType(std::string const& type, std::string const& name, int const& number, double const& resistivity, double const& permeability){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("ConductorTypeId");
+    m_type = type;
+    m_name = name;
+    m_number = number;
+    m_resistivity = resistivity;
+    m_permeability = permeability;
+}
+
+ConductorType::~ConductorType(){}
+
+std::string const& ConductorType::getId() const{
+    return m_id;
+}
+
+std::string const& ConductorType::getType() const{
+    return m_type;
+}
+
+std::string const& ConductorType::getName() const{
+    return m_name;
+}
+
+int const& ConductorType::getNumber() const{
+    return m_number;
+}
+
+double const& ConductorType::getResistivity() const{
+    return m_resistivity;
+}
+
+double const& ConductorType::getPermeability() const{
+    return m_permeability;
+}
+
+ConductorType& ConductorType::setType(std::string const& type){
+    m_type = type;
+    return *this;
+}
+
+ConductorType& ConductorType::setName(std::string const& name){
+    m_name = name;
+    return *this;
+}
+
+ConductorType& ConductorType::setNumber(int const& number){
+    m_number = number;
+    return *this;
+}
+
+ConductorType& ConductorType::setResistivity(double const& resistivity){
+    m_resistivity = resistivity;
+    return *this;
+}
+
+ConductorType& ConductorType::setPermeability(double const& permeability){
+    m_permeability = permeability;
+    return *this;
+}
+

@@ -44,32 +44,103 @@
 #include "building.h"
 #include "leadtype.h"
 #include "coating.h"
+#include "util/apputils.h"
+
+class LeadType;
+class Energization;
+class Coating;
+class ConductorType;
+class Conductor;
+class Building;
 
 struct computations{
-    bool GPR;
-    bool POTENTIAL_SCALAR;
-    bool ELECTRIC;
-    bool MAGNETIC;
-    bool VECTOR_POTENTIAL;
-    bool GRADIENT_SCALAR;
+    bool GPR = false;
+    bool POTENTIAL_SCALAR = false;
+    bool ELECTRIC = false;
+    bool MAGNETIC = false;
+    bool VECTOR_POTENTIAL = false;
+    bool GRADIENT_SCALAR = false;
 };
 
 struct profile{
     struct coords{
-        double start;
-        double end;
-        double step;
+        double start = 0.0;
+        double end = 0.0;
+        double step = 0.0;
+        bool operator==(const coords& c) const{
+            bool result = true;
+            if(start != c.start) result = false;
+            if(end != c.end) result = false;
+            if(step != c.step) result = false;
+            return result;
+        }
+        bool operator!=(const coords& c) const{
+            bool result = true;
+            if(*this == c) result = false;
+            return result;
+        }
     } xCoords, yCoords;
-    double NLine;
-    double MCol;
+    double NLine = 0.0;
+    double MCol = 0.0;
+    bool operator==(const profile& p) const{
+        bool result = true;
+        if(NLine !=  p.NLine) result = false;
+        if(MCol != p.MCol) result = false;
+        if(xCoords != p.xCoords) result = false;
+        if(yCoords != p.yCoords) result = false;
+        return result;
+    }
+    bool operator!=(const profile& p) const{
+        bool result = true;
+        if(*this == p) result = false;
+        return result;
+    }
 };
 
 class Configuration
 {
     public:
         Configuration();
+        Configuration(std::string const& identifier, std::string const& units, std::string const& frequency);
         ~Configuration();
+    //Setters start-----------------------------------------------------
+        Configuration& setIdentifier(std::string const& identifier);
+        Configuration& setUnits(std::string const& units);
+        Configuration& setFrequency(std::string const& frequency);
+        Configuration& addLeadType(LeadType* leadType);
+        Configuration& removeLeadType(LeadType* leadType);
+        Configuration& addCoating(Coating* coating);
+        Configuration& removeCoating(Coating* coating);
+        Configuration& addEnergization(Energization* energization);
+        Configuration& removeEnergization(Energization* energization);
+        Configuration& addTolerance(double const& tolerance);
+        Configuration& removeTolerance(double const& tolerance);
+        Configuration& addConductorType(ConductorType* conductorType);
+        Configuration& removeConductorType(ConductorType* conductorType);
+        Configuration& addConductor(Conductor* conductor);
+        Configuration& removeConductor(Conductor* conductor);
+        Configuration& addBuilding(Building* building);
+        Configuration& removeBuilding(Building* building);
+        Configuration& setComputations(computations const& comp);
+        Configuration& addProfile(profile const& p);
+        Configuration& removeProfile(profile const& p);
+    //Setters end-------------------------------------------------------
+    //Getters start-----------------------------------------------------
         std::string const& getId() const;
+        std::string const& getIdentifier() const;
+        std::string const& getUnits() const;
+        std::string const& getFrequency() const;
+        std::vector<LeadType*> const& getLeadTypes() const;
+        std::vector<Coating*> const& getCoatings() const;
+        std::vector<Energization*> const& getEnergizations() const;
+        std::vector<double> const& getTolerances() const;
+        std::vector<ConductorType*> const& getConductorTypes() const;
+        std::vector<Conductor*> const& getConductors() const;
+        std::vector<Conductor*> const& getBuildingConductors() const;
+        std::vector<Building*> const& getBuildings() const;
+        computations const& getComputations() const;
+        std::vector<profile> const& getProfiles() const;
+    //Getters end-------------------------------------------------------
     private:
         std::string m_id, m_identifier, m_units, m_frequency;
         std::vector<LeadType*> m_leadTypes;

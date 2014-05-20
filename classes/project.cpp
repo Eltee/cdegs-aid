@@ -51,7 +51,7 @@ Project::Project(){
     m_projectSettings.set4 = "";
 }
 
-Project::Project(std::string name, std::string date, std::string author, std::string description){
+Project::Project(std::string const& name, std::string const& date, std::string const& author, std::string const& description){
     m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
@@ -67,7 +67,13 @@ Project::Project(std::string name, std::string date, std::string author, std::st
     m_projectSettings.set4 = "";
 }
 
-Project::~Project(){}
+Project::~Project(){
+    delete(m_defaultConfig);
+    delete(m_lastConfig);
+    for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
+        delete(*it);
+    }
+}
 
 std::string const& Project::getId() const{
     return m_id;
@@ -188,7 +194,7 @@ Project& Project::addConfiguration(Configuration* config){
     bool alreadyPresent=false;
 
     for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-        if(&(**it) == config){
+        if(*it == config){
             alreadyPresent = true;
             break;
         }
@@ -207,7 +213,7 @@ Project& Project::removeConfiguration(Configuration* config){
     do{
         done = true;
         for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-            if(&(**it) == config){
+            if(*it == config){
                 m_configurations.erase(it);
                 done = false;
                 break;

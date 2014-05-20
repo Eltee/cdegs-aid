@@ -35,6 +35,38 @@
 
 #include "coating.h"
 
-Coating::Coating()
-{
+Coating::Coating(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("CoatingId");
+    m_name = "default";
+    m_number = 1;
+}
+
+Coating::Coating(std::string const& name, int const& number){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("CoatingId");
+    m_name = name;
+    m_number = number;
+}
+
+Coating::~Coating(){}
+
+std::string const& Coating::getId() const{
+    return m_id;
+}
+
+std::string const& Coating::getName() const{
+    return m_name;
+}
+
+int const& Coating::getNumber() const{
+    return m_number;
+}
+
+Coating& Coating::setName(std::string const& name){
+    m_name = name;
+    return *this;
+}
+
+Coating& Coating::setNumber(int const& number){
+    m_number = number;
+    return *this;
 }

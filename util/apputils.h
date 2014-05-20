@@ -46,6 +46,7 @@
 #include "classes/configuration.h"
 
 class Project;
+class Configuration;
 
 class AppUtils
 {

@@ -416,8 +416,10 @@ void AppUtils::saveProject(const Project &project){
     //Project node end-----------------------------------------------------------------
 
     //Configurations
+    pugi::xml_node configNode = doc.append_child("Configurations");
+
     for(std::vector<Configuration*>::iterator it=project.getConfigurations().begin(); it != project.getConfigurations().end(); it++ ){
-        saveConfiguration(&(**it), doc);
+        saveConfiguration(*it, configNode);
     }
 
     QString folder = "";
@@ -427,6 +429,6 @@ void AppUtils::saveProject(const Project &project){
 
 }
 
-void AppUtils::saveConfiguration(Configuration* const config, pugi::xml_document &doc){
+void AppUtils::saveConfiguration(Configuration* const config, pugi::xml_node &parent){
 
 }

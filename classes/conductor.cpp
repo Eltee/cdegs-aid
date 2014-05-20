@@ -35,6 +35,99 @@
 
 #include "conductor.h"
 
-Conductor::Conductor()
-{
+Conductor::Conductor(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("ConductorId");
+    m_radius = 0.0;
 }
+
+Conductor::~Conductor(){
+    delete(m_leadType);
+    delete(m_conductorType);
+    delete(m_coating);
+    delete(m_energization);
+    delete(m_cableType);
+}
+
+std::string const& Conductor::getId() const{
+    return m_id;
+}
+
+LeadType const* Conductor::getLeadType() const{
+    return m_leadType;
+}
+
+ConductorType const* Conductor::getConductorType() const{
+    return m_conductorType;
+}
+
+Energization const* Conductor::getEnergization() const{
+    return m_energization;
+}
+
+CableType const* Conductor::getCableType() const{
+    return m_cableType;
+}
+
+coords const& Conductor::getStartCoords() const{
+    return m_startCoords;
+}
+
+coords const& Conductor::getEndCoords() const{
+    return m_endCoords;
+}
+
+double const& Conductor::getRadius() const{
+    return m_radius;
+}
+
+Conductor& Conductor::setLeadType(LeadType* leadType){
+    m_leadType = leadType;
+    return *this;
+}
+
+Conductor& Conductor::setConductorType(ConductorType* conductorType){
+    m_conductorType = conductorType;
+    return *this;
+}
+
+Conductor& Conductor::setCoating(Coating* coating){
+    m_coating = coating;
+    return *this;
+}
+
+Conductor& Conductor::setEnergization(Energization* energization){
+    m_energization = energization;
+    return *this;
+}
+
+Conductor& Conductor::setStartCoords(coords const& start){
+    m_startCoords = start;
+    return *this;
+}
+
+Conductor& Conductor::setEndCoords(coords const& end){
+    m_endCoords = end;
+    return *this;
+}
+
+Conductor& Conductor::setCoords(coords const& start, coords const& end){
+    m_startCoords = start;
+    m_endCoords = end;
+    return *this;
+}
+
+Conductor& Conductor::setRadius(double const& radius){
+    m_radius = radius;
+    return *this;
+}
+
+Conductor& Conductor::setSubDivision(subDivision const& subD){
+    m_subDivision = subD;
+    return *this;
+}
+
+Conductor& Conductor::setCableType(CableType* cableType){
+    m_cableType = cableType;
+    return *this;
+}
+

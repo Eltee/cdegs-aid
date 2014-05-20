@@ -35,6 +35,38 @@
 
 #include "cabletype.h"
 
-CableType::CableType()
-{
+CableType::CableType(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("CableTypeId");
+    m_name = "default";
+    m_number = 1;
+}
+
+CableType::CableType(std::string const& name, int const& number){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("CableTypeId");
+    m_name = name;
+    m_number = number;
+}
+
+CableType::~CableType(){}
+
+std::string const& CableType::getId() const{
+    return m_id;
+}
+
+std::string const& CableType::getName() const{
+    return m_name;
+}
+
+int const& CableType::getNumber() const{
+    return m_number;
+}
+
+CableType& CableType::setName(std::string const& name){
+    m_name = name;
+    return *this;
+}
+
+CableType& CableType::setNumber(int const& number){
+    m_number = number;
+    return *this;
 }

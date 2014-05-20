@@ -35,6 +35,60 @@
 
 #include "energization.h"
 
-Energization::Energization()
-{
+Energization::Energization(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("EnergizationId");
+    m_identification = "default";
+    m_type = "default";
+    m_angle = 0;
+    m_magnitude = 0;
+}
+
+Energization::Energization(std::string const& identification, std::string const& type, int const& angle, double const& magnitude){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("EnergizationId");
+    m_identification = identification;
+    m_type = type;
+    m_angle = angle;
+    m_magnitude = magnitude;
+}
+
+Energization::~Energization(){}
+
+std::string const& Energization::getId() const{
+    return m_id;
+}
+
+std::string const& Energization::getIdentification() const{
+    return m_identification;
+}
+
+std::string const& Energization::getType() const{
+    return m_type;
+}
+
+int const& Energization::getAngle() const{
+    return m_angle;
+}
+
+double const& Energization::getMagnitude() const{
+    return m_magnitude;
+}
+
+Energization& Energization::setIdentification(std::string const& identification){
+    m_identification = identification;
+    return *this;
+}
+
+Energization& Energization::setType(std::string const& type){
+    m_type = type;
+    return *this;
+}
+
+Energization& Energization::setAngle(int const& angle){
+    m_angle = angle;
+    return *this;
+}
+
+Energization& Energization::setMagnitude(double const& magnitude){
+    m_magnitude = magnitude;
+    return *this;
 }

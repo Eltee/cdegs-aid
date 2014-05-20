@@ -37,14 +37,26 @@
 #define LEADTYPE_H
 
 #include <string>
+#include "util/apputils.h"
 
 class LeadType
 {
     public:
         LeadType();
+        LeadType(std::string const& name, int const& number);
         ~LeadType();
+    //Getters start------------------------------------------------
+        std::string const& getId() const;
+        std::string const& getName() const;
+        int const& getNumber() const;
+    //Getters end--------------------------------------------------
+    //Setters start------------------------------------------------
+        LeadType& setName(std::string const& name);
+        LeadType& setNumber(int const& number);
+    //Setters end--------------------------------------------------
     private:
         std::string m_id, m_name;
+        int m_number;
 };
 
 #endif // LEADTYPE_H

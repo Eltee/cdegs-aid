@@ -35,6 +35,38 @@
 
 #include "leadtype.h"
 
-LeadType::LeadType()
-{
+LeadType::LeadType(){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("LeadTypeId");
+    m_name = "default";
+    m_number = 1;
+}
+
+LeadType::LeadType(std::string const& name, int const& number){
+    m_id = AppUtils::getInstance().uniqueIdGenerator("LeadTypeId");
+    m_name = name;
+    m_number = number;
+}
+
+LeadType::~LeadType(){}
+
+std::string const& LeadType::getId() const{
+    return m_id;
+}
+
+std::string const& LeadType::getName() const{
+    return m_name;
+}
+
+int const& LeadType::getNumber() const{
+    return m_number;
+}
+
+LeadType& LeadType::setName(std::string const& name){
+    m_name = name;
+    return *this;
+}
+
+LeadType& LeadType::setNumber(int const& number){
+    m_number = number;
+    return *this;
 }

@@ -42,28 +42,61 @@
 #include "coating.h"
 #include "energization.h"
 #include "cabletype.h"
+#include "util/apputils.h"
+
+class LeadType;
+class ConductorType;
+class Coating;
+class Energization;
+class CableType;
+
+struct coords{
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;
+};
+
+struct subDivision{
+    std::string method = "default";
+    int number = 0;
+};
 
 class Conductor
 {
     public:
         Conductor();
         ~Conductor();
+    //Getters start--------------------------------------------------------
+        std::string const& getId() const;
+        LeadType const* getLeadType() const;
+        ConductorType const* getConductorType() const;
+        Energization const* getEnergization() const;
+        CableType const* getCableType() const;
+        coords const& getStartCoords() const;
+        coords const& getEndCoords() const;
+        double const& getRadius() const;
+    //Getters end----------------------------------------------------------
+    //Setters start--------------------------------------------------------
+        Conductor& setLeadType(LeadType* leadType);
+        Conductor& setConductorType(ConductorType* conductorType);
+        Conductor& setCoating(Coating* coating);
+        Conductor& setEnergization(Energization* energization);
+        Conductor& setStartCoords(coords const& start);
+        Conductor& setEndCoords(coords const& end);
+        Conductor& setCoords(coords const& start, coords const& end);
+        Conductor& setRadius(double const& radius);
+        Conductor& setSubDivision(subDivision const& subD);
+        Conductor& setCableType(CableType* cableType);
+    //Setters end----------------------------------------------------------
     private:
         std::string m_id;
         LeadType* m_leadType;
         ConductorType* m_conductorType;
         Coating* m_coating;
         Energization* m_energization;
-        struct coords{
-            double x;
-            double y;
-            double z;
-        } m_startCoords, m_endCoords;
+        coords m_startCoords, m_endCoords;
         double m_radius;
-        struct subDivision{
-            std::string method;
-            int number;
-        } m_subDivision;
+        subDivision m_subDivision;
         CableType* m_cableType;
 };
 
