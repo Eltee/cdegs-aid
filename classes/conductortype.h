@@ -37,32 +37,29 @@
 #define CONDUCTORTYPE_H
 
 #include <string>
+#include "component.h"
 #include "util/apputils.h"
 
-class ConductorType
+class Component;
+
+class ConductorType : public Component
 {
     public:
         ConductorType();
-        ConductorType(std::string const& type, std::string const& name, int const& number, double const& resistivity, double const& permeability);
+        ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability);
         ~ConductorType();
     //Getters start------------------------------------------------
-        std::string const& getId() const;
         std::string const& getType() const;
-        std::string const& getName() const;
-        int const& getNumber() const;
         double const& getResistivity() const;
         double const& getPermeability() const;
     //Getters end--------------------------------------------------
     //Setters start------------------------------------------------
         ConductorType& setType(std::string const& type);
-        ConductorType& setName(std::string const& name);
-        ConductorType& setNumber(int const& number);
         ConductorType& setResistivity(double const& resistivity);
         ConductorType& setPermeability(double const& permeability);
     //Setters end--------------------------------------------------
     private:
-        std::string m_id, m_type, m_name;
-        int m_number;
+        std::string m_type;
         double m_resistivity, m_permeability;
 };
 

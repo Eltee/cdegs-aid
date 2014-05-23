@@ -41,12 +41,29 @@
 #include <iostream>
 #include <QDir>
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <fstream>
 #include "lib/pugixml.hpp"
 #include "classes/project.h"
 #include "classes/configuration.h"
+#include "classes/building.h"
+#include "classes/cabletype.h"
+#include "classes/coating.h"
+#include "classes/conductor.h"
+#include "classes/conductortype.h"
+#include "classes/energization.h"
+#include "classes/leadtype.h"
 
 class Project;
 class Configuration;
+class Building;
+class CableType;
+class Coating;
+class Conductor;
+class ConductorType;
+class Energization;
+class LeadType;
 
 class AppUtils
 {
@@ -56,20 +73,28 @@ class AppUtils
                                               // Instantiated on first use.
             return instance;
         }
-        void initialize();
-        void saveIds();
-        void saveProject(const Project &project);
-        void saveConfiguration(Configuration* const config, pugi::xml_document &doc);
+        void saveProject(const Project& project, const std::string& path, const std::string& filename);
+        void saveConfiguration(const Configuration* config, pugi::xml_node& parent);
+        void exportConfiguration(const Configuration* config, const std::string& fullPath);
         std::vector<double> drange(double start, double end, double step);
         std::string getOsName();
-        void readXML(pugi::xml_node toIter, int iteration=0);
-        std::string uniqueIdGenerator(std::string type);
-        const wchar_t* getXMLPath(QString folderPath, QString filename);
-        const wchar_t* getXMLPath(QString filename);
+        inline const char* BoolToString(const bool& b) const;
+        void readXML(const pugi::xml_node& toIter, int iteration=0);
+        std::string uniqueIdGenerator(const std::string& type);
+        const wchar_t* getXMLPath(const QString& folderPath, const QString& filename);
+        const wchar_t* getXMLPath(const QString& filename);
+        std::string getPath(const QString& folderPath, const QString& filename);
+        std::string getPath(const QString& filename);
+        void setDefaultConfig();
+        void loadDefaultConfig();
+        void generateDefaultConfig();
+        Configuration const* getDefaultConfig() const;
+        Configuration* loadConfig(pugi::xml_node configNode) const;
+        Project* loadProject(const std::string& path, const std::string& filename);
         std::string my_utf8(const char * str) { return str; }
         std::string my_utf8(const wchar_t * str) { return pugi::as_utf8(str); }
-        std::string dbl2str(double d);
-        void append_dbl2str(std::string &s, double d);
+        std::string dbl2str(const double& d);
+        void append_dbl2str(std::string &s, const double& d);
     private:
         AppUtils() {}
         AppUtils(AppUtils const&);
@@ -87,6 +112,7 @@ class AppUtils
                 double buildingId=0;
                 double profileId=0;
         } m_ids;
+        Configuration* m_defaultConfig;
 };
 
 #endif // APPUTILS_H

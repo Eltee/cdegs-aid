@@ -39,9 +39,11 @@
 #include <string>
 #include <QDate>
 #include <QTextDocument>
-#include <vector>
+#include <unordered_map>
 #include <QDir>
 #include <QString>
+#include <memory>
+#include <stdio.h>
 #include "util/apputils.h"
 #include "configuration.h"
 
@@ -65,8 +67,10 @@ class Project
 {
     public:
         Project();
-        Project(std::string const& name, std::string const& date, std::string const& author, std::string const& description);
+        Project(std::string const& name, QDate const& date, std::string const& author, std::string const& description);
         ~Project();
+        Project(Project const* project);
+        Project& operator=(Project const* project);
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);
         Project& setRelPath(std::string const& relPath);
@@ -85,6 +89,7 @@ class Project
         Project& setProjSet4(std::string const& set4);
         Project& addConfiguration(Configuration* config);
         Project& removeConfiguration(Configuration* config);
+        Project& setId(std::string const& id);
     //Setters end-----------------------------------------------------------------
     //Getters start---------------------------------------------------------------
         std::string const& getId() const;
@@ -92,19 +97,19 @@ class Project
         std::string const& getRelPath() const;
         std::string const& getDefaultWindow() const;
         std::string const& getLastWindow() const;
-        Configuration const* getDefaultConfig() const;
-        Configuration const* getLastConfig() const;
+        Configuration* getDefaultConfig() const;
+        Configuration* getLastConfig() const;
         project_metadata const& getMetadata() const;
         project_settings const& getSettings() const;
-        std::vector<Configuration*> getConfigurations() const;
+        std::unordered_map<std::string, Configuration*> getConfigurations() const;
     //Getters end-----------------------------------------------------------------
     private:
         std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow;
-        Configuration* m_defaultConfig;
-        Configuration* m_lastConfig;
+        Configuration* m_defaultConfig = NULL;
+        Configuration* m_lastConfig = NULL;
         project_metadata m_metadata;
         project_settings m_projectSettings;
-        std::vector<Configuration*> m_configurations;
+        std::unordered_map<std::string, Configuration*> m_configurations;
 };
 
 #endif // PROJECT_H

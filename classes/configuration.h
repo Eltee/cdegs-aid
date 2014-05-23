@@ -37,6 +37,7 @@
 #define CONFIGURATION_H
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include "energization.h"
 #include "conductortype.h"
@@ -44,6 +45,7 @@
 #include "building.h"
 #include "leadtype.h"
 #include "coating.h"
+#include "cabletype.h"
 #include "util/apputils.h"
 
 class LeadType;
@@ -52,6 +54,7 @@ class Coating;
 class ConductorType;
 class Conductor;
 class Building;
+class CableType;
 
 struct computations{
     bool GPR = false;
@@ -63,6 +66,7 @@ struct computations{
 };
 
 struct profile{
+    std::string id = "PR0";
     struct coords{
         double start = 0.0;
         double end = 0.0;
@@ -102,8 +106,12 @@ class Configuration
     public:
         Configuration();
         Configuration(std::string const& identifier, std::string const& units, std::string const& frequency);
+        Configuration(Configuration const* config);
         ~Configuration();
+        Configuration& operator=(Configuration const* config);
+        void setDefaultTypes();
     //Setters start-----------------------------------------------------
+        Configuration& setId(std::string const& id);
         Configuration& setIdentifier(std::string const& identifier);
         Configuration& setUnits(std::string const& units);
         Configuration& setFrequency(std::string const& frequency);
@@ -119,39 +127,47 @@ class Configuration
         Configuration& removeConductorType(ConductorType* conductorType);
         Configuration& addConductor(Conductor* conductor);
         Configuration& removeConductor(Conductor* conductor);
+        Configuration& addBuildingConductor(Conductor* conductor);
+        Configuration& removeBuildingConductor(Conductor* conductor);
         Configuration& addBuilding(Building* building);
         Configuration& removeBuilding(Building* building);
         Configuration& setComputations(computations const& comp);
-        Configuration& addProfile(profile const& p);
-        Configuration& removeProfile(profile const& p);
+        Configuration& addProfile(profile* p);
+        Configuration& removeProfile(profile* p);
+        Configuration& addCableType(CableType* cableType);
+        Configuration& removeCableType(CableType* cableType);
+        computations& setComputations();
     //Setters end-------------------------------------------------------
     //Getters start-----------------------------------------------------
         std::string const& getId() const;
         std::string const& getIdentifier() const;
         std::string const& getUnits() const;
         std::string const& getFrequency() const;
-        std::vector<LeadType*> const& getLeadTypes() const;
-        std::vector<Coating*> const& getCoatings() const;
-        std::vector<Energization*> const& getEnergizations() const;
-        std::vector<double> const& getTolerances() const;
-        std::vector<ConductorType*> const& getConductorTypes() const;
-        std::vector<Conductor*> const& getConductors() const;
-        std::vector<Conductor*> const& getBuildingConductors() const;
-        std::vector<Building*> const& getBuildings() const;
+        std::unordered_map<std::string, LeadType*> getLeadTypes() const;
+        std::unordered_map<std::string, Coating*> getCoatings() const;
+        std::unordered_map<std::string, Energization*> getEnergizations() const;
+        std::vector<double> getTolerances() const;
+        std::unordered_map<std::string, ConductorType*> getConductorTypes() const;
+        std::unordered_map<std::string, Conductor*> getConductors() const;
+        std::unordered_map<std::string, Conductor*> getBuildingConductors() const;
+        std::unordered_map<std::string, Building*> getBuildings() const;
         computations const& getComputations() const;
-        std::vector<profile> const& getProfiles() const;
+        std::unordered_map<std::string, profile*> getProfiles() const;
+        std::unordered_map<std::string, CableType*> getCableTypes() const;
     //Getters end-------------------------------------------------------
+
     private:
         std::string m_id, m_identifier, m_units, m_frequency;
-        std::vector<LeadType*> m_leadTypes;
-        std::vector<Coating*> m_coatings;
-        std::vector<Energization*> m_energizations;
+        std::unordered_map<std::string, LeadType*> m_leadTypes;
+        std::unordered_map<std::string, Coating*> m_coatings;
+        std::unordered_map<std::string, Energization*> m_energizations;
         std::vector<double> m_tolerances;
-        std::vector<ConductorType*> m_conductorTypes;
-        std::vector<Conductor*> m_conductors, m_buildingConductors;
-        std::vector<Building*> m_buildings;
+        std::unordered_map<std::string, ConductorType*> m_conductorTypes;
+        std::unordered_map<std::string, Conductor*> m_conductors, m_buildingConductors;
+        std::unordered_map<std::string, Building*> m_buildings;
+        std::unordered_map<std::string, CableType*> m_cableTypes;
         computations m_computations;
-        std::vector<profile> m_profiles;
+        std::unordered_map<std::string, profile*> m_profiles;
 };
 
 #endif // CONFIGURATION_H

@@ -37,26 +37,17 @@
 #define COATING_H
 
 #include <string>
+#include "component.h"
 #include "util/apputils.h"
 
-class Coating
+class Component;
+
+class Coating : public Component
 {
     public:
         Coating();
-        Coating(std::string const& name, int const& number);
+        Coating(std::string const& name);
         ~Coating();
-    //Getters start------------------------------------------------
-        std::string const& getId() const;
-        std::string const& getName() const;
-        int const& getNumber() const;
-    //Getters end--------------------------------------------------
-    //Setters start------------------------------------------------
-        Coating& setName(std::string const& name);
-        Coating& setNumber(int const& number);
-    //Setters end--------------------------------------------------
-    private:
-        std::string m_id, m_name;
-        int m_number;
 };
 
 #endif // COATING_H

@@ -37,11 +37,14 @@
 #define CONDUCTOR_H
 
 #include <string>
+#include <stdio.h>
 #include "leadtype.h"
 #include "conductortype.h"
 #include "coating.h"
 #include "energization.h"
 #include "cabletype.h"
+#include "component.h"
+#include "configuration.h"
 #include "util/apputils.h"
 
 class LeadType;
@@ -49,6 +52,8 @@ class ConductorType;
 class Coating;
 class Energization;
 class CableType;
+class Component;
+class Configuration;
 
 struct coords{
     double x = 0.0;
@@ -61,20 +66,23 @@ struct subDivision{
     int number = 0;
 };
 
-class Conductor
+class Conductor : public Component
 {
     public:
         Conductor();
+        Conductor(Configuration const& config, std::string const& leadType, std::string const& conductorType, std::string const& coating, std::string const& energization, std::string const& cableType, const double& radius=0.0);
+        Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, const double& radius=0.0);
         ~Conductor();
     //Getters start--------------------------------------------------------
-        std::string const& getId() const;
         LeadType const* getLeadType() const;
         ConductorType const* getConductorType() const;
+        Coating const* getCoating() const;
         Energization const* getEnergization() const;
         CableType const* getCableType() const;
         coords const& getStartCoords() const;
         coords const& getEndCoords() const;
         double const& getRadius() const;
+        subDivision const& getSubDivision() const;
     //Getters end----------------------------------------------------------
     //Setters start--------------------------------------------------------
         Conductor& setLeadType(LeadType* leadType);
@@ -89,15 +97,14 @@ class Conductor
         Conductor& setCableType(CableType* cableType);
     //Setters end----------------------------------------------------------
     private:
-        std::string m_id;
-        LeadType* m_leadType;
-        ConductorType* m_conductorType;
-        Coating* m_coating;
-        Energization* m_energization;
+        LeadType* m_leadType = NULL;
+        ConductorType* m_conductorType = NULL;
+        Coating* m_coating = NULL;
+        Energization* m_energization = NULL;
         coords m_startCoords, m_endCoords;
         double m_radius;
         subDivision m_subDivision;
-        CableType* m_cableType;
+        CableType* m_cableType = NULL;
 };
 
 #endif // CONDUCTOR_H

@@ -37,29 +37,33 @@
 #define ENERGIZATION_H
 
 #include <string>
+#include "component.h"
 #include "util/apputils.h"
 
-class Energization
+class Component;
+
+class Energization : public Component
 {
     public:
         Energization();
-        Energization(std::string const& identification, std::string const& type, int const& angle, double const& magnitude);
+        Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle);
         ~Energization();
     //Getters start----------------------------------------------------
-        std::string const& getId() const;
         std::string const& getIdentification() const;
         std::string const& getType() const;
+        std::string const& getFrequency() const;
         int const& getAngle() const;
         double const& getMagnitude() const;
     //Getters end------------------------------------------------------
     //Setters start----------------------------------------------------
         Energization& setIdentification(std::string const& identification);
         Energization& setType(std::string const& type);
+        Energization& setFrequency(std::string const& frequency);
         Energization& setAngle(int const& angle);
         Energization& setMagnitude(double const& magnitude);
     //Setters end------------------------------------------------------
     private:
-        std::string m_id, m_identification, m_type;
+        std::string m_identification, m_type, m_frequency;
         int m_angle;
         double m_magnitude;
 };

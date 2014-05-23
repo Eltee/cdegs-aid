@@ -51,14 +51,14 @@ Project::Project(){
     m_projectSettings.set4 = "";
 }
 
-Project::Project(std::string const& name, std::string const& date, std::string const& author, std::string const& description){
+Project::Project(std::string const& name, QDate const& date, std::string const& author, std::string const& description){
     m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
     m_defaultWindow = "Metadata";
     m_lastWindow = "Metadata";
     m_metadata.author = author;
-    m_metadata.date = QDate::fromString(QString::fromStdString(date));
+    m_metadata.date = date;
     m_metadata.description.setPlainText(QString::fromStdString(description));
     m_metadata.name = name;
     m_projectSettings.set1 = "";
@@ -68,11 +68,49 @@ Project::Project(std::string const& name, std::string const& date, std::string c
 }
 
 Project::~Project(){
-    delete(m_defaultConfig);
-    delete(m_lastConfig);
-    for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-        delete(*it);
+    for(std::unordered_map<std::string, Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
+        delete(it->second);
     }
+}
+
+Project::Project(Project const* project){
+    m_id = project->getId();
+    m_absPath = project->getAbsPath();
+    m_relPath = project->getRelPath();
+    m_defaultConfig = project->getDefaultConfig();
+    m_lastConfig = project->getLastConfig();
+    m_defaultWindow = project->getDefaultWindow();
+    m_lastWindow = project->getLastWindow();
+    m_metadata.author = project->getMetadata().author;
+    m_metadata.date = project->getMetadata().date;
+    m_metadata.name = project->getMetadata().name;
+    m_metadata.description.setPlainText(project->getMetadata().description.toPlainText());
+    m_projectSettings.set1 = "";
+    m_projectSettings.set2 = "";
+    m_projectSettings.set3 = "";
+    m_projectSettings.set4 = "";
+    m_configurations = project->getConfigurations();
+}
+
+Project& Project::operator=(Project const* project){
+    m_id = project->getId();
+    m_absPath = project->getAbsPath();
+    m_relPath = project->getRelPath();
+    m_defaultConfig = project->getDefaultConfig();
+    m_lastConfig = project->getLastConfig();
+    m_defaultWindow = project->getDefaultWindow();
+    m_lastWindow = project->getLastWindow();
+    m_metadata.author = project->getMetadata().author;
+    m_metadata.date = project->getMetadata().date;
+    m_metadata.name = project->getMetadata().name;
+    m_metadata.description.setPlainText(project->getMetadata().description.toPlainText());
+    m_projectSettings.set1 = "";
+    m_projectSettings.set2 = "";
+    m_projectSettings.set3 = "";
+    m_projectSettings.set4 = "";
+    m_configurations = project->getConfigurations();
+
+    return *this;
 }
 
 std::string const& Project::getId() const{
@@ -95,11 +133,11 @@ std::string const& Project::getLastWindow() const{
     return m_lastWindow;
 }
 
-Configuration const* Project::getDefaultConfig() const{
+Configuration* Project::getDefaultConfig() const{
     return m_defaultConfig;
 }
 
-Configuration const* Project::getLastConfig() const{
+Configuration* Project::getLastConfig() const{
     return m_lastConfig;
 }
 
@@ -111,7 +149,7 @@ project_settings const& Project::getSettings() const{
     return m_projectSettings;
 }
 
-std::vector<Configuration*> Project::getConfigurations() const{
+std::unordered_map<std::string, Configuration*> Project::getConfigurations() const{
     return m_configurations;
 }
 
@@ -193,34 +231,21 @@ Project& Project::setProjSet4(std::string const& set4){
 Project& Project::addConfiguration(Configuration* config){
     bool alreadyPresent=false;
 
-    for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-        if(*it == config){
-            alreadyPresent = true;
-            break;
-        }
-    }
+    if(m_configurations.count(config->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent){
-        m_configurations.push_back(config);
-    }
+    if(!alreadyPresent) m_configurations.emplace(config->getId(), config);
 
     return *this;
 }
 
 Project& Project::removeConfiguration(Configuration* config){
-    bool done;
-
-    do{
-        done = true;
-        for(std::vector<Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-            if(*it == config){
-                m_configurations.erase(it);
-                done = false;
-                break;
-            }
-        }
-    }while(!done);
+    if(m_configurations.count(config->getId())) m_configurations.erase(config->getId());
 
     return *this;
 }
 
+Project& Project::setId(std::string const& id){
+    m_id = id;
+
+    return *this;
+}

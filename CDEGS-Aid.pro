@@ -17,7 +17,8 @@ SOURCES += \
     classes/leadtype.cpp \
     classes/coating.cpp \
     classes/cabletype.cpp \
-    util/apputils.cpp
+    util/apputils.cpp \
+    classes/component.cpp
 
 HEADERS += \
     lib/qcustomplot.h \
@@ -35,7 +36,8 @@ HEADERS += \
     classes/leadtype.h \
     classes/coating.h \
     classes/cabletype.h \
-    util/apputils.h
+    util/apputils.h \
+    classes/component.h
 
 OTHER_FILES +=
 

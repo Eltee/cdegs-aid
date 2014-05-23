@@ -37,16 +37,18 @@
 #define BUILDING_H
 
 #include <string>
+#include "component.h"
 #include "util/apputils.h"
 
-class Building
+class Component;
+
+class Building : public Component
 {
     public:
         Building();
         Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step);
         ~Building();
     //Getters start---------------------------------------------------
-        std::string const& getId() const;
         int const& getFaces() const;
         double const& getHeight() const;
         double const& getDistanceMin() const;
@@ -61,7 +63,6 @@ class Building
         Building& setStep(double const& step);
     //Setters end-----------------------------------------------------
     private:
-        std::string m_id;
         int m_faces;
         double m_height, m_distanceMin, m_distanceMax, m_step;
 };

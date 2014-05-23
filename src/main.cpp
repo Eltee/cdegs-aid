@@ -43,7 +43,8 @@
 #include <QDir>
 #include <QtGlobal>
 #include <memory>
-
+#include <QDate>
+#include <exception>
 
 /*int main(int argc, char* argv[])
 {
@@ -104,13 +105,116 @@ int main(int argc, char* argv[])
 }*/
 
 int main(int argc, char* argv[]){
-    Project* p = new Project("Test", "1999-04-18", "Dudebro", "test please");
+    Project* p = new Project("Test", QDate::currentDate(), "Dudebro", "test please");
 
-    qDebug() << p->getMetadata().date.toString();
+    AppUtils::getInstance().setDefaultConfig();
 
-    //AppUtils::getInstance().saveProject(*p);
+    Configuration* c = new Configuration(AppUtils::getInstance().getDefaultConfig());
+
+    Conductor* cd1;
+    Conductor* cd2;
+    Conductor* cd3;
+
+    cd1 = new Conductor(*c, "LT0", "CT3", "CO0", "E2", "CBT0", 0.0191);
+    cd2 = new Conductor(*c, "LT0", "CT3", "CO0", "E3", "CBT0", 0.0191);
+    cd3 = new Conductor(*c, "LT0", "CT3", "CO0", "E4", "CBT0", 0.0191);
+
+    subDivision subD;
+
+    subD.method = "Explicit";
+    subD.number = 1;
+
+    cd1->setSubDivision(subD);
+    cd2->setSubDivision(subD);
+    cd3->setSubDivision(subD);
+
+    coords start, end;
+
+    start.x = -800.0;
+    start.y = 0.0;
+    start.z = -10.0;
+    end.x = 800.0;
+    end.y = 0.0;
+    end.z = -10.0;
+
+    cd1->setCoords(start, end);
+
+    start.y = 10.0;
+    end.y = 10.0;
+
+    cd2->setCoords(start, end);
+
+    start.y = -10.0;
+    end.y = -10.0;
+
+    cd3->setCoords(start, end);
+
+    c->addConductor(cd1).addConductor(cd2).addConductor(cd3);
+
+    profile* pro = new profile;
+
+    pro->id = AppUtils::getInstance().uniqueIdGenerator("ProfileId");
+
+    pro->xCoords.start = -50.0;
+    pro->xCoords.step = 0.25;
+    pro->yCoords.start = -0.0;
+    pro->yCoords.step = -0.25;
+    pro->NLine = 181.0;
+    pro->MCol = 401.0;
+
+    c->addProfile(pro);
+
+    p->addConfiguration(c);
+
+    AppUtils::getInstance().saveProject(*p, "D:/test/", "attempt1.cdp");
+
+    for(auto& conf : p->getConfigurations()){
+        std::string fullPath = p->getAbsPath() + "/hi_" + conf.second->getIdentifier() + ".f05";
+        AppUtils::getInstance().exportConfiguration(conf.second, fullPath);
+    }
 
     delete(p);
 
-    return 0;
+    /*Project* p;
+
+    try{
+        p = AppUtils::getInstance().loadProject("D:/test/", "okay.cdp");
+        AppUtils::getInstance().saveProject(*p, "D:/test/", "not okay.cdp");
+    }
+    catch (std::exception e){
+        std::cout << "An exception occurred. Exception: " << e.what() << std::endl;
+    }*/
+
+    return 1337;
 }
+
+/*
+ * std::cout << p->getConfigurations().size() << std::endl;
+
+    Configuration* c = new Configuration();
+    Configuration* d = new Configuration();
+
+    p->addConfiguration(c).addConfiguration(d);
+
+    std::cout << p->getConfigurations().size() << std::endl;
+
+    std::cout << p->getId() << std::endl;
+
+    std::cout << p->getConfigurations().front()->getId() << std::endl;
+
+    std::cout << c << std::endl;
+
+    std::cout << d << std::endl;
+
+    std::cout << p->getConfigurations().front() << std::endl;
+
+    std::cout << p->getConfigurations().back() << std::endl;
+
+    std::cout << c->getId() << std::endl;
+
+    std::cout << p->getConfigurations().front()->getId() << std::endl;
+
+    for(Configuration* config : p->getConfigurations()){
+        std::cout << config->getId() << std::endl;
+    }
+    */

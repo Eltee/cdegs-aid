@@ -35,8 +35,7 @@
 
 #include "building.h"
 
-Building::Building(){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("BuildingId");
+Building::Building() : Component(AppUtils::getInstance().uniqueIdGenerator("BuildingId"), "", false, true){
     m_faces = 2;
     m_height = 6.0;
     m_distanceMin = 4.0;
@@ -44,8 +43,7 @@ Building::Building(){
     m_step = 0.5;
 }
 
-Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("BuildingId");
+Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step) : Component(AppUtils::getInstance().uniqueIdGenerator("BuildingId"), "", false, true){
     m_faces = faces;
     m_height = height;
     m_distanceMin = distanceMin;
@@ -54,10 +52,6 @@ Building::Building(int const& faces, double const& height, double const& distanc
 }
 
 Building::~Building(){}
-
-std::string const& Building::getId() const{
-    return m_id;
-}
 
 int const& Building::getFaces() const{
     return m_faces;

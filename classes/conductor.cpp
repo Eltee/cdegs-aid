@@ -35,22 +35,31 @@
 
 #include "conductor.h"
 
-Conductor::Conductor(){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("ConductorId");
+Conductor::Conductor() : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
     m_radius = 0.0;
 }
 
-Conductor::~Conductor(){
-    delete(m_leadType);
-    delete(m_conductorType);
-    delete(m_coating);
-    delete(m_energization);
-    delete(m_cableType);
+Conductor::Conductor(Configuration const& config, std::string const& leadType, std::string const& conductorType, std::string const& coating, std::string const& energization, std::string const& cableType, double const& radius) : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
+    m_radius = radius;
+
+    if(leadType != "") m_leadType = config.getLeadTypes().at(leadType);
+    if(conductorType != "") m_conductorType = config.getConductorTypes().at(conductorType);
+    if(coating != "") m_coating = config.getCoatings().at(coating);
+    if(energization != "") m_energization = config.getEnergizations().at(energization);
+    if(cableType != "") m_cableType = config.getCableTypes().at(cableType);
 }
 
-std::string const& Conductor::getId() const{
-    return m_id;
+Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, double const& radius) : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
+    m_radius = radius;
+
+    m_leadType = leadType;
+    m_conductorType = conductorType;
+    m_coating = coating;
+    m_energization = energization;
+    m_cableType = cableType;
 }
+
+Conductor::~Conductor(){}
 
 LeadType const* Conductor::getLeadType() const{
     return m_leadType;
@@ -58,6 +67,10 @@ LeadType const* Conductor::getLeadType() const{
 
 ConductorType const* Conductor::getConductorType() const{
     return m_conductorType;
+}
+
+Coating const* Conductor::getCoating() const{
+    return m_coating;
 }
 
 Energization const* Conductor::getEnergization() const{
@@ -78,6 +91,10 @@ coords const& Conductor::getEndCoords() const{
 
 double const& Conductor::getRadius() const{
     return m_radius;
+}
+
+subDivision const& Conductor::getSubDivision() const{
+    return m_subDivision;
 }
 
 Conductor& Conductor::setLeadType(LeadType* leadType){

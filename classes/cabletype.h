@@ -37,26 +37,17 @@
 #define CABLETYPE_H
 
 #include <string>
+#include "component.h"
 #include "util/apputils.h"
 
-class CableType
+class CableType;
+
+class CableType : public Component
 {
     public:
         CableType();
-        CableType(std::string const& name, int const& number);
+        CableType(std::string const& name);
         ~CableType();
-    //Getters start------------------------------------------------
-        std::string const& getId() const;
-        std::string const& getName() const;
-        int const& getNumber() const;
-    //Getters end--------------------------------------------------
-    //Setters start------------------------------------------------
-        CableType& setName(std::string const& name);
-        CableType& setNumber(int const& number);
-    //Setters end--------------------------------------------------
-    private:
-        std::string m_id, m_name;
-        int m_number;
 };
 
 #endif // CABLETYPE_H

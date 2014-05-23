@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    leadtype.h
+* Nom/Name:    component.h
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,21 +33,32 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef LEADTYPE_H
-#define LEADTYPE_H
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 #include <string>
-#include "component.h"
-#include "util/apputils.h"
 
-class Component;
-
-class LeadType : public Component
+class Component
 {
     public:
-        LeadType();
-        LeadType(std::string const& name);
-        ~LeadType();
+        Component();
+        Component(std::string id, std::string name, bool locked, bool saveable);
+        ~Component();
+    //Getters start-----------------------------------------------
+        std::string const& getId() const;
+        std::string const& getName() const;
+        bool const& isLocked() const;
+        bool const& isSaveable() const;
+    //Getters end-------------------------------------------------
+    //Setters start-----------------------------------------------
+        Component& setId(std::string const& id);
+        Component& setName(std::string const& name);
+        Component& setLocked(bool const& locked);
+        Component& setSaveable(bool const& saveable);
+    //Setters end-------------------------------------------------
+    protected:
+        std::string m_id, m_name;
+        bool m_locked, m_saveable;
 };
 
-#endif // LEADTYPE_H
+#endif // COMPONENT_H

@@ -2,7 +2,7 @@
 * Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    leadtype.h
+* Nom/Name:    component.cpp
 *
 * Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
 *              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
@@ -33,21 +33,57 @@
 *   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef LEADTYPE_H
-#define LEADTYPE_H
-
-#include <string>
 #include "component.h"
-#include "util/apputils.h"
 
-class Component;
+Component::Component(){
+    m_id = "";
+    m_name = "default";
+    m_locked = false;
+    m_saveable = false;
+}
 
-class LeadType : public Component
-{
-    public:
-        LeadType();
-        LeadType(std::string const& name);
-        ~LeadType();
-};
+Component::Component(std::string id, std::string name, bool locked, bool saveable){
+    m_id = id;
+    m_name = name;
+    m_locked = locked;
+    m_saveable = saveable;
+}
 
-#endif // LEADTYPE_H
+Component::~Component(){}
+
+std::string const& Component::getId() const{
+    return m_id;
+}
+
+std::string const& Component::getName() const{
+    return m_name;
+}
+
+bool const& Component::isLocked() const{
+    return m_locked;
+}
+
+bool const& Component::isSaveable() const{
+    return m_saveable;
+}
+
+Component& Component::setId(std::string const& id){
+    m_id = id;
+    return *this;
+}
+
+Component& Component::setName(std::string const& name){
+    m_name = name;
+    return *this;
+}
+
+Component& Component::setLocked(bool const& locked){
+    m_locked = locked;
+    return *this;
+}
+
+Component& Component::setSaveable(bool const& saveable){
+    m_saveable = saveable;
+    return *this;
+}
+
