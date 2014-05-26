@@ -74,11 +74,11 @@ class Conductor : public Component
         Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, const double& radius=0.0);
         ~Conductor();
     //Getters start--------------------------------------------------------
-        LeadType const* getLeadType() const;
-        ConductorType const* getConductorType() const;
-        Coating const* getCoating() const;
-        Energization const* getEnergization() const;
-        CableType const* getCableType() const;
+        LeadType* getLeadType() const;
+        ConductorType* getConductorType() const;
+        Coating* getCoating() const;
+        Energization* getEnergization() const;
+        CableType* getCableType() const;
         coords const& getStartCoords() const;
         coords const& getEndCoords() const;
         double const& getRadius() const;

@@ -40,6 +40,7 @@ Project::Project(){
     m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
+    m_fileName = "Project" + m_id + ".cdp";
     m_defaultWindow = "Metadata";
     m_lastWindow = "Metadata";
     m_metadata.author = "";
@@ -51,10 +52,12 @@ Project::Project(){
     m_projectSettings.set4 = "";
 }
 
-Project::Project(std::string const& name, QDate const& date, std::string const& author, std::string const& description){
+Project::Project(std::string const& name, std::string fileName, QDate const& date, std::string const& author, std::string const& description){
     m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
+    m_fileName = fileName;
+    m_fileName.erase(remove_if(m_fileName.begin(), m_fileName.end(), isspace), m_fileName.end());
     m_defaultWindow = "Metadata";
     m_lastWindow = "Metadata";
     m_metadata.author = author;
@@ -125,6 +128,10 @@ std::string const& Project::getRelPath() const{
     return m_relPath;
 }
 
+std::string const& Project::getFileName() const{
+    return m_fileName;
+}
+
 std::string const& Project::getDefaultWindow() const{
     return m_defaultWindow;
 }
@@ -160,6 +167,12 @@ Project& Project::setAbsPath(std::string const& absPath){
 
 Project& Project::setRelPath(std::string const& relPath){
     m_relPath = relPath;
+    return *this;
+}
+
+Project& Project::setFileName(std::string const& fileName){
+    m_fileName = fileName;
+    m_fileName.erase(remove_if(m_fileName.begin(), m_fileName.end(), isspace), m_fileName.end());
     return *this;
 }
 

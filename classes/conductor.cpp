@@ -61,23 +61,23 @@ Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* 
 
 Conductor::~Conductor(){}
 
-LeadType const* Conductor::getLeadType() const{
+LeadType* Conductor::getLeadType() const{
     return m_leadType;
 }
 
-ConductorType const* Conductor::getConductorType() const{
+ConductorType* Conductor::getConductorType() const{
     return m_conductorType;
 }
 
-Coating const* Conductor::getCoating() const{
+Coating* Conductor::getCoating() const{
     return m_coating;
 }
 
-Energization const* Conductor::getEnergization() const{
+Energization* Conductor::getEnergization() const{
     return m_energization;
 }
 
-CableType const* Conductor::getCableType() const{
+CableType* Conductor::getCableType() const{
     return m_cableType;
 }
 

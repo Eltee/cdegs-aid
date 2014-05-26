@@ -67,13 +67,14 @@ class Project
 {
     public:
         Project();
-        Project(std::string const& name, QDate const& date, std::string const& author, std::string const& description);
+        Project(std::string const& name, std::string fileName, QDate const& date, std::string const& author, std::string const& description);
         ~Project();
         Project(Project const* project);
         Project& operator=(Project const* project);
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);
         Project& setRelPath(std::string const& relPath);
+        Project& setFileName(const std::string& fileName);
         Project& setDefaultWindow(std::string const& defaultWindow);
         Project& setLastWindow(std::string const& lastWindow);
         Project& setDefaultConfig(Configuration* defaultConfig);
@@ -95,6 +96,7 @@ class Project
         std::string const& getId() const;
         std::string const& getAbsPath() const;
         std::string const& getRelPath() const;
+        std::string const& getFileName() const;
         std::string const& getDefaultWindow() const;
         std::string const& getLastWindow() const;
         Configuration* getDefaultConfig() const;
@@ -104,7 +106,7 @@ class Project
         std::unordered_map<std::string, Configuration*> getConfigurations() const;
     //Getters end-----------------------------------------------------------------
     private:
-        std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow;
+        std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow, m_fileName;
         Configuration* m_defaultConfig = NULL;
         Configuration* m_lastConfig = NULL;
         project_metadata m_metadata;

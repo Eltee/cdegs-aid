@@ -578,6 +578,8 @@ Project* AppUtils::loadProject(const std::string& path, const std::string& filen
 
     project->setRelPath(node.child("RelPath").attribute("Value").value());
 
+    project->setFileName(node.child("FileName").attribute("Value").value());
+
     project->setDefaultWindow(node.child("DefaultWindow").attribute("Value").value());
 
     project->setLastWindow(node.child("LastWindow").attribute("Value").value());
@@ -617,22 +619,211 @@ Project* AppUtils::loadProject(const std::string& path, const std::string& filen
     return project;
 }
 
+Project* AppUtils::loadProject(const wchar_t* fullPath){
+    Project* project = new Project();
+
+    pugi::xml_document doc;
+
+    doc.load_file(fullPath);
+
+    pugi::xml_node node = doc.first_child();
+
+    project->setId(node.attribute("Id").value());
+
+    project->setAbsPath(node.child("AbsPath").attribute("Value").value());
+
+    project->setRelPath(node.child("RelPath").attribute("Value").value());
+
+    project->setFileName(node.child("FileName").attribute("Value").value());
+
+    project->setDefaultWindow(node.child("DefaultWindow").attribute("Value").value());
+
+    project->setLastWindow(node.child("LastWindow").attribute("Value").value());
+
+    project->setMetaAuthor(node.child("Metadata").child("Author").text().as_string());
+
+    project->setMetaName(node.child("Metadata").child("Name").text().as_string());
+
+    project->setMetaDescription(node.child("Metadata").child("Description").text().as_string());
+
+    project->setMetaDate(QDate::fromString(node.child("Metadata").child("Date").text().as_string()));
+
+    project->setProjSet1(node.child("ProjectSettings").child("Set1").text().as_string());
+
+    project->setProjSet2(node.child("ProjectSettings").child("Set2").text().as_string());
+
+    project->setProjSet3(node.child("ProjectSettings").child("Set3").text().as_string());
+
+    project->setProjSet4(node.child("ProjectSettings").child("Set4").text().as_string());
+
+    node = doc.last_child();
+
+    for(pugi::xml_node_iterator it = node.children().begin(); it != node.children().end(); it++){
+        project->addConfiguration(loadConfig(*it));
+    }
+
+    std::string key;
+
+    node = doc.first_child();
+
+    key = node.child("DefaultConfig").first_attribute().value();
+    if(key != "") project->setDefaultConfig(project->getConfigurations().at(key));
+
+    key = node.child("LastConfig").first_attribute().value();
+    if(key != "") project->setLastConfig(project->getConfigurations().at(key));
+
+    return project;
+}
+
+double AppUtils::radians(const double& d) {
+return d * pi() / 180;
+}
+
+double AppUtils::degrees(const double& r) {
+return r * 180/ pi();
+}
+
+std::string AppUtils::stringToUpper(std::string strToConvert){
+    std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(), ::toupper);
+
+    return strToConvert;
+}
+
 void AppUtils::exportConfiguration(const Configuration* config, const std::string& fullPath){
     std::ofstream configFile;
+    std::string tolerances = "";
+    std::unordered_map<std::string, int> enerPos;
+    std::unordered_map<std::string, int> cTypePos;
+    int phaseAIter = 0, phaseBIter = 0, phaseCIter = 0, poleAIter = 0, poleBIter = 0, GNDIter = 0;
+
+    for(auto& i_cond : config->getConductors()){
+        enerPos.emplace(i_cond.second->getEnergization()->getId(), enerPos.size());
+        cTypePos.emplace(i_cond.second->getConductorType()->getId(), cTypePos.size());
+    }
+
+    for(auto& i_cond : config->getBuildingConductors()){
+        enerPos.emplace(i_cond.second->getEnergization()->getId(), enerPos.size());
+        cTypePos.emplace(i_cond.second->getConductorType()->getId(), cTypePos.size());
+    }
+
     configFile.open(fullPath);
     configFile << "HIFREQ\n";
     configFile << "OPTIONS\n";
-    configFile << "  RUN-IDENTIFI, " + config->getIdentifier() + "\n";
-    configFile << "  UNITS, " + config->getUnits() + "\n";
+    configFile << "  RUN-IDENTIFI, " + stringToUpper(config->getIdentifier()) + "\n";
+    configFile << "  UNITS, " + stringToUpper(config->getUnits()) + "\n";
     configFile << "  PRINOUT, DETAILED\n";
     configFile << "  SYSTEM\n";
     configFile << "    TOLERANCE,";
-    std::string tolerances = "";
+
     for(double tolerance : config->getTolerances()){
         tolerances.append(dbl2str(tolerance)).append(",");
     }
     tolerances.pop_back();
+
     configFile << tolerances << "\n";
+
+    for(auto& i_ener : enerPos){
+        configFile << "    ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i_ener.first)->getType()) << "," << dbl2str(config->getEnergizations().at(i_ener.first)->getMagnitude()) << "," << dbl2str(config->getEnergizations().at(i_ener.first)->getAngle() * 3600) << ",,,,,," << config->getEnergizations().at(i_ener.first)->getIdentification();
+
+        if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseA"){
+            configFile << phaseAIter << "\n";
+            phaseAIter++;
+        }
+        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseB"){
+            configFile << phaseBIter << "\n";
+            phaseBIter++;
+        }
+        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseC"){
+            configFile << phaseCIter << "\n";
+            phaseCIter++;
+        }
+        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PoleA"){
+            configFile << poleAIter << "\n";
+            poleAIter++;
+        }
+        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PoleB"){
+            configFile << poleBIter << "\n";
+            poleBIter++;
+        }
+        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "GND"){
+            configFile << GNDIter << "\n";
+            GNDIter++;
+        }
+    }
+
+    configFile << "    CHARACTERISTICS\n";
+
+    for(auto& i_cType : cTypePos){
+        configFile << "      CONDUCTOR-TYPE," << config->getConductorTypes().at(i_cType.first)->getType() << "," << dbl2str(config->getConductorTypes().at(i_cType.first)->getResistivity()) << "," << dbl2str(config->getConductorTypes().at(i_cType.first)->getPermeability()) << ",,,,,,," << config->getConductorTypes().at(i_cType.first)->getName() << "\n";
+    }
+
+    configFile << "\n";
+    configFile << "    SUBDIVISION,YES,\n";
+    configFile << "    NETWORK\n";
+    configFile << "      MAIN-GROUND\n";
+    configFile << "\n";
+
+    for(auto& i_cond : config->getConductors()){
+        configFile << "      CONDUCTOR, 0, " << cTypePos.at(i_cond.second->getConductorType()->getId()) << ", 0, " << enerPos.at(i_cond.second->getEnergization()->getId()) << "," << dbl2str(i_cond.second->getStartCoords().x) << "," << dbl2str(i_cond.second->getStartCoords().y) << "," << dbl2str(i_cond.second->getStartCoords().z) << "," << dbl2str(i_cond.second->getEndCoords().x) << "," << dbl2str(i_cond.second->getEndCoords().y) << "," << dbl2str(i_cond.second->getEndCoords().z) << "," << dbl2str(i_cond.second->getRadius()) << ",1,0\n";
+    }
+
+    configFile << "\n\n";
+    configFile << "COMPUTATIONS\n";
+    configFile << "  DETERMINE\n";
+    configFile << "    GPR, ";
+    if(config->getComputations().GPR){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+    configFile << "    POTENTIAL-SCALAR, ";
+    if(config->getComputations().POTENTIAL_SCALAR){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+    configFile << "    ELECTRIC, ";
+    if(config->getComputations().ELECTRIC){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+    configFile << "    MAGNETIC, ";
+    if(config->getComputations().MAGNETIC){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+    configFile << "    VECTOR-POTENTIAL, ";
+    if(config->getComputations().VECTOR_POTENTIAL){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+    configFile << "    GRADIENT-SCALAR, ";
+    if(config->getComputations().GRADIENT_SCALAR){
+        configFile << "ON\n";
+    }
+    else{
+        configFile << "OFF\n";
+    }
+
+    configFile << "  FREQUENCY,60.,\n";
+    configFile << "  OBSERVATION\n";
+
+    for(auto& i_pro : config->getProfiles()){
+        configFile << "    PROFILE, " << dbl2str(i_pro.second->NLine) << ",0," << dbl2str(i_pro.second->xCoords.start) << "," << dbl2str(i_pro.second->yCoords.start) << ",0,0," << dbl2str(i_pro.second->yCoords.step) << ",0\n";
+        configFile << "      SURFACE, " << dbl2str(i_pro.second->MCol) << ",0," << dbl2str(i_pro.second->xCoords.step) << ",0,0\n";
+    }
+
+    configFile << "\n";
+    configFile << "ENDPROGRAM";
+
     configFile.close();
 }
 
@@ -830,6 +1021,107 @@ void AppUtils::saveProject(const Project &project, const std::string& path, cons
     else{
         doc.save_file(getXMLPath(QString::fromStdString(filename)));
     }
+
+}
+
+void AppUtils::saveProject(const Project &project){
+    pugi::xml_document doc;
+
+    pugi::xml_node projectNode = doc.append_child("Project");
+
+    pugi::xml_node node;
+
+    //Project node-------------------------------------------------------
+
+    //Project attribute
+    projectNode.append_attribute("Id").set_value(project.getId().c_str());
+
+    //AbsPath node
+    node = projectNode.append_child("AbsPath");
+    node.append_attribute("Os").set_value(getOsName().c_str());
+    node.append_attribute("Value").set_value(project.getAbsPath().c_str());
+
+    //RelPath node
+    node = projectNode.append_child("RelPath");
+    node.append_attribute("Os").set_value(getOsName().c_str());
+    node.append_attribute("Value").set_value(project.getRelPath().c_str());
+
+    //FileName node
+    node = projectNode.append_child("FileName");
+    node.append_attribute("Value").set_value(project.getFileName().c_str());
+
+    //DefaultConfig node
+    node = projectNode.append_child("DefaultConfig");
+    if(project.getDefaultConfig() != NULL){
+        node.append_attribute("Value").set_value(project.getDefaultConfig()->getId().c_str());
+    }
+
+    //LastConfig node
+    node = projectNode.append_child("LastConfig");
+    if(project.getLastConfig() != NULL){
+        node.append_attribute("Value").set_value(project.getLastConfig()->getId().c_str());
+    }
+
+    //DefaultWindow node
+    node = projectNode.append_child("DefaultWindow");
+    node.append_attribute("Value").set_value(project.getDefaultWindow().c_str());
+
+    //LastWindow node
+    node = projectNode.append_child("LastWindow");
+    node.append_attribute("Value").set_value(project.getLastWindow().c_str());
+
+    //Metadata node------------------------------------------------------------
+    pugi::xml_node metadataNode = projectNode.append_child("Metadata");
+
+    //Name node
+    node = metadataNode.append_child("Name");
+    node.append_child(pugi::node_pcdata).set_value(project.getMetadata().name.c_str());
+
+    //Date node
+    node = metadataNode.append_child("Date");
+    node.append_child(pugi::node_pcdata).set_value(project.getMetadata().date.toString().toStdString().c_str());
+
+    //Author node
+    node = metadataNode.append_child("Author");
+    node.append_child(pugi::node_pcdata).set_value(project.getMetadata().author.c_str());
+
+    //Description node
+    node = metadataNode.append_child("Description");
+    node.append_child(pugi::node_pcdata).set_value(project.getMetadata().description.toPlainText().toStdString().c_str());
+
+    //Metadata node end---------------------------------------------------------
+
+    //ProjectSettings node------------------------------------------------------------
+    pugi::xml_node projectSettingsNode = projectNode.append_child("ProjectSettings");
+
+    //Set1 node
+    node = projectSettingsNode.append_child("Set1");
+    node.append_child(pugi::node_pcdata).set_value(project.getSettings().set1.c_str());
+
+    //Set2 node
+    node = projectSettingsNode.append_child("Set2");
+    node.append_child(pugi::node_pcdata).set_value(project.getSettings().set2.c_str());
+
+    //Set3 node
+    node = projectSettingsNode.append_child("Set3");
+    node.append_child(pugi::node_pcdata).set_value(project.getSettings().set3.c_str());
+
+    //Set4 node
+    node = projectSettingsNode.append_child("Set4");
+    node.append_child(pugi::node_pcdata).set_value(project.getSettings().set4.c_str());
+
+    //ProjectSettings node end---------------------------------------------------------
+
+    //Project node end-----------------------------------------------------------------
+
+    //Configurations
+    pugi::xml_node configNode = doc.append_child("Configurations");
+
+    for(auto& config : project.getConfigurations()){
+        saveConfiguration(config.second, configNode);
+    }
+
+    doc.save_file(getXMLPath(QString::fromStdString(project.getAbsPath()), QString::fromStdString(project.getFileName())));
 
 }
 

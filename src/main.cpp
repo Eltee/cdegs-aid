@@ -45,15 +45,18 @@
 #include <memory>
 #include <QDate>
 #include <exception>
+#include "ui/cdegs_main.h"
 
-/*int main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    Dialog_Welcome diag;
+    cdegs_main maine;
 
-    return diag.exec();
-}*/
+    maine.show();
+
+    return app.exec();
+}
 
 /*
 
@@ -104,7 +107,7 @@ int main(int argc, char* argv[])
     return 0;
 }*/
 
-int main(int argc, char* argv[]){
+/*int main(int argc, char* argv[]){
     Project* p = new Project("Test", QDate::currentDate(), "Dudebro", "test please");
 
     AppUtils::getInstance().setDefaultConfig();
@@ -175,7 +178,7 @@ int main(int argc, char* argv[]){
 
     delete(p);
 
-    /*Project* p;
+    Project* p;
 
     try{
         p = AppUtils::getInstance().loadProject("D:/test/", "okay.cdp");
@@ -183,10 +186,10 @@ int main(int argc, char* argv[]){
     }
     catch (std::exception e){
         std::cout << "An exception occurred. Exception: " << e.what() << std::endl;
-    }*/
+    }
 
     return 1337;
-}
+}*/
 
 /*
  * std::cout << p->getConfigurations().size() << std::endl;

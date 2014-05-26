@@ -18,7 +18,11 @@ SOURCES += \
     classes/coating.cpp \
     classes/cabletype.cpp \
     util/apputils.cpp \
-    classes/component.cpp
+    classes/component.cpp \
+    ui/cdegs_main.cpp \
+    ui/project_widget.cpp \
+    ui/configuration_widget.cpp \
+    ui/project_tab_widget.cpp
 
 HEADERS += \
     lib/qcustomplot.h \
@@ -37,12 +41,20 @@ HEADERS += \
     classes/coating.h \
     classes/cabletype.h \
     util/apputils.h \
-    classes/component.h
+    classes/component.h \
+    ui/cdegs_main.h \
+    ui/project_widget.h \
+    ui/configuration_widget.h \
+    ui/project_tab_widget.h
 
 OTHER_FILES +=
 
 FORMS += \
-    ui/dialog_welcome.ui
+    ui/dialog_welcome.ui \
+    ui/cdegs_main.ui \
+    ui/project_widget.ui \
+    ui/configuration_widget.ui \
+    ui/project_tab_widget.ui
 
 RESOURCES += \
     ressources.qrc

@@ -65,7 +65,7 @@ std::string const& Energization::getFrequency() const{
     return m_frequency;
 }
 
-int const& Energization::getAngle() const{
+const double& Energization::getAngle() const{
     return m_angle;
 }
 
@@ -88,7 +88,7 @@ Energization& Energization::setFrequency(std::string const& frequency){
     return *this;
 }
 
-Energization& Energization::setAngle(int const& angle){
+Energization& Energization::setAngle(double const& angle){
     m_angle = angle;
     return *this;
 }

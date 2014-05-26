@@ -52,20 +52,19 @@ class Energization : public Component
         std::string const& getIdentification() const;
         std::string const& getType() const;
         std::string const& getFrequency() const;
-        int const& getAngle() const;
+        double const& getAngle() const;
         double const& getMagnitude() const;
     //Getters end------------------------------------------------------
     //Setters start----------------------------------------------------
         Energization& setIdentification(std::string const& identification);
         Energization& setType(std::string const& type);
         Energization& setFrequency(std::string const& frequency);
-        Energization& setAngle(int const& angle);
+        Energization& setAngle(double const& angle);
         Energization& setMagnitude(double const& magnitude);
     //Setters end------------------------------------------------------
     private:
         std::string m_identification, m_type, m_frequency;
-        int m_angle;
-        double m_magnitude;
+        double m_magnitude, m_angle;
 };
 
 #endif // ENERGIZATION_H

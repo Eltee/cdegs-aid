@@ -44,6 +44,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fstream>
+#include <math.h>
+#include <unordered_map>
 #include "lib/pugixml.hpp"
 #include "classes/project.h"
 #include "classes/configuration.h"
@@ -74,10 +76,15 @@ class AppUtils
             return instance;
         }
         void saveProject(const Project& project, const std::string& path, const std::string& filename);
+        void saveProject(const Project& project);
         void saveConfiguration(const Configuration* config, pugi::xml_node& parent);
         void exportConfiguration(const Configuration* config, const std::string& fullPath);
         std::vector<double> drange(double start, double end, double step);
         std::string getOsName();
+        double pi() { return std::atan(1)*4; }
+        double radians(const double& d);
+        double degrees(const double& r);
+        std::string stringToUpper(std::string strToConvert);
         inline const char* BoolToString(const bool& b) const;
         void readXML(const pugi::xml_node& toIter, int iteration=0);
         std::string uniqueIdGenerator(const std::string& type);
@@ -91,6 +98,7 @@ class AppUtils
         Configuration const* getDefaultConfig() const;
         Configuration* loadConfig(pugi::xml_node configNode) const;
         Project* loadProject(const std::string& path, const std::string& filename);
+        Project* loadProject(const wchar_t* fullPath);
         std::string my_utf8(const char * str) { return str; }
         std::string my_utf8(const wchar_t * str) { return pugi::as_utf8(str); }
         std::string dbl2str(const double& d);
