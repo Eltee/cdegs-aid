@@ -4,7 +4,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
 SOURCES += \
     src/main.cpp \
     lib/qcustomplot.cpp \
-    ui/dialog_welcome.cpp \
     lib/pugixml.cpp \
     classes/project.cpp \
     classes/conductor.cpp \
@@ -26,7 +25,6 @@ SOURCES += \
 
 HEADERS += \
     lib/qcustomplot.h \
-    ui/dialog_welcome.h \
     lib/pugiconfig.hpp \
     lib/pugixml.hpp \
     classes/project.h \
@@ -50,7 +48,6 @@ HEADERS += \
 OTHER_FILES +=
 
 FORMS += \
-    ui/dialog_welcome.ui \
     ui/cdegs_main.ui \
     ui/project_widget.ui \
     ui/configuration_widget.ui \

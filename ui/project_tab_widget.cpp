@@ -38,12 +38,15 @@
 #include "project_tab_widget.h"
 #include "ui_project_tab_widget.h"
 
-project_tab_widget::project_tab_widget(QWidget *parent, Project* p) :
+project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, Project* p) :
     QWidget(parent),
     ui(new Ui::project_tab_widget)
 {
     ui->setupUi(this);
     project = p;
+    connectSlots();
+    defParent = dp;
+    ui->tabProject->addTab(new project_widget(this, this, p), "Project Settings");
 }
 
 project_tab_widget::~project_tab_widget()
@@ -53,4 +56,46 @@ project_tab_widget::~project_tab_widget()
 
 Project* project_tab_widget::getProject(){
     return project;
+}
+
+void project_tab_widget::connectSlots(){
+    QObject::connect(ui->tabProject, SIGNAL(currentChanged(int)),
+                     this, SLOT(changeTab()));
+
+    QObject::connect(ui->tabProject, SIGNAL(tabCloseRequested(int)),
+                     this, SLOT(closeConfig(int)));
+}
+
+Configuration* project_tab_widget::getConfig(){
+    if(ui->tabProject->currentIndex() > 0){
+        return dynamic_cast<configuration_widget*>(ui->tabProject->currentWidget())->getConfig();
+    }
+    else{
+        return NULL;
+    }
+}
+
+void project_tab_widget::refresh(){
+    defParent->refresh();
+}
+
+void project_tab_widget::addConfig(Configuration* config){
+    int index = ui->tabProject->addTab(new configuration_widget(this, this, config), QString::fromStdString(config->getIdentifier()));
+    ui->tabProject->setCurrentIndex(index);
+}
+
+void project_tab_widget::changeTab(){
+    refresh();
+}
+
+void project_tab_widget::closeConfig(int index){
+
+    if(index > 0){
+        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            delete(dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig());
+            ui->tabProject->removeTab(index);
+        }
+    }
+
+    refresh();
 }

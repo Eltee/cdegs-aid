@@ -39,6 +39,11 @@
 #define PROJECT_WIDGET_H
 
 #include <QWidget>
+#include "project_tab_widget.h"
+#include "classes/project.h"
+
+class project_tab_widget;
+class Project;
 
 namespace Ui {
     class project_widget;
@@ -49,11 +54,15 @@ class project_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_widget(QWidget *parent = 0);
+        explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, Project* p = NULL);
+        Project* getProject();
+        void refresh();
         ~project_widget();
 
     private:
         Ui::project_widget *ui;
+        Project* project;
+        project_tab_widget* defParent;
 };
 
 #endif // PROJECT_WIDGET_H

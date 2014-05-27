@@ -43,6 +43,7 @@
 #include <QDir>
 #include <QtGlobal>
 #include <memory>
+#include <QStyleFactory>
 #include <QDate>
 #include <exception>
 #include "ui/cdegs_main.h"
@@ -50,6 +51,8 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
+    app.setStyle("gtk");
 
     cdegs_main maine;
 

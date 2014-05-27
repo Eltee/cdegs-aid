@@ -38,14 +38,24 @@
 #include "project_widget.h"
 #include "ui_project_widget.h"
 
-project_widget::project_widget(QWidget *parent) :
+project_widget::project_widget(QWidget *parent, project_tab_widget* dp, Project* p) :
     QWidget(parent),
     ui(new Ui::project_widget)
 {
+    project = p;
     ui->setupUi(this);
+    defParent = dp;
+}
+
+Project* project_widget::getProject(){
+    return project;
 }
 
 project_widget::~project_widget()
 {
     delete ui;
+}
+
+void project_widget::refresh(){
+    defParent->refresh();
 }

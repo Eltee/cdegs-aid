@@ -39,6 +39,11 @@
 #define CONFIGURATION_WIDGET_H
 
 #include <QWidget>
+#include "project_tab_widget.h"
+#include "classes/configuration.h"
+
+class project_tab_widget;
+class Configuration;
 
 namespace Ui {
     class configuration_widget;
@@ -49,11 +54,15 @@ class configuration_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit configuration_widget(QWidget *parent = 0);
+        explicit configuration_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, Configuration* config = NULL);
+        Configuration* getConfig();
+        void refresh();
         ~configuration_widget();
 
     private:
         Ui::configuration_widget *ui;
+        Configuration* configuration;
+        project_tab_widget* defParent;
 };
 
 #endif // CONFIGURATION_WIDGET_H

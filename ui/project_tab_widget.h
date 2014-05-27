@@ -40,6 +40,14 @@
 
 #include <QWidget>
 #include "classes/project.h"
+#include "classes/configuration.h"
+#include "project_widget.h"
+#include "configuration_widget.h"
+#include "cdegs_main.h"
+
+class cdegs_main;
+class Project;
+class Configuration;
 
 namespace Ui {
     class project_tab_widget;
@@ -50,13 +58,22 @@ class project_tab_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_tab_widget(QWidget *parent = 0, Project* p = NULL);
+        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, Project* p = NULL);
         Project* getProject();
+        Configuration* getConfig();
+        void addConfig(Configuration* config);
+        void refresh();
+        void connectSlots();
         ~project_tab_widget();
+
+    private slots:
+        void changeTab();
+        void closeConfig(int index);
 
     private:
         Ui::project_tab_widget *ui;
         Project* project;
+        cdegs_main* defParent;
 };
 
 #endif // PROJECT_TAB_WIDGET_H

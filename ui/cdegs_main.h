@@ -52,6 +52,9 @@
 #include "classes/configuration.h"
 #include "classes/project.h"
 
+class Configuration;
+class Project;
+
 namespace Ui {
     class cdegs_main;
 }
@@ -78,6 +81,7 @@ class cdegs_main : public QMainWindow
         void saveProjectAs();
         void closeProject();
         void closeProject(int index);
+        void changeTab();
         void changeProject(int index);
         void newConfig();
         void openConfig();

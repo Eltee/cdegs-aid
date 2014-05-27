@@ -1,38 +1,36 @@
 /******************************************************************************
-* Projet:     PROJECT_NAME
+* Projet:     CDEGS-Aid
 *  /Project
 *
-* Nom/Name:    name_here.h
+* Nom/Name:    cdegs_main.cpp
 *
-* Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-*              Vestibulum posuere venenatis aliquet. Proin sit amet ornare
-*              libero, nec aliquam mi. Curabitur iaculis, quam ultrices
-*              vulputate laoreet, felis risus consectetur sem, quis semper
-*              tortor ante ac lacus. Sed porttitor aliquam blandit. Nullam
-*              vel eros ac velit mattis scelerisque.
+* Description: CDEGS-Aid est un logiciel d'aide pour la génération de fichiers
+*              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des
+*              simulations de champ électrics, d'affichage et d'analyse de
+*              résultat de simulations CDEGS-HiFreq.
 *
-* Auteur:      Renaud Bigras, Hydro-Qu�bec Trans�nergie
+* Auteur:      Renaud Bigras, Hydro-Québec Transénergie
 *  /Author
 *
-* Cr��:        07-05-2014
+* Créé:        07-05-2014
 *  /Created
 *
 * Copyright:   (c) Renaud Bigras 2014
 *
-*   This file is part of PROJECT_NAME.
+*   This file is part of CDEGS-Aid.
 *
-*   PROJECT_NAME is free software: you can redistribute it and/or modify
+*   CDEGS-Aid is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation, either version 3 of the License, or
 *   (at your option) any later version.
 *
-*   PROJECT_NAME is distributed in the hope that it will be useful,
+*   CDEGS-Aid is distributed in the hope that it will be useful,
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
 *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 *   GNU General Public License for more details.
 *
 *   You should have received a copy of the GNU General Public License
-*   along with PROJECT_NAME. If not, see <http://www.gnu.org/licenses/>.
+*   along with CDEGS-Aid. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 #include "cdegs_main.h"
@@ -59,6 +57,9 @@ void cdegs_main::connectSlots(){
     QObject::connect(ui->actionNew_Project, SIGNAL(triggered()),
                       this,  SLOT(newProject()));
 
+    QObject::connect(ui->actionNew_Config, SIGNAL(triggered()),
+                      this,  SLOT(newConfig()));
+
     QObject::connect(ui->actionOpen_Project, SIGNAL(triggered()),
                       this,  SLOT(openProject()));
 
@@ -72,33 +73,45 @@ void cdegs_main::connectSlots(){
                       this,  SLOT(closeProject()));
 
     QObject::connect(ui->tabProjects, SIGNAL(currentChanged(int)),
-                     this, SLOT(changeProject(int)));
+                     this, SLOT(changeTab()));
 
     QObject::connect(ui->tabProjects, SIGNAL(tabCloseRequested(int)),
                      this, SLOT(closeProject(int)));
+
+    QObject::connect(ui->actionAbout, SIGNAL(triggered()),
+                     this, SLOT(about()));
 }
 
 void cdegs_main::refresh(){
-    updateTitle();
-    updateActions();
     updateProject();
     updateConfig();
+    updateTitle();
+    updateActions();    
     updateTab();
 }
 
-void cdegs_main::updateTab(){
+void cdegs_main::updateTab(){ //TO-DO: CHANGE
     if(project != NULL && ui->tabProjects->count() > 0){
         ui->tabProjects->setTabText(ui->tabProjects->currentIndex(), QString::fromStdString(project->getFileName()));
     }
 }
 
 void cdegs_main::updateProject(){
-    if(project != NULL){
+    if(ui->tabProjects->currentIndex() != -1){
+        project = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getProject();
     }
+    else{
+        project = NULL;
+    }
+
 }
 
 void cdegs_main::updateConfig(){
-    if(config != NULL){
+    if(ui->tabProjects->currentIndex() != -1){
+        config = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getConfig();
+    }
+    else{
+        config = NULL;
     }
 }
 
@@ -135,7 +148,13 @@ void cdegs_main::updateActions(){
 void cdegs_main::updateTitle(){
     if(project != NULL){
         QString title;
-        std::string stdTitle = "CDEGS Aid - " + project->getAbsPath() + "/" + project->getFileName();
+        std::string stdTitle;
+        if(config != NULL){
+            stdTitle = "CDEGS Aid - " + project->getFileName() + " - " + config->getIdentifier();
+        }
+        else{
+            stdTitle = "CDEGS Aid - " + project->getAbsPath() + "/" + project->getFileName();
+        }
         title = QString::fromStdString(stdTitle);
         this->setWindowTitle(title);
     }
@@ -147,8 +166,10 @@ void cdegs_main::updateTitle(){
 void cdegs_main::newProject(){
     project = new Project();
 
-    int index = ui->tabProjects->addTab(new project_tab_widget(ui->tabProjects, project), QString::fromStdString(project->getFileName()));
+    int index = ui->tabProjects->addTab(new project_tab_widget(this, this, project), QString::fromStdString(project->getFileName()));
+
     ui->tabProjects->setCurrentIndex(index);
+
 
     refresh();
 }
@@ -157,7 +178,7 @@ void cdegs_main::openProject(){
     QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
     project = AppUtils::getInstance().loadProject(filePath.toStdWString().c_str());
 
-    int index = ui->tabProjects->addTab(new project_tab_widget(ui->tabProjects, project), QString::fromStdString(project->getFileName()));
+    int index = ui->tabProjects->addTab(new project_tab_widget(this, this, project), QString::fromStdString(project->getFileName()));
     ui->tabProjects->setCurrentIndex(index);
 
     refresh();
@@ -210,8 +231,18 @@ void cdegs_main::changeProject(int index){
     refresh();
 }
 
-void cdegs_main::newConfig(){
+void cdegs_main::changeTab(){
+    refresh();
+}
 
+void cdegs_main::newConfig(){
+    config = new Configuration();
+
+    if(ui->tabProjects->currentIndex() != -1){
+        dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
+
+        refresh();
+    }
 }
 
 void cdegs_main::openConfig(){
@@ -235,5 +266,5 @@ void cdegs_main::exportConfigAs(){
 }
 
 void cdegs_main::about(){
-
+    QMessageBox::about(this, "CDEGS Aid", "CDEGS-Aid est un logiciel d'aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d'affichage et d'analyse de résultat de simulations CDEGS-HiFreq.\n\n(c) Renaud Bigras 2014");
 }

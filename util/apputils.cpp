@@ -711,7 +711,7 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << "OPTIONS\n";
     configFile << "  RUN-IDENTIFI, " + stringToUpper(config->getIdentifier()) + "\n";
     configFile << "  UNITS, " + stringToUpper(config->getUnits()) + "\n";
-    configFile << "  PRINOUT, DETAILED\n";
+    configFile << "  PRINTOUT, DETAILED\n";
     configFile << "  SYSTEM\n";
     configFile << "    TOLERANCE,";
 
