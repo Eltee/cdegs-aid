@@ -153,12 +153,17 @@ int main(int argc, char* argv[]){
 
     profile* pro = new profile;
 
-    pro->xCoords.start = -50.0;
-    pro->xCoords.step = 0.25;
-    pro->yCoords.start = -0.0;
-    pro->yCoords.step = -0.25;
-    pro->NLine = 181.0;
-    pro->MCol = 401.0;
+    pro->start.x = 0;
+    pro->start.y = -50;
+    pro->start.z = 0;
+    pro->ptStep.x = 0;
+    pro->ptStep.y = 0;
+    pro->ptStep.z = -0.25;
+    pro->prStep.x = 0.0;
+    pro->prStep.y = 0.25;
+    pro->prStep.z = 0.0;
+    pro->ptNum = 181;
+    pro->prNum = 401;
 
     c->addProfile(pro, true);
 

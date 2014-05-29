@@ -549,14 +549,17 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     for(pugi::xml_node_iterator it = configNode.child("Profiles").children().begin(); it != configNode.child("Profiles").children().end(); it++){
         profile* p = new profile;
         p->id = it->attribute("Id").as_int();
-        p->xCoords.start = it->child("XCoords").attribute("Start").as_double();
-        p->xCoords.end = it->child("XCoords").attribute("End").as_double();
-        p->xCoords.step = it->child("XCoords").attribute("Step").as_double();
-        p->yCoords.start = it->child("YCoords").attribute("Start").as_double();
-        p->yCoords.end = it->child("YCoords").attribute("End").as_double();
-        p->yCoords.step = it->child("YCoords").attribute("Step").as_double();
-        p->NLine = it->child("NLine").attribute("Value").as_double();
-        p->MCol = it->child("MCol").attribute("Value").as_double();
+        p->start.x = it->child("ProfileStart").attribute("X").as_double();
+        p->start.y = it->child("ProfileStart").attribute("Y").as_double();
+        p->start.z = it->child("ProfileStart").attribute("Z").as_double();
+        p->ptStep.x = it->child("PointStep").attribute("Dx").as_double();
+        p->ptStep.y = it->child("PointStep").attribute("Dy").as_double();
+        p->ptStep.z = it->child("PointStep").attribute("Dz").as_double();
+        p->prStep.x = it->child("ProfileStep").attribute("Dx").as_double();
+        p->prStep.y = it->child("ProfileStep").attribute("Dy").as_double();
+        p->prStep.z = it->child("ProfileStep").attribute("Dz").as_double();
+        p->ptNum = it->child("NumberPoints").attribute("Value").as_int();
+        p->prNum = it->child("NumberProfiles").attribute("Value").as_int();
         config->addProfile(p);
     }
 
@@ -711,7 +714,7 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << tolerances << "\n";
 
     for(unsigned int i=1; i<config->getEnergizations().size(); i++){
-        configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
+        configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << "," << std::to_string(config->getEnergizations().at(i)->getImaginaryPart()) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
 
         if(config->getEnergizations().at(i)->getIdentification() == "PhaseA"){
             configFile << phaseAIter << "\n";
@@ -813,8 +816,19 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << "  OBSERVATION\n";
 
     for(unsigned int i=1; i<=config->getProfiles().size(); i++){
-        configFile << "    PROFILE, " << dbl2str(config->getProfiles().at(i)->NLine) << ",0," << dbl2str(config->getProfiles().at(i)->xCoords.start) << "," << dbl2str(config->getProfiles().at(i)->yCoords.start) << ",0,0," << dbl2str(config->getProfiles().at(i)->yCoords.step) << ",0\n";
-        configFile << "      SURFACE, " << dbl2str(config->getProfiles().at(i)->MCol) << ",0," << dbl2str(config->getProfiles().at(i)->xCoords.step) << ",0,0\n";
+        configFile << "    PROFILE, " << std::to_string(config->getProfiles().at(i)->ptNum)
+                   << "," << dbl2str(config->getProfiles().at(i)->start.x)
+                   << "," << dbl2str(config->getProfiles().at(i)->start.y)
+                   << "," << dbl2str(config->getProfiles().at(i)->start.z)
+                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.x)
+                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.y)
+                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.z)
+                   << ",0\n";
+        configFile << "      SURFACE," << std::to_string(config->getProfiles().at(i)->prNum)
+                   << "," << dbl2str(config->getProfiles().at(i)->prStep.x)
+                   << "," << dbl2str(config->getProfiles().at(i)->prStep.y)
+                   << "," << dbl2str(config->getProfiles().at(i)->prStep.z)
+                   << ",0\n";
     }
 
     configFile << "  FREQUENCY,60.,\n";
@@ -1336,21 +1350,26 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
         profileNode = profilesNode.append_child("Profile");
         profileNode.append_attribute("Id").set_value(config->getProfiles().at(i)->id);
 
-        node = profileNode.append_child("XCoords");
-        node.append_attribute("Start").set_value(dbl2str(config->getProfiles().at(i)->xCoords.start).c_str());
-        node.append_attribute("End").set_value(dbl2str(config->getProfiles().at(i)->xCoords.end).c_str());
-        node.append_attribute("Step").set_value(dbl2str(config->getProfiles().at(i)->xCoords.step).c_str());
+        node = profileNode.append_child("ProfileStart");
+        node.append_attribute("X").set_value(dbl2str(config->getProfiles().at(i)->start.x).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getProfiles().at(i)->start.y).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getProfiles().at(i)->start.z).c_str());
 
-        node = profileNode.append_child("YCoords");
-        node.append_attribute("Start").set_value(dbl2str(config->getProfiles().at(i)->yCoords.start).c_str());
-        node.append_attribute("End").set_value(dbl2str(config->getProfiles().at(i)->yCoords.end).c_str());
-        node.append_attribute("Step").set_value(dbl2str(config->getProfiles().at(i)->yCoords.step).c_str());
+        node = profileNode.append_child("PointStep");
+        node.append_attribute("Dx").set_value(dbl2str(config->getProfiles().at(i)->ptStep.x).c_str());
+        node.append_attribute("Dy").set_value(dbl2str(config->getProfiles().at(i)->ptStep.y).c_str());
+        node.append_attribute("Dz").set_value(dbl2str(config->getProfiles().at(i)->ptStep.z).c_str());
 
-        node = profileNode.append_child("NLine");
-        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->NLine).c_str());
+        node = profileNode.append_child("ProfileStep");
+        node.append_attribute("Dx").set_value(dbl2str(config->getProfiles().at(i)->prStep.x).c_str());
+        node.append_attribute("Dy").set_value(dbl2str(config->getProfiles().at(i)->prStep.y).c_str());
+        node.append_attribute("Dz").set_value(dbl2str(config->getProfiles().at(i)->prStep.z).c_str());
 
-        node = profileNode.append_child("MCol");
-        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->MCol).c_str());
+        node = profileNode.append_child("NumberPoints");
+        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->ptNum).c_str());
+
+        node = profileNode.append_child("NumberProfiles");
+        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->prNum).c_str());
     }
 
     //Profiles end-----------------------------------------------------------------

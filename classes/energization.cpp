@@ -70,11 +70,27 @@ const double& Energization::getAngle() const{
 }
 
 int const& Energization::getRealPart() const{
-    return static_cast<int>((m_magnitude * std::cos(m_angle * PI / 180)));
+    if(m_angle != 0){
+        int result = static_cast<int>((m_magnitude * std::cos(m_angle * PI / 180)));
+        if(result > 0){
+            return result + 1;
+        }
+        else{
+            return result - 1;
+        }
+    }
+    else{
+        return m_magnitude;
+    }
 }
 
 int const& Energization::getImaginaryPart() const{
-    return static_cast<int>((m_magnitude * std::sin(m_angle * PI / 180)));
+    if(m_angle != 0){
+        return static_cast<int>((m_magnitude * std::sin(m_angle * PI / 180)));
+    }
+    else{
+        return 0;
+    }
 }
 
 int const& Energization::getMagnitude() const{

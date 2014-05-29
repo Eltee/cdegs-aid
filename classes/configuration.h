@@ -67,15 +67,16 @@ struct computations{
 
 struct profile{
     int id = 1;
+
     struct coords{
-        double start = 0.0;
-        double end = 0.0;
-        double step = 0.0;
+        double x = 0.0;
+        double y = 0.0;
+        double z = 0.0;
         bool operator==(const coords& c) const{
             bool result = true;
-            if(start != c.start) result = false;
-            if(end != c.end) result = false;
-            if(step != c.step) result = false;
+            if(x != c.x) result = false;
+            if(y != c.y) result = false;
+            if(z != c.z) result = false;
             return result;
         }
         bool operator!=(const coords& c) const{
@@ -83,15 +84,24 @@ struct profile{
             if(*this == c) result = false;
             return result;
         }
-    } xCoords, yCoords;
-    double NLine = 0.0;
-    double MCol = 0.0;
+    } start, ptStep, prStep;
+
+    int ptNum = 0.0;
+    int prNum = 0.0;
+
+    void fromStepToCoords(){
+
+    }
+
+    void fromCoordsToStep(){
+
+    }
+
     bool operator==(const profile& p) const{
         bool result = true;
-        if(NLine !=  p.NLine) result = false;
-        if(MCol != p.MCol) result = false;
-        if(xCoords != p.xCoords) result = false;
-        if(yCoords != p.yCoords) result = false;
+        if(ptNum !=  p.ptNum) result = false;
+        if(prNum != p.prNum) result = false;
+        if(start != p.start) result = false;
         return result;
     }
     bool operator!=(const profile& p) const{
