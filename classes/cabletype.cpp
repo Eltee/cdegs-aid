@@ -35,8 +35,8 @@
 
 #include "cabletype.h"
 
-CableType::CableType() : Component(AppUtils::getInstance().uniqueIdGenerator("CableTypeId"), "", false, false){}
+CableType::CableType() : Component(0, "", false, false){}
 
-CableType::CableType(std::string const& name) : Component(AppUtils::getInstance().uniqueIdGenerator("CableTypeId"), name, false, true){}
+CableType::CableType(std::string const& name) : Component(0, name, false, true){}
 
 CableType::~CableType(){}

@@ -36,13 +36,13 @@
 #include "component.h"
 
 Component::Component(){
-    m_id = "";
+    m_id = 0;
     m_name = "default";
     m_locked = false;
     m_saveable = false;
 }
 
-Component::Component(std::string id, std::string name, bool locked, bool saveable){
+Component::Component(int const& id, std::string const& name, bool const& locked, bool const& saveable){
     m_id = id;
     m_name = name;
     m_locked = locked;
@@ -51,7 +51,7 @@ Component::Component(std::string id, std::string name, bool locked, bool saveabl
 
 Component::~Component(){}
 
-std::string const& Component::getId() const{
+const int& Component::getId() const{
     return m_id;
 }
 
@@ -67,7 +67,7 @@ bool const& Component::isSaveable() const{
     return m_saveable;
 }
 
-Component& Component::setId(std::string const& id){
+Component& Component::setId(const int& id){
     m_id = id;
     return *this;
 }

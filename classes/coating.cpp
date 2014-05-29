@@ -35,8 +35,8 @@
 
 #include "coating.h"
 
-Coating::Coating() : Component(AppUtils::getInstance().uniqueIdGenerator("CoatingId"), "", false, true){}
+Coating::Coating() : Component(0, "", false, true){}
 
-Coating::Coating(std::string const& name) : Component(AppUtils::getInstance().uniqueIdGenerator("CoatingId"), name, false, true){}
+Coating::Coating(std::string const& name) : Component(0, name, false, true){}
 
 Coating::~Coating(){}

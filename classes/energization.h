@@ -37,8 +37,11 @@
 #define ENERGIZATION_H
 
 #include <string>
+#include <math.h>
 #include "component.h"
 #include "util/apputils.h"
+
+#define PI 3.14159265
 
 class Component;
 
@@ -53,18 +56,21 @@ class Energization : public Component
         std::string const& getType() const;
         std::string const& getFrequency() const;
         double const& getAngle() const;
-        double const& getMagnitude() const;
+        int const & getRealPart() const;
+        int const& getImaginaryPart() const;
+        int const& getMagnitude() const;
     //Getters end------------------------------------------------------
     //Setters start----------------------------------------------------
         Energization& setIdentification(std::string const& identification);
         Energization& setType(std::string const& type);
         Energization& setFrequency(std::string const& frequency);
         Energization& setAngle(double const& angle);
-        Energization& setMagnitude(double const& magnitude);
+        Energization& setMagnitude(int const& magnitude);
     //Setters end------------------------------------------------------
     private:
         std::string m_identification, m_type, m_frequency;
-        double m_magnitude, m_angle;
+        int m_magnitude;
+        double m_angle;
 };
 
 #endif // ENERGIZATION_H

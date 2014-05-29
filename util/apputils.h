@@ -46,6 +46,7 @@
 #include <fstream>
 #include <math.h>
 #include <unordered_map>
+#include <wchar.h>
 #include "lib/pugixml.hpp"
 #include "classes/project.h"
 #include "classes/configuration.h"
@@ -75,10 +76,11 @@ class AppUtils
                                               // Instantiated on first use.
             return instance;
         }
-        void saveProject(const Project& project, const std::string& path, const std::string& filename);
-        void saveProject(const Project& project);
-        void saveConfiguration(const Configuration* config, pugi::xml_node& parent);
-        void exportConfiguration(const Configuration* config, const std::string& fullPath);
+        void saveProject(const Project& project, std::string& path); //done
+        void saveProject(const Project& project); //done
+        void saveConfiguration(const Configuration* config, pugi::xml_node& parent); //done
+        void exportConfiguration(const Configuration* config, const std::string& fullPath); //done
+
         std::vector<double> drange(double start, double end, double step);
         std::string getOsName();
         double pi() { return std::atan(1)*4; }
@@ -87,18 +89,21 @@ class AppUtils
         std::string stringToUpper(std::string strToConvert);
         inline const char* BoolToString(const bool& b) const;
         void readXML(const pugi::xml_node& toIter, int iteration=0);
-        std::string uniqueIdGenerator(const std::string& type);
-        const wchar_t* getXMLPath(const QString& folderPath, const QString& filename);
-        const wchar_t* getXMLPath(const QString& filename);
+
+        std::string uniqueIdGenerator(); //done
+
+        std::string getAppData();
         std::string getPath(const QString& folderPath, const QString& filename);
         std::string getPath(const QString& filename);
-        void setDefaultConfig();
-        void loadDefaultConfig();
-        void generateDefaultConfig();
-        Configuration const* getDefaultConfig() const;
-        Configuration* loadConfig(pugi::xml_node configNode) const;
-        Project* loadProject(const std::string& path, const std::string& filename);
-        Project* loadProject(const wchar_t* fullPath);
+
+        void setDefaultConfig(); //done
+        void loadDefaultConfig(); //done
+        void generateDefaultConfig(); //done
+        Configuration const* getDefaultConfig() const; //done
+        Configuration* loadConfig(pugi::xml_node configNode) const; //done
+        Project* loadProject(const QString& folder, const QString& filename); //done
+        Project* loadProject(const wchar_t* fullPath); //done
+
         std::string my_utf8(const char * str) { return str; }
         std::string my_utf8(const wchar_t * str) { return pugi::as_utf8(str); }
         std::string dbl2str(const double& d);
@@ -107,19 +112,7 @@ class AppUtils
         AppUtils() {}
         AppUtils(AppUtils const&);
         void operator=(AppUtils const&);
-        struct ids{
-                double projectId=0;
-                double configurationId=0;
-                double leadTypeId=0;
-                double coatingId=0;
-                double energizationId=0;
-                double conductorTypeId=0;
-                double cableTypeId=0;
-                double conductorId=0;
-                double buildingConductorId=0;
-                double buildingId=0;
-                double profileId=0;
-        } m_ids;
+        double m_projectId=0;
         Configuration* m_defaultConfig;
 };
 

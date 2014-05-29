@@ -37,7 +37,7 @@
 
 
 Project::Project(){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
+    m_id = AppUtils::getInstance().uniqueIdGenerator();
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
     m_fileName = "Project" + m_id + ".cdp";
@@ -53,7 +53,7 @@ Project::Project(){
 }
 
 Project::Project(std::string const& name, std::string fileName, QDate const& date, std::string const& author, std::string const& description){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("ProjectId");
+    m_id = AppUtils::getInstance().uniqueIdGenerator();
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
     m_fileName = fileName;
@@ -244,15 +244,15 @@ Project& Project::setProjSet4(std::string const& set4){
 Project& Project::addConfiguration(Configuration* config){
     bool alreadyPresent=false;
 
-    if(m_configurations.count(config->getId())) alreadyPresent = true;
+    if(m_configurations.count(config->getIdentifier())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_configurations.emplace(config->getId(), config);
+    if(!alreadyPresent) m_configurations.emplace(config->getIdentifier(), config);
 
     return *this;
 }
 
 Project& Project::removeConfiguration(Configuration* config){
-    if(m_configurations.count(config->getId())) m_configurations.erase(config->getId());
+    if(m_configurations.count(config->getIdentifier())) m_configurations.erase(config->getIdentifier());
 
     return *this;
 }

@@ -36,7 +36,6 @@
 #include "configuration.h"
 
 Configuration::Configuration(){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("ConfigurationId");
     m_identifier = "default";
     m_units = "Metric";
     m_frequency = "AC";
@@ -44,14 +43,12 @@ Configuration::Configuration(){
 }
 
 Configuration::Configuration(std::string const& identifier, std::string const& units, std::string const& frequency){
-    m_id = AppUtils::getInstance().uniqueIdGenerator("ConfigurationId");
     m_identifier = identifier;
     m_units = units;
     m_frequency = frequency;
 }
 
 Configuration::Configuration(Configuration const* config){
-    m_id = config->getId();
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
@@ -89,7 +86,6 @@ Configuration::~Configuration(){
 }
 
 Configuration& Configuration::operator=(Configuration const* config){
-    m_id = config->getId();
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
@@ -105,11 +101,6 @@ Configuration& Configuration::operator=(Configuration const* config){
     m_computations = config->getComputations();
     m_profiles = config->getProfiles();
 
-    return *this;
-}
-
-Configuration& Configuration::setId(std::string const& id){
-    m_id = id;
     return *this;
 }
 
@@ -133,12 +124,20 @@ Configuration& Configuration::setComputations(computations const& comp){
     return *this;
 }
 
-Configuration& Configuration::addLeadType(LeadType *leadType){
+Configuration& Configuration::addLeadType(LeadType *leadType, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_leadTypes.count(leadType->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_leadTypes.emplace(leadType->getId(), leadType);
+    }
+    else{
+        if(m_leadTypes.count(leadType->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_leadTypes.emplace(leadType->getId(), leadType);
+        if(!alreadyPresent){
+            leadType->setId(idGenerator("LeadTypeId"));
+            m_leadTypes.emplace(leadType->getId(), leadType);
+        }
+    }
 
     return *this;
 }
@@ -149,12 +148,20 @@ Configuration& Configuration::removeLeadType(LeadType *leadType){
     return *this;
 }
 
-Configuration& Configuration::addCoating(Coating *coating){
+Configuration& Configuration::addCoating(Coating *coating, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_coatings.count(coating->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_coatings.emplace(coating->getId(), coating);
+    }
+    else{
+        if(m_coatings.count(coating->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_coatings.emplace(coating->getId(), coating);
+        if(!alreadyPresent){
+            coating->setId(idGenerator("CoatingId"));
+            m_coatings.emplace(coating->getId(), coating);
+        }
+    }
 
     return *this;
 }
@@ -165,12 +172,20 @@ Configuration& Configuration::removeCoating(Coating *coating){
     return *this;
 }
 
-Configuration& Configuration::addEnergization(Energization *energization){
+Configuration& Configuration::addEnergization(Energization *energization, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_energizations.count(energization->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_energizations.emplace(energization->getId(), energization);
+    }
+    else{
+        if(m_energizations.count(energization->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_energizations.emplace(energization->getId(), energization);
+        if(!alreadyPresent){
+            energization->setId(idGenerator("EnergizationId"));
+            m_energizations.emplace(energization->getId(), energization);
+        }
+    }
 
     return *this;
 }
@@ -204,12 +219,20 @@ Configuration& Configuration::removeTolerance(double const& tolerance){
     return *this;
 }
 
-Configuration& Configuration::addConductorType(ConductorType *conductorType){
+Configuration& Configuration::addConductorType(ConductorType *conductorType, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_conductorTypes.count(conductorType->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_conductorTypes.emplace(conductorType->getId(), conductorType);
+    }
+    else{
+        if(m_conductorTypes.count(conductorType->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_conductorTypes.emplace(conductorType->getId(), conductorType);
+        if(!alreadyPresent){
+            conductorType->setId(idGenerator("ConductorTypeId"));
+            m_conductorTypes.emplace(conductorType->getId(), conductorType);
+        }
+    }
 
     return *this;
 }
@@ -220,12 +243,20 @@ Configuration& Configuration::removeConductorType(ConductorType *conductorType){
     return *this;
 }
 
-Configuration& Configuration::addConductor(Conductor *conductor){
+Configuration& Configuration::addConductor(Conductor *conductor, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_conductors.count(conductor->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_conductors.emplace(conductor->getId(), conductor);
+    }
+    else{
+        if(m_conductors.count(conductor->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_conductors.emplace(conductor->getId(), conductor);
+        if(!alreadyPresent){
+            conductor->setId(idGenerator("ConductorId"));
+            m_conductors.emplace(conductor->getId(), conductor);
+        }
+    }
 
     return *this;
 }
@@ -236,12 +267,22 @@ Configuration& Configuration::removeConductor(Conductor *conductor){
     return *this;
 }
 
-Configuration& Configuration::addBuildingConductor(Conductor *conductor){
+Configuration& Configuration::addBuildingConductor(Conductor *conductor, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_buildingConductors.count(conductor->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_buildingConductors.emplace(conductor->getId(), conductor);
+    }
+    else{
+        if(m_buildingConductors.count(conductor->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_buildingConductors.emplace(conductor->getId(), conductor);
+        if(!alreadyPresent){
+            conductor->setId(idGenerator("BuildingConductorId"));
+            m_buildingConductors.emplace(conductor->getId(), conductor);
+        }
+    }
+
+
 
     return *this;
 }
@@ -252,12 +293,20 @@ Configuration& Configuration::removeBuildingConductor(Conductor *conductor){
     return *this;
 }
 
-Configuration& Configuration::addBuilding(Building *building){
+Configuration& Configuration::addBuilding(Building *building, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_buildings.count(building->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_buildings.emplace(building->getId(), building);
+    }
+    else{
+        if(m_buildings.count(building->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_buildings.emplace(building->getId(), building);
+        if(!alreadyPresent){
+            building->setId(idGenerator("BuildingId"));
+            m_buildings.emplace(building->getId(), building);
+        }
+    }
 
     return *this;
 }
@@ -268,12 +317,20 @@ Configuration& Configuration::removeBuilding(Building *building){
     return *this;
 }
 
-Configuration& Configuration::addProfile(profile* p){
+Configuration& Configuration::addProfile(profile* p, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_profiles.count(p->id)) alreadyPresent = true;
+    if(!newAdd){
+        m_profiles.emplace(p->id, p);
+    }
+    else{
+        if(m_profiles.count(p->id)) alreadyPresent = true;
 
-    if(!alreadyPresent) m_profiles.emplace(p->id, p);
+        if(!alreadyPresent){
+            p->id = idGenerator("ProfileId");
+            m_profiles.emplace(p->id, p);
+        }
+    }
 
     return *this;
 }
@@ -284,12 +341,20 @@ Configuration& Configuration::removeProfile(profile* p){
     return *this;
 }
 
-Configuration& Configuration::addCableType(CableType* cableType){
+Configuration& Configuration::addCableType(CableType* cableType, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_cableTypes.count(cableType->getId())) alreadyPresent = true;
+    if(!newAdd){
+        m_cableTypes.emplace(cableType->getId(), cableType);
+    }
+    else{
+        if(m_cableTypes.count(cableType->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_cableTypes.emplace(cableType->getId(), cableType);
+        if(!alreadyPresent){
+            cableType->setId(idGenerator("CableTypeId"));
+            m_cableTypes.emplace(cableType->getId(), cableType);
+        }
+    }
 
     return *this;
 }
@@ -304,10 +369,6 @@ computations& Configuration::setComputations(){
     return m_computations;
 }
 
-std::string const& Configuration::getId() const{
-    return m_id;
-}
-
 std::string const& Configuration::getIdentifier() const{
     return m_identifier;
 }
@@ -320,15 +381,15 @@ std::string const& Configuration::getFrequency() const{
     return m_frequency;
 }
 
-std::unordered_map<std::string, LeadType*> Configuration::getLeadTypes() const{
+std::unordered_map<int, LeadType*> Configuration::getLeadTypes() const{
     return m_leadTypes;
 }
 
-std::unordered_map<std::string, Coating*> Configuration::getCoatings() const{
+std::unordered_map<int, Coating*> Configuration::getCoatings() const{
     return m_coatings;
 }
 
-std::unordered_map<std::string, Energization*> Configuration::getEnergizations() const{
+std::unordered_map<int, Energization*> Configuration::getEnergizations() const{
     return m_energizations;
 }
 
@@ -336,19 +397,19 @@ std::vector<double> Configuration::getTolerances() const{
     return m_tolerances;
 }
 
-std::unordered_map<std::string, ConductorType*> Configuration::getConductorTypes() const{
+std::unordered_map<int, ConductorType*> Configuration::getConductorTypes() const{
     return m_conductorTypes;
 }
 
-std::unordered_map<std::string, Conductor*> Configuration::getConductors() const{
+std::unordered_map<int, Conductor*> Configuration::getConductors() const{
     return m_conductors;
 }
 
-std::unordered_map<std::string, Conductor*> Configuration::getBuildingConductors() const{
+std::unordered_map<int, Conductor*> Configuration::getBuildingConductors() const{
     return m_buildingConductors;
 }
 
-std::unordered_map<std::string, Building*> Configuration::getBuildings() const{
+std::unordered_map<int, Building*> Configuration::getBuildings() const{
     return m_buildings;
 }
 
@@ -356,10 +417,53 @@ computations const& Configuration::getComputations() const{
     return m_computations;
 }
 
-std::unordered_map<std::string, profile*> Configuration::getProfiles() const{
+std::unordered_map<int, profile*> Configuration::getProfiles() const{
     return m_profiles;
 }
 
-std::unordered_map<std::string, CableType*> Configuration::getCableTypes() const{
+std::unordered_map<int, CableType*> Configuration::getCableTypes() const{
     return m_cableTypes;
+}
+
+int Configuration::idGenerator(const std::string& type){
+    int result = 0;
+
+    if(type == "LeadTypeId"){
+        result = m_ids.leadTypeId;
+        m_ids.leadTypeId += 1;
+    }
+    else if(type == "CoatingId"){
+        result = m_ids.coatingId;
+        m_ids.coatingId += 1;
+    }
+    else if(type == "EnergizationId"){
+        result = m_ids.energizationId;
+        m_ids.energizationId += 1;
+    }
+    else if(type == "ConductorTypeId"){
+        result = m_ids.conductorTypeId;
+        m_ids.conductorTypeId += 1;
+    }
+    else if(type == "CableTypeId"){
+        result = m_ids.cableTypeId;
+        m_ids.cableTypeId += 1;
+    }
+    else if(type == "ConductorId"){
+        result = m_ids.conductorId;
+        m_ids.conductorId += 1;
+    }
+    else if(type == "BuildingConductorId"){
+        result = m_ids.buildingConductorId;
+        m_ids.buildingConductorId += 1;
+    }
+    else if(type == "BuildingId"){
+        result = m_ids.buildingId;
+        m_ids.buildingId += 1;
+    }
+    else if(type == "ProfileId"){
+        result = m_ids.profileId;
+        m_ids.profileId += 1;
+    }
+
+    return result;
 }

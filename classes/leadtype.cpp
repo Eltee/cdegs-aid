@@ -35,8 +35,8 @@
 
 #include "leadtype.h"
 
-LeadType::LeadType() : Component(AppUtils::getInstance().uniqueIdGenerator("LeadTypeId"), "", false, true){}
+LeadType::LeadType() : Component(0, "", false, true){}
 
-LeadType::LeadType(std::string const& name) : Component(AppUtils::getInstance().uniqueIdGenerator("LeadTypeId"), name, false, true){}
+LeadType::LeadType(std::string const& name) : Component(0, name, false, true){}
 
 LeadType::~LeadType(){}

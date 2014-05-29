@@ -35,7 +35,7 @@
 
 #include "energization.h"
 
-Energization::Energization() : Component(AppUtils::getInstance().uniqueIdGenerator("EnergizationId"), "", false, true){
+Energization::Energization() : Component(0, "", false, true){
     m_identification = "default";
     m_type = "default";
     m_frequency = "AC";
@@ -43,7 +43,7 @@ Energization::Energization() : Component(AppUtils::getInstance().uniqueIdGenerat
     m_magnitude = 0;
 }
 
-Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component(AppUtils::getInstance().uniqueIdGenerator("EnergizationId"), "", false, true){
+Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component(0, "", false, true){
     m_identification = identification;
     m_type = type;
     m_frequency = frequency;
@@ -69,7 +69,15 @@ const double& Energization::getAngle() const{
     return m_angle;
 }
 
-double const& Energization::getMagnitude() const{
+int const& Energization::getRealPart() const{
+    return static_cast<int>((m_magnitude * std::cos(m_angle * PI / 180)));
+}
+
+int const& Energization::getImaginaryPart() const{
+    return static_cast<int>((m_magnitude * std::sin(m_angle * PI / 180)));
+}
+
+int const& Energization::getMagnitude() const{
     return m_magnitude;
 }
 
@@ -93,7 +101,7 @@ Energization& Energization::setAngle(double const& angle){
     return *this;
 }
 
-Energization& Energization::setMagnitude(double const& magnitude){
+Energization& Energization::setMagnitude(const int& magnitude){
     m_magnitude = magnitude;
     return *this;
 }

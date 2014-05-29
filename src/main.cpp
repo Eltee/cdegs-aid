@@ -48,18 +48,16 @@
 #include <exception>
 #include "ui/cdegs_main.h"
 
-int main(int argc, char* argv[])
+/*int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-
-    app.setStyle("gtk");
 
     cdegs_main maine;
 
     maine.show();
 
     return app.exec();
-}
+}*/
 
 /*
 
@@ -110,9 +108,10 @@ int main(int argc, char* argv[])
     return 0;
 }*/
 
-/*int main(int argc, char* argv[]){
-    Project* p = new Project("Test", QDate::currentDate(), "Dudebro", "test please");
+int main(int argc, char* argv[]){
+    Project* p = new Project("Test", "great escape.cdp", QDate::currentDate(), "Dudebro", "test please");
 
+    AppUtils::getInstance().generateDefaultConfig();
     AppUtils::getInstance().setDefaultConfig();
 
     Configuration* c = new Configuration(AppUtils::getInstance().getDefaultConfig());
@@ -121,18 +120,13 @@ int main(int argc, char* argv[])
     Conductor* cd2;
     Conductor* cd3;
 
-    cd1 = new Conductor(*c, "LT0", "CT3", "CO0", "E2", "CBT0", 0.0191);
-    cd2 = new Conductor(*c, "LT0", "CT3", "CO0", "E3", "CBT0", 0.0191);
-    cd3 = new Conductor(*c, "LT0", "CT3", "CO0", "E4", "CBT0", 0.0191);
+    cd1 = new Conductor(*c, 0, 1, 0, 1, 0, 0.0191);
+    cd2 = new Conductor(*c, 0, 1, 0, 2, 0, 0.0191);
+    cd3 = new Conductor(*c, 0, 1, 0, 3, 0, 0.0191);
 
-    subDivision subD;
-
-    subD.method = "Explicit";
-    subD.number = 1;
-
-    cd1->setSubDivision(subD);
-    cd2->setSubDivision(subD);
-    cd3->setSubDivision(subD);
+    cd1->setSubDivision(1);
+    cd2->setSubDivision(1);
+    cd3->setSubDivision(1);
 
     coords start, end;
 
@@ -155,11 +149,9 @@ int main(int argc, char* argv[])
 
     cd3->setCoords(start, end);
 
-    c->addConductor(cd1).addConductor(cd2).addConductor(cd3);
+    c->addConductor(cd1, true).addConductor(cd2, true).addConductor(cd3, true);
 
     profile* pro = new profile;
-
-    pro->id = AppUtils::getInstance().uniqueIdGenerator("ProfileId");
 
     pro->xCoords.start = -50.0;
     pro->xCoords.step = 0.25;
@@ -168,11 +160,13 @@ int main(int argc, char* argv[])
     pro->NLine = 181.0;
     pro->MCol = 401.0;
 
-    c->addProfile(pro);
+    c->addProfile(pro, true);
 
     p->addConfiguration(c);
 
-    AppUtils::getInstance().saveProject(*p, "D:/test/", "attempt1.cdp");
+    std::string path = "D:/test";
+
+    AppUtils::getInstance().saveProject(*p, path);
 
     for(auto& conf : p->getConfigurations()){
         std::string fullPath = p->getAbsPath() + "/hi_" + conf.second->getIdentifier() + ".f05";
@@ -181,18 +175,14 @@ int main(int argc, char* argv[])
 
     delete(p);
 
-    Project* p;
+    std::string filename = "greatescape.cdp";
 
-    try{
-        p = AppUtils::getInstance().loadProject("D:/test/", "okay.cdp");
-        AppUtils::getInstance().saveProject(*p, "D:/test/", "not okay.cdp");
-    }
-    catch (std::exception e){
-        std::cout << "An exception occurred. Exception: " << e.what() << std::endl;
-    }
+    p = AppUtils::getInstance().loadProject(QString::fromStdString(path), QString::fromStdString(filename));
+    p->setFileName("fuckere.cdp");
+    AppUtils::getInstance().saveProject(*p, path);
 
     return 1337;
-}*/
+}
 
 /*
  * std::cout << p->getConfigurations().size() << std::endl;

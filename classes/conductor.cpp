@@ -35,21 +35,21 @@
 
 #include "conductor.h"
 
-Conductor::Conductor() : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
+Conductor::Conductor() : Component(0, "", false, true){
     m_radius = 0.0;
 }
 
-Conductor::Conductor(Configuration const& config, std::string const& leadType, std::string const& conductorType, std::string const& coating, std::string const& energization, std::string const& cableType, double const& radius) : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
+Conductor::Conductor(Configuration const& config, const int& leadType, const int& conductorType, const int& coating, const int& energization, const int& cableType, double const& radius) : Component(0, "", false, true){
     m_radius = radius;
 
-    if(leadType != "") m_leadType = config.getLeadTypes().at(leadType);
-    if(conductorType != "") m_conductorType = config.getConductorTypes().at(conductorType);
-    if(coating != "") m_coating = config.getCoatings().at(coating);
-    if(energization != "") m_energization = config.getEnergizations().at(energization);
-    if(cableType != "") m_cableType = config.getCableTypes().at(cableType);
+    m_leadType = config.getLeadTypes().at(leadType);
+    m_conductorType = config.getConductorTypes().at(conductorType);
+    m_coating = config.getCoatings().at(coating);
+    m_energization = config.getEnergizations().at(energization);
+    m_cableType = config.getCableTypes().at(cableType);
 }
 
-Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, double const& radius) : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorId"), "", false, true){
+Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, double const& radius) : Component(0, "", false, true){
     m_radius = radius;
 
     m_leadType = leadType;
@@ -93,7 +93,7 @@ double const& Conductor::getRadius() const{
     return m_radius;
 }
 
-subDivision const& Conductor::getSubDivision() const{
+const int& Conductor::getSubDivision() const{
     return m_subDivision;
 }
 
@@ -138,7 +138,7 @@ Conductor& Conductor::setRadius(double const& radius){
     return *this;
 }
 
-Conductor& Conductor::setSubDivision(subDivision const& subD){
+Conductor& Conductor::setSubDivision(const int& subD){
     m_subDivision = subD;
     return *this;
 }

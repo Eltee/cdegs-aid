@@ -61,16 +61,11 @@ struct coords{
     double z = 0.0;
 };
 
-struct subDivision{
-    std::string method = "default";
-    int number = 0;
-};
-
 class Conductor : public Component
 {
     public:
         Conductor();
-        Conductor(Configuration const& config, std::string const& leadType, std::string const& conductorType, std::string const& coating, std::string const& energization, std::string const& cableType, const double& radius=0.0);
+        Conductor(Configuration const& config, int const& leadType, int const& conductorType, int const& coating, int const& energization, int const& cableType, const double& radius=0.0);
         Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, const double& radius=0.0);
         ~Conductor();
     //Getters start--------------------------------------------------------
@@ -82,7 +77,7 @@ class Conductor : public Component
         coords const& getStartCoords() const;
         coords const& getEndCoords() const;
         double const& getRadius() const;
-        subDivision const& getSubDivision() const;
+        int const& getSubDivision() const;
     //Getters end----------------------------------------------------------
     //Setters start--------------------------------------------------------
         Conductor& setLeadType(LeadType* leadType);
@@ -93,7 +88,7 @@ class Conductor : public Component
         Conductor& setEndCoords(coords const& end);
         Conductor& setCoords(coords const& start, coords const& end);
         Conductor& setRadius(double const& radius);
-        Conductor& setSubDivision(subDivision const& subD);
+        Conductor& setSubDivision(int const& subD);
         Conductor& setCableType(CableType* cableType);
     //Setters end----------------------------------------------------------
     private:
@@ -103,7 +98,7 @@ class Conductor : public Component
         Energization* m_energization = NULL;
         coords m_startCoords, m_endCoords;
         double m_radius;
-        subDivision m_subDivision;
+        int m_subDivision;
         CableType* m_cableType = NULL;
 };
 

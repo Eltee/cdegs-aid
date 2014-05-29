@@ -35,13 +35,13 @@
 
 #include "conductortype.h"
 
-ConductorType::ConductorType() : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorTypeId"), "", false, true){
+ConductorType::ConductorType() : Component(0, "", false, true){
     m_type = "default";
     m_resistivity = 1.64;
     m_permeability = 1.0;
 }
 
-ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(AppUtils::getInstance().uniqueIdGenerator("ConductorTypeId"), name, false, true){
+ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(0, name, false, true){
     m_type = type;
     m_resistivity = resistivity;
     m_permeability = permeability;

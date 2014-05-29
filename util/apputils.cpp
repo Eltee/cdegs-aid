@@ -98,18 +98,10 @@ void AppUtils::readXML(const pugi::xml_node& toIter, int iteration){
 
 }
 
-const wchar_t* AppUtils::getXMLPath(const QString& folderPath, const QString& filename){
-    QDir appFolder(folderPath);
-    const wchar_t* path = appFolder.absoluteFilePath(filename).toStdWString().c_str();
-    return path;
-}
-
-const wchar_t* AppUtils::getXMLPath(const QString& filename){
-    QString pathToFolder = qgetenv("APPDATA").constData();
+std::string AppUtils::getAppData(){
+    std::string pathToFolder = qgetenv("APPDATA").constData();
     pathToFolder += "/CDEGS-AID";
-    QDir appFolder(pathToFolder);
-    const wchar_t* path = appFolder.absoluteFilePath(filename).toStdWString().c_str();
-    return path;
+    return pathToFolder;
 }
 
 std::string AppUtils::getPath(const QString& folderPath, const QString& filename){
@@ -140,13 +132,13 @@ void AppUtils::loadDefaultConfig(){
     m_defaultConfig = new Configuration();
 
     pugi::xml_document doc;
-    if (!doc.load_file(AppUtils::getInstance().getXMLPath("default_values.cdp"))){
+
+    QString filename = "default_values.cdp";
+    if (!doc.load_file(QString::fromStdString(getPath(filename)).toStdWString().c_str())){
         std::cout << "Failure" << std::endl;
     }
 
     pugi::xml_node node = doc.first_child().first_child();
-
-    m_defaultConfig->setId(node.first_attribute().value());
 
     m_defaultConfig->setIdentifier(node.child("Identifier").first_attribute().value());
 
@@ -156,21 +148,21 @@ void AppUtils::loadDefaultConfig(){
 
     for(pugi::xml_node_iterator it = node.child("LeadTypes").children().begin(); it != node.child("LeadTypes").children().end(); it++){
         LeadType* lt = new LeadType(it->attribute("Name").value());
-        lt->setId(it->attribute("Id").value());
+        lt->setId(it->attribute("Id").as_int());
         lt->setLocked(true);
         m_defaultConfig->addLeadType(lt);
     }
 
     for(pugi::xml_node_iterator it = node.child("Coatings").children().begin(); it != node.child("Coatings").children().end(); it++){
         Coating* co = new Coating(it->attribute("Name").value());
-        co->setId(it->attribute("Id").value());
+        co->setId(it->attribute("Id").as_int());
         co->setLocked(true);
         m_defaultConfig->addCoating(co);
     }
 
     for(pugi::xml_node_iterator it = node.child("Energizations").children().begin(); it != node.child("Energizations").children().end(); it++){
         Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_double(), it->attribute("Angle").as_double());
-        en->setId(it->attribute("Id").value());
+        en->setId(it->attribute("Id").as_int());
         en->setLocked(true);
         m_defaultConfig->addEnergization(en);
     }
@@ -181,14 +173,14 @@ void AppUtils::loadDefaultConfig(){
 
     for(pugi::xml_node_iterator it = node.child("ConductorTypes").children().begin(); it != node.child("ConductorTypes").children().end(); it++){
         ConductorType* ct = new ConductorType(it->attribute("Type").value(), it->attribute("Name").value(), it->attribute("Resistivity").as_double(), it->attribute("Permeability").as_double());
-        ct->setId(it->attribute("Id").value());
+        ct->setId(it->attribute("Id").as_int());
         ct->setLocked(true);
         m_defaultConfig->addConductorType(ct);
     }
 
     for(pugi::xml_node_iterator it = node.child("CableTypes").children().begin(); it != node.child("CableTypes").children().end(); it++){
         CableType* cbt = new CableType(it->attribute("Name").value());
-        cbt->setId(it->attribute("Id").value());
+        cbt->setId(it->attribute("Id").as_int());
         cbt->setLocked(true);
         m_defaultConfig->addCableType(cbt);
     }
@@ -212,9 +204,6 @@ void AppUtils::generateDefaultConfig(){
 
     //Configuration node-------------------------------------------------------
 
-    //Configuration attribute
-    configNode.append_attribute("Id").set_value("C0");
-
     //Identifier node
     node = configNode.append_child("Identifier");
     node.append_attribute("Value").set_value("Default");
@@ -231,17 +220,64 @@ void AppUtils::generateDefaultConfig(){
     pugi::xml_node leadTypesNode = configNode.append_child("LeadTypes");
 
     node = leadTypesNode.append_child("LeadType");
-    node.append_attribute("Id").set_value("LT0");
+    node.append_attribute("Id").set_value("-1");
+    node.append_attribute("Name").set_value("Unconnected");
+    node.append_attribute("Locked").set_value("1");
+
+    node = leadTypesNode.append_child("LeadType");
+    node.append_attribute("Id").set_value("0");
     node.append_attribute("Name").set_value("Default Impedance");
     node.append_attribute("Locked").set_value("1");
 
     //LeadTypes end------------------------------------------------------------
 
+    //ConductorTypes node-----------------------------------------------------------
+    pugi::xml_node conductorTypesNode = configNode.append_child("ConductorTypes");
+
+    node = conductorTypesNode.append_child("ConductorType");
+    node.append_attribute("Id").set_value("-1");
+    node.append_attribute("Type").set_value("Plastic");
+    node.append_attribute("Name").set_value("Plastic");
+    node.append_attribute("Resistivity").set_value("0.0");
+    node.append_attribute("Permeability").set_value("1.0");
+    node.append_attribute("Locked").set_value("1");
+
+    node = conductorTypesNode.append_child("ConductorType");
+    node.append_attribute("Id").set_value("0");
+    node.append_attribute("Type").set_value("Default");
+    node.append_attribute("Name").set_value("Default Conductor");
+    node.append_attribute("Resistivity").set_value("1.0");
+    node.append_attribute("Permeability").set_value("1.0");
+    node.append_attribute("Locked").set_value("1");
+
+    node = conductorTypesNode.append_child("ConductorType");
+    node.append_attribute("Id").set_value("1");
+    node.append_attribute("Type").set_value("Computed");
+    node.append_attribute("Name").set_value("Aluminium");
+    node.append_attribute("Resistivity").set_value("1.64");
+    node.append_attribute("Permeability").set_value("1.0");
+    node.append_attribute("Locked").set_value("1");
+
+    node = conductorTypesNode.append_child("ConductorType");
+    node.append_attribute("Id").set_value("2");
+    node.append_attribute("Type").set_value("Computed");
+    node.append_attribute("Name").set_value("Steel");
+    node.append_attribute("Resistivity").set_value("12.0");
+    node.append_attribute("Permeability").set_value("250.0");
+    node.append_attribute("Locked").set_value("1");
+
+    //ConductorTypes end------------------------------------------------------------
+
     //Coatings node-----------------------------------------------------------
     pugi::xml_node coatingsNode = configNode.append_child("Coatings");
 
     node = coatingsNode.append_child("Coating");
-    node.append_attribute("Id").set_value("CO0");
+    node.append_attribute("Id").set_value("-1");
+    node.append_attribute("Name").set_value("Insulated");
+    node.append_attribute("Locked").set_value("1");
+
+    node = coatingsNode.append_child("Coating");
+    node.append_attribute("Id").set_value("0");
     node.append_attribute("Name").set_value("Default Coating");
     node.append_attribute("Locked").set_value("1");
 
@@ -251,60 +287,79 @@ void AppUtils::generateDefaultConfig(){
     pugi::xml_node energizationsNode = configNode.append_child("Energizations");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E1");
-    node.append_attribute("Identification").set_value("GND");
+    node.append_attribute("Id").set_value("0");
+    node.append_attribute("Identification").set_value("(No Energization)");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("Both");
     node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("0.0");
+    node.append_attribute("Magnitude").set_value("0");
     node.append_attribute("Locked").set_value("1");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E2");
+    node.append_attribute("Id").set_value("1");
     node.append_attribute("Identification").set_value("PhaseA");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700.0");
+    node.append_attribute("Magnitude").set_value("441700");
     node.append_attribute("Locked").set_value("1");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E3");
+    node.append_attribute("Id").set_value("2");
     node.append_attribute("Identification").set_value("PhaseB");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("-120");
-    node.append_attribute("Magnitude").set_value("441700.0");
+    node.append_attribute("Magnitude").set_value("441700");
     node.append_attribute("Locked").set_value("1");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E4");
+    node.append_attribute("Id").set_value("3");
     node.append_attribute("Identification").set_value("PhaseC");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("120");
-    node.append_attribute("Magnitude").set_value("441700.0");
+    node.append_attribute("Magnitude").set_value("441700");
     node.append_attribute("Locked").set_value("1");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E5");
+    node.append_attribute("Id").set_value("4");
+    node.append_attribute("Identification").set_value("GND");
+    node.append_attribute("Type").set_value("GPR-Potential");
+    node.append_attribute("Frequency").set_value("Both");
+    node.append_attribute("Angle").set_value("0");
+    node.append_attribute("Magnitude").set_value("0");
+    node.append_attribute("Locked").set_value("1");
+
+    node = energizationsNode.append_child("Energization");
+    node.append_attribute("Id").set_value("5");
     node.append_attribute("Identification").set_value("PoleA");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("DC");
     node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700000.0");
+    node.append_attribute("Magnitude").set_value("441700000");
     node.append_attribute("Locked").set_value("1");
 
     node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("E6");
+    node.append_attribute("Id").set_value("6");
     node.append_attribute("Identification").set_value("PoleB");
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("DC");
     node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700000.0");
+    node.append_attribute("Magnitude").set_value("441700000");
     node.append_attribute("Locked").set_value("1");
 
     //Energizations end------------------------------------------------------------
+
+    //CableTypes node-----------------------------------------------------------
+    pugi::xml_node cableTypesNode = configNode.append_child("CableTypes");
+
+    node = cableTypesNode.append_child("CableType");
+    node.append_attribute("Id").set_value("0");
+    node.append_attribute("Name").set_value("(Not a Cable)");
+    node.append_attribute("Locked").set_value("1");
+
+    //CableTypes end------------------------------------------------------------
 
     //Tolerances node-----------------------------------------------------------
     pugi::xml_node tolerancesNode = configNode.append_child("Tolerances");
@@ -313,7 +368,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Value").set_value("0.001");
 
     node = tolerancesNode.append_child("Tolerance");
-    node.append_attribute("Value").set_value("1.0");
+    node.append_attribute("Value").set_value("1");
 
     node = tolerancesNode.append_child("Tolerance");
     node.append_attribute("Value").set_value("0.005");
@@ -337,53 +392,6 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Value").set_value("0.5");
 
     //Tolerances end------------------------------------------------------------
-
-    //ConductorTypes node-----------------------------------------------------------
-    pugi::xml_node conductorTypesNode = configNode.append_child("ConductorTypes");
-
-    node = conductorTypesNode.append_child("ConductorType");
-    node.append_attribute("Id").set_value("CT1");
-    node.append_attribute("Type").set_value("Plastic");
-    node.append_attribute("Name").set_value("Plastic");
-    node.append_attribute("Resistivity").set_value("0.0");
-    node.append_attribute("Permeability").set_value("1.0");
-    node.append_attribute("Locked").set_value("1");
-
-    node = conductorTypesNode.append_child("ConductorType");
-    node.append_attribute("Id").set_value("CT2");
-    node.append_attribute("Type").set_value("Default");
-    node.append_attribute("Name").set_value("Default Conductor");
-    node.append_attribute("Resistivity").set_value("1.0");
-    node.append_attribute("Permeability").set_value("1.0");
-    node.append_attribute("Locked").set_value("1");
-
-    node = conductorTypesNode.append_child("ConductorType");
-    node.append_attribute("Id").set_value("CT3");
-    node.append_attribute("Type").set_value("Computed");
-    node.append_attribute("Name").set_value("Aluminium");
-    node.append_attribute("Resistivity").set_value("1.64");
-    node.append_attribute("Permeability").set_value("1.0");
-    node.append_attribute("Locked").set_value("1");
-
-    node = conductorTypesNode.append_child("ConductorType");
-    node.append_attribute("Id").set_value("CT4");
-    node.append_attribute("Type").set_value("Computed");
-    node.append_attribute("Name").set_value("Steel");
-    node.append_attribute("Resistivity").set_value("12.0");
-    node.append_attribute("Permeability").set_value("250.0");
-    node.append_attribute("Locked").set_value("1");
-
-    //ConductorTypes end------------------------------------------------------------
-
-    //CableTypes node-----------------------------------------------------------
-    pugi::xml_node cableTypesNode = configNode.append_child("CableTypes");
-
-    node = cableTypesNode.append_child("CableType");
-    node.append_attribute("Id").set_value("CBT0");
-    node.append_attribute("Name").set_value("(Not a cable)");
-    node.append_attribute("Locked").set_value("1");
-
-    //CableTypes end------------------------------------------------------------
 
     node = configNode.append_child("Conductors");
     node = configNode.append_child("BuildingConductors");
@@ -416,7 +424,7 @@ void AppUtils::generateDefaultConfig(){
 
     QString filename = "default_values.cdp";
 
-    doc.save_file(getXMLPath(filename));
+    doc.save_file(QString::fromStdString(getPath(filename)).toStdWString().c_str());
 }
 
 Configuration const* AppUtils::getDefaultConfig() const{
@@ -426,8 +434,6 @@ Configuration const* AppUtils::getDefaultConfig() const{
 Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     Configuration* config = new Configuration();
 
-    config->setId(configNode.first_attribute().value());
-
     config->setIdentifier(configNode.child("Identifier").first_attribute().value());
 
     config->setUnits(configNode.child("Units").first_attribute().value());
@@ -436,21 +442,21 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("LeadTypes").children().begin(); it != configNode.child("LeadTypes").children().end(); it++){
         LeadType* lt = new LeadType(it->attribute("Name").value());
-        lt->setId(it->attribute("Id").value());
+        lt->setId(it->attribute("Id").as_int());
         lt->setLocked(it->attribute("Locked").as_bool());
         config->addLeadType(lt);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Coatings").children().begin(); it != configNode.child("Coatings").children().end(); it++){
         Coating* co = new Coating(it->attribute("Name").value());
-        co->setId(it->attribute("Id").value());
+        co->setId(it->attribute("Id").as_int());
         co->setLocked(it->attribute("Locked").as_bool());
         config->addCoating(co);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Energizations").children().begin(); it != configNode.child("Energizations").children().end(); it++){
-        Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_double(), it->attribute("Angle").as_double());
-        en->setId(it->attribute("Id").value());
+        Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_int(), it->attribute("Angle").as_double());
+        en->setId(it->attribute("Id").as_int());
         en->setLocked(it->attribute("Locked").as_bool());
         config->addEnergization(en);
     }
@@ -461,14 +467,14 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("ConductorTypes").children().begin(); it != configNode.child("ConductorTypes").children().end(); it++){
         ConductorType* ct = new ConductorType(it->attribute("Type").value(), it->attribute("Name").value(), it->attribute("Resistivity").as_double(), it->attribute("Permeability").as_double());
-        ct->setId(it->attribute("Id").value());
+        ct->setId(it->attribute("Id").as_int());
         ct->setLocked(it->attribute("Locked").as_bool());
         config->addConductorType(ct);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("CableTypes").children().begin(); it != configNode.child("CableTypes").children().end(); it++){
         CableType* cbt = new CableType(it->attribute("Name").value());
-        cbt->setId(it->attribute("Id").value());
+        cbt->setId(it->attribute("Id").as_int());
         cbt->setLocked(it->attribute("Locked").as_bool());
         config->addCableType(cbt);
     }
@@ -477,23 +483,23 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("Conductors").children().begin(); it != configNode.child("Conductors").children().end(); it++){
         Conductor* cd = new Conductor();
-        std::string key;
-        cd->setId(it->attribute("Id").value());
+        int key;
+        cd->setId(it->attribute("Id").as_int());
 
-        key = it->child("LeadTypeId").first_attribute().value();
-        if(key != "") cd->setLeadType(config->getLeadTypes().at(key));
+        key = it->child("LeadTypeId").first_attribute().as_int();
+        cd->setLeadType(config->getLeadTypes().at(key));
 
-        key = it->child("CoatingId").first_attribute().value();
-        if(key != "") cd->setCoating(config->getCoatings().at(key));
+        key = it->child("CoatingId").first_attribute().as_int();
+        cd->setCoating(config->getCoatings().at(key));
 
-        key = it->child("ConductorTypeId").first_attribute().value();
-        if(key != "") cd->setConductorType(config->getConductorTypes().at(key));
+        key = it->child("ConductorTypeId").first_attribute().as_int();
+        cd->setConductorType(config->getConductorTypes().at(key));
 
-        key = it->child("EnergizationId").first_attribute().value();
-        if(key != "") cd->setEnergization(config->getEnergizations().at(key));
+        key = it->child("EnergizationId").first_attribute().as_int();
+        cd->setEnergization(config->getEnergizations().at(key));
 
-        key = it->child("CableTypeId").first_attribute().value();
-        if(key != "") cd->setCableType(config->getCableTypes().at(key));
+        key = it->child("CableTypeId").first_attribute().as_int();
+        cd->setCableType(config->getCableTypes().at(key));
 
         cd->setRadius(it->child("Radius").first_attribute().as_double());
         coords start, end;
@@ -509,12 +515,12 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("BuildingConductors").children().begin(); it != configNode.child("BuildingConductors").children().end(); it++){
         Conductor* cd = new Conductor();
-        cd->setId(it->attribute("Id").value());
-        cd->setLeadType(config->getLeadTypes().at(it->child("LeadTypeId").first_attribute().value()));
-        cd->setCoating(config->getCoatings().at(it->child("CoatingId").first_attribute().value()));
-        cd->setConductorType(config->getConductorTypes().at(it->child("ConductorTypeId").first_attribute().value()));
-        cd->setEnergization(config->getEnergizations().at(it->child("EnergizationId").first_attribute().value()));
-        cd->setCableType(config->getCableTypes().at(it->child("CableTypeId").first_attribute().value()));
+        cd->setId(it->attribute("Id").as_int());
+        cd->setLeadType(config->getLeadTypes().at(it->child("LeadTypeId").first_attribute().as_int()));
+        cd->setCoating(config->getCoatings().at(it->child("CoatingId").first_attribute().as_int()));
+        cd->setConductorType(config->getConductorTypes().at(it->child("ConductorTypeId").first_attribute().as_int()));
+        cd->setEnergization(config->getEnergizations().at(it->child("EnergizationId").first_attribute().as_int()));
+        cd->setCableType(config->getCableTypes().at(it->child("CableTypeId").first_attribute().as_int()));
         cd->setRadius(it->child("Radius").first_attribute().as_double());
         coords start, end;
         start.x = it->child("CoordsStart").attribute("X").as_double();
@@ -529,7 +535,7 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("Buildings").children().begin(); it != configNode.child("Buildings").children().end(); it++){
         Building* b = new Building(it->child("Faces").attribute("Value").as_int(), it->child("Height").attribute("Value").as_double(), it->child("Distance").attribute("Min").as_double(), it->child("Distance").attribute("Max").as_double(), it->child("Step").attribute("Value").as_double());
-        b->setId(it->attribute("Id").value());
+        b->setId(it->attribute("Id").as_int());
         config->addBuilding(b);
     }
 
@@ -542,7 +548,7 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
 
     for(pugi::xml_node_iterator it = configNode.child("Profiles").children().begin(); it != configNode.child("Profiles").children().end(); it++){
         profile* p = new profile;
-        p->id = it->attribute("Id").value();
+        p->id = it->attribute("Id").as_int();
         p->xCoords.start = it->child("XCoords").attribute("Start").as_double();
         p->xCoords.end = it->child("XCoords").attribute("End").as_double();
         p->xCoords.step = it->child("XCoords").attribute("Step").as_double();
@@ -557,18 +563,12 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     return config;
 }
 
-Project* AppUtils::loadProject(const std::string& path, const std::string& filename){
+Project* AppUtils::loadProject(const QString& folder, const QString& filename){
     Project* project = new Project();
 
     pugi::xml_document doc;
 
-    if(path != ""){
-        doc.load_file(getXMLPath(QString::fromStdString(path), QString::fromStdString(filename)));
-    }
-    else{
-        doc.load_file(getXMLPath(QString::fromStdString(filename)));
-    }
-
+    doc.load_file(QString::fromStdString(getPath(folder, filename)).toStdWString().c_str());
 
     pugi::xml_node node = doc.first_child();
 
@@ -692,27 +692,15 @@ std::string AppUtils::stringToUpper(std::string strToConvert){
 void AppUtils::exportConfiguration(const Configuration* config, const std::string& fullPath){
     std::ofstream configFile;
     std::string tolerances = "";
-    std::unordered_map<std::string, int> enerPos;
-    std::unordered_map<std::string, int> cTypePos;
     int phaseAIter = 0, phaseBIter = 0, phaseCIter = 0, poleAIter = 0, poleBIter = 0, GNDIter = 0;
-
-    for(auto& i_cond : config->getConductors()){
-        enerPos.emplace(i_cond.second->getEnergization()->getId(), enerPos.size());
-        cTypePos.emplace(i_cond.second->getConductorType()->getId(), cTypePos.size());
-    }
-
-    for(auto& i_cond : config->getBuildingConductors()){
-        enerPos.emplace(i_cond.second->getEnergization()->getId(), enerPos.size());
-        cTypePos.emplace(i_cond.second->getConductorType()->getId(), cTypePos.size());
-    }
 
     configFile.open(fullPath);
     configFile << "HIFREQ\n";
     configFile << "OPTIONS\n";
-    configFile << "  RUN-IDENTIFI, " + stringToUpper(config->getIdentifier()) + "\n";
+    configFile << "  RUN-IDENTIFI, " + config->getIdentifier() + "\n";
     configFile << "  UNITS, " + stringToUpper(config->getUnits()) + "\n";
     configFile << "  PRINTOUT, DETAILED\n";
-    configFile << "  SYSTEM\n";
+    configFile << "SYSTEM\n";
     configFile << "    TOLERANCE,";
 
     for(double tolerance : config->getTolerances()){
@@ -722,49 +710,57 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
 
     configFile << tolerances << "\n";
 
-    for(auto& i_ener : enerPos){
-        configFile << "    ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i_ener.first)->getType()) << "," << dbl2str(config->getEnergizations().at(i_ener.first)->getMagnitude()) << "," << dbl2str(config->getEnergizations().at(i_ener.first)->getAngle() * 3600) << ",,,,,," << config->getEnergizations().at(i_ener.first)->getIdentification();
+    for(unsigned int i=1; i<config->getEnergizations().size(); i++){
+        configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
 
-        if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseA"){
+        if(config->getEnergizations().at(i)->getIdentification() == "PhaseA"){
             configFile << phaseAIter << "\n";
             phaseAIter++;
         }
-        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseB"){
+        else if(config->getEnergizations().at(i)->getIdentification() == "PhaseB"){
             configFile << phaseBIter << "\n";
             phaseBIter++;
         }
-        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PhaseC"){
+        else if(config->getEnergizations().at(i)->getIdentification() == "PhaseC"){
             configFile << phaseCIter << "\n";
             phaseCIter++;
         }
-        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PoleA"){
+        else if(config->getEnergizations().at(i)->getIdentification() == "PoleA"){
             configFile << poleAIter << "\n";
             poleAIter++;
         }
-        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "PoleB"){
+        else if(config->getEnergizations().at(i)->getIdentification() == "PoleB"){
             configFile << poleBIter << "\n";
             poleBIter++;
         }
-        else if(config->getEnergizations().at(i_ener.first)->getIdentification() == "GND"){
+        else if(config->getEnergizations().at(i)->getIdentification() == "GND"){
             configFile << GNDIter << "\n";
             GNDIter++;
         }
     }
 
-    configFile << "    CHARACTERISTICS\n";
+    configFile << "  CHARACTERISTICS\n";
 
-    for(auto& i_cType : cTypePos){
-        configFile << "      CONDUCTOR-TYPE," << config->getConductorTypes().at(i_cType.first)->getType() << "," << dbl2str(config->getConductorTypes().at(i_cType.first)->getResistivity()) << "," << dbl2str(config->getConductorTypes().at(i_cType.first)->getPermeability()) << ",,,,,,," << config->getConductorTypes().at(i_cType.first)->getName() << "\n";
+    for(unsigned int i=1; i<config->getConductorTypes().size()-1; i++){
+        configFile << "    CONDUCTOR-TYPE," << config->getConductorTypes().at(i)->getType() << "," << dbl2str(config->getConductorTypes().at(i)->getResistivity()) << "," << dbl2str(config->getConductorTypes().at(i)->getPermeability()) << ",,,,,,," << config->getConductorTypes().at(i)->getName() << "\n";
     }
+
+    //COATING TYPES HERE
+
+    //CABLE TYPES HERE
 
     configFile << "\n";
     configFile << "    SUBDIVISION,YES,\n";
-    configFile << "    NETWORK\n";
-    configFile << "      MAIN-GROUND\n";
+    configFile << "  NETWORK\n";
+    configFile << "    MAIN-GROUND\n";
     configFile << "\n";
 
-    for(auto& i_cond : config->getConductors()){
-        configFile << "      CONDUCTOR, 0, " << cTypePos.at(i_cond.second->getConductorType()->getId()) << ", 0, " << enerPos.at(i_cond.second->getEnergization()->getId()) << "," << dbl2str(i_cond.second->getStartCoords().x) << "," << dbl2str(i_cond.second->getStartCoords().y) << "," << dbl2str(i_cond.second->getStartCoords().z) << "," << dbl2str(i_cond.second->getEndCoords().x) << "," << dbl2str(i_cond.second->getEndCoords().y) << "," << dbl2str(i_cond.second->getEndCoords().z) << "," << dbl2str(i_cond.second->getRadius()) << ",1,0\n";
+    for(unsigned int i=1; i<=config->getConductors().size(); i++){
+        configFile << "      CONDUCTOR, " << std::to_string(config->getConductors().at(i)->getLeadType()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getConductorType()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getCoating()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getEnergization()->getId()) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().x) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().y) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().z) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().x) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().y) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().z) << "," << dbl2str(config->getConductors().at(i)->getRadius()) << "," << std::to_string(config->getConductors().at(i)->getSubDivision()) << ",0\n";
+    }
+
+    for(unsigned int i=1; i<=config->getBuildingConductors().size(); i++){
+        configFile << "      CONDUCTOR, " << std::to_string(config->getBuildingConductors().at(i)->getLeadType()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getConductorType()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getCoating()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getEnergization()->getId()) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getRadius()) << "," << std::to_string(config->getBuildingConductors().at(i)->getSubDivision()) << ",0\n";
     }
 
     configFile << "\n\n";
@@ -812,15 +808,16 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     else{
         configFile << "OFF\n";
     }
+    configFile << "    CURRENTS, COMPUTED\n";
 
-    configFile << "  FREQUENCY,60.,\n";
     configFile << "  OBSERVATION\n";
 
-    for(auto& i_pro : config->getProfiles()){
-        configFile << "    PROFILE, " << dbl2str(i_pro.second->NLine) << ",0," << dbl2str(i_pro.second->xCoords.start) << "," << dbl2str(i_pro.second->yCoords.start) << ",0,0," << dbl2str(i_pro.second->yCoords.step) << ",0\n";
-        configFile << "      SURFACE, " << dbl2str(i_pro.second->MCol) << ",0," << dbl2str(i_pro.second->xCoords.step) << ",0,0\n";
+    for(unsigned int i=1; i<=config->getProfiles().size(); i++){
+        configFile << "    PROFILE, " << dbl2str(config->getProfiles().at(i)->NLine) << ",0," << dbl2str(config->getProfiles().at(i)->xCoords.start) << "," << dbl2str(config->getProfiles().at(i)->yCoords.start) << ",0,0," << dbl2str(config->getProfiles().at(i)->yCoords.step) << ",0\n";
+        configFile << "      SURFACE, " << dbl2str(config->getProfiles().at(i)->MCol) << ",0," << dbl2str(config->getProfiles().at(i)->xCoords.step) << ",0,0\n";
     }
 
+    configFile << "  FREQUENCY,60.,\n";
     configFile << "\n";
     configFile << "ENDPROGRAM";
 
@@ -829,6 +826,7 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
 
 std::string AppUtils::dbl2str(const double& d)
 {
+    if(d == 0.0) return "0";
     size_t len = std::snprintf(0, 0, "%.10f", d);
     std::string s(len+1, 0);
     // technically non-portable, see below
@@ -839,7 +837,11 @@ std::string AppUtils::dbl2str(const double& d)
     s.erase(s.find_last_not_of('0') + 1, std::string::npos);
     // remove trailing point
     if(s.back() == '.') {
-        s.append("0");
+        s.pop_back();
+    }
+    // remove front zero
+    if(s.front() == '0'){
+        s.erase(s.begin());
     }
     return s;
 }
@@ -858,71 +860,23 @@ void AppUtils::append_dbl2str(std::string &s, const double& d) {
     if(s.back() == '.') {
         s.pop_back();
     }
+    // remove front zero
+    if(s.front() == '0'){
+        s.erase(s.begin());
+    }
 }
 
-std::string AppUtils::uniqueIdGenerator(const std::string& type){
+std::string AppUtils::uniqueIdGenerator(){
     std::string result = "failure";
 
-    if(type == "ProjectId"){
-        result = "P";
-        append_dbl2str(result, m_ids.projectId+1);
-        m_ids.projectId += 1;
-    }
-    else if(type == "ConfigurationId"){
-        result = "C";
-        append_dbl2str(result, m_ids.configurationId+1);
-        m_ids.configurationId += 1;
-    }
-    else if(type == "LeadTypeId"){
-        result = "LT";
-        append_dbl2str(result, m_ids.leadTypeId+1);
-        m_ids.leadTypeId += 1;
-    }
-    else if(type == "CoatingId"){
-        result = "CO";
-        append_dbl2str(result, m_ids.coatingId+1);
-        m_ids.coatingId += 1;
-    }
-    else if(type == "EnergizationId"){
-        result = "E";
-        append_dbl2str(result, m_ids.energizationId+1);
-        m_ids.energizationId += 1;
-    }
-    else if(type == "ConductorTypeId"){
-        result = "CT";
-        append_dbl2str(result, m_ids.conductorTypeId+1);
-        m_ids.conductorTypeId += 1;
-    }
-    else if(type == "CableTypeId"){
-        result = "CBT";
-        append_dbl2str(result, m_ids.cableTypeId+1);
-        m_ids.cableTypeId += 1;
-    }
-    else if(type == "ConductorId"){
-        result = "CD";
-        append_dbl2str(result, m_ids.conductorId+1);
-        m_ids.conductorId += 1;
-    }
-    else if(type == "BuildingConductorId"){
-        result = "BCD";
-        append_dbl2str(result, m_ids.buildingConductorId+1);
-        m_ids.buildingConductorId += 1;
-    }
-    else if(type == "BuildingId"){
-        result = "B";
-        append_dbl2str(result, m_ids.buildingId+1);
-        m_ids.buildingId += 1;
-    }
-    else if(type == "ProfileId"){
-        result = "PR";
-        append_dbl2str(result, m_ids.profileId+1);
-        m_ids.profileId += 1;
-    }
+    result = "P";
+    append_dbl2str(result, m_projectId+1);
+    m_projectId += 1;
 
     return result;
 }
 
-void AppUtils::saveProject(const Project &project, const std::string& path, const std::string& filename){
+void AppUtils::saveProject(const Project &project, std::string& path){
     pugi::xml_document doc;
 
     pugi::xml_node projectNode = doc.append_child("Project");
@@ -944,16 +898,20 @@ void AppUtils::saveProject(const Project &project, const std::string& path, cons
     node.append_attribute("Os").set_value(getOsName().c_str());
     node.append_attribute("Value").set_value(project.getRelPath().c_str());
 
+    //FileName node
+    node = projectNode.append_child("FileName");
+    node.append_attribute("Value").set_value(project.getFileName().c_str());
+
     //DefaultConfig node
     node = projectNode.append_child("DefaultConfig");
     if(project.getDefaultConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getDefaultConfig()->getId().c_str());
+        node.append_attribute("Value").set_value(project.getDefaultConfig()->getIdentifier().c_str());
     }
 
     //LastConfig node
     node = projectNode.append_child("LastConfig");
     if(project.getLastConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getLastConfig()->getId().c_str());
+        node.append_attribute("Value").set_value(project.getLastConfig()->getIdentifier().c_str());
     }
 
     //DefaultWindow node
@@ -1011,17 +969,17 @@ void AppUtils::saveProject(const Project &project, const std::string& path, cons
     //Configurations
     pugi::xml_node configNode = doc.append_child("Configurations");
 
-    for(auto& config : project.getConfigurations()){
+    for(auto& config : project.getConfigurations()){ //BREAKS HERE
         saveConfiguration(config.second, configNode);
     }
 
-    if(path != ""){
-        doc.save_file(getXMLPath(QString::fromStdString(path), QString::fromStdString(filename)));
-    }
-    else{
-        doc.save_file(getXMLPath(QString::fromStdString(filename)));
+    if(path == ""){
+        path = getAppData();
     }
 
+    QString filename = QString::fromStdString(project.getFileName());
+
+    doc.save_file(QString::fromStdString(getPath(QString::fromStdString(path), filename)).toStdWString().c_str());
 }
 
 void AppUtils::saveProject(const Project &project){
@@ -1053,13 +1011,13 @@ void AppUtils::saveProject(const Project &project){
     //DefaultConfig node
     node = projectNode.append_child("DefaultConfig");
     if(project.getDefaultConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getDefaultConfig()->getId().c_str());
+        node.append_attribute("Value").set_value(project.getDefaultConfig()->getIdentifier().c_str());
     }
 
     //LastConfig node
     node = projectNode.append_child("LastConfig");
     if(project.getLastConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getLastConfig()->getId().c_str());
+        node.append_attribute("Value").set_value(project.getLastConfig()->getIdentifier().c_str());
     }
 
     //DefaultWindow node
@@ -1121,7 +1079,10 @@ void AppUtils::saveProject(const Project &project){
         saveConfiguration(config.second, configNode);
     }
 
-    doc.save_file(getXMLPath(QString::fromStdString(project.getAbsPath()), QString::fromStdString(project.getFileName())));
+    QString folder = QString::fromStdString(project.getAbsPath());
+    QString filename = QString::fromStdString(project.getFileName());
+
+    doc.save_file(QString::fromStdString(getPath(folder, filename)).toStdWString().c_str());
 
 }
 
@@ -1131,9 +1092,6 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     pugi::xml_node node;
 
     //Configuration node-------------------------------------------------------
-
-    //Configuration attribute
-    configNode.append_attribute("Id").set_value(config->getId().c_str());
 
     //Identifier node
     node = configNode.append_child("Identifier");
@@ -1150,11 +1108,11 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //LeadTypes node-----------------------------------------------------------
     pugi::xml_node leadTypesNode = configNode.append_child("LeadTypes");
 
-    for(auto& i_leadType : config->getLeadTypes()){
+    for(unsigned int i=0; i<config->getLeadTypes().size(); i++){
         node = leadTypesNode.append_child("LeadType");
-        node.append_attribute("Id").set_value(i_leadType.first.c_str());
-        node.append_attribute("Name").set_value(i_leadType.second->getName().c_str());
-        node.append_attribute("Locked").set_value(i_leadType.second->isLocked());
+        node.append_attribute("Id").set_value(config->getLeadTypes().at(i-1)->getId());
+        node.append_attribute("Name").set_value(config->getLeadTypes().at(i-1)->getName().c_str());
+        node.append_attribute("Locked").set_value(config->getLeadTypes().at(i-1)->isLocked());
     }
 
     //LeadTypes end------------------------------------------------------------
@@ -1162,11 +1120,11 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //Coatings node-----------------------------------------------------------
     pugi::xml_node coatingsNode = configNode.append_child("Coatings");
 
-    for(auto& i_coating : config->getCoatings()){
+    for(unsigned int i=0; i<config->getCoatings().size(); i++){
         node = coatingsNode.append_child("Coating");
-        node.append_attribute("Id").set_value(i_coating.first.c_str());
-        node.append_attribute("Name").set_value(i_coating.second->getName().c_str());
-        node.append_attribute("Locked").set_value(i_coating.second->isLocked());
+        node.append_attribute("Id").set_value(config->getCoatings().at(i-1)->getId());
+        node.append_attribute("Name").set_value(config->getCoatings().at(i-1)->getName().c_str());
+        node.append_attribute("Locked").set_value(config->getCoatings().at(i-1)->isLocked());
     }
 
     //Coatings end------------------------------------------------------------
@@ -1174,15 +1132,15 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //Energizations node-----------------------------------------------------------
     pugi::xml_node energizationsNode = configNode.append_child("Energizations");
 
-    for(auto& i_energization : config->getEnergizations()){
+    for(unsigned int i=0; i<config->getEnergizations().size(); i++){
         node = energizationsNode.append_child("Energization");
-        node.append_attribute("Id").set_value(i_energization.first.c_str());
-        node.append_attribute("Identification").set_value(i_energization.second->getIdentification().c_str());
-        node.append_attribute("Type").set_value(i_energization.second->getType().c_str());
-        node.append_attribute("Frequency").set_value(i_energization.second->getFrequency().c_str());
-        node.append_attribute("Angle").set_value(std::to_string(i_energization.second->getAngle()).c_str());
-        node.append_attribute("Magnitude").set_value(dbl2str(i_energization.second->getMagnitude()).c_str());
-        node.append_attribute("Locked").set_value(i_energization.second->isLocked());
+        node.append_attribute("Id").set_value(config->getEnergizations().at(i)->getId());
+        node.append_attribute("Identification").set_value(config->getEnergizations().at(i)->getIdentification().c_str());
+        node.append_attribute("Type").set_value(config->getEnergizations().at(i)->getType().c_str());
+        node.append_attribute("Frequency").set_value(config->getEnergizations().at(i)->getFrequency().c_str());
+        node.append_attribute("Angle").set_value(dbl2str(config->getEnergizations().at(i)->getAngle()).c_str());
+        node.append_attribute("Magnitude").set_value(config->getEnergizations().at(i)->getMagnitude());
+        node.append_attribute("Locked").set_value(config->getEnergizations().at(i)->isLocked());
     }
 
     //Energizations end------------------------------------------------------------
@@ -1200,14 +1158,14 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //ConductorTypes node-----------------------------------------------------------
     pugi::xml_node conductorTypesNode = configNode.append_child("ConductorTypes");
 
-    for(auto& i_cType : config->getConductorTypes()){
+    for(unsigned int i=0; i<config->getConductorTypes().size(); i++){
         node = conductorTypesNode.append_child("ConductorType");
-        node.append_attribute("Id").set_value(i_cType.first.c_str());
-        node.append_attribute("Type").set_value(i_cType.second->getType().c_str());
-        node.append_attribute("Name").set_value(i_cType.second->getName().c_str());
-        node.append_attribute("Resistivity").set_value(dbl2str(i_cType.second->getResistivity()).c_str());
-        node.append_attribute("Permeability").set_value(dbl2str(i_cType.second->getPermeability()).c_str());
-        node.append_attribute("Locked").set_value(i_cType.second->isLocked());
+        node.append_attribute("Id").set_value(config->getConductorTypes().at(i-1)->getId());
+        node.append_attribute("Type").set_value(config->getConductorTypes().at(i-1)->getType().c_str());
+        node.append_attribute("Name").set_value(config->getConductorTypes().at(i-1)->getName().c_str());
+        node.append_attribute("Resistivity").set_value(dbl2str(config->getConductorTypes().at(i-1)->getResistivity()).c_str());
+        node.append_attribute("Permeability").set_value(dbl2str(config->getConductorTypes().at(i-1)->getPermeability()).c_str());
+        node.append_attribute("Locked").set_value(config->getConductorTypes().at(i-1)->isLocked());
     }
 
     //ConductorTypes end------------------------------------------------------------
@@ -1215,11 +1173,11 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //CableTypes node-----------------------------------------------------------
     pugi::xml_node cableTypesNode = configNode.append_child("CableTypes");
 
-    for(auto& i_cbType : config->getCableTypes()){
+    for(unsigned int i=0; i<config->getCableTypes().size(); i++){
         node = cableTypesNode.append_child("CableType");
-        node.append_attribute("Id").set_value(i_cbType.first.c_str());
-        node.append_attribute("Name").set_value(i_cbType.second->getName().c_str());
-        node.append_attribute("Locked").set_value(i_cbType.second->isLocked());
+        node.append_attribute("Id").set_value(config->getCableTypes().at(i)->getId());
+        node.append_attribute("Name").set_value(config->getCableTypes().at(i)->getName().c_str());
+        node.append_attribute("Locked").set_value(config->getCableTypes().at(i)->isLocked());
     }
 
     //CableTypes end------------------------------------------------------------
@@ -1228,48 +1186,48 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     pugi::xml_node conductorsNode = configNode.append_child("Conductors");
     pugi::xml_node conductorNode;
 
-    for(auto& i_conductor : config->getConductors()){
+    for(unsigned int i=1; i<=config->getConductors().size(); i++){
         conductorNode = conductorsNode.append_child("Conductor");
-        conductorNode.append_attribute("Id").set_value(i_conductor.first.c_str());
+        conductorNode.append_attribute("Id").set_value(config->getConductors().at(i)->getId());
         conductorNode.append_attribute("Type").set_value("Conductor");
 
         node = conductorNode.append_child("LeadTypeId");
-        if(i_conductor.second->getLeadType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getLeadType()->getId().c_str());
+        if(config->getConductors().at(i)->getLeadType() != NULL){
+            node.append_attribute("Value").set_value(config->getConductors().at(i)->getLeadType()->getId());
         }
 
         node = conductorNode.append_child("ConductorTypeId");
-        if(i_conductor.second->getConductorType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getConductorType()->getId().c_str());
+        if(config->getConductors().at(i)->getConductorType() != NULL){
+            node.append_attribute("Value").set_value(config->getConductors().at(i)->getConductorType()->getId());
         }
 
         node = conductorNode.append_child("CoatingId");
-        if(i_conductor.second->getCoating() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getCoating()->getId().c_str());
+        if(config->getConductors().at(i)->getCoating() != NULL){
+            node.append_attribute("Value").set_value(config->getConductors().at(i)->getCoating()->getId());
         }
 
         node = conductorNode.append_child("EnergizationId");
-        if(i_conductor.second->getEnergization() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getEnergization()->getId().c_str());
+        if(config->getConductors().at(i)->getEnergization() != NULL){
+            node.append_attribute("Value").set_value(config->getConductors().at(i)->getEnergization()->getId());
         }
 
         node = conductorNode.append_child("CableTypeId");
-        if(i_conductor.second->getCableType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getCableType()->getId().c_str());
+        if(config->getConductors().at(i)->getCableType() != NULL){
+            node.append_attribute("Value").set_value(config->getConductors().at(i)->getCableType()->getId());
         }
 
         node = conductorNode.append_child("CoordsStart");
-        node.append_attribute("X").set_value(dbl2str(i_conductor.second->getStartCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(i_conductor.second->getStartCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(i_conductor.second->getStartCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().x).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().y).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().z).c_str());
 
         node = conductorNode.append_child("CoordsEnd");
-        node.append_attribute("X").set_value(dbl2str(i_conductor.second->getEndCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(i_conductor.second->getEndCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(i_conductor.second->getEndCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().x).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().y).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().z).c_str());
 
         node = conductorNode.append_child("Radius");
-        node.append_attribute("Value").set_value(dbl2str(i_conductor.second->getRadius()).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getConductors().at(i)->getRadius()).c_str());
     }
 
     //Conductors end-----------------------------------------------------------------
@@ -1277,48 +1235,48 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     //Building Conductors node----------------------------------------------------------------
         conductorsNode = configNode.append_child("BuildingConductors");
 
-    for(auto& i_conductor : config->getBuildingConductors()){
+    for(unsigned int i=1; i<=config->getBuildingConductors().size(); i++){
         conductorNode = conductorsNode.append_child("Conductor");
-        conductorNode.append_attribute("Id").set_value(i_conductor.first.c_str());
+        conductorNode.append_attribute("Id").set_value(config->getBuildingConductors().at(i)->getId());
         conductorNode.append_attribute("Type").set_value("BuildingConductor");
 
         node = conductorNode.append_child("LeadTypeId");
-        if(i_conductor.second->getLeadType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getLeadType()->getId().c_str());
+        if(config->getBuildingConductors().at(i)->getLeadType() != NULL){
+            node.append_attribute("Value").set_value(config->getBuildingConductors().at(i)->getLeadType()->getId());
         }
 
         node = conductorNode.append_child("ConductorTypeId");
-        if(i_conductor.second->getConductorType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getConductorType()->getId().c_str());
+        if(config->getBuildingConductors().at(i)->getConductorType() != NULL){
+            node.append_attribute("Value").set_value(config->getBuildingConductors().at(i)->getConductorType()->getId());
         }
 
         node = conductorNode.append_child("CoatingId");
-        if(i_conductor.second->getCoating() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getCoating()->getId().c_str());
+        if(config->getBuildingConductors().at(i)->getCoating() != NULL){
+            node.append_attribute("Value").set_value(config->getBuildingConductors().at(i)->getCoating()->getId());
         }
 
         node = conductorNode.append_child("EnergizationId");
-        if(i_conductor.second->getEnergization() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getEnergization()->getId().c_str());
+        if(config->getBuildingConductors().at(i)->getEnergization() != NULL){
+            node.append_attribute("Value").set_value(config->getBuildingConductors().at(i)->getEnergization()->getId());
         }
 
         node = conductorNode.append_child("CableTypeId");
-        if(i_conductor.second->getCableType() != NULL){
-            node.append_attribute("Value").set_value(i_conductor.second->getCableType()->getId().c_str());
+        if(config->getBuildingConductors().at(i)->getCableType() != NULL){
+            node.append_attribute("Value").set_value(config->getBuildingConductors().at(i)->getCableType()->getId());
         }
 
         node = conductorNode.append_child("CoordsStart");
-        node.append_attribute("X").set_value(dbl2str(i_conductor.second->getStartCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(i_conductor.second->getStartCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(i_conductor.second->getStartCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getBuildingConductors().at(i)->getStartCoords().x).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getBuildingConductors().at(i)->getStartCoords().y).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getBuildingConductors().at(i)->getStartCoords().z).c_str());
 
         node = conductorNode.append_child("CoordsEnd");
-        node.append_attribute("X").set_value(dbl2str(i_conductor.second->getEndCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(i_conductor.second->getEndCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(i_conductor.second->getEndCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getBuildingConductors().at(i)->getEndCoords().x).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getBuildingConductors().at(i)->getEndCoords().y).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getBuildingConductors().at(i)->getEndCoords().z).c_str());
 
         node = conductorNode.append_child("Radius");
-        node.append_attribute("Value").set_value(dbl2str(i_conductor.second->getRadius()).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getBuildingConductors().at(i)->getRadius()).c_str());
     }
 
     //Building Conductors end-----------------------------------------------------------------
@@ -1327,22 +1285,22 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     pugi::xml_node buildingsNode = configNode.append_child("Buildings");
     pugi::xml_node buildingNode;
 
-    for(auto& i_building : config->getBuildings()){
+    for(unsigned int i=1; i<=config->getBuildings().size(); i++){
         buildingNode = buildingsNode.append_child("Building");
-        buildingNode.append_attribute("Id").set_value(i_building.first.c_str());
+        buildingNode.append_attribute("Id").set_value(config->getBuildings().at(i)->getId());
 
         node = buildingNode.append_child("Faces");
-        node.append_attribute("Value").set_value(std::to_string(i_building.second->getFaces()).c_str());
+        node.append_attribute("Value").set_value(std::to_string(config->getBuildings().at(i)->getFaces()).c_str());
 
         node = buildingNode.append_child("Height");
-        node.append_attribute("Value").set_value(dbl2str(i_building.second->getHeight()).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getBuildings().at(i)->getHeight()).c_str());
 
         node = buildingNode.append_child("Step");
-        node.append_attribute("Value").set_value(dbl2str(i_building.second->getStep()).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getBuildings().at(i)->getStep()).c_str());
 
         node = buildingNode.append_child("Distance");
-        node.append_attribute("Min").set_value(dbl2str(i_building.second->getDistanceMin()).c_str());
-        node.append_attribute("Max").set_value(dbl2str(i_building.second->getDistanceMax()).c_str());
+        node.append_attribute("Min").set_value(dbl2str(config->getBuildings().at(i)->getDistanceMin()).c_str());
+        node.append_attribute("Max").set_value(dbl2str(config->getBuildings().at(i)->getDistanceMax()).c_str());
     }
 
     //Buildings end-----------------------------------------------------------------
@@ -1374,25 +1332,25 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     pugi::xml_node profilesNode = configNode.append_child("Profiles");
     pugi::xml_node profileNode;
 
-    for(auto& i_profile : config->getProfiles()){
+    for(unsigned int i=1; i<=config->getProfiles().size(); i++){
         profileNode = profilesNode.append_child("Profile");
-        profileNode.append_attribute("Id").set_value(i_profile.first.c_str());
+        profileNode.append_attribute("Id").set_value(config->getProfiles().at(i)->id);
 
         node = profileNode.append_child("XCoords");
-        node.append_attribute("Start").set_value(dbl2str(i_profile.second->xCoords.start).c_str());
-        node.append_attribute("End").set_value(dbl2str(i_profile.second->xCoords.end).c_str());
-        node.append_attribute("Step").set_value(dbl2str(i_profile.second->xCoords.step).c_str());
+        node.append_attribute("Start").set_value(dbl2str(config->getProfiles().at(i)->xCoords.start).c_str());
+        node.append_attribute("End").set_value(dbl2str(config->getProfiles().at(i)->xCoords.end).c_str());
+        node.append_attribute("Step").set_value(dbl2str(config->getProfiles().at(i)->xCoords.step).c_str());
 
         node = profileNode.append_child("YCoords");
-        node.append_attribute("Start").set_value(dbl2str(i_profile.second->yCoords.start).c_str());
-        node.append_attribute("End").set_value(dbl2str(i_profile.second->yCoords.end).c_str());
-        node.append_attribute("Step").set_value(dbl2str(i_profile.second->yCoords.step).c_str());
+        node.append_attribute("Start").set_value(dbl2str(config->getProfiles().at(i)->yCoords.start).c_str());
+        node.append_attribute("End").set_value(dbl2str(config->getProfiles().at(i)->yCoords.end).c_str());
+        node.append_attribute("Step").set_value(dbl2str(config->getProfiles().at(i)->yCoords.step).c_str());
 
         node = profileNode.append_child("NLine");
-        node.append_attribute("Value").set_value(dbl2str(i_profile.second->NLine).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->NLine).c_str());
 
         node = profileNode.append_child("MCol");
-        node.append_attribute("Value").set_value(dbl2str(i_profile.second->MCol).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->MCol).c_str());
     }
 
     //Profiles end-----------------------------------------------------------------
