@@ -35,8 +35,24 @@
 
 #include "coating.h"
 
+/*!
+ \brief
+
+ \fn Coating::Coating
+*/
 Coating::Coating() : Component(0, "", false, true){}
 
+/*!
+ \brief
+
+ \fn Coating::Coating
+ \param name
+*/
 Coating::Coating(std::string const& name) : Component(0, name, false, true){}
 
+/*!
+ \brief
+
+ \fn Coating::~Coating
+*/
 Coating::~Coating(){}

@@ -35,6 +35,11 @@
 
 #include "configuration.h"
 
+/*!
+ \brief
+
+ \fn Configuration::Configuration
+*/
 Configuration::Configuration(){
     m_identifier = "default";
     m_units = "Metric";
@@ -42,12 +47,26 @@ Configuration::Configuration(){
 
 }
 
+/*!
+ \brief
+
+ \fn Configuration::Configuration
+ \param identifier
+ \param units
+ \param frequency
+*/
 Configuration::Configuration(std::string const& identifier, std::string const& units, std::string const& frequency){
     m_identifier = identifier;
     m_units = units;
     m_frequency = frequency;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::Configuration
+ \param config
+*/
 Configuration::Configuration(Configuration const* config){
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
@@ -65,6 +84,11 @@ Configuration::Configuration(Configuration const* config){
     m_profiles = config->getProfiles();
 }
 
+/*!
+ \brief
+
+ \fn Configuration::~Configuration
+*/
 Configuration::~Configuration(){
     m_leadTypes.clear();
 
@@ -85,6 +109,13 @@ Configuration::~Configuration(){
     m_profiles.clear();
 }
 
+/*!
+ \brief
+
+ \fn Configuration::operator =
+ \param config
+ \return Configuration &Configuration::operator
+*/
 Configuration& Configuration::operator=(Configuration const* config){
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
@@ -104,26 +135,62 @@ Configuration& Configuration::operator=(Configuration const* config){
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::setIdentifier
+ \param identifier
+ \return Configuration
+*/
 Configuration& Configuration::setIdentifier(std::string const& identifier){
     m_identifier = identifier;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::setUnits
+ \param units
+ \return Configuration
+*/
 Configuration& Configuration::setUnits(std::string const& units){
     m_units = units;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::setFrequency
+ \param frequency
+ \return Configuration
+*/
 Configuration& Configuration::setFrequency(std::string const& frequency){
     m_frequency = frequency;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::setComputations
+ \param comp
+ \return Configuration
+*/
 Configuration& Configuration::setComputations(computations const& comp){
     m_computations = comp;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addLeadType
+ \param leadType
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addLeadType(LeadType *leadType, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -142,12 +209,27 @@ Configuration& Configuration::addLeadType(LeadType *leadType, bool const& newAdd
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeLeadType
+ \param leadType
+ \return Configuration
+*/
 Configuration& Configuration::removeLeadType(LeadType *leadType){
     if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addCoating
+ \param coating
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addCoating(Coating *coating, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -166,12 +248,27 @@ Configuration& Configuration::addCoating(Coating *coating, bool const& newAdd){
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeCoating
+ \param coating
+ \return Configuration
+*/
 Configuration& Configuration::removeCoating(Coating *coating){
     if(m_coatings.count(coating->getId())) m_coatings.erase(coating->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addEnergization
+ \param energization
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addEnergization(Energization *energization, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -190,18 +287,39 @@ Configuration& Configuration::addEnergization(Energization *energization, bool c
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeEnergization
+ \param energization
+ \return Configuration
+*/
 Configuration& Configuration::removeEnergization(Energization *energization){
     if(m_energizations.count(energization->getId())) m_energizations.erase(energization->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addTolerance
+ \param tolerance
+ \return Configuration
+*/
 Configuration& Configuration::addTolerance(double const& tolerance){
     m_tolerances.push_back(tolerance);
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeTolerance
+ \param tolerance
+ \return Configuration
+*/
 Configuration& Configuration::removeTolerance(double const& tolerance){
     bool done;
 
@@ -219,6 +337,14 @@ Configuration& Configuration::removeTolerance(double const& tolerance){
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addConductorType
+ \param conductorType
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addConductorType(ConductorType *conductorType, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -237,12 +363,27 @@ Configuration& Configuration::addConductorType(ConductorType *conductorType, boo
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeConductorType
+ \param conductorType
+ \return Configuration
+*/
 Configuration& Configuration::removeConductorType(ConductorType *conductorType){
     if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.erase(conductorType->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addConductor
+ \param conductor
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addConductor(Conductor *conductor, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -261,12 +402,27 @@ Configuration& Configuration::addConductor(Conductor *conductor, bool const& new
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeConductor
+ \param conductor
+ \return Configuration
+*/
 Configuration& Configuration::removeConductor(Conductor *conductor){
     if(m_conductors.count(conductor->getId())) m_conductors.erase(conductor->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addBuildingConductor
+ \param conductor
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addBuildingConductor(Conductor *conductor, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -287,12 +443,27 @@ Configuration& Configuration::addBuildingConductor(Conductor *conductor, bool co
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeBuildingConductor
+ \param conductor
+ \return Configuration
+*/
 Configuration& Configuration::removeBuildingConductor(Conductor *conductor){
     if(m_buildingConductors.count(conductor->getId())) m_buildingConductors.erase(conductor->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addBuilding
+ \param building
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addBuilding(Building *building, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -311,12 +482,27 @@ Configuration& Configuration::addBuilding(Building *building, bool const& newAdd
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeBuilding
+ \param building
+ \return Configuration
+*/
 Configuration& Configuration::removeBuilding(Building *building){
     if(m_buildings.count(building->getId())) m_buildings.erase(building->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addProfile
+ \param p
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addProfile(profile* p, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -335,12 +521,27 @@ Configuration& Configuration::addProfile(profile* p, bool const& newAdd){
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeProfile
+ \param p
+ \return Configuration
+*/
 Configuration& Configuration::removeProfile(profile* p){
     if(m_profiles.count(p->id)) m_profiles.erase(p->id);
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::addCableType
+ \param cableType
+ \param newAdd
+ \return Configuration
+*/
 Configuration& Configuration::addCableType(CableType* cableType, bool const& newAdd){
     bool alreadyPresent=false;
 
@@ -359,72 +560,176 @@ Configuration& Configuration::addCableType(CableType* cableType, bool const& new
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::removeCableType
+ \param cableType
+ \return Configuration
+*/
 Configuration& Configuration::removeCableType(CableType* cableType){
     if(m_cableTypes.count(cableType->getId())) m_cableTypes.erase(cableType->getId());
 
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::setComputations
+ \return computations
+*/
 computations& Configuration::setComputations(){
     return m_computations;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getIdentifier
+ \return const std::string
+*/
 std::string const& Configuration::getIdentifier() const{
     return m_identifier;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getUnits
+ \return const std::string
+*/
 std::string const& Configuration::getUnits() const{
     return m_units;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getFrequency
+ \return const std::string
+*/
 std::string const& Configuration::getFrequency() const{
     return m_frequency;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getLeadTypes
+ \return std::unordered_map<int, LeadType *>
+*/
 std::unordered_map<int, LeadType*> Configuration::getLeadTypes() const{
     return m_leadTypes;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getCoatings
+ \return std::unordered_map<int, Coating *>
+*/
 std::unordered_map<int, Coating*> Configuration::getCoatings() const{
     return m_coatings;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getEnergizations
+ \return std::unordered_map<int, Energization *>
+*/
 std::unordered_map<int, Energization*> Configuration::getEnergizations() const{
     return m_energizations;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getTolerances
+ \return std::vector<double>
+*/
 std::vector<double> Configuration::getTolerances() const{
     return m_tolerances;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getConductorTypes
+ \return std::unordered_map<int, ConductorType *>
+*/
 std::unordered_map<int, ConductorType*> Configuration::getConductorTypes() const{
     return m_conductorTypes;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getConductors
+ \return std::unordered_map<int, Conductor *>
+*/
 std::unordered_map<int, Conductor*> Configuration::getConductors() const{
     return m_conductors;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getBuildingConductors
+ \return std::unordered_map<int, Conductor *>
+*/
 std::unordered_map<int, Conductor*> Configuration::getBuildingConductors() const{
     return m_buildingConductors;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getBuildings
+ \return std::unordered_map<int, Building *>
+*/
 std::unordered_map<int, Building*> Configuration::getBuildings() const{
     return m_buildings;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getComputations
+ \return const computations
+*/
 computations const& Configuration::getComputations() const{
     return m_computations;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getProfiles
+ \return std::unordered_map<int, profile *>
+*/
 std::unordered_map<int, profile*> Configuration::getProfiles() const{
     return m_profiles;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::getCableTypes
+ \return std::unordered_map<int, CableType *>
+*/
 std::unordered_map<int, CableType*> Configuration::getCableTypes() const{
     return m_cableTypes;
 }
 
+/*!
+ \brief
+
+ \fn Configuration::idGenerator
+ \param type
+ \return int
+*/
 int Configuration::idGenerator(const std::string& type){
     int result = 0;
 

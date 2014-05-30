@@ -45,6 +45,18 @@
 
 class Component;
 
+/*!
+ \brief Classe composante qui représente une valeur d'énergization.
+
+ Cette classe représente les valeurs d'energization dans le modèle de la configuration.
+
+ La configuration par défaut contient 7 energizations, soit les 3 phases AC, les 2 pôles DC et le GND.
+ Elles ont un voltage de 441 700 V.
+
+ On peut ajouter des energizations personalisés qui seront sauvegardés dans la configuration.
+
+ \class Energization energization.h "classes/energization.h"
+*/
 class Energization : public Component
 {
     public:

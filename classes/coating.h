@@ -42,6 +42,18 @@
 
 class Component;
 
+/*!
+ \brief Classe composante qui représente un type de recouvrement.
+
+ Classe qui représente un type de recouvrement dans le modèle de la configuration.
+
+ Dans la configuration par défaut, deux types de recouvrement sont définis:
+ Insulated, Default Coating
+
+ Il est possible d'ajouter des types de recouvrement personalisés qui se retrouveront dans le fichier de simulation.
+
+ \class Coating coating.h "classes/coating.h"
+*/
 class Coating : public Component
 {
     public:

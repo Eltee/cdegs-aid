@@ -42,6 +42,16 @@
 
 class CableType;
 
+/*!
+ \brief Classe composante qui représente un type de câblage.
+
+ Cette classe représente un type de câblage. Dans la configuration par défaut, un seul type de câblage est défini:
+ (Not a Cable)
+
+ Il est possible d'ajouter des types de câblages personalisés qui se retrouveront dans le fichier de simulation.
+
+ \class CableType cabletype.h "classes/cabletype.h"
+*/
 class CableType : public Component
 {
     public:

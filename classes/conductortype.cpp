@@ -35,42 +35,100 @@
 
 #include "conductortype.h"
 
+/*!
+ \brief
+
+ \fn ConductorType::ConductorType
+*/
 ConductorType::ConductorType() : Component(0, "", false, true){
     m_type = "default";
     m_resistivity = 1.64;
     m_permeability = 1.0;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::ConductorType
+ \param type
+ \param name
+ \param resistivity
+ \param permeability
+*/
 ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(0, name, false, true){
     m_type = type;
     m_resistivity = resistivity;
     m_permeability = permeability;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::~ConductorType
+*/
 ConductorType::~ConductorType(){}
 
+/*!
+ \brief
+
+ \fn ConductorType::getType
+ \return const std::string
+*/
 std::string const& ConductorType::getType() const{
     return m_type;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::getResistivity
+ \return const double
+*/
 double const& ConductorType::getResistivity() const{
     return m_resistivity;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::getPermeability
+ \return const double
+*/
 double const& ConductorType::getPermeability() const{
     return m_permeability;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::setType
+ \param type
+ \return ConductorType
+*/
 ConductorType& ConductorType::setType(std::string const& type){
     m_type = type;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::setResistivity
+ \param resistivity
+ \return ConductorType
+*/
 ConductorType& ConductorType::setResistivity(double const& resistivity){
     m_resistivity = resistivity;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn ConductorType::setPermeability
+ \param permeability
+ \return ConductorType
+*/
 ConductorType& ConductorType::setPermeability(double const& permeability){
     m_permeability = permeability;
     return *this;

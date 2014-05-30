@@ -35,6 +35,11 @@
 
 #include "settings.h"
 
+/*!
+ \brief
+
+ \fn Settings::Settings
+*/
 Settings::Settings()
 {
 }

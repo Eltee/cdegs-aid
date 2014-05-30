@@ -55,12 +55,24 @@ class CableType;
 class Component;
 class Configuration;
 
+/*!
+ \brief Struct qui représente une coordonnée.
+
+ \class coords conductor.h "classes/conductor.h"
+*/
 struct coords{
     double x = 0.0;
     double y = 0.0;
     double z = 0.0;
 };
 
+/*!
+ \brief Classe composante qui représente un conducteur.
+
+ Cette classe représente un objet conducteur. Possiblement l'objet le plus important de la simulation.
+
+ \class Conductor conductor.h "classes/conductor.h"
+*/
 class Conductor : public Component
 {
     public:

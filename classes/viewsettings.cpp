@@ -35,6 +35,11 @@
 
 #include "viewsettings.h"
 
+/*!
+ \brief
+
+ \fn ViewSettings::ViewSettings
+*/
 ViewSettings::ViewSettings()
 {
 }

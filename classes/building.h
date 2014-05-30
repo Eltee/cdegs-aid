@@ -42,6 +42,15 @@
 
 class Component;
 
+/*!
+ \brief Classe composante qui représente un bâtiment.
+
+ Cette classe représente, dans le modèle, un bâtiment ajouté à la configuration.
+
+ Celui-ci sera ensuite converti en les conducteurs apropriés pour la simulation.
+
+ \class Building building.h "classes/building.h"
+*/
 class Building : public Component
 {
     public:

@@ -35,8 +35,24 @@
 
 #include "leadtype.h"
 
+/*!
+ \brief
+
+ \fn LeadType::LeadType
+*/
 LeadType::LeadType() : Component(0, "", false, true){}
 
+/*!
+ \brief
+
+ \fn LeadType::LeadType
+ \param name
+*/
 LeadType::LeadType(std::string const& name) : Component(0, name, false, true){}
 
+/*!
+ \brief
+
+ \fn LeadType::~LeadType
+*/
 LeadType::~LeadType(){}

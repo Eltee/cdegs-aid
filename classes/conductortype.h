@@ -42,6 +42,17 @@
 
 class Component;
 
+/*!
+ \brief Classe composante qui représente un type de conducteur.
+
+ Classe qui représente un type de conducteur dans la modèle de la configuration.
+
+ La configuration par défaut contient 4 types: Plastic, Default Conductor, Aluminium & Steel
+
+ On peut ajouter des types de conducteurs personalisés qui seront sauvegardés dans la configuration.
+
+ \class ConductorType conductortype.h "classes/conductortype.h"
+*/
 class ConductorType : public Component
 {
     public:

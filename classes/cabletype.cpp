@@ -35,8 +35,24 @@
 
 #include "cabletype.h"
 
+/*!
+ \brief
+
+ \fn CableType::CableType
+*/
 CableType::CableType() : Component(0, "", false, false){}
 
+/*!
+ \brief
+
+ \fn CableType::CableType
+ \param name
+*/
 CableType::CableType(std::string const& name) : Component(0, name, false, true){}
 
+/*!
+ \brief
+
+ \fn CableType::~CableType
+*/
 CableType::~CableType(){}

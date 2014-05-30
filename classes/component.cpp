@@ -35,6 +35,11 @@
 
 #include "component.h"
 
+/*!
+ \brief Constructeur par défaut.
+
+ \fn Component::Component
+*/
 Component::Component(){
     m_id = 0;
     m_name = "default";
@@ -42,6 +47,15 @@ Component::Component(){
     m_saveable = false;
 }
 
+/*!
+ \brief Constructeur qui prend des paramètres.
+
+ \fn Component::Component(int const& id, std::string const& name, bool const& locked, bool const& saveable)
+ \param id L'identificateur
+ \param name Le nom
+ \param locked Barré(?)
+ \param saveable Sauvegardable(?)
+*/
 Component::Component(int const& id, std::string const& name, bool const& locked, bool const& saveable){
     m_id = id;
     m_name = name;
@@ -49,39 +63,96 @@ Component::Component(int const& id, std::string const& name, bool const& locked,
     m_saveable = saveable;
 }
 
+/*!
+ \brief Destructeur par défaut.
+
+ \fn Component::~Component
+*/
 Component::~Component(){}
 
+/*!
+ \brief Fonction qui retourne l'identificateur.
+
+ \fn Component::getId
+ \return L'identificateur
+*/
 const int& Component::getId() const{
     return m_id;
 }
 
+/*!
+ \brief Fonction qui retourne le nom.
+
+ \fn Component::getName
+ \return Le nom
+*/
 std::string const& Component::getName() const{
     return m_name;
 }
 
+/*!
+ \brief Fonction qui retourne un booléen indiquant si le composant est barré.
+
+ \fn Component::isLocked
+ \return Barré: vrai/faux
+*/
 bool const& Component::isLocked() const{
     return m_locked;
 }
 
+/*!
+ \brief Fonction qui retourne un booléen indiquant si le composant est sauvegardable.
+
+ \fn Component::isSaveable
+ \return Sauvegardable: vrai/faux
+*/
 bool const& Component::isSaveable() const{
     return m_saveable;
 }
 
+/*!
+ \brief Fonction permetttant de changer l'identificateur.
+
+ \fn Component::setId
+ \param id Le nouvel identificateur
+ \return L'objet lui-même (chaîne d'appels)
+*/
 Component& Component::setId(const int& id){
     m_id = id;
     return *this;
 }
 
+/*!
+ \brief Fonction permettant de changer le nom.
+
+ \fn Component::setName
+ \param name Le nouveau nom
+ \return L'objet lui-même (chaîne d'appels)
+*/
 Component& Component::setName(std::string const& name){
     m_name = name;
     return *this;
 }
 
+/*!
+ \brief Fonction permettant de barrer/débarrer le composant.
+
+ \fn Component::setLocked
+ \param locked Le nouveau booléen barré(?)
+ \return L'objet lui-même (chaîne d'appels)
+*/
 Component& Component::setLocked(bool const& locked){
     m_locked = locked;
     return *this;
 }
 
+/*!
+ \brief Fonction permettant de barrer/débarrer le composant.
+
+ \fn Component::setSaveable
+ \param saveable Le nouveau booléen sauvegardable(?)
+ \return L'objet lui-même (chaîne d'appels)
+*/
 Component& Component::setSaveable(bool const& saveable){
     m_saveable = saveable;
     return *this;

@@ -35,6 +35,11 @@
 
 #include "building.h"
 
+/*!
+ \brief
+
+ \fn Building::Building
+*/
 Building::Building() : Component(0, "", false, true){
     m_faces = 2;
     m_height = 6.0;
@@ -43,6 +48,16 @@ Building::Building() : Component(0, "", false, true){
     m_step = 0.5;
 }
 
+/*!
+ \brief
+
+ \fn Building::Building
+ \param faces
+ \param height
+ \param distanceMin
+ \param distanceMax
+ \param step
+*/
 Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step) : Component(0, "", false, true){
     m_faces = faces;
     m_height = height;
@@ -51,48 +66,118 @@ Building::Building(int const& faces, double const& height, double const& distanc
     m_step = step;
 }
 
+/*!
+ \brief
+
+ \fn Building::~Building
+*/
 Building::~Building(){}
 
+/*!
+ \brief
+
+ \fn Building::getFaces
+ \return const int
+*/
 int const& Building::getFaces() const{
     return m_faces;
 }
 
+/*!
+ \brief
+
+ \fn Building::getHeight
+ \return const double
+*/
 double const& Building::getHeight() const{
     return m_height;
 }
 
+/*!
+ \brief
+
+ \fn Building::getDistanceMin
+ \return const double
+*/
 double const& Building::getDistanceMin() const{
     return m_distanceMin;
 }
 
+/*!
+ \brief
+
+ \fn Building::getDistanceMax
+ \return const double
+*/
 double const& Building::getDistanceMax() const{
     return m_distanceMax;
 }
 
+/*!
+ \brief
+
+ \fn Building::getStep
+ \return const double
+*/
 double const& Building::getStep() const{
     return m_step;
 }
 
+/*!
+ \brief
+
+ \fn Building::setFaces
+ \param faces
+ \return Building
+*/
 Building& Building::setFaces(int const& faces){
     m_faces = faces;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Building::setHeight
+ \param height
+ \return Building
+*/
 Building& Building::setHeight(double const& height){
     m_height = height;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Building::setDistanceMin
+ \param distanceMin
+ \return Building
+*/
 Building& Building::setDistanceMin(double const& distanceMin){
     m_distanceMin = distanceMin;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Building::setDistanceMax
+ \param distanceMax
+ \return Building
+*/
 Building& Building::setDistanceMax(double const& distanceMax){
     m_distanceMax = distanceMax;
     return *this;
 }
 
+/*!
+ \brief
+
+ \fn Building::setStep
+ \param step
+ \return Building
+*/
 Building& Building::setStep(double const& step){
     m_step = step;
     return *this;

@@ -38,6 +38,15 @@
 
 #include <string>
 
+/*!
+ \brief Classe mère des composantes.
+
+ Cette classe représente la base de toutes les classes composantes dans le projet.
+
+ Elle contient des attributs de base et des méthodes pour les accèder.
+
+ \class Component component.h "classes/component.h"
+*/
 class Component
 {
     public:
@@ -57,9 +66,10 @@ class Component
         Component& setSaveable(bool const& saveable);
     //Setters end-------------------------------------------------
     protected:
-        int m_id;
-        std::string m_name;
-        bool m_locked, m_saveable;
+        int m_id; /*!< \brief L'identificateur numérique, normallement utilisée pour l'ordre dans le fichier de simulation */
+        std::string m_name; /*!< \brief Le nom de la composante */
+        bool m_locked; /*!< \brief Booléen qui permet l'édition/la suppression de la composante ou pas */
+        bool m_saveable; /*!< \brief Booléen qui permet la sauvegarde de la composante ou pas */
 };
 
 #endif // COMPONENT_H
