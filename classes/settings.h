@@ -36,6 +36,15 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+/*!
+ \brief Classe représentant les paramètres du logiciel. Présentement non-implémentée.
+
+ Cette classe contient et représente les paramètres du logiciel CDEGS-Aid.
+ Cette classe n'a pas encore d'attributs ni d'impact car elle n'est pas encore
+ implémentée.
+
+ \class Settings settings.h "classes/settings.h"
+*/
 class Settings
 {
     public:

@@ -49,6 +49,13 @@ namespace Ui {
     class configuration_widget;
 }
 
+/*!
+ \brief Classe qui représente une fenêtre contenant une configuration.
+
+ Cette fenêtre GUI représente une fenêtre/onglet contenant une configuration et ses options de modification.
+
+ \class configuration_widget configuration_widget.h "ui/configuration_widget.h"
+*/
 class configuration_widget : public QWidget
 {
         Q_OBJECT

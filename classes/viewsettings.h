@@ -36,6 +36,15 @@
 #ifndef VIEWSETTINGS_H
 #define VIEWSETTINGS_H
 
+/*!
+ \brief Classe représentant les paramètres visuels du logiciel. Présentement non-implémentée.
+
+ Cette classe contient et représente les paramètres visuels du logiciel CDEGS-Aid.
+ Cette classe n'a pas encore d'attributs ni d'impact car elle n'est pas encore
+ implémentée.
+
+ \class ViewSettings viewsettings.h "classes/viewsettings.h"
+*/
 class ViewSettings
 {
     public:

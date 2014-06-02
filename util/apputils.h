@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fstream>
+#include <memory>
 #include <math.h>
 #include <unordered_map>
 #include <wchar.h>
@@ -68,6 +69,15 @@ class ConductorType;
 class Energization;
 class LeadType;
 
+/*!
+ \brief Classe singleton qui sert d'outil général pour le projet.
+
+ La classe AppUtil est instanciée une seule fois et statique. La raison qu'elle est implémentée en tant que singleton plutôt que de simplement avoir des méthodes statiques est à cause de son rôle de logger.
+
+ Contient des méthodes de sauvegarde, de log et de lecture.
+
+ \class AppUtils apputils.h "util/apputils.h"
+*/
 class AppUtils
 {
     public:
@@ -92,6 +102,9 @@ class AppUtils
 
         std::string uniqueIdGenerator(); //done
 
+        void loadStylesheets();
+        std::unordered_map<std::string, QString> const& getStyleSheets() const;
+        QString const& getStyle(std::string name) const;
         std::string getAppData();
         std::string getPath(const QString& folderPath, const QString& filename);
         std::string getPath(const QString& filename);
@@ -114,6 +127,7 @@ class AppUtils
         void operator=(AppUtils const&);
         double m_projectId=0;
         Configuration* m_defaultConfig;
+        std::unordered_map<std::string, QString> m_styleSheets;
 };
 
 #endif // APPUTILS_H

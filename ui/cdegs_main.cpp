@@ -36,6 +36,12 @@
 #include "cdegs_main.h"
 #include "ui_cdegs_main.h"
 
+/*!
+ \brief
+
+ \fn cdegs_main::cdegs_main
+ \param parent
+*/
 cdegs_main::cdegs_main(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::cdegs_main){
@@ -44,6 +50,11 @@ cdegs_main::cdegs_main(QWidget *parent) :
     connectSlots();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::~cdegs_main
+*/
 cdegs_main::~cdegs_main(){
     delete ui;
     if(project != NULL){
@@ -53,6 +64,11 @@ cdegs_main::~cdegs_main(){
     }
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::connectSlots
+*/
 void cdegs_main::connectSlots(){
     QObject::connect(ui->actionNew_Project, SIGNAL(triggered()),
                       this,  SLOT(newProject()));
@@ -80,8 +96,19 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionAbout, SIGNAL(triggered()),
                      this, SLOT(about()));
+
+    QObject::connect(ui->actionStylesheet, SIGNAL(triggered()),
+                     this, SLOT(openStyleDialog()));
+
+    QObject::connect(ui->actionOpen_Config, SIGNAL(triggered()),
+                     this, SLOT(openConfigDialog()));
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::refresh
+*/
 void cdegs_main::refresh(){
     updateProject();
     updateConfig();
@@ -90,12 +117,22 @@ void cdegs_main::refresh(){
     updateTab();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::updateTab
+*/
 void cdegs_main::updateTab(){ //TO-DO: CHANGE
     if(project != NULL && ui->tabProjects->count() > 0){
         ui->tabProjects->setTabText(ui->tabProjects->currentIndex(), QString::fromStdString(project->getFileName()));
     }
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::updateProject
+*/
 void cdegs_main::updateProject(){
     if(ui->tabProjects->currentIndex() != -1){
         project = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getProject();
@@ -106,6 +143,11 @@ void cdegs_main::updateProject(){
 
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::updateConfig
+*/
 void cdegs_main::updateConfig(){
     if(ui->tabProjects->currentIndex() != -1){
         config = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getConfig();
@@ -115,6 +157,11 @@ void cdegs_main::updateConfig(){
     }
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::updateActions
+*/
 void cdegs_main::updateActions(){
     if(project != NULL){
         ui->actionSave_Project->setEnabled(true);
@@ -145,6 +192,11 @@ void cdegs_main::updateActions(){
     }
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::updateTitle
+*/
 void cdegs_main::updateTitle(){
     if(project != NULL){
         QString title;
@@ -163,6 +215,11 @@ void cdegs_main::updateTitle(){
     }
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::newProject
+*/
 void cdegs_main::newProject(){
     project = new Project();
 
@@ -174,6 +231,11 @@ void cdegs_main::newProject(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::openProject
+*/
 void cdegs_main::openProject(){
     QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
     project = AppUtils::getInstance().loadProject(filePath.toStdWString().c_str());
@@ -184,10 +246,20 @@ void cdegs_main::openProject(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::saveProject
+*/
 void cdegs_main::saveProject(){
     if(project != NULL) AppUtils::getInstance().saveProject(*project);
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::saveProjectAs
+*/
 void cdegs_main::saveProjectAs(){
     if(project!= NULL){
         QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS-Aid Project File (*.cdp)");
@@ -200,6 +272,11 @@ void cdegs_main::saveProjectAs(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::closeProject
+*/
 void cdegs_main::closeProject(){
     if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
         delete(project);
@@ -211,6 +288,12 @@ void cdegs_main::closeProject(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::closeProject
+ \param index
+*/
 void cdegs_main::closeProject(int index){
     if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
         delete(dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject());
@@ -220,6 +303,12 @@ void cdegs_main::closeProject(int index){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::changeProject
+ \param index
+*/
 void cdegs_main::changeProject(int index){
     if(index != -1){
         project = dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject();
@@ -231,10 +320,20 @@ void cdegs_main::changeProject(int index){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::changeTab
+*/
 void cdegs_main::changeTab(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::newConfig
+*/
 void cdegs_main::newConfig(){
     config = new Configuration();
 
@@ -245,26 +344,100 @@ void cdegs_main::newConfig(){
     }
 }
 
-void cdegs_main::openConfig(){
+/*!
+ \brief
 
+ \fn cdegs_main::openConfig
+*/
+void cdegs_main::openConfig(Configuration* config){
+    std::cout << config->getIdentifier() << std::endl;
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::saveConfig
+*/
 void cdegs_main::saveConfig(){
 
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::closeConfig
+*/
 void cdegs_main::closeConfig(){
 
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::exportConfig
+*/
 void cdegs_main::exportConfig(){
 
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::exportConfigAs
+*/
 void cdegs_main::exportConfigAs(){
 
 }
 
+/*!
+ \brief
+
+ \fn cdegs_main::about
+*/
 void cdegs_main::about(){
     QMessageBox::about(this, "CDEGS Aid", "CDEGS-Aid est un logiciel d'aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d'affichage et d'analyse de résultat de simulations CDEGS-HiFreq.\n\n(c) Renaud Bigras 2014");
 }
+
+/*!
+ \brief
+
+ \fn cdegs_main::openStyleDialog
+*/
+void cdegs_main::openStyleDialog(){
+    style_dialog* diag = new style_dialog(this);
+    QObject::connect(diag, SIGNAL(returnStyle(std::string)),
+                     this, SLOT(changeStyle(std::string)));
+    diag->exec();
+    QObject::disconnect(diag, SIGNAL(returnStyle(std::string)),
+                     this, SLOT(changeStyle(std::string)));
+    delete diag;
+}
+
+/*!
+ \brief
+
+ \fn cdegs_main::changeStyle
+ \param style
+*/
+void cdegs_main::changeStyle(std::string style){
+    QString styleSheet = AppUtils::getInstance().getStyleSheets().at(style);
+    this->setStyleSheet(styleSheet);
+}
+
+/*!
+ \brief
+
+ \fn cdegs_main::openConfigDialog
+*/
+void cdegs_main::openConfigDialog(){
+    if(project != NULL){
+        configuration_chooser_dialog* diag = new configuration_chooser_dialog(this, project);
+        QObject::connect(diag, SIGNAL(returnConfig(Configuration*)),
+                         this, SLOT(openConfig(Configuration*)));
+        diag->exec();
+        QObject::disconnect(diag, SIGNAL(returnConfig(Configuration*)),
+                            this, SLOT(openConfig(Configuration*)));
+        delete diag;
+    }
+}
+

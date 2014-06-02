@@ -38,6 +38,7 @@
 
 #include <string>
 #include <stdio.h>
+#include "structs.h"
 #include "leadtype.h"
 #include "conductortype.h"
 #include "coating.h"
@@ -54,17 +55,6 @@ class Energization;
 class CableType;
 class Component;
 class Configuration;
-
-/*!
- \brief Struct qui représente une coordonnée.
-
- \class coords conductor.h "classes/conductor.h"
-*/
-struct coords{
-    double x = 0.0;
-    double y = 0.0;
-    double z = 0.0;
-};
 
 /*!
  \brief Classe composante qui représente un conducteur.

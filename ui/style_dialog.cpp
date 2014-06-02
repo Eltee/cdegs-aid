@@ -35,53 +35,59 @@
 *   along with PROJECT_NAME. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef PROJECT_TAB_WIDGET_H
-#define PROJECT_TAB_WIDGET_H
+#include "style_dialog.h"
+#include "ui_style_dialog.h"
 
-#include <QWidget>
-#include "classes/project.h"
-#include "classes/configuration.h"
-#include "project_widget.h"
-#include "configuration_widget.h"
-#include "cdegs_main.h"
-
-class cdegs_main;
-class Project;
-class Configuration;
-
-namespace Ui {
-    class project_tab_widget;
+style_dialog::style_dialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::style_dialog)
+{
+    ui->setupUi(this);
+    m_model = new QStringListModel();
+    populateModel();
+    ui->listView_style->setModel(m_model);
+    connectSlots();
 }
 
-/*!
- \brief Classe représentant une fenêtre à onglet contenant les données et configurations du projet courant.
+void style_dialog::populateModel(){
+    QStringList stringList;
 
- Cette classe représente une fenêtre à onglets contenu dans la fenêtre à onglet principale de la fenêtre mère.
- Celle-ci contient un onglet pour les données et un onglet pour chaque configuration ouverte provenant du projet.
+    for(auto& entry : AppUtils::getInstance().getStyleSheets()){
+        stringList.push_back(QString::fromStdString(entry.first));
+    }
 
- \class project_tab_widget project_tab_widget.h "ui/project_tab_widget.h"
-*/
-class project_tab_widget : public QWidget
+    m_model->setStringList(stringList);
+}
+
+void style_dialog::connectSlots(){
+    QObject::connect(ui->pushButton_ok, SIGNAL(clicked()),
+                     this, SLOT(buttonOk()));
+
+    QObject::connect(ui->pushButton_cancel, SIGNAL(clicked()),
+                     this, SLOT(close()));
+
+    QObject::connect(ui->listView_style, SIGNAL(doubleClicked(QModelIndex)),
+                     this, SLOT(selectStyle(QModelIndex)));
+}
+
+void style_dialog::buttonOk(){
+    m_style = m_model->data(ui->listView_style->currentIndex(), Qt::DisplayRole).toString().toStdString();
+
+    emit returnStyle(m_style);
+
+    this->close();
+}
+
+void style_dialog::selectStyle(QModelIndex index){
+    m_style = m_model->data(index, Qt::DisplayRole).toString().toStdString();
+
+    emit returnStyle(m_style);
+
+    this->close();
+}
+
+style_dialog::~style_dialog()
 {
-        Q_OBJECT
-
-    public:
-        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, Project* p = NULL);
-        Project* getProject();
-        Configuration* getConfig();
-        void addConfig(Configuration* config);
-        void refresh();
-        void connectSlots();
-        ~project_tab_widget();
-
-    private slots:
-        void changeTab();
-        void closeConfig(int index);
-
-    private:
-        Ui::project_tab_widget *ui;
-        Project* project;
-        cdegs_main* defParent;
-};
-
-#endif // PROJECT_TAB_WIDGET_H
+    delete ui;
+    delete m_model;
+}

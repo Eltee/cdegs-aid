@@ -35,6 +35,15 @@
 
 #include "apputils.h"
 
+/*!
+ \brief
+
+ \fn AppUtils::drange
+ \param start
+ \param end
+ \param step
+ \return std::vector<double>
+*/
 std::vector<double> AppUtils::drange(double start, double end, double step){
     std::vector<double> range;
 
@@ -45,6 +54,12 @@ std::vector<double> AppUtils::drange(double start, double end, double step){
     return range;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::getOsName
+ \return std::string
+*/
 std::string AppUtils::getOsName(){
     #ifdef _WIN64
         return "Windows 64-bit";
@@ -63,10 +78,24 @@ std::string AppUtils::getOsName(){
     #endif
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::BoolToString
+ \param b
+ \return const char
+*/
 inline const char* AppUtils::BoolToString(const bool& b) const{
   return b ? "True" : "False";
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::readXML
+ \param toIter
+ \param iteration
+*/
 void AppUtils::readXML(const pugi::xml_node& toIter, int iteration){
     std::string whitespace = "";
 
@@ -98,18 +127,73 @@ void AppUtils::readXML(const pugi::xml_node& toIter, int iteration){
 
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::loadStylesheets
+*/
+void AppUtils::loadStylesheets(){
+    QDir directory(QString::fromStdString(getAppData()));
+
+    directory.setFilter(QDir::Files);
+
+    m_styleSheets.emplace("Default", "");
+
+    for(QString file : directory.entryList()){
+        if(file.endsWith(".css")){
+            QString style;
+            std::ifstream infile(directory.absoluteFilePath(file).toStdString());
+            std::string line;
+            while (std::getline(infile, line))
+            {
+                style.append(QString::fromStdString(line)).append("\n");
+            }
+            m_styleSheets.emplace(file.remove(file.size()-4, 4).toStdString(), style);
+        }
+    }
+}
+
+std::unordered_map<std::string, QString> const& AppUtils::getStyleSheets() const{
+    return m_styleSheets;
+}
+
+QString const& AppUtils::getStyle(std::string name) const{
+    return m_styleSheets.at(name);
+}
+
+/*!
+ \brief
+
+ \fn AppUtils::getAppData
+ \return std::string
+*/
 std::string AppUtils::getAppData(){
     std::string pathToFolder = qgetenv("APPDATA").constData();
-    pathToFolder += "/CDEGS-AID";
+    pathToFolder += "\\CDEGS-AID";
     return pathToFolder;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::getPath
+ \param folderPath
+ \param filename
+ \return std::string
+*/
 std::string AppUtils::getPath(const QString& folderPath, const QString& filename){
     QDir appFolder(folderPath);
     std::string path = appFolder.absoluteFilePath(filename).toStdString();
     return path;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::getPath
+ \param filename
+ \return std::string
+*/
 std::string AppUtils::getPath(const QString& filename){
     QString pathToFolder = qgetenv("APPDATA").constData();
     pathToFolder += "/CDEGS-AID";
@@ -118,6 +202,11 @@ std::string AppUtils::getPath(const QString& filename){
     return path;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::setDefaultConfig
+*/
 void AppUtils::setDefaultConfig(){
     if(0 == access(getPath("default_values.cdp").c_str(), 0)){ //Exists
         loadDefaultConfig();
@@ -128,6 +217,11 @@ void AppUtils::setDefaultConfig(){
     }
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::loadDefaultConfig
+*/
 void AppUtils::loadDefaultConfig(){
     m_defaultConfig = new Configuration();
 
@@ -194,6 +288,11 @@ void AppUtils::loadDefaultConfig(){
 
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::generateDefaultConfig
+*/
 void AppUtils::generateDefaultConfig(){
     pugi::xml_document doc;
 
@@ -427,10 +526,23 @@ void AppUtils::generateDefaultConfig(){
     doc.save_file(QString::fromStdString(getPath(filename)).toStdWString().c_str());
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::getDefaultConfig
+ \return const Configuration
+*/
 Configuration const* AppUtils::getDefaultConfig() const{
     return m_defaultConfig;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::loadConfig
+ \param configNode
+ \return Configuration
+*/
 Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     Configuration* config = new Configuration();
 
@@ -566,6 +678,14 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     return config;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::loadProject
+ \param folder
+ \param filename
+ \return Project
+*/
 Project* AppUtils::loadProject(const QString& folder, const QString& filename){
     Project* project = new Project();
 
@@ -622,6 +742,13 @@ Project* AppUtils::loadProject(const QString& folder, const QString& filename){
     return project;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::loadProject
+ \param fullPath
+ \return Project
+*/
 Project* AppUtils::loadProject(const wchar_t* fullPath){
     Project* project = new Project();
 
@@ -678,20 +805,48 @@ Project* AppUtils::loadProject(const wchar_t* fullPath){
     return project;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::radians
+ \param d
+ \return double
+*/
 double AppUtils::radians(const double& d) {
 return d * pi() / 180;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::degrees
+ \param r
+ \return double
+*/
 double AppUtils::degrees(const double& r) {
 return r * 180/ pi();
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::stringToUpper
+ \param strToConvert
+ \return std::string
+*/
 std::string AppUtils::stringToUpper(std::string strToConvert){
     std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(), ::toupper);
 
     return strToConvert;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::exportConfiguration
+ \param config
+ \param fullPath
+*/
 void AppUtils::exportConfiguration(const Configuration* config, const std::string& fullPath){
     std::ofstream configFile;
     std::string tolerances = "";
@@ -838,6 +993,13 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile.close();
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::dbl2str
+ \param d
+ \return std::string
+*/
 std::string AppUtils::dbl2str(const double& d)
 {
     if(d == 0.0) return "0";
@@ -860,6 +1022,13 @@ std::string AppUtils::dbl2str(const double& d)
     return s;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::append_dbl2str
+ \param s
+ \param d
+*/
 void AppUtils::append_dbl2str(std::string &s, const double& d) {
     size_t len = std::snprintf(0, 0, "%.10f", d);
     size_t oldsize = s.size();
@@ -880,6 +1049,12 @@ void AppUtils::append_dbl2str(std::string &s, const double& d) {
     }
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::uniqueIdGenerator
+ \return std::string
+*/
 std::string AppUtils::uniqueIdGenerator(){
     std::string result = "failure";
 
@@ -890,6 +1065,13 @@ std::string AppUtils::uniqueIdGenerator(){
     return result;
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::saveProject
+ \param project
+ \param path
+*/
 void AppUtils::saveProject(const Project &project, std::string& path){
     pugi::xml_document doc;
 
@@ -996,6 +1178,12 @@ void AppUtils::saveProject(const Project &project, std::string& path){
     doc.save_file(QString::fromStdString(getPath(QString::fromStdString(path), filename)).toStdWString().c_str());
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::saveProject
+ \param project
+*/
 void AppUtils::saveProject(const Project &project){
     pugi::xml_document doc;
 
@@ -1100,6 +1288,13 @@ void AppUtils::saveProject(const Project &project){
 
 }
 
+/*!
+ \brief
+
+ \fn AppUtils::saveConfiguration
+ \param config
+ \param parent
+*/
 void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &parent){
     pugi::xml_node configNode = parent.append_child("Configuration");
 

@@ -49,6 +49,13 @@ namespace Ui {
     class project_widget;
 }
 
+/*!
+ \brief Classe qui représente une fenêtre contenant les métadonnées/paramètres d'un projet.
+
+ Cette fenêtre GUI représente une fenêtre/onglet contenant un projet et ses options de modification.
+
+ \class project_widget project_widget.h "ui/project_widget.h"
+*/
 class project_widget : public QWidget
 {
         Q_OBJECT

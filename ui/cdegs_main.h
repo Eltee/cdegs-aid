@@ -46,9 +46,11 @@
 #include <QtUiTools/QUiLoader>
 #include <iostream>
 #include <QFileInfo>
-#include "ui/configuration_widget.h"
-#include "ui/project_tab_widget.h"
-#include "ui/project_widget.h"
+#include "configuration_widget.h"
+#include "project_tab_widget.h"
+#include "project_widget.h"
+#include "style_dialog.h"
+#include "configuration_chooser_dialog.h"
 #include "classes/configuration.h"
 #include "classes/project.h"
 
@@ -59,6 +61,14 @@ namespace Ui {
     class cdegs_main;
 }
 
+/*!
+ \brief Classe représentant la fenêtre principale du logiciel.
+
+ Cette classe représente la fenêtre mère du logiciel. C'est aussi le contrôleur principal,
+ compte-tenu de la mentalité M-VC de Qt (Un modèle et un hybride View/Controller)
+
+ \class cdegs_main cdegs_main.h "ui/cdegs_main.h"
+*/
 class cdegs_main : public QMainWindow
 {
         Q_OBJECT
@@ -84,11 +94,14 @@ class cdegs_main : public QMainWindow
         void changeTab();
         void changeProject(int index);
         void newConfig();
-        void openConfig();
+        void openConfig(Configuration* config);
         void saveConfig();
         void closeConfig();
         void exportConfig();
         void exportConfigAs();
+        void openStyleDialog();
+        void changeStyle(std::string style);
+        void openConfigDialog();
         void about();
 
     private:

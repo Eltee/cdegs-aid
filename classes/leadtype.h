@@ -42,6 +42,17 @@
 
 class Component;
 
+/*!
+ \brief Classe composante qui représente un type de connection câble
+
+ Cette classe représente le LeadType dans le modèle de la configuration.
+
+ Par défaut, il y a deux LeadTypes: Unconnected et Default Impedence.
+
+ On peut ajouter des LeadTypes personalisés qui seront sauvegardés dans la configuration.
+
+ \class LeadType leadtype.h "classes/leadtype.h"
+*/
 class LeadType : public Component
 {
     public:

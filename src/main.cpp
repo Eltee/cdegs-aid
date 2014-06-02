@@ -44,20 +44,27 @@
 #include <QtGlobal>
 #include <memory>
 #include <QStyleFactory>
+#include <fstream>
+#include <sstream>
 #include <QDate>
 #include <exception>
 #include "ui/cdegs_main.h"
 
-/*int main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
+    AppUtils::getInstance().setDefaultConfig();
+
+    AppUtils::getInstance().loadStylesheets();
 
     cdegs_main maine;
 
     maine.show();
 
-    return app.exec();
-}*/
+    return app.exec()
+            ;
+}
 
 /*
 
@@ -108,7 +115,7 @@ int main(int argc, char* argv[])
     return 0;
 }*/
 
-int main(int argc, char* argv[]){
+/*int main(int argc, char* argv[]){
     Project* p = new Project("Test", "great escape.cdp", QDate::currentDate(), "Dudebro", "test please");
 
     AppUtils::getInstance().generateDefaultConfig();
@@ -165,7 +172,54 @@ int main(int argc, char* argv[]){
     pro->ptNum = 181;
     pro->prNum = 401;
 
-    c->addProfile(pro, true);
+    profile* pro2 = new profile;
+
+    pro2->fromCoordsToStep(0, -50, 0, 0, -50, -45, 0, 50, 0, 181, 401);
+
+    std::cout << "Profile 1: " << std::endl
+              << "Start X: " << pro->start.x << std::endl
+              << "Start Y: " << pro->start.y << std::endl
+              << "Start Z: " << pro->start.z << std::endl
+              << "Point Step Dx: " << pro->ptStep.x << std::endl
+              << "Point Step Dy: " << pro->ptStep.y << std::endl
+              << "Point Step Dz: " << pro->ptStep.z << std::endl
+              << "Profile Step Dx: " << pro->prStep.x << std::endl
+              << "Profile Step Dy: " << pro->prStep.y << std::endl
+              << "Profile Step Dz: " << pro->prStep.z << std::endl
+              << "Number of Points: " << pro->ptNum << std::endl
+              << "Number of Profiles: " << pro->prNum << std::endl;
+
+    std::cout << "Profile 2: " << std::endl
+              << "Start X: " << pro2->start.x << std::endl
+              << "Start Y: " << pro2->start.y << std::endl
+              << "Start Z: " << pro2->start.z << std::endl
+              << "Point Step Dx: " << pro2->ptStep.x << std::endl
+              << "Point Step Dy: " << pro2->ptStep.y << std::endl
+              << "Point Step Dz: " << pro2->ptStep.z << std::endl
+              << "Profile Step Dx: " << pro2->prStep.x << std::endl
+              << "Profile Step Dy: " << pro2->prStep.y << std::endl
+              << "Profile Step Dz: " << pro2->prStep.z << std::endl
+              << "Number of Points: " << pro2->ptNum << std::endl
+              << "Number of Profiles: " << pro2->prNum << std::endl;
+
+    for(auto& coord : pro->toCoords()){
+        std::cout << "Point:" << std::endl
+                  << "X: " << coord.x << std::endl
+                  << "Y: " << coord.y << std::endl
+                  << "Z: " << coord.z << std::endl;
+    }
+
+    for(auto& coord : pro2->toCoords()){
+        std::cout << "Point:" << std::endl
+                  << "X: " << coord.x << std::endl
+                  << "Y: " << coord.y << std::endl
+                  << "Z: " << coord.z << std::endl;
+    }
+
+    delete(pro);
+    delete(pro2);
+
+    /*c->addProfile(pro, true);
 
     p->addConfiguration(c);
 

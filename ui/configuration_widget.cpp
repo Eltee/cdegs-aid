@@ -38,6 +38,14 @@
 #include "configuration_widget.h"
 #include "ui_configuration_widget.h"
 
+/*!
+ \brief
+
+ \fn configuration_widget::configuration_widget
+ \param parent
+ \param dp
+ \param config
+*/
 configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* dp, Configuration* config) :
     QWidget(parent),
     ui(new Ui::configuration_widget)
@@ -47,15 +55,31 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     defParent = dp;
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::getConfig
+ \return Configuration
+*/
 Configuration* configuration_widget::getConfig(){
     return configuration;
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::~configuration_widget
+*/
 configuration_widget::~configuration_widget()
 {
     delete ui;
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refresh
+*/
 void configuration_widget::refresh(){
     defParent->refresh();
 }

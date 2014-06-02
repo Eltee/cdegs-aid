@@ -44,25 +44,20 @@
 #include <QString>
 #include <memory>
 #include <stdio.h>
+#include "structs.h"
 #include "util/apputils.h"
 #include "configuration.h"
 
 class Configuration;
 
-struct project_metadata{
-        std::string name;
-        QDate date;
-        std::string author;
-        QTextDocument description;
-};
+/*!
+ \brief Classe conteneur mère. La classe principal du modèle. Contient le projet courant.
 
-struct project_settings{
-        std::string set1;
-        std::string set2;
-        std::string set3;
-        std::string set4;
-};
+ Cette classe contient plusieurs attributs propre à un certain projet et contient une ou plusieurs
+ configurations.
 
+ \class Project project.h "classes/project.h"
+*/
 class Project
 {
     public:

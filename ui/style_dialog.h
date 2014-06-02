@@ -35,53 +35,41 @@
 *   along with PROJECT_NAME. If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-#ifndef PROJECT_TAB_WIDGET_H
-#define PROJECT_TAB_WIDGET_H
+#ifndef STYLE_DIALOG_H
+#define STYLE_DIALOG_H
 
-#include <QWidget>
-#include "classes/project.h"
-#include "classes/configuration.h"
-#include "project_widget.h"
-#include "configuration_widget.h"
-#include "cdegs_main.h"
-
-class cdegs_main;
-class Project;
-class Configuration;
+#include <QDialog>
+#include <QStringListModel>
+#include <QStringList>
+#include "../util/apputils.h"
 
 namespace Ui {
-    class project_tab_widget;
+    class style_dialog;
 }
 
-/*!
- \brief Classe représentant une fenêtre à onglet contenant les données et configurations du projet courant.
-
- Cette classe représente une fenêtre à onglets contenu dans la fenêtre à onglet principale de la fenêtre mère.
- Celle-ci contient un onglet pour les données et un onglet pour chaque configuration ouverte provenant du projet.
-
- \class project_tab_widget project_tab_widget.h "ui/project_tab_widget.h"
-*/
-class project_tab_widget : public QWidget
+class style_dialog : public QDialog
 {
         Q_OBJECT
 
     public:
-        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, Project* p = NULL);
-        Project* getProject();
-        Configuration* getConfig();
-        void addConfig(Configuration* config);
-        void refresh();
+        explicit style_dialog(QWidget *parent = 0);
+        void populateModel();
         void connectSlots();
-        ~project_tab_widget();
+        ~style_dialog();
+
+    public slots:
+        void buttonOk();
 
     private slots:
-        void changeTab();
-        void closeConfig(int index);
+        void selectStyle(QModelIndex index);
+
+    signals:
+        std::string returnStyle(std::string style);
 
     private:
-        Ui::project_tab_widget *ui;
-        Project* project;
-        cdegs_main* defParent;
+        Ui::style_dialog *ui;
+        QStringListModel* m_model;
+        std::string m_style;
 };
 
-#endif // PROJECT_TAB_WIDGET_H
+#endif // STYLE_DIALOG_H

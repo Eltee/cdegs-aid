@@ -38,6 +38,14 @@
 #include "project_tab_widget.h"
 #include "ui_project_tab_widget.h"
 
+/*!
+ \brief
+
+ \fn project_tab_widget::project_tab_widget
+ \param parent
+ \param dp
+ \param p
+*/
 project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, Project* p) :
     QWidget(parent),
     ui(new Ui::project_tab_widget)
@@ -49,15 +57,31 @@ project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, Project*
     ui->tabProject->addTab(new project_widget(this, this, p), "Project Settings");
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::~project_tab_widget
+*/
 project_tab_widget::~project_tab_widget()
 {
     delete ui;
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::getProject
+ \return Project
+*/
 Project* project_tab_widget::getProject(){
     return project;
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::connectSlots
+*/
 void project_tab_widget::connectSlots(){
     QObject::connect(ui->tabProject, SIGNAL(currentChanged(int)),
                      this, SLOT(changeTab()));
@@ -66,6 +90,12 @@ void project_tab_widget::connectSlots(){
                      this, SLOT(closeConfig(int)));
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::getConfig
+ \return Configuration
+*/
 Configuration* project_tab_widget::getConfig(){
     if(ui->tabProject->currentIndex() > 0){
         return dynamic_cast<configuration_widget*>(ui->tabProject->currentWidget())->getConfig();
@@ -75,19 +105,41 @@ Configuration* project_tab_widget::getConfig(){
     }
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::refresh
+*/
 void project_tab_widget::refresh(){
     defParent->refresh();
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::addConfig
+ \param config
+*/
 void project_tab_widget::addConfig(Configuration* config){
     int index = ui->tabProject->addTab(new configuration_widget(this, this, config), QString::fromStdString(config->getIdentifier()));
     ui->tabProject->setCurrentIndex(index);
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::changeTab
+*/
 void project_tab_widget::changeTab(){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::closeConfig
+ \param index
+*/
 void project_tab_widget::closeConfig(int index){
 
     if(index > 0){
