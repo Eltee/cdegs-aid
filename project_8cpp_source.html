@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>CDEGS-Aid:  Fichier source de classes/project.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="hqt.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">CDEGS-Aid
+   </div>
+   <div id="projectbrief">Programme d&#39;aide à la génération de fichiers .f05 et à l&#39;analyse des résultats de simulations CDEGS.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b02e4219757ae4e3a0f1714873865bbf.html">classes</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">project.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">* Projet:     CDEGS-Aid</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*  /Project</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">* Nom/Name:    project.cpp</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">* Description: CDEGS-Aid est un logiciel d&#39;aide pour la génération de fichiers</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">*              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">*              simulations de champ électrics, d&#39;affichage et d&#39;analyse de</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">*              résultat de simulations CDEGS-HiFreq.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Auteur:      Renaud Bigras, Hydro-Québec Transénergie</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*  /Author</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">* Créé:        12-05-2014</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">*  /Created</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* Copyright:   (c) Renaud Bigras 2014</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">*   This file is part of CDEGS-Aid.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">*   CDEGS-Aid is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">*   the Free Software Foundation, either version 3 of the License, or</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">*   (at your option) any later version.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">*   CDEGS-Aid is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">*   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">*   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">*   along with CDEGS-Aid. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">*******************************************************************************/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;project.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classProject.html#aa007ecd17d5bc800e7a956cf666eea21">   44</a></span>&#160;<a class="code" href="classProject.html#aa007ecd17d5bc800e7a956cf666eea21">Project::Project</a>(){</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    m_id = AppUtils::getInstance().<a class="code" href="classAppUtils.html#af00169614584b396b33d588f15e482d5">uniqueIdGenerator</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    m_absPath = QDir::current().absolutePath().toStdString();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    m_relPath = QDir::current().path().toStdString();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    m_fileName = <span class="stringliteral">&quot;Project&quot;</span> + m_id + <span class="stringliteral">&quot;.cdp&quot;</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    m_defaultWindow = <span class="stringliteral">&quot;Metadata&quot;</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    m_lastWindow = <span class="stringliteral">&quot;Metadata&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    m_metadata.author = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    m_metadata.date = QDate::currentDate();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    m_metadata.name = <span class="stringliteral">&quot;Project &quot;</span> + m_id;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    m_projectSettings.set1 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    m_projectSettings.set2 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    m_projectSettings.set3 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    m_projectSettings.set4 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<a class="code" href="classProject.html#aa007ecd17d5bc800e7a956cf666eea21">Project::Project</a>(std::string <span class="keyword">const</span>&amp; name, std::string fileName, QDate <span class="keyword">const</span>&amp; date, std::string <span class="keyword">const</span>&amp; author, std::string <span class="keyword">const</span>&amp; description){</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    m_id = AppUtils::getInstance().<a class="code" href="classAppUtils.html#af00169614584b396b33d588f15e482d5">uniqueIdGenerator</a>();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    m_absPath = QDir::current().absolutePath().toStdString();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    m_relPath = QDir::current().path().toStdString();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    m_fileName = fileName;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    m_fileName.erase(remove_if(m_fileName.begin(), m_fileName.end(), isspace), m_fileName.end());</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    m_defaultWindow = <span class="stringliteral">&quot;Metadata&quot;</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    m_lastWindow = <span class="stringliteral">&quot;Metadata&quot;</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    m_metadata.author = author;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    m_metadata.date = date;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    m_metadata.description.setPlainText(QString::fromStdString(description));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    m_metadata.name = name;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    m_projectSettings.set1 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    m_projectSettings.set2 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    m_projectSettings.set3 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    m_projectSettings.set4 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;Project::~Project(){</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">for</span>(std::unordered_map&lt;std::string, Configuration*&gt;::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">delete</span>(it-&gt;second);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<a class="code" href="classProject.html#aa007ecd17d5bc800e7a956cf666eea21">Project::Project</a>(<a class="code" href="classProject.html">Project</a> <span class="keyword">const</span>* project){</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    m_id = project-&gt;<a class="code" href="classProject.html#a5e6b16f4f429713eb485beb19c55c270">getId</a>();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    m_absPath = project-&gt;<a class="code" href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">getAbsPath</a>();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    m_relPath = project-&gt;<a class="code" href="classProject.html#ad5c8fedff937b7cc9cd91466cd685457">getRelPath</a>();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    m_defaultConfig = project-&gt;<a class="code" href="classProject.html#aa0376b1a49477a655a4621685bf46978">getDefaultConfig</a>();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    m_lastConfig = project-&gt;<a class="code" href="classProject.html#a1025341dde5f39caf46dd5441b67e435">getLastConfig</a>();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    m_defaultWindow = project-&gt;<a class="code" href="classProject.html#a2d84f5d0502ab75a9f131615038418a6">getDefaultWindow</a>();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    m_lastWindow = project-&gt;<a class="code" href="classProject.html#a6a4e5775de41f68a87824dc15490691a">getLastWindow</a>();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    m_metadata.author = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().author;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    m_metadata.date = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().date;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    m_metadata.name = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().name;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    m_metadata.description.setPlainText(project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().description.toPlainText());</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    m_projectSettings.set1 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    m_projectSettings.set2 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    m_projectSettings.set3 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    m_projectSettings.set4 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    m_configurations = project-&gt;<a class="code" href="classProject.html#aa254d6927fe92b599084afa581ed1eba">getConfigurations</a>();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<a class="code" href="classProject.html">Project</a>&amp; Project::operator=(<a class="code" href="classProject.html">Project</a> <span class="keyword">const</span>* project){</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    m_id = project-&gt;<a class="code" href="classProject.html#a5e6b16f4f429713eb485beb19c55c270">getId</a>();</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    m_absPath = project-&gt;<a class="code" href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">getAbsPath</a>();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    m_relPath = project-&gt;<a class="code" href="classProject.html#ad5c8fedff937b7cc9cd91466cd685457">getRelPath</a>();</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    m_defaultConfig = project-&gt;<a class="code" href="classProject.html#aa0376b1a49477a655a4621685bf46978">getDefaultConfig</a>();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    m_lastConfig = project-&gt;<a class="code" href="classProject.html#a1025341dde5f39caf46dd5441b67e435">getLastConfig</a>();</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    m_defaultWindow = project-&gt;<a class="code" href="classProject.html#a2d84f5d0502ab75a9f131615038418a6">getDefaultWindow</a>();</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    m_lastWindow = project-&gt;<a class="code" href="classProject.html#a6a4e5775de41f68a87824dc15490691a">getLastWindow</a>();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    m_metadata.author = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().author;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    m_metadata.date = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().date;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    m_metadata.name = project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().name;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    m_metadata.description.setPlainText(project-&gt;<a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">getMetadata</a>().description.toPlainText());</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    m_projectSettings.set1 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    m_projectSettings.set2 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    m_projectSettings.set3 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    m_projectSettings.set4 = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    m_configurations = project-&gt;<a class="code" href="classProject.html#aa254d6927fe92b599084afa581ed1eba">getConfigurations</a>();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="classProject.html#a5e6b16f4f429713eb485beb19c55c270">  158</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a5e6b16f4f429713eb485beb19c55c270">Project::getId</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">return</span> m_id;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">  168</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">Project::getAbsPath</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> m_absPath;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="classProject.html#ad5c8fedff937b7cc9cd91466cd685457">  178</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#ad5c8fedff937b7cc9cd91466cd685457">Project::getRelPath</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">return</span> m_relPath;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">  188</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">Project::getFileName</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordflow">return</span> m_fileName;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;}</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno"><a class="line" href="classProject.html#a2d84f5d0502ab75a9f131615038418a6">  198</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a2d84f5d0502ab75a9f131615038418a6">Project::getDefaultWindow</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordflow">return</span> m_defaultWindow;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classProject.html#a6a4e5775de41f68a87824dc15490691a">  208</a></span>&#160;std::string <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a6a4e5775de41f68a87824dc15490691a">Project::getLastWindow</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">return</span> m_lastWindow;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="classProject.html#aa0376b1a49477a655a4621685bf46978">  218</a></span>&#160;<a class="code" href="classConfiguration.html">Configuration</a>* <a class="code" href="classProject.html#aa0376b1a49477a655a4621685bf46978">Project::getDefaultConfig</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">return</span> m_defaultConfig;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;}</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="classProject.html#a1025341dde5f39caf46dd5441b67e435">  228</a></span>&#160;<a class="code" href="classConfiguration.html">Configuration</a>* <a class="code" href="classProject.html#a1025341dde5f39caf46dd5441b67e435">Project::getLastConfig</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">return</span> m_lastConfig;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;}</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno"><a class="line" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">  238</a></span>&#160;<a class="code" href="structproject__metadata.html">project_metadata</a> <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#a998e20ff15c5459ed254b8d151518a17">Project::getMetadata</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">return</span> m_metadata;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="classProject.html#aae52ebeb5f2b1b951902d120deac36bb">  248</a></span>&#160;<a class="code" href="structproject__settings.html">project_settings</a> <span class="keyword">const</span>&amp; <a class="code" href="classProject.html#aae52ebeb5f2b1b951902d120deac36bb">Project::getSettings</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">return</span> m_projectSettings;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="classProject.html#aa254d6927fe92b599084afa581ed1eba">  258</a></span>&#160;std::unordered_map&lt;std::string, Configuration*&gt; <a class="code" href="classProject.html#aa254d6927fe92b599084afa581ed1eba">Project::getConfigurations</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">return</span> m_configurations;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;}</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="classProject.html#a26d38b168866bb58c7c7f96b114fd8f8">  269</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a26d38b168866bb58c7c7f96b114fd8f8">Project::setAbsPath</a>(std::string <span class="keyword">const</span>&amp; absPath){</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    m_absPath = absPath;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="classProject.html#a98a9b38bbd4f74edb3aac29d8cff2658">  281</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a98a9b38bbd4f74edb3aac29d8cff2658">Project::setRelPath</a>(std::string <span class="keyword">const</span>&amp; relPath){</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    m_relPath = relPath;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno"><a class="line" href="classProject.html#a781abc3e53ecd1ff800c0a438337d7b0">  293</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a781abc3e53ecd1ff800c0a438337d7b0">Project::setFileName</a>(std::string <span class="keyword">const</span>&amp; fileName){</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    m_fileName = fileName;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    m_fileName.erase(remove_if(m_fileName.begin(), m_fileName.end(), isspace), m_fileName.end());</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="classProject.html#a7a6c2b3fb3603b1cafe1d5661cb2e7bf">  306</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a7a6c2b3fb3603b1cafe1d5661cb2e7bf">Project::setDefaultWindow</a>(std::string <span class="keyword">const</span>&amp; defaultWindow){</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    m_defaultWindow = defaultWindow;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;}</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="classProject.html#afbe717296dfd8f0e6437940ed8eb1802">  318</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#afbe717296dfd8f0e6437940ed8eb1802">Project::setLastWindow</a>(std::string <span class="keyword">const</span>&amp; lastWindow){</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    m_lastWindow = lastWindow;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno"><a class="line" href="classProject.html#abf7658296daf511f89c5a77625de0efc">  330</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#abf7658296daf511f89c5a77625de0efc">Project::setDefaultConfig</a>(<a class="code" href="classConfiguration.html">Configuration</a>* defaultConfig){</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    m_defaultConfig = defaultConfig;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;}</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classProject.html#ade8b40ca079e1181e5af30028475868f">  342</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#ade8b40ca079e1181e5af30028475868f">Project::setLastConfig</a>(<a class="code" href="classConfiguration.html">Configuration</a>* lastConfig){</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    m_lastConfig = lastConfig;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;}</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
+<div class="line"><a name="l00354"></a><span class="lineno"><a class="line" href="classProject.html#a84dcb4f9267de1495735ce682a31e103">  354</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a84dcb4f9267de1495735ce682a31e103">Project::setMetaName</a>(std::string <span class="keyword">const</span>&amp; name){</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    m_metadata.name = name;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;}</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="classProject.html#afe4bbc5aa92aa25f759356c558499ea6">  366</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#afe4bbc5aa92aa25f759356c558499ea6">Project::setMetaAuthor</a>(std::string <span class="keyword">const</span>&amp; author){</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    m_metadata.author = author;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
+<div class="line"><a name="l00378"></a><span class="lineno"><a class="line" href="classProject.html#a659ae152d6d39924d452b734ba1329ac">  378</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a659ae152d6d39924d452b734ba1329ac">Project::setMetaDescription</a>(std::string <span class="keyword">const</span>&amp; description){</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    m_metadata.description.setPlainText(QString::fromStdString(description));</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;}</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<a class="code" href="classProject.html">Project</a>&amp; Project::setMetaDate(std::string <span class="keyword">const</span>&amp; date){</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    m_metadata.date = QDate::fromString(QString::fromStdString(date));</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;}</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<a class="code" href="classProject.html">Project</a>&amp; Project::setMetaDate(QDate <span class="keyword">const</span>&amp; date){</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    m_metadata.date = date;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;}</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00414"></a><span class="lineno"><a class="line" href="classProject.html#a8d4723be1ae7a345ea112be98d3439b2">  414</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a8d4723be1ae7a345ea112be98d3439b2">Project::setProjSet1</a>(std::string <span class="keyword">const</span>&amp; set1){</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    m_projectSettings.set1 = set1;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;}</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno"><a class="line" href="classProject.html#a972977d511d51abc9c3ff0b911308fa1">  426</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a972977d511d51abc9c3ff0b911308fa1">Project::setProjSet2</a>(std::string <span class="keyword">const</span>&amp; set2){</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    m_projectSettings.set2 = set2;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;}</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;</div>
+<div class="line"><a name="l00438"></a><span class="lineno"><a class="line" href="classProject.html#aada420ffb43fd97de958de6d50cc0533">  438</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#aada420ffb43fd97de958de6d50cc0533">Project::setProjSet3</a>(std::string <span class="keyword">const</span>&amp; set3){</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    m_projectSettings.set3 = set3;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;}</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;</div>
+<div class="line"><a name="l00450"></a><span class="lineno"><a class="line" href="classProject.html#adf013ad29f8c3713a0a4be71f42fcc02">  450</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#adf013ad29f8c3713a0a4be71f42fcc02">Project::setProjSet4</a>(std::string <span class="keyword">const</span>&amp; set4){</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    m_projectSettings.set4 = set4;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;}</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00462"></a><span class="lineno"><a class="line" href="classProject.html#a5396b740bb657669565b2198739f4efa">  462</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a5396b740bb657669565b2198739f4efa">Project::addConfiguration</a>(<a class="code" href="classConfiguration.html">Configuration</a>* config){</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    <span class="keywordtype">bool</span> alreadyPresent=<span class="keyword">false</span>;</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keywordflow">if</span>(m_configurations.count(config-&gt;<a class="code" href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">getIdentifier</a>())) alreadyPresent = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <span class="keywordflow">if</span>(!alreadyPresent) m_configurations.emplace(config-&gt;<a class="code" href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">getIdentifier</a>(), config);</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;}</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
+<div class="line"><a name="l00479"></a><span class="lineno"><a class="line" href="classProject.html#adf1e4c77ae4d6dcb5fc823f77e459e46">  479</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#adf1e4c77ae4d6dcb5fc823f77e459e46">Project::removeConfiguration</a>(<a class="code" href="classConfiguration.html">Configuration</a>* config){</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    <span class="keywordflow">if</span>(m_configurations.count(config-&gt;<a class="code" href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">getIdentifier</a>())) m_configurations.erase(config-&gt;<a class="code" href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">getIdentifier</a>());</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;}</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;</div>
+<div class="line"><a name="l00492"></a><span class="lineno"><a class="line" href="classProject.html#a7daf3f51bf2c085a8d907ddc09cf8390">  492</a></span>&#160;<a class="code" href="classProject.html">Project</a>&amp; <a class="code" href="classProject.html#a7daf3f51bf2c085a8d907ddc09cf8390">Project::setId</a>(std::string <span class="keyword">const</span>&amp; <span class="keywordtype">id</span>){</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    m_id = id;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;}</div>
+<div class="ttc" id="classProject_html_a7daf3f51bf2c085a8d907ddc09cf8390"><div class="ttname"><a href="classProject.html#a7daf3f51bf2c085a8d907ddc09cf8390">Project::setId</a></div><div class="ttdeci">Project &amp; setId(std::string const &amp;id)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00492">project.cpp:492</a></div></div>
+<div class="ttc" id="classProject_html_aa007ecd17d5bc800e7a956cf666eea21"><div class="ttname"><a href="classProject.html#aa007ecd17d5bc800e7a956cf666eea21">Project::Project</a></div><div class="ttdeci">Project()</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00044">project.cpp:44</a></div></div>
+<div class="ttc" id="classProject_html_aada420ffb43fd97de958de6d50cc0533"><div class="ttname"><a href="classProject.html#aada420ffb43fd97de958de6d50cc0533">Project::setProjSet3</a></div><div class="ttdeci">Project &amp; setProjSet3(std::string const &amp;set3)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00438">project.cpp:438</a></div></div>
+<div class="ttc" id="classProject_html_a781abc3e53ecd1ff800c0a438337d7b0"><div class="ttname"><a href="classProject.html#a781abc3e53ecd1ff800c0a438337d7b0">Project::setFileName</a></div><div class="ttdeci">Project &amp; setFileName(const std::string &amp;fileName)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00293">project.cpp:293</a></div></div>
+<div class="ttc" id="classProject_html_abf7658296daf511f89c5a77625de0efc"><div class="ttname"><a href="classProject.html#abf7658296daf511f89c5a77625de0efc">Project::setDefaultConfig</a></div><div class="ttdeci">Project &amp; setDefaultConfig(Configuration *defaultConfig)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00330">project.cpp:330</a></div></div>
+<div class="ttc" id="classProject_html_a84dcb4f9267de1495735ce682a31e103"><div class="ttname"><a href="classProject.html#a84dcb4f9267de1495735ce682a31e103">Project::setMetaName</a></div><div class="ttdeci">Project &amp; setMetaName(std::string const &amp;name)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00354">project.cpp:354</a></div></div>
+<div class="ttc" id="classProject_html_a98a9b38bbd4f74edb3aac29d8cff2658"><div class="ttname"><a href="classProject.html#a98a9b38bbd4f74edb3aac29d8cff2658">Project::setRelPath</a></div><div class="ttdeci">Project &amp; setRelPath(std::string const &amp;relPath)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00281">project.cpp:281</a></div></div>
+<div class="ttc" id="classProject_html_aa0376b1a49477a655a4621685bf46978"><div class="ttname"><a href="classProject.html#aa0376b1a49477a655a4621685bf46978">Project::getDefaultConfig</a></div><div class="ttdeci">Configuration * getDefaultConfig() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00218">project.cpp:218</a></div></div>
+<div class="ttc" id="classProject_html_a972977d511d51abc9c3ff0b911308fa1"><div class="ttname"><a href="classProject.html#a972977d511d51abc9c3ff0b911308fa1">Project::setProjSet2</a></div><div class="ttdeci">Project &amp; setProjSet2(std::string const &amp;set2)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00426">project.cpp:426</a></div></div>
+<div class="ttc" id="classProject_html_a26d38b168866bb58c7c7f96b114fd8f8"><div class="ttname"><a href="classProject.html#a26d38b168866bb58c7c7f96b114fd8f8">Project::setAbsPath</a></div><div class="ttdeci">Project &amp; setAbsPath(std::string const &amp;absPath)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00269">project.cpp:269</a></div></div>
+<div class="ttc" id="classProject_html_a659ae152d6d39924d452b734ba1329ac"><div class="ttname"><a href="classProject.html#a659ae152d6d39924d452b734ba1329ac">Project::setMetaDescription</a></div><div class="ttdeci">Project &amp; setMetaDescription(std::string const &amp;description)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00378">project.cpp:378</a></div></div>
+<div class="ttc" id="classProject_html_afbe717296dfd8f0e6437940ed8eb1802"><div class="ttname"><a href="classProject.html#afbe717296dfd8f0e6437940ed8eb1802">Project::setLastWindow</a></div><div class="ttdeci">Project &amp; setLastWindow(std::string const &amp;lastWindow)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00318">project.cpp:318</a></div></div>
+<div class="ttc" id="classProject_html_adf013ad29f8c3713a0a4be71f42fcc02"><div class="ttname"><a href="classProject.html#adf013ad29f8c3713a0a4be71f42fcc02">Project::setProjSet4</a></div><div class="ttdeci">Project &amp; setProjSet4(std::string const &amp;set4)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00450">project.cpp:450</a></div></div>
+<div class="ttc" id="classProject_html_ad5c8fedff937b7cc9cd91466cd685457"><div class="ttname"><a href="classProject.html#ad5c8fedff937b7cc9cd91466cd685457">Project::getRelPath</a></div><div class="ttdeci">std::string const &amp; getRelPath() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00178">project.cpp:178</a></div></div>
+<div class="ttc" id="classProject_html_aa254d6927fe92b599084afa581ed1eba"><div class="ttname"><a href="classProject.html#aa254d6927fe92b599084afa581ed1eba">Project::getConfigurations</a></div><div class="ttdeci">std::unordered_map&lt; std::string, Configuration * &gt; getConfigurations() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00258">project.cpp:258</a></div></div>
+<div class="ttc" id="classProject_html"><div class="ttname"><a href="classProject.html">Project</a></div><div class="ttdoc">Classe conteneur mère. La classe principal du modèle. Contient le projet courant. ...</div><div class="ttdef"><b>Definition:</b> <a href="project_8h_source.html#l00093">project.h:93</a></div></div>
+<div class="ttc" id="classProject_html_a08e3eb2d0ed29d5e3a87b6b93f96551d"><div class="ttname"><a href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">Project::getAbsPath</a></div><div class="ttdeci">std::string const &amp; getAbsPath() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00168">project.cpp:168</a></div></div>
+<div class="ttc" id="classProject_html_ade8b40ca079e1181e5af30028475868f"><div class="ttname"><a href="classProject.html#ade8b40ca079e1181e5af30028475868f">Project::setLastConfig</a></div><div class="ttdeci">Project &amp; setLastConfig(Configuration *lastConfig)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00342">project.cpp:342</a></div></div>
+<div class="ttc" id="classProject_html_a998e20ff15c5459ed254b8d151518a17"><div class="ttname"><a href="classProject.html#a998e20ff15c5459ed254b8d151518a17">Project::getMetadata</a></div><div class="ttdeci">project_metadata const &amp; getMetadata() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00238">project.cpp:238</a></div></div>
+<div class="ttc" id="classProject_html_a1025341dde5f39caf46dd5441b67e435"><div class="ttname"><a href="classProject.html#a1025341dde5f39caf46dd5441b67e435">Project::getLastConfig</a></div><div class="ttdeci">Configuration * getLastConfig() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00228">project.cpp:228</a></div></div>
+<div class="ttc" id="classProject_html_aae52ebeb5f2b1b951902d120deac36bb"><div class="ttname"><a href="classProject.html#aae52ebeb5f2b1b951902d120deac36bb">Project::getSettings</a></div><div class="ttdeci">project_settings const &amp; getSettings() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00248">project.cpp:248</a></div></div>
+<div class="ttc" id="classProject_html_a8d4723be1ae7a345ea112be98d3439b2"><div class="ttname"><a href="classProject.html#a8d4723be1ae7a345ea112be98d3439b2">Project::setProjSet1</a></div><div class="ttdeci">Project &amp; setProjSet1(std::string const &amp;set1)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00414">project.cpp:414</a></div></div>
+<div class="ttc" id="classProject_html_afe4bbc5aa92aa25f759356c558499ea6"><div class="ttname"><a href="classProject.html#afe4bbc5aa92aa25f759356c558499ea6">Project::setMetaAuthor</a></div><div class="ttdeci">Project &amp; setMetaAuthor(std::string const &amp;author)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00366">project.cpp:366</a></div></div>
+<div class="ttc" id="classProject_html_a6a4e5775de41f68a87824dc15490691a"><div class="ttname"><a href="classProject.html#a6a4e5775de41f68a87824dc15490691a">Project::getLastWindow</a></div><div class="ttdeci">std::string const &amp; getLastWindow() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00208">project.cpp:208</a></div></div>
+<div class="ttc" id="classProject_html_a5396b740bb657669565b2198739f4efa"><div class="ttname"><a href="classProject.html#a5396b740bb657669565b2198739f4efa">Project::addConfiguration</a></div><div class="ttdeci">Project &amp; addConfiguration(Configuration *config)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00462">project.cpp:462</a></div></div>
+<div class="ttc" id="classConfiguration_html"><div class="ttname"><a href="classConfiguration.html">Configuration</a></div><div class="ttdoc">Classe conteneur qui représente une configuration de simulation HiFreq. </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8h_source.html#l00330">configuration.h:330</a></div></div>
+<div class="ttc" id="classConfiguration_html_aeb75a68e368faeaa3b8a4ed70f09f5a0"><div class="ttname"><a href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">Configuration::getIdentifier</a></div><div class="ttdeci">std::string const &amp; getIdentifier() const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8cpp_source.html#l00592">configuration.cpp:592</a></div></div>
+<div class="ttc" id="classAppUtils_html_af00169614584b396b33d588f15e482d5"><div class="ttname"><a href="classAppUtils.html#af00169614584b396b33d588f15e482d5">AppUtils::uniqueIdGenerator</a></div><div class="ttdeci">std::string uniqueIdGenerator()</div><div class="ttdef"><b>Definition:</b> <a href="apputils_8cpp_source.html#l01024">apputils.cpp:1024</a></div></div>
+<div class="ttc" id="classProject_html_adf1e4c77ae4d6dcb5fc823f77e459e46"><div class="ttname"><a href="classProject.html#adf1e4c77ae4d6dcb5fc823f77e459e46">Project::removeConfiguration</a></div><div class="ttdeci">Project &amp; removeConfiguration(Configuration *config)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00479">project.cpp:479</a></div></div>
+<div class="ttc" id="classProject_html_a7a6c2b3fb3603b1cafe1d5661cb2e7bf"><div class="ttname"><a href="classProject.html#a7a6c2b3fb3603b1cafe1d5661cb2e7bf">Project::setDefaultWindow</a></div><div class="ttdeci">Project &amp; setDefaultWindow(std::string const &amp;defaultWindow)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00306">project.cpp:306</a></div></div>
+<div class="ttc" id="structproject__metadata_html"><div class="ttname"><a href="structproject__metadata.html">project_metadata</a></div><div class="ttdoc">Struct qui représente les métadonnées d&#39;un projet. </div><div class="ttdef"><b>Definition:</b> <a href="project_8h_source.html#l00063">project.h:63</a></div></div>
+<div class="ttc" id="structproject__settings_html"><div class="ttname"><a href="structproject__settings.html">project_settings</a></div><div class="ttdoc">Struct qui représente les paramètres propres à un projet. Présentement non-implémenté. </div><div class="ttdef"><b>Definition:</b> <a href="project_8h_source.html#l00078">project.h:78</a></div></div>
+<div class="ttc" id="classProject_html_a0dbf7cadf7be2038c38f30a20d2af93b"><div class="ttname"><a href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">Project::getFileName</a></div><div class="ttdeci">std::string const &amp; getFileName() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00188">project.cpp:188</a></div></div>
+<div class="ttc" id="classProject_html_a5e6b16f4f429713eb485beb19c55c270"><div class="ttname"><a href="classProject.html#a5e6b16f4f429713eb485beb19c55c270">Project::getId</a></div><div class="ttdeci">std::string const &amp; getId() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00158">project.cpp:158</a></div></div>
+<div class="ttc" id="classProject_html_a2d84f5d0502ab75a9f131615038418a6"><div class="ttname"><a href="classProject.html#a2d84f5d0502ab75a9f131615038418a6">Project::getDefaultWindow</a></div><div class="ttdeci">std::string const &amp; getDefaultWindow() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00198">project.cpp:198</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Lundi 2 Juin 2014 08:48:05 pour CDEGS-Aid par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

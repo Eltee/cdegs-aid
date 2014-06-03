@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>CDEGS-Aid:  Fichier source de classes/conductor.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="hqt.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">CDEGS-Aid
+   </div>
+   <div id="projectbrief">Programme d&#39;aide à la génération de fichiers .f05 et à l&#39;analyse des résultats de simulations CDEGS.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b02e4219757ae4e3a0f1714873865bbf.html">classes</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">conductor.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">* Projet:     CDEGS-Aid</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*  /Project</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">* Nom/Name:    conductor.h</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">* Description: CDEGS-Aid est un logiciel d&#39;aide pour la génération de fichiers</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">*              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">*              simulations de champ électrics, d&#39;affichage et d&#39;analyse de</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">*              résultat de simulations CDEGS-HiFreq.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Auteur:      Renaud Bigras, Hydro-Québec Transénergie</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*  /Author</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">* Créé:        12-05-2014</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">*  /Created</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* Copyright:   (c) Renaud Bigras 2014</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">*   This file is part of CDEGS-Aid.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">*   CDEGS-Aid is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">*   the Free Software Foundation, either version 3 of the License, or</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">*   (at your option) any later version.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">*   CDEGS-Aid is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">*   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">*   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">*   along with CDEGS-Aid. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">*******************************************************************************/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifndef CONDUCTOR_H</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define CONDUCTOR_H</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;leadtype.h&quot;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;conductortype.h&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;coating.h&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;energization.h&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;cabletype.h&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &quot;component.h&quot;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;configuration.h&quot;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;util/apputils.h&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">class </span><a class="code" href="classLeadType.html">LeadType</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">class </span><a class="code" href="classConductorType.html">ConductorType</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">class </span><a class="code" href="classCoating.html">Coating</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">class </span><a class="code" href="classEnergization.html">Energization</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">class </span><a class="code" href="classCableType.html">CableType</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">class </span><a class="code" href="classComponent.html">Component</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">class </span><a class="code" href="classConfiguration.html">Configuration</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classConductor.html">   65</a></span>&#160;<span class="keyword">class </span><a class="code" href="classConductor.html">Conductor</a> : <span class="keyword">public</span> <a class="code" href="classComponent.html">Component</a></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>(<a class="code" href="classConfiguration.html">Configuration</a> <span class="keyword">const</span>&amp; config, <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; leadType, <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; conductorType, <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; coating, <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; energization, <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; cableType, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; radius=0.0);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>(<a class="code" href="classLeadType.html">LeadType</a>* leadType, <a class="code" href="classConductorType.html">ConductorType</a>* conductorType, <a class="code" href="classCoating.html">Coating</a>* coating, <a class="code" href="classEnergization.html">Energization</a>* energization, <a class="code" href="classCableType.html">CableType</a>* cableType, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; radius=0.0);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        ~<a class="code" href="classConductor.html">Conductor</a>();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//Getters start--------------------------------------------------------</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classLeadType.html">LeadType</a>* <a class="code" href="classConductor.html#ab92cf63d818e4855fd66e1772f547fc6">getLeadType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classConductorType.html">ConductorType</a>* <a class="code" href="classConductor.html#a59a190edfbab160d426ef9515e41c428">getConductorType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classCoating.html">Coating</a>* <a class="code" href="classConductor.html#ab3829f6d9bbdd5dc6c89d1c0763463a4">getCoating</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classEnergization.html">Energization</a>* <a class="code" href="classConductor.html#a106bd289af9052ba746ee2e03ac228f7">getEnergization</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classCableType.html">CableType</a>* <a class="code" href="classConductor.html#af242fe1e5d80c9e0e6c4360a63859392">getCableType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; <a class="code" href="classConductor.html#ae6994f2889b32aeb947874d412352ef8">getStartCoords</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; <a class="code" href="classConductor.html#a354def232dd135b21011df38f2cd9fd7">getEndCoords</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; <a class="code" href="classConductor.html#aa7c73505b26af85376fdd1d7e8ffc0c0">getRadius</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; <a class="code" href="classConductor.html#a3731292355003d44634bdbd6b91e9536">getSubDivision</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">//Getters end----------------------------------------------------------</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">//Setters start--------------------------------------------------------</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a29e6978a344ac1021f38a599a5d8ab4a">setLeadType</a>(<a class="code" href="classLeadType.html">LeadType</a>* leadType);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#aa377e72fa589082988540c9a6172617f">setConductorType</a>(<a class="code" href="classConductorType.html">ConductorType</a>* conductorType);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a5d70487a3e1480113c9e192f98738c84">setCoating</a>(<a class="code" href="classCoating.html">Coating</a>* coating);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#ae021f486ff483d1bb39b9c709bba3779">setEnergization</a>(<a class="code" href="classEnergization.html">Energization</a>* energization);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a66fd092fce2716c30045d2c589a20918">setStartCoords</a>(<a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; start);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a5c89b2e210d71576c486b71751e21ca8">setEndCoords</a>(<a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; end);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a5b945661f730aac1d221c94b73a28a4e">setCoords</a>(<a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; start, <a class="code" href="structcoords.html">coords</a> <span class="keyword">const</span>&amp; end);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#aa6f817f5ab317ef36a7f16060b96bb2c">setRadius</a>(<span class="keywordtype">double</span> <span class="keyword">const</span>&amp; radius);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a9a8ef94243d1db244b32c8f41e4bb43e">setSubDivision</a>(<span class="keywordtype">int</span> <span class="keyword">const</span>&amp; subD);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="classConductor.html">Conductor</a>&amp; <a class="code" href="classConductor.html#a314e2371c1adbf22f8bc597082cda025">setCableType</a>(<a class="code" href="classCableType.html">CableType</a>* cableType);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//Setters end----------------------------------------------------------</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="classLeadType.html">LeadType</a>* m_leadType = NULL;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="classConductorType.html">ConductorType</a>* m_conductorType = NULL;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="classCoating.html">Coating</a>* m_coating = NULL;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="classEnergization.html">Energization</a>* m_energization = NULL;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="structcoords.html">coords</a> m_startCoords, m_endCoords;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">double</span> m_radius;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">int</span> m_subDivision;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classCableType.html">CableType</a>* m_cableType = NULL;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif // CONDUCTOR_H</span></div>
+<div class="ttc" id="classConductor_html"><div class="ttname"><a href="classConductor.html">Conductor</a></div><div class="ttdoc">Classe composante qui représente un conducteur. </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8h_source.html#l00065">conductor.h:65</a></div></div>
+<div class="ttc" id="classConductor_html_a3731292355003d44634bdbd6b91e9536"><div class="ttname"><a href="classConductor.html#a3731292355003d44634bdbd6b91e9536">Conductor::getSubDivision</a></div><div class="ttdeci">int const &amp; getSubDivision() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00170">conductor.cpp:170</a></div></div>
+<div class="ttc" id="classConductor_html_a106bd289af9052ba746ee2e03ac228f7"><div class="ttname"><a href="classConductor.html#a106bd289af9052ba746ee2e03ac228f7">Conductor::getEnergization</a></div><div class="ttdeci">Energization * getEnergization() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00125">conductor.cpp:125</a></div></div>
+<div class="ttc" id="classConductor_html_a9a8ef94243d1db244b32c8f41e4bb43e"><div class="ttname"><a href="classConductor.html#a9a8ef94243d1db244b32c8f41e4bb43e">Conductor::setSubDivision</a></div><div class="ttdeci">Conductor &amp; setSubDivision(int const &amp;subD)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00270">conductor.cpp:270</a></div></div>
+<div class="ttc" id="classConductorType_html"><div class="ttname"><a href="classConductorType.html">ConductorType</a></div><div class="ttdoc">Classe composante qui représente un type de conducteur. </div><div class="ttdef"><b>Definition:</b> <a href="conductortype_8h_source.html#l00056">conductortype.h:56</a></div></div>
+<div class="ttc" id="classCableType_html"><div class="ttname"><a href="classCableType.html">CableType</a></div><div class="ttdoc">Classe composante qui représente un type de câblage. </div><div class="ttdef"><b>Definition:</b> <a href="cabletype_8h_source.html#l00055">cabletype.h:55</a></div></div>
+<div class="ttc" id="classEnergization_html"><div class="ttname"><a href="classEnergization.html">Energization</a></div><div class="ttdoc">Classe composante qui représente une valeur d&#39;énergization. </div><div class="ttdef"><b>Definition:</b> <a href="energization_8h_source.html#l00060">energization.h:60</a></div></div>
+<div class="ttc" id="classConductor_html_ab3829f6d9bbdd5dc6c89d1c0763463a4"><div class="ttname"><a href="classConductor.html#ab3829f6d9bbdd5dc6c89d1c0763463a4">Conductor::getCoating</a></div><div class="ttdeci">Coating * getCoating() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00116">conductor.cpp:116</a></div></div>
+<div class="ttc" id="classConductor_html_a29e6978a344ac1021f38a599a5d8ab4a"><div class="ttname"><a href="classConductor.html#a29e6978a344ac1021f38a599a5d8ab4a">Conductor::setLeadType</a></div><div class="ttdeci">Conductor &amp; setLeadType(LeadType *leadType)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00180">conductor.cpp:180</a></div></div>
+<div class="ttc" id="classConductor_html_a59a190edfbab160d426ef9515e41c428"><div class="ttname"><a href="classConductor.html#a59a190edfbab160d426ef9515e41c428">Conductor::getConductorType</a></div><div class="ttdeci">ConductorType * getConductorType() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00107">conductor.cpp:107</a></div></div>
+<div class="ttc" id="classLeadType_html"><div class="ttname"><a href="classLeadType.html">LeadType</a></div><div class="ttdoc">Classe composante qui représente un type de connection câble. </div><div class="ttdef"><b>Definition:</b> <a href="leadtype_8h_source.html#l00056">leadtype.h:56</a></div></div>
+<div class="ttc" id="classConductor_html_ab92cf63d818e4855fd66e1772f547fc6"><div class="ttname"><a href="classConductor.html#ab92cf63d818e4855fd66e1772f547fc6">Conductor::getLeadType</a></div><div class="ttdeci">LeadType * getLeadType() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00098">conductor.cpp:98</a></div></div>
+<div class="ttc" id="classCoating_html"><div class="ttname"><a href="classCoating.html">Coating</a></div><div class="ttdoc">Classe composante qui représente un type de recouvrement. </div><div class="ttdef"><b>Definition:</b> <a href="coating_8h_source.html#l00057">coating.h:57</a></div></div>
+<div class="ttc" id="classComponent_html"><div class="ttname"><a href="classComponent.html">Component</a></div><div class="ttdoc">Classe mère des composantes. </div><div class="ttdef"><b>Definition:</b> <a href="component_8h_source.html#l00050">component.h:50</a></div></div>
+<div class="ttc" id="classConductor_html_a354def232dd135b21011df38f2cd9fd7"><div class="ttname"><a href="classConductor.html#a354def232dd135b21011df38f2cd9fd7">Conductor::getEndCoords</a></div><div class="ttdeci">coords const &amp; getEndCoords() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00152">conductor.cpp:152</a></div></div>
+<div class="ttc" id="classConductor_html_a66fd092fce2716c30045d2c589a20918"><div class="ttname"><a href="classConductor.html#a66fd092fce2716c30045d2c589a20918">Conductor::setStartCoords</a></div><div class="ttdeci">Conductor &amp; setStartCoords(coords const &amp;start)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00224">conductor.cpp:224</a></div></div>
+<div class="ttc" id="classConfiguration_html"><div class="ttname"><a href="classConfiguration.html">Configuration</a></div><div class="ttdoc">Classe conteneur qui représente une configuration de simulation HiFreq. </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8h_source.html#l00330">configuration.h:330</a></div></div>
+<div class="ttc" id="classConductor_html_a5b945661f730aac1d221c94b73a28a4e"><div class="ttname"><a href="classConductor.html#a5b945661f730aac1d221c94b73a28a4e">Conductor::setCoords</a></div><div class="ttdeci">Conductor &amp; setCoords(coords const &amp;start, coords const &amp;end)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00247">conductor.cpp:247</a></div></div>
+<div class="ttc" id="classConductor_html_a314e2371c1adbf22f8bc597082cda025"><div class="ttname"><a href="classConductor.html#a314e2371c1adbf22f8bc597082cda025">Conductor::setCableType</a></div><div class="ttdeci">Conductor &amp; setCableType(CableType *cableType)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00281">conductor.cpp:281</a></div></div>
+<div class="ttc" id="classConductor_html_ae6994f2889b32aeb947874d412352ef8"><div class="ttname"><a href="classConductor.html#ae6994f2889b32aeb947874d412352ef8">Conductor::getStartCoords</a></div><div class="ttdeci">coords const &amp; getStartCoords() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00143">conductor.cpp:143</a></div></div>
+<div class="ttc" id="classConductor_html_aa7c73505b26af85376fdd1d7e8ffc0c0"><div class="ttname"><a href="classConductor.html#aa7c73505b26af85376fdd1d7e8ffc0c0">Conductor::getRadius</a></div><div class="ttdeci">double const &amp; getRadius() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00161">conductor.cpp:161</a></div></div>
+<div class="ttc" id="classConductor_html_a5d70487a3e1480113c9e192f98738c84"><div class="ttname"><a href="classConductor.html#a5d70487a3e1480113c9e192f98738c84">Conductor::setCoating</a></div><div class="ttdeci">Conductor &amp; setCoating(Coating *coating)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00202">conductor.cpp:202</a></div></div>
+<div class="ttc" id="classConductor_html_aa6f817f5ab317ef36a7f16060b96bb2c"><div class="ttname"><a href="classConductor.html#aa6f817f5ab317ef36a7f16060b96bb2c">Conductor::setRadius</a></div><div class="ttdeci">Conductor &amp; setRadius(double const &amp;radius)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00259">conductor.cpp:259</a></div></div>
+<div class="ttc" id="classConductor_html_af242fe1e5d80c9e0e6c4360a63859392"><div class="ttname"><a href="classConductor.html#af242fe1e5d80c9e0e6c4360a63859392">Conductor::getCableType</a></div><div class="ttdeci">CableType * getCableType() const </div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00134">conductor.cpp:134</a></div></div>
+<div class="ttc" id="classConductor_html_ae021f486ff483d1bb39b9c709bba3779"><div class="ttname"><a href="classConductor.html#ae021f486ff483d1bb39b9c709bba3779">Conductor::setEnergization</a></div><div class="ttdeci">Conductor &amp; setEnergization(Energization *energization)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00213">conductor.cpp:213</a></div></div>
+<div class="ttc" id="structcoords_html"><div class="ttname"><a href="structcoords.html">coords</a></div><div class="ttdoc">Structure qui représente un ensemble de coordonnées XYZ. </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8h_source.html#l00079">configuration.h:79</a></div></div>
+<div class="ttc" id="classConductor_html_a5c89b2e210d71576c486b71751e21ca8"><div class="ttname"><a href="classConductor.html#a5c89b2e210d71576c486b71751e21ca8">Conductor::setEndCoords</a></div><div class="ttdeci">Conductor &amp; setEndCoords(coords const &amp;end)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00235">conductor.cpp:235</a></div></div>
+<div class="ttc" id="classConductor_html_aa377e72fa589082988540c9a6172617f"><div class="ttname"><a href="classConductor.html#aa377e72fa589082988540c9a6172617f">Conductor::setConductorType</a></div><div class="ttdeci">Conductor &amp; setConductorType(ConductorType *conductorType)</div><div class="ttdef"><b>Definition:</b> <a href="conductor_8cpp_source.html#l00191">conductor.cpp:191</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Lundi 2 Juin 2014 08:48:05 pour CDEGS-Aid par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

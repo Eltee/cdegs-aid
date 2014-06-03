@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>CDEGS-Aid:  Fichier source de ui/cdegs_main.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="hqt.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">CDEGS-Aid
+   </div>
+   <div id="projectbrief">Programme d&#39;aide à la génération de fichiers .f05 et à l&#39;analyse des résultats de simulations CDEGS.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_1788f8309b1a812dcb800a185471cf6c.html">ui</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">cdegs_main.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">* Projet:     CDEGS-Aid</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*  /Project</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">* Nom/Name:    cdegs_main.cpp</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">* Description: CDEGS-Aid est un logiciel d&#39;aide pour la génération de fichiers</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">*              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">*              simulations de champ électrics, d&#39;affichage et d&#39;analyse de</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">*              résultat de simulations CDEGS-HiFreq.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Auteur:      Renaud Bigras, Hydro-Québec Transénergie</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*  /Author</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">* Créé:        07-05-2014</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">*  /Created</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* Copyright:   (c) Renaud Bigras 2014</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">*   This file is part of CDEGS-Aid.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">*   CDEGS-Aid is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">*   the Free Software Foundation, either version 3 of the License, or</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">*   (at your option) any later version.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">*   CDEGS-Aid is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">*   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">*   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">*   along with CDEGS-Aid. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">*******************************************************************************/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;cdegs_main.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;ui_cdegs_main.h&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classcdegs__main.html#a79626349125b905ef1b2d20c7423707a">   45</a></span>&#160;<a class="code" href="classcdegs__main.html#a79626349125b905ef1b2d20c7423707a">cdegs_main::cdegs_main</a>(QWidget *parent) :</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QMainWindow(parent),</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    ui(new Ui::<a class="code" href="classcdegs__main.html">cdegs_main</a>){</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    ui-&gt;setupUi(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    connectSlots();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;cdegs_main::~cdegs_main(){</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">delete</span> ui;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(project != NULL){</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        config = NULL;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">delete</span>(project);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        project = NULL;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> cdegs_main::connectSlots(){</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QObject::connect(ui-&gt;actionNew_Project, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                      <span class="keyword">this</span>,  SLOT(newProject()));</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    QObject::connect(ui-&gt;actionNew_Config, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                      <span class="keyword">this</span>,  SLOT(newConfig()));</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QObject::connect(ui-&gt;actionOpen_Project, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                      <span class="keyword">this</span>,  SLOT(openProject()));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QObject::connect(ui-&gt;actionSave_Project, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                      <span class="keyword">this</span>,  SLOT(saveProject()));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    QObject::connect(ui-&gt;actionSave_Project_as, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                      <span class="keyword">this</span>,  SLOT(saveProjectAs()));</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    QObject::connect(ui-&gt;actionClose_Project, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                      <span class="keyword">this</span>,  SLOT(closeProject()));</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QObject::connect(ui-&gt;tabProjects, SIGNAL(currentChanged(<span class="keywordtype">int</span>)),</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                     <span class="keyword">this</span>, SLOT(changeTab()));</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    QObject::connect(ui-&gt;tabProjects, SIGNAL(tabCloseRequested(<span class="keywordtype">int</span>)),</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                     <span class="keyword">this</span>, SLOT(closeProject(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    QObject::connect(ui-&gt;actionAbout, SIGNAL(triggered()),</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                     <span class="keyword">this</span>, SLOT(about()));</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">void</span> cdegs_main::refresh(){</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    updateProject();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    updateConfig();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    updateTitle();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    updateActions();    </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    updateTab();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">void</span> cdegs_main::updateTab(){ <span class="comment">//TO-DO: CHANGE</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">if</span>(project != NULL &amp;&amp; ui-&gt;tabProjects-&gt;count() &gt; 0){</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        ui-&gt;tabProjects-&gt;setTabText(ui-&gt;tabProjects-&gt;currentIndex(), QString::fromStdString(project-&gt;<a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">getFileName</a>()));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">void</span> cdegs_main::updateProject(){</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>(ui-&gt;tabProjects-&gt;currentIndex() != -1){</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        project = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classproject__tab__widget.html">project_tab_widget</a>*<span class="keyword">&gt;</span>(ui-&gt;tabProjects-&gt;currentWidget())-&gt;getProject();</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        project = NULL;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keywordtype">void</span> cdegs_main::updateConfig(){</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordflow">if</span>(ui-&gt;tabProjects-&gt;currentIndex() != -1){</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        config = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classproject__tab__widget.html">project_tab_widget</a>*<span class="keyword">&gt;</span>(ui-&gt;tabProjects-&gt;currentWidget())-&gt;getConfig();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        config = NULL;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    }</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keywordtype">void</span> cdegs_main::updateActions(){</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordflow">if</span>(project != NULL){</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        ui-&gt;actionSave_Project-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        ui-&gt;actionSave_Project_as-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        ui-&gt;actionClose_Project-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        ui-&gt;actionNew_Config-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        ui-&gt;actionOpen_Config-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        ui-&gt;actionSave_Project-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        ui-&gt;actionSave_Project_as-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        ui-&gt;actionClose_Project-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        ui-&gt;actionNew_Config-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        ui-&gt;actionOpen_Config-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">if</span>(config != NULL){</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        ui-&gt;actionClose_Config-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        ui-&gt;actionSave_Config-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        ui-&gt;actionExport_Config-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        ui-&gt;actionExport_Config_as-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        ui-&gt;actionClose_Config-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        ui-&gt;actionSave_Config-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        ui-&gt;actionExport_Config-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        ui-&gt;actionExport_Config_as-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keywordtype">void</span> cdegs_main::updateTitle(){</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">if</span>(project != NULL){</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        QString title;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        std::string stdTitle;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <span class="keywordflow">if</span>(config != NULL){</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            stdTitle = <span class="stringliteral">&quot;CDEGS Aid - &quot;</span> + project-&gt;<a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">getFileName</a>() + <span class="stringliteral">&quot; - &quot;</span> + config-&gt;<a class="code" href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">getIdentifier</a>();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            stdTitle = <span class="stringliteral">&quot;CDEGS Aid - &quot;</span> + project-&gt;<a class="code" href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">getAbsPath</a>() + <span class="stringliteral">&quot;/&quot;</span> + project-&gt;<a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">getFileName</a>();</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        title = QString::fromStdString(stdTitle);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        this-&gt;setWindowTitle(title);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        this-&gt;setWindowTitle(<span class="stringliteral">&quot;CDEGS Aid&quot;</span>);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="keywordtype">void</span> cdegs_main::newProject(){</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    project = <span class="keyword">new</span> <a class="code" href="classProject.html">Project</a>();</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">int</span> index = ui-&gt;tabProjects-&gt;addTab(<span class="keyword">new</span> <a class="code" href="classproject__tab__widget.html">project_tab_widget</a>(<span class="keyword">this</span>, <span class="keyword">this</span>, project), QString::fromStdString(project-&gt;<a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">getFileName</a>()));</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    ui-&gt;tabProjects-&gt;setCurrentIndex(index);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    refresh();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;}</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="keywordtype">void</span> cdegs_main::openProject(){</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    QString filePath = QFileDialog::getOpenFileName(<span class="keyword">this</span>, <span class="stringliteral">&quot;Choose Project to open..&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;CDEGS-Aid Project File (*.cdp)&quot;</span>);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    project = AppUtils::getInstance().loadProject(filePath.toStdWString().c_str());</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordtype">int</span> index = ui-&gt;tabProjects-&gt;addTab(<span class="keyword">new</span> <a class="code" href="classproject__tab__widget.html">project_tab_widget</a>(<span class="keyword">this</span>, <span class="keyword">this</span>, project), QString::fromStdString(project-&gt;<a class="code" href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">getFileName</a>()));</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    ui-&gt;tabProjects-&gt;setCurrentIndex(index);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    refresh();</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keywordtype">void</span> cdegs_main::saveProject(){</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">if</span>(project != NULL) AppUtils::getInstance().saveProject(*project);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="keywordtype">void</span> cdegs_main::saveProjectAs(){</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">if</span>(project!= NULL){</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        QString filePath = QFileDialog::getSaveFileName(<span class="keyword">this</span>, <span class="stringliteral">&quot;Choose file to save..&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;CDEGS-Aid Project File (*.cdp)&quot;</span>);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        QDir d = QFileInfo(filePath).absoluteDir();</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        project-&gt;<a class="code" href="classProject.html#a26d38b168866bb58c7c7f96b114fd8f8">setAbsPath</a>(d.absolutePath().toStdString()).setRelPath(d.path().toStdString());</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        project-&gt;<a class="code" href="classProject.html#a781abc3e53ecd1ff800c0a438337d7b0">setFileName</a>(QFileInfo(filePath).fileName().toStdString());</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        AppUtils::getInstance().saveProject(*project);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    }</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    refresh();</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;}</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keywordtype">void</span> cdegs_main::closeProject(){</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordflow">if</span>(QMessageBox::question(<span class="keyword">this</span>, <span class="stringliteral">&quot;Warning! Close Project?&quot;</span>, <span class="stringliteral">&quot;Closing your project will cause all unsaved changes to be lost.&quot;</span>) == QMessageBox::Yes){</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keyword">delete</span>(project);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        config = NULL;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        project = NULL;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        ui-&gt;tabProjects-&gt;removeTab(ui-&gt;tabProjects-&gt;currentIndex());</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    }</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    refresh();</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;}</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="keywordtype">void</span> cdegs_main::closeProject(<span class="keywordtype">int</span> index){</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordflow">if</span>(QMessageBox::question(<span class="keyword">this</span>, <span class="stringliteral">&quot;Warning! Close Project?&quot;</span>, <span class="stringliteral">&quot;Closing your project will cause all unsaved changes to be lost.&quot;</span>) == QMessageBox::Yes){</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keyword">delete</span>(<span class="keyword">dynamic_cast&lt;</span><a class="code" href="classproject__tab__widget.html">project_tab_widget</a>*<span class="keyword">&gt;</span>(ui-&gt;tabProjects-&gt;widget(index))-&gt;getProject());</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        ui-&gt;tabProjects-&gt;removeTab(index);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    }</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    refresh();</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;}</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="keywordtype">void</span> cdegs_main::changeProject(<span class="keywordtype">int</span> index){</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">if</span>(index != -1){</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        project = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classproject__tab__widget.html">project_tab_widget</a>*<span class="keyword">&gt;</span>(ui-&gt;tabProjects-&gt;widget(index))-&gt;getProject();</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        project = NULL;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    }</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    refresh();</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keywordtype">void</span> cdegs_main::changeTab(){</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    refresh();</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="keywordtype">void</span> cdegs_main::newConfig(){</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    config = <span class="keyword">new</span> <a class="code" href="classConfiguration.html">Configuration</a>();</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">if</span>(ui-&gt;tabProjects-&gt;currentIndex() != -1){</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classproject__tab__widget.html">project_tab_widget</a>*<span class="keyword">&gt;</span>(ui-&gt;tabProjects-&gt;currentWidget())-&gt;addConfig(config);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        refresh();</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;}</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="keywordtype">void</span> cdegs_main::openConfig(){</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;}</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="keywordtype">void</span> cdegs_main::saveConfig(){</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;}</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="keywordtype">void</span> cdegs_main::closeConfig(){</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="keywordtype">void</span> cdegs_main::exportConfig(){</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;}</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="keywordtype">void</span> cdegs_main::exportConfigAs(){</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;}</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="keywordtype">void</span> cdegs_main::about(){</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    QMessageBox::about(<span class="keyword">this</span>, <span class="stringliteral">&quot;CDEGS Aid&quot;</span>, <span class="stringliteral">&quot;CDEGS-Aid est un logiciel d&#39;aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d&#39;affichage et d&#39;analyse de résultat de simulations CDEGS-HiFreq.\n\n(c) Renaud Bigras 2014&quot;</span>);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;}</div>
+<div class="ttc" id="classProject_html_a781abc3e53ecd1ff800c0a438337d7b0"><div class="ttname"><a href="classProject.html#a781abc3e53ecd1ff800c0a438337d7b0">Project::setFileName</a></div><div class="ttdeci">Project &amp; setFileName(const std::string &amp;fileName)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00293">project.cpp:293</a></div></div>
+<div class="ttc" id="classcdegs__main_html"><div class="ttname"><a href="classcdegs__main.html">cdegs_main</a></div><div class="ttdoc">Classe représentant la fenêtre principale du logiciel. </div><div class="ttdef"><b>Definition:</b> <a href="cdegs__main_8h_source.html#l00070">cdegs_main.h:70</a></div></div>
+<div class="ttc" id="classProject_html_a26d38b168866bb58c7c7f96b114fd8f8"><div class="ttname"><a href="classProject.html#a26d38b168866bb58c7c7f96b114fd8f8">Project::setAbsPath</a></div><div class="ttdeci">Project &amp; setAbsPath(std::string const &amp;absPath)</div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00269">project.cpp:269</a></div></div>
+<div class="ttc" id="classProject_html"><div class="ttname"><a href="classProject.html">Project</a></div><div class="ttdoc">Classe conteneur mère. La classe principal du modèle. Contient le projet courant. ...</div><div class="ttdef"><b>Definition:</b> <a href="project_8h_source.html#l00093">project.h:93</a></div></div>
+<div class="ttc" id="classProject_html_a08e3eb2d0ed29d5e3a87b6b93f96551d"><div class="ttname"><a href="classProject.html#a08e3eb2d0ed29d5e3a87b6b93f96551d">Project::getAbsPath</a></div><div class="ttdeci">std::string const &amp; getAbsPath() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00168">project.cpp:168</a></div></div>
+<div class="ttc" id="classConfiguration_html"><div class="ttname"><a href="classConfiguration.html">Configuration</a></div><div class="ttdoc">Classe conteneur qui représente une configuration de simulation HiFreq. </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8h_source.html#l00330">configuration.h:330</a></div></div>
+<div class="ttc" id="classConfiguration_html_aeb75a68e368faeaa3b8a4ed70f09f5a0"><div class="ttname"><a href="classConfiguration.html#aeb75a68e368faeaa3b8a4ed70f09f5a0">Configuration::getIdentifier</a></div><div class="ttdeci">std::string const &amp; getIdentifier() const </div><div class="ttdef"><b>Definition:</b> <a href="configuration_8cpp_source.html#l00592">configuration.cpp:592</a></div></div>
+<div class="ttc" id="classproject__tab__widget_html"><div class="ttname"><a href="classproject__tab__widget.html">project_tab_widget</a></div><div class="ttdoc">Classe représentant une fenêtre à onglet contenant les données et configurations du projet courant...</div><div class="ttdef"><b>Definition:</b> <a href="project__tab__widget_8h_source.html#l00064">project_tab_widget.h:64</a></div></div>
+<div class="ttc" id="classProject_html_a0dbf7cadf7be2038c38f30a20d2af93b"><div class="ttname"><a href="classProject.html#a0dbf7cadf7be2038c38f30a20d2af93b">Project::getFileName</a></div><div class="ttdeci">std::string const &amp; getFileName() const </div><div class="ttdef"><b>Definition:</b> <a href="project_8cpp_source.html#l00188">project.cpp:188</a></div></div>
+<div class="ttc" id="classcdegs__main_html_a79626349125b905ef1b2d20c7423707a"><div class="ttname"><a href="classcdegs__main.html#a79626349125b905ef1b2d20c7423707a">cdegs_main::cdegs_main</a></div><div class="ttdeci">cdegs_main(QWidget *parent=0)</div><div class="ttdef"><b>Definition:</b> <a href="cdegs__main_8cpp_source.html#l00045">cdegs_main.cpp:45</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Lundi 2 Juin 2014 08:48:05 pour CDEGS-Aid par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

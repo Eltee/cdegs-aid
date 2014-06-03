@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>CDEGS-Aid:  Fichier source de classes/building.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="hqt.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">CDEGS-Aid
+   </div>
+   <div id="projectbrief">Programme d&#39;aide à la génération de fichiers .f05 et à l&#39;analyse des résultats de simulations CDEGS.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b02e4219757ae4e3a0f1714873865bbf.html">classes</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">building.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/******************************************************************************</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">* Projet:     CDEGS-Aid</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*  /Project</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">* Nom/Name:    building.h</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">* Description: CDEGS-Aid est un logiciel d&#39;aide pour la génération de fichiers</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">*              de simulation compatibles avec SESCad et CDEGS-HiFreq pour des</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">*              simulations de champ électrics, d&#39;affichage et d&#39;analyse de</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">*              résultat de simulations CDEGS-HiFreq.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Auteur:      Renaud Bigras, Hydro-Québec Transénergie</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*  /Author</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">* Créé:        12-05-2014</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">*  /Created</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* Copyright:   (c) Renaud Bigras 2014</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">*   This file is part of CDEGS-Aid.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">*   CDEGS-Aid is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*   it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">*   the Free Software Foundation, either version 3 of the License, or</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">*   (at your option) any later version.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">*   CDEGS-Aid is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*   but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">*   GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">*   You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">*   along with CDEGS-Aid. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">*******************************************************************************/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifndef BUILDING_H</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define BUILDING_H</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;component.h&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;util/apputils.h&quot;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">class </span><a class="code" href="classComponent.html">Component</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classBuilding.html">   54</a></span>&#160;<span class="keyword">class </span><a class="code" href="classBuilding.html">Building</a> : <span class="keyword">public</span> <a class="code" href="classComponent.html">Component</a></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classBuilding.html#ab570ec0a203ee621f9f522c678a147d9">Building</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="classBuilding.html#ab570ec0a203ee621f9f522c678a147d9">Building</a>(<span class="keywordtype">int</span> <span class="keyword">const</span>&amp; faces, <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; height, <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; distanceMin, <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; distanceMax, <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; step);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        ~<a class="code" href="classBuilding.html">Building</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//Getters start---------------------------------------------------</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">int</span> <span class="keyword">const</span>&amp; <a class="code" href="classBuilding.html#aee1a106a7541bd9e0ada76e6946b16a0">getFaces</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; <a class="code" href="classBuilding.html#afb764107d77f33785a4de5ce6bcfa56a">getHeight</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; <a class="code" href="classBuilding.html#ad47f132464aaf4869e22e51f72b58a87">getDistanceMin</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; <a class="code" href="classBuilding.html#a6d92d82a4c56b8086297ef38b7961abf">getDistanceMax</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">double</span> <span class="keyword">const</span>&amp; <a class="code" href="classBuilding.html#a9dc9d9bbe7ea82fde574e3b57bfb82ee">getStep</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">//Getters end-----------------------------------------------------</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">//Setters start---------------------------------------------------</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="classBuilding.html">Building</a>&amp; <a class="code" href="classBuilding.html#a2ce6e8d75d2016cea8edaa1ad1592b29">setFaces</a>(<span class="keywordtype">int</span> <span class="keyword">const</span>&amp; faces);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classBuilding.html">Building</a>&amp; <a class="code" href="classBuilding.html#a7e7166f5a98dae8c7b3a07231eaf2161">setHeight</a>(<span class="keywordtype">double</span> <span class="keyword">const</span>&amp; height);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classBuilding.html">Building</a>&amp; <a class="code" href="classBuilding.html#af414d2bdeaa8ed520e4a326ab5aea4f6">setDistanceMin</a>(<span class="keywordtype">double</span> <span class="keyword">const</span>&amp; distanceMin);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classBuilding.html">Building</a>&amp; <a class="code" href="classBuilding.html#a5761b7a0e60ba13f48443da825531fdd">setDistanceMax</a>(<span class="keywordtype">double</span> <span class="keyword">const</span>&amp; distanceMax);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classBuilding.html">Building</a>&amp; <a class="code" href="classBuilding.html#a0c75ff9787c09fdab7b89f2954e613f2">setStep</a>(<span class="keywordtype">double</span> <span class="keyword">const</span>&amp; step);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//Setters end-----------------------------------------------------</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">int</span> m_faces;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">double</span> m_height, m_distanceMin, m_distanceMax, m_step;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif // BUILDING_H</span></div>
+<div class="ttc" id="classBuilding_html_a7e7166f5a98dae8c7b3a07231eaf2161"><div class="ttname"><a href="classBuilding.html#a7e7166f5a98dae8c7b3a07231eaf2161">Building::setHeight</a></div><div class="ttdeci">Building &amp; setHeight(double const &amp;height)</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00145">building.cpp:145</a></div></div>
+<div class="ttc" id="classBuilding_html_ad47f132464aaf4869e22e51f72b58a87"><div class="ttname"><a href="classBuilding.html#ad47f132464aaf4869e22e51f72b58a87">Building::getDistanceMin</a></div><div class="ttdeci">double const &amp; getDistanceMin() const </div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00102">building.cpp:102</a></div></div>
+<div class="ttc" id="classBuilding_html_a5761b7a0e60ba13f48443da825531fdd"><div class="ttname"><a href="classBuilding.html#a5761b7a0e60ba13f48443da825531fdd">Building::setDistanceMax</a></div><div class="ttdeci">Building &amp; setDistanceMax(double const &amp;distanceMax)</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00169">building.cpp:169</a></div></div>
+<div class="ttc" id="classBuilding_html_afb764107d77f33785a4de5ce6bcfa56a"><div class="ttname"><a href="classBuilding.html#afb764107d77f33785a4de5ce6bcfa56a">Building::getHeight</a></div><div class="ttdeci">double const &amp; getHeight() const </div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00092">building.cpp:92</a></div></div>
+<div class="ttc" id="classBuilding_html"><div class="ttname"><a href="classBuilding.html">Building</a></div><div class="ttdoc">Classe composante qui représente un bâtiment. </div><div class="ttdef"><b>Definition:</b> <a href="building_8h_source.html#l00054">building.h:54</a></div></div>
+<div class="ttc" id="classComponent_html"><div class="ttname"><a href="classComponent.html">Component</a></div><div class="ttdoc">Classe mère des composantes. </div><div class="ttdef"><b>Definition:</b> <a href="component_8h_source.html#l00050">component.h:50</a></div></div>
+<div class="ttc" id="classBuilding_html_aee1a106a7541bd9e0ada76e6946b16a0"><div class="ttname"><a href="classBuilding.html#aee1a106a7541bd9e0ada76e6946b16a0">Building::getFaces</a></div><div class="ttdeci">int const &amp; getFaces() const </div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00082">building.cpp:82</a></div></div>
+<div class="ttc" id="classBuilding_html_a2ce6e8d75d2016cea8edaa1ad1592b29"><div class="ttname"><a href="classBuilding.html#a2ce6e8d75d2016cea8edaa1ad1592b29">Building::setFaces</a></div><div class="ttdeci">Building &amp; setFaces(int const &amp;faces)</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00133">building.cpp:133</a></div></div>
+<div class="ttc" id="classBuilding_html_a9dc9d9bbe7ea82fde574e3b57bfb82ee"><div class="ttname"><a href="classBuilding.html#a9dc9d9bbe7ea82fde574e3b57bfb82ee">Building::getStep</a></div><div class="ttdeci">double const &amp; getStep() const </div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00122">building.cpp:122</a></div></div>
+<div class="ttc" id="classBuilding_html_ab570ec0a203ee621f9f522c678a147d9"><div class="ttname"><a href="classBuilding.html#ab570ec0a203ee621f9f522c678a147d9">Building::Building</a></div><div class="ttdeci">Building()</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00043">building.cpp:43</a></div></div>
+<div class="ttc" id="classBuilding_html_a0c75ff9787c09fdab7b89f2954e613f2"><div class="ttname"><a href="classBuilding.html#a0c75ff9787c09fdab7b89f2954e613f2">Building::setStep</a></div><div class="ttdeci">Building &amp; setStep(double const &amp;step)</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00181">building.cpp:181</a></div></div>
+<div class="ttc" id="classBuilding_html_af414d2bdeaa8ed520e4a326ab5aea4f6"><div class="ttname"><a href="classBuilding.html#af414d2bdeaa8ed520e4a326ab5aea4f6">Building::setDistanceMin</a></div><div class="ttdeci">Building &amp; setDistanceMin(double const &amp;distanceMin)</div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00157">building.cpp:157</a></div></div>
+<div class="ttc" id="classBuilding_html_a6d92d82a4c56b8086297ef38b7961abf"><div class="ttname"><a href="classBuilding.html#a6d92d82a4c56b8086297ef38b7961abf">Building::getDistanceMax</a></div><div class="ttdeci">double const &amp; getDistanceMax() const </div><div class="ttdef"><b>Definition:</b> <a href="building_8cpp_source.html#l00112">building.cpp:112</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Lundi 2 Juin 2014 08:48:05 pour CDEGS-Aid par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

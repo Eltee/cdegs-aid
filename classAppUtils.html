@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>CDEGS-Aid: Référence de la classe AppUtils</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="hqt.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">CDEGS-Aid
+   </div>
+   <div id="projectbrief">Programme d&#39;aide à la génération de fichiers .f05 et à l&#39;analyse des résultats de simulations CDEGS.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Liste&#160;des&#160;classes</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&#160;de&#160;classe</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="classAppUtils-members.html">Liste de tous les membres</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence de la classe AppUtils</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe singleton qui sert d'outil général pour le projet.  
+ <a href="classAppUtils.html#details">Plus de détails...</a></p>
+
+<p><code>#include &quot;<a class="el" href="apputils_8h_source.html">util/apputils.h</a>&quot;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a0c64ea411db34fafd82579307d0dd22a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c64ea411db34fafd82579307d0dd22a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saveProject</b> (const <a class="el" href="classProject.html">Project</a> &amp;project, std::string &amp;path)</td></tr>
+<tr class="separator:a0c64ea411db34fafd82579307d0dd22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfcad7386f69e8774f57eb09cc88b693"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfcad7386f69e8774f57eb09cc88b693"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saveProject</b> (const <a class="el" href="classProject.html">Project</a> &amp;project)</td></tr>
+<tr class="separator:acfcad7386f69e8774f57eb09cc88b693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe6fb327f21d2cfc4e80885d7237672d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#afe6fb327f21d2cfc4e80885d7237672d">saveConfiguration</a> (const <a class="el" href="classConfiguration.html">Configuration</a> *config, pugi::xml_node &amp;parent)</td></tr>
+<tr class="separator:afe6fb327f21d2cfc4e80885d7237672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa696ecae45d2c71d96c501909a9c60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#aafa696ecae45d2c71d96c501909a9c60">exportConfiguration</a> (const <a class="el" href="classConfiguration.html">Configuration</a> *config, const std::string &amp;fullPath)</td></tr>
+<tr class="separator:aafa696ecae45d2c71d96c501909a9c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0003c48e13af88a10c93fe6b5e7f2bc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#ac0003c48e13af88a10c93fe6b5e7f2bc">drange</a> (double start, double end, double step)</td></tr>
+<tr class="separator:ac0003c48e13af88a10c93fe6b5e7f2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6369e921af2a32fdf36a5d78ff2b22"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a3b6369e921af2a32fdf36a5d78ff2b22">getOsName</a> ()</td></tr>
+<tr class="separator:a3b6369e921af2a32fdf36a5d78ff2b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51566462b0a4abd7a4524de21a24b19a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51566462b0a4abd7a4524de21a24b19a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>pi</b> ()</td></tr>
+<tr class="separator:a51566462b0a4abd7a4524de21a24b19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3fca2da1b0cfcca2fae64fa369aed03"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#ad3fca2da1b0cfcca2fae64fa369aed03">radians</a> (const double &amp;d)</td></tr>
+<tr class="separator:ad3fca2da1b0cfcca2fae64fa369aed03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dff6da7cd9c9d48ac9fbebaa663a09f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a8dff6da7cd9c9d48ac9fbebaa663a09f">degrees</a> (const double &amp;r)</td></tr>
+<tr class="separator:a8dff6da7cd9c9d48ac9fbebaa663a09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a706817af6132aab3bcac0f88a27556f3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a706817af6132aab3bcac0f88a27556f3">stringToUpper</a> (std::string strToConvert)</td></tr>
+<tr class="separator:a706817af6132aab3bcac0f88a27556f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957d7a22fe1728b0872ca79ae0ae51ec"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a957d7a22fe1728b0872ca79ae0ae51ec">BoolToString</a> (const bool &amp;b) const </td></tr>
+<tr class="separator:a957d7a22fe1728b0872ca79ae0ae51ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c4bfc71f07a53ea39da191367954258"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a8c4bfc71f07a53ea39da191367954258">readXML</a> (const pugi::xml_node &amp;toIter, int iteration=0)</td></tr>
+<tr class="separator:a8c4bfc71f07a53ea39da191367954258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00169614584b396b33d588f15e482d5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#af00169614584b396b33d588f15e482d5">uniqueIdGenerator</a> ()</td></tr>
+<tr class="separator:af00169614584b396b33d588f15e482d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a5236ce45a997fb6aca6461f9986db2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a4a5236ce45a997fb6aca6461f9986db2">getAppData</a> ()</td></tr>
+<tr class="separator:a4a5236ce45a997fb6aca6461f9986db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e5d0b01e2b634311f437a00947c9989"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e5d0b01e2b634311f437a00947c9989"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getPath</b> (const QString &amp;folderPath, const QString &amp;filename)</td></tr>
+<tr class="separator:a0e5d0b01e2b634311f437a00947c9989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7b58da5a504794bd8f3ab13ad76501a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7b58da5a504794bd8f3ab13ad76501a"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getPath</b> (const QString &amp;filename)</td></tr>
+<tr class="separator:ab7b58da5a504794bd8f3ab13ad76501a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e75523a5e19e5b2463fca39873d62c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e75523a5e19e5b2463fca39873d62c0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDefaultConfig</b> ()</td></tr>
+<tr class="separator:a3e75523a5e19e5b2463fca39873d62c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5c1101e1c8e69e727f6759994e9428c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5c1101e1c8e69e727f6759994e9428c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadDefaultConfig</b> ()</td></tr>
+<tr class="separator:ad5c1101e1c8e69e727f6759994e9428c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0955242964a74fb6de7aa45b2ec5b64c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0955242964a74fb6de7aa45b2ec5b64c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>generateDefaultConfig</b> ()</td></tr>
+<tr class="separator:a0955242964a74fb6de7aa45b2ec5b64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23c11e1b1e03ef33f6b58228518f6779"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classConfiguration.html">Configuration</a> const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a23c11e1b1e03ef33f6b58228518f6779">getDefaultConfig</a> () const </td></tr>
+<tr class="separator:a23c11e1b1e03ef33f6b58228518f6779"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1737738104e0ab5e0345d2bb2e3e60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classConfiguration.html">Configuration</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a9c1737738104e0ab5e0345d2bb2e3e60">loadConfig</a> (pugi::xml_node configNode) const </td></tr>
+<tr class="separator:a9c1737738104e0ab5e0345d2bb2e3e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a3c05053428496d3d7e48b9ec97dcce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a3c05053428496d3d7e48b9ec97dcce"></a>
+<a class="el" href="classProject.html">Project</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>loadProject</b> (const QString &amp;folder, const QString &amp;filename)</td></tr>
+<tr class="separator:a4a3c05053428496d3d7e48b9ec97dcce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806bd1cbc6de260e1374b8da61051ae2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a806bd1cbc6de260e1374b8da61051ae2"></a>
+<a class="el" href="classProject.html">Project</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>loadProject</b> (const wchar_t *fullPath)</td></tr>
+<tr class="separator:a806bd1cbc6de260e1374b8da61051ae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09287799492470eb56b8a4a7978e6616"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09287799492470eb56b8a4a7978e6616"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>my_utf8</b> (const char *str)</td></tr>
+<tr class="separator:a09287799492470eb56b8a4a7978e6616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb6fa8972f98521dda6713b3c76083e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb6fa8972f98521dda6713b3c76083e7"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>my_utf8</b> (const wchar_t *str)</td></tr>
+<tr class="separator:adb6fa8972f98521dda6713b3c76083e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cc4a64b80e0952a184c29bd11684b0f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#a7cc4a64b80e0952a184c29bd11684b0f">dbl2str</a> (const double &amp;d)</td></tr>
+<tr class="separator:a7cc4a64b80e0952a184c29bd11684b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6e4a54216de6a86e978a3cc1969210f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAppUtils.html#ab6e4a54216de6a86e978a3cc1969210f">append_dbl2str</a> (std::string &amp;s, const double &amp;d)</td></tr>
+<tr class="separator:ab6e4a54216de6a86e978a3cc1969210f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr class="memitem:aeda3ab57ad859aae6afb3fdee00d12e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeda3ab57ad859aae6afb3fdee00d12e0"></a>
+static <a class="el" href="classAppUtils.html">AppUtils</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInstance</b> ()</td></tr>
+<tr class="separator:aeda3ab57ad859aae6afb3fdee00d12e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Classe singleton qui sert d'outil général pour le projet. </p>
+<p>La classe AppUtil est instanciée une seule fois et statique. La raison qu'elle est implémentée en tant que singleton plutôt que de simplement avoir des méthodes statiques est à cause de son rôle de logger.</p>
+<p>Contient des méthodes de sauvegarde, de log et de lecture. </p>
+
+<p>Définition à la ligne <a class="el" href="apputils_8h_source.html#l00080">80</a> du fichier <a class="el" href="apputils_8h_source.html">apputils.h</a>.</p>
+</div><h2 class="groupheader">Documentation des fonctions membres</h2>
+<a class="anchor" id="ab6e4a54216de6a86e978a3cc1969210f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AppUtils::append_dbl2str </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+    <tr><td class="paramname">d</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00998">998</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a957d7a22fe1728b0872ca79ae0ae51ec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * AppUtils::BoolToString </td>
+          <td>(</td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>const char </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00088">88</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7cc4a64b80e0952a184c29bd11684b0f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AppUtils::dbl2str </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>std::string </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00969">969</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8dff6da7cd9c9d48ac9fbebaa663a09f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double AppUtils::degrees </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>r</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>double </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00792">792</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac0003c48e13af88a10c93fe6b5e7f2bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; double &gt; AppUtils::drange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>step</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td></td></tr>
+    <tr><td class="paramname">end</td><td></td></tr>
+    <tr><td class="paramname">step</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>std::vector&lt;double&gt; </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00047">47</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aafa696ecae45d2c71d96c501909a9c60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AppUtils::exportConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classConfiguration.html">Configuration</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fullPath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td></td></tr>
+    <tr><td class="paramname">fullPath</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00816">816</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a5236ce45a997fb6aca6461f9986db2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AppUtils::getAppData </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Renvoie</dt><dd>std::string </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00136">136</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a23c11e1b1e03ef33f6b58228518f6779"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classConfiguration.html">Configuration</a> const * AppUtils::getDefaultConfig </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Renvoie</dt><dd>const <a class="el" href="classConfiguration.html" title="Classe conteneur qui représente une configuration de simulation HiFreq. ">Configuration</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00501">501</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3b6369e921af2a32fdf36a5d78ff2b22"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AppUtils::getOsName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Renvoie</dt><dd>std::string </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00063">63</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c1737738104e0ab5e0345d2bb2e3e60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classConfiguration.html">Configuration</a> * AppUtils::loadConfig </td>
+          <td>(</td>
+          <td class="paramtype">pugi::xml_node&#160;</td>
+          <td class="paramname"><em>configNode</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configNode</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd><a class="el" href="classConfiguration.html" title="Classe conteneur qui représente une configuration de simulation HiFreq. ">Configuration</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00512">512</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad3fca2da1b0cfcca2fae64fa369aed03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double AppUtils::radians </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>double </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00781">781</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8c4bfc71f07a53ea39da191367954258"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AppUtils::readXML </td>
+          <td>(</td>
+          <td class="paramtype">const pugi::xml_node &amp;&#160;</td>
+          <td class="paramname"><em>toIter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iteration</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">toIter</td><td></td></tr>
+    <tr><td class="paramname">iteration</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00099">99</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afe6fb327f21d2cfc4e80885d7237672d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AppUtils::saveConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classConfiguration.html">Configuration</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pugi::xml_node &amp;&#160;</td>
+          <td class="paramname"><em>parent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td></td></tr>
+    <tr><td class="paramname">parent</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l01264">1264</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a706817af6132aab3bcac0f88a27556f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AppUtils::stringToUpper </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>strToConvert</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">strToConvert</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>std::string </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l00803">803</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af00169614584b396b33d588f15e482d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AppUtils::uniqueIdGenerator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Renvoie</dt><dd>std::string </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="apputils_8cpp_source.html#l01024">1024</a> du fichier <a class="el" href="apputils_8cpp_source.html">apputils.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>util/<a class="el" href="apputils_8h_source.html">apputils.h</a></li>
+<li>util/<a class="el" href="apputils_8cpp_source.html">apputils.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Lundi 2 Juin 2014 08:48:05 pour CDEGS-Aid par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>
