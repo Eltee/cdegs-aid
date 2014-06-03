@@ -66,6 +66,7 @@ class Project
         ~Project();
         Project(Project const* project);
         Project& operator=(Project const* project);
+        bool operator==(Project const* project) const;
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);
         Project& setRelPath(std::string const& relPath);

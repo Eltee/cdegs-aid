@@ -68,7 +68,7 @@ class configuration_widget : public QWidget
 
     private:
         Ui::configuration_widget *ui;
-        Configuration* configuration;
+        Configuration* configuration, configOrig;
         project_tab_widget* defParent;
 };
 

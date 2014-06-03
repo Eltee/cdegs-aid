@@ -149,6 +149,21 @@ Project& Project::operator=(Project const* project){
     return *this;
 }
 
+bool Project::operator==(Project const* project) const{
+    bool result = true;
+    if(m_id != project->getId()) result = false;
+    if(m_absPath != project->getAbsPath()) result = false;
+    if(m_relPath != project->getRelPath()) result = false;
+    if(m_defaultConfig != project->getDefaultConfig()) result = false;
+    if(m_lastConfig != project->getLastConfig()) result = false;
+    if(m_defaultWindow != project->getDefaultWindow()) result = false;
+    if(m_lastWindow != project->getLastWindow()) result = false;
+    if(m_metadata.author != project->getMetadata().author) result = false;
+    if(m_metadata.date != project->getMetadata().date) result = false;
+    if(m_metadata.description != project->getMetadata().description) result = false;
+    if(m_metadata.name != project->getMetadata().name) result = false;
+}
+
 /*!
  \brief
 

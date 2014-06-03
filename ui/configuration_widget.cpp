@@ -50,7 +50,8 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     QWidget(parent),
     ui(new Ui::configuration_widget)
 {
-    configuration = config;
+    configOrig = config;
+    configuration = new Configuration(config);
     ui->setupUi(this);
     defParent = dp;
 }

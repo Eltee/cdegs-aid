@@ -350,7 +350,11 @@ void cdegs_main::newConfig(){
  \fn cdegs_main::openConfig
 */
 void cdegs_main::openConfig(Configuration* config){
-    std::cout << config->getIdentifier() << std::endl;
+    if(ui->tabProjects->currentIndex() != -1){
+        dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
+
+        refresh();
+    }
 }
 
 /*!

@@ -39,6 +39,8 @@
 #define PROJECT_WIDGET_H
 
 #include <QWidget>
+#include <QFileDialog>
+#include <QDir>
 #include "project_tab_widget.h"
 #include "classes/project.h"
 
@@ -63,8 +65,18 @@ class project_widget : public QWidget
     public:
         explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, Project* p = NULL);
         Project* getProject();
+        void connectSlots();
+        void disconnectSlots();
         void refresh();
         ~project_widget();
+
+    private slots:
+        void changeDate(QDate date);
+        void changeName(QString name);
+        void changeAuthor(QString author);
+        void changeDescription();
+        void changeFilepath(QString path);
+        void openFilepath();
 
     private:
         Ui::project_widget *ui;

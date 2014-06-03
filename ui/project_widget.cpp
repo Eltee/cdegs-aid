@@ -54,6 +54,7 @@ project_widget::project_widget(QWidget *parent, project_tab_widget* dp, Project*
     ui->setupUi(this);
     defParent = dp;
     refresh();
+    connectSlots();
 }
 
 /*!
@@ -79,9 +80,55 @@ project_widget::~project_widget()
 /*!
  \brief
 
+ \fn project_widget::connectSlots
+*/
+void project_widget::connectSlots(){
+    QObject::connect(ui->dateEdit_pDate, SIGNAL(dateChanged(QDate)),
+                     this, SLOT(changeDate(QDate)));
+
+    QObject::connect(ui->lineEdit_pAuthor, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeAuthor(QString)));
+
+    QObject::connect(ui->lineEdit_pName, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeName(QString)));
+
+    QObject::connect(ui->lineEdit_pPath, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeFilepath(QString)));
+
+    QObject::connect(ui->textEdit_pDesc, SIGNAL(textChanged()),
+                     this, SLOT(changeDescription()));
+
+    QObject::connect(ui->toolButton, SIGNAL(clicked()),
+                     this, SLOT(openFilepath()));
+}
+
+void project_widget::disconnectSlots(){
+    QObject::disconnect(ui->dateEdit_pDate, SIGNAL(dateChanged(QDate)),
+                     this, SLOT(changeDate(QDate)));
+
+    QObject::disconnect(ui->lineEdit_pAuthor, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeAuthor(QString)));
+
+    QObject::disconnect(ui->lineEdit_pName, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeName(QString)));
+
+    QObject::disconnect(ui->lineEdit_pPath, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeFilepath(QString)));
+
+    QObject::disconnect(ui->textEdit_pDesc, SIGNAL(textChanged()),
+                     this, SLOT(changeDescription()));
+
+    QObject::disconnect(ui->toolButton, SIGNAL(clicked()),
+                     this, SLOT(openFilepath()));
+}
+
+/*!
+ \brief
+
  \fn project_widget::refresh
 */
 void project_widget::refresh(){
+    disconnectSlots();
     defParent->refresh();
     if(project != NULL){
         std::string filePath = project->getAbsPath() + "/" + project->getFileName();
@@ -92,4 +139,53 @@ void project_widget::refresh(){
         ui->dateEdit_pDate->setDate(project->getMetadata().date);
         ui->textEdit_pDesc->setDocument(project->getMetadata().description.clone());
     }
+    connectSlots();
 }
+
+void project_widget::changeDate(QDate date){
+    if(project != NULL){
+        project->setMetaDate(date);
+        refresh();
+    }
+}
+
+void project_widget::changeName(QString name){
+    if(project != NULL){
+        project->setMetaName(name.toStdString());
+        refresh();
+    }
+}
+
+void project_widget::changeAuthor(QString author){
+    if(project != NULL){
+        project->setMetaAuthor(author.toStdString());
+        refresh();
+    }
+}
+
+void project_widget::changeDescription(){
+    if(project != NULL){
+        project->setMetaDescription(ui->textEdit_pDesc->document()->toPlainText().toStdString());
+        refresh();
+    }
+}
+
+void project_widget::changeFilepath(QString path){
+    if(project != NULL){
+        int index, toGo;
+        index = path.lastIndexOf("/");
+        toGo = path.size() - path.lastIndexOf("/");
+        project->setFileName(path.right(toGo-1).toStdString());
+        path.remove(index, toGo);
+        project->setAbsPath(path.toStdString());
+        project->setRelPath(path.toStdString());
+        refresh();
+    }
+}
+
+void project_widget::openFilepath(){
+    QString filepath = QFileDialog::getSaveFileName(this, "Choose file to save to..", "", "CDEGS-Aid Project File (*.cdp)");
+
+    ui->lineEdit_pPath->setText(filepath);
+}
+
