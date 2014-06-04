@@ -158,10 +158,22 @@ bool Project::operator==(Project const* project) const{
     if(m_lastConfig != project->getLastConfig()) result = false;
     if(m_defaultWindow != project->getDefaultWindow()) result = false;
     if(m_lastWindow != project->getLastWindow()) result = false;
-    if(m_metadata.author != project->getMetadata().author) result = false;
-    if(m_metadata.date != project->getMetadata().date) result = false;
-    if(m_metadata.description != project->getMetadata().description) result = false;
-    if(m_metadata.name != project->getMetadata().name) result = false;
+    if(m_metadata != project->getMetadata()) result = false;
+    if(m_configurations.size() == project->getConfigurations().size()){
+        for(auto& config : project->getConfigurations()){
+            if(m_configurations.at(config.first) != config.second) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+    return result;
+}
+
+bool Project::operator!=(Project const* project) const{
+    bool result = true;
+    if(*this == project) result = false;
+    return result;
 }
 
 /*!

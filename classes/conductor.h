@@ -69,6 +69,9 @@ class Conductor : public Component
         Conductor();
         Conductor(Configuration const& config, int const& leadType, int const& conductorType, int const& coating, int const& energization, int const& cableType, const double& radius=0.0);
         Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, const double& radius=0.0);
+        Conductor(Conductor const* cond);
+        bool operator==(Conductor const* cond);
+        bool operator!=(Conductor const* cond);
         ~Conductor();
     //Getters start--------------------------------------------------------
         LeadType* getLeadType() const;

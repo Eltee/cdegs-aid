@@ -72,6 +72,8 @@ class Configuration
         Configuration(std::string const& identifier, std::string const& units, std::string const& frequency);
         Configuration(Configuration const* config);
         ~Configuration();
+        bool operator==(Configuration const* config);
+        bool operator!=(Configuration const* config);
         Configuration& operator=(Configuration const* config);
         void setDefaultTypes();
         int idGenerator(const std::string& type);

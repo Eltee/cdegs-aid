@@ -50,9 +50,32 @@ LeadType::LeadType() : Component(0, "", false, true){}
 */
 LeadType::LeadType(std::string const& name) : Component(0, name, false, true){}
 
+LeadType::LeadType(LeadType const* lType){
+    m_id = lType->getId();
+    m_name = lType->getName();
+    m_saveable = lType->isSaveable();
+    m_locked = lType->isLocked();
+}
+
 /*!
  \brief
 
  \fn LeadType::~LeadType
 */
 LeadType::~LeadType(){}
+
+
+bool LeadType::operator==(LeadType const* lType){
+    bool result = true;
+    if(m_id != lType->getId()) result = false;
+    if(m_name != lType->getName()) result = false;
+    if(m_saveable != lType->isSaveable()) result = false;
+    if(m_locked != lType->isLocked()) result = false;
+    return result;
+}
+
+bool LeadType::operator!=(LeadType const* lType){
+    bool result = true;
+    if(*this == *lType) result = false;
+    return result;
+}

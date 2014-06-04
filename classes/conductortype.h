@@ -58,7 +58,10 @@ class ConductorType : public Component
     public:
         ConductorType();
         ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability);
+        ConductorType(ConductorType const* cType);
         ~ConductorType();
+        bool operator==(ConductorType const* cType);
+        bool operator!=(ConductorType const* cType);
     //Getters start------------------------------------------------
         std::string const& getType() const;
         double const& getResistivity() const;

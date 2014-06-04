@@ -62,7 +62,10 @@ class Energization : public Component
     public:
         Energization();
         Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle);
+        Energization(Energization const* ener);
         ~Energization();
+        bool operator==(Energization const* ener);
+        bool operator!=(Energization const* ener);
     //Getters start----------------------------------------------------
         std::string const& getIdentification() const;
         std::string const& getType() const;

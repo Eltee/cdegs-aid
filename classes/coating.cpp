@@ -50,9 +50,31 @@ Coating::Coating() : Component(0, "", false, true){}
 */
 Coating::Coating(std::string const& name) : Component(0, name, false, true){}
 
+Coating::Coating(Coating const* coat){
+    m_id = coat->getId();
+    m_name = coat->getName();
+    m_saveable = coat->isSaveable();
+    m_locked = coat->isLocked();
+}
+
 /*!
  \brief
 
  \fn Coating::~Coating
 */
 Coating::~Coating(){}
+
+bool Coating::operator==(Coating const* coat){
+    bool result = true;
+    if(m_id != coat->getId()) result = false;
+    if(m_name != coat->getName()) result = false;
+    if(m_saveable != coat->isSaveable()) result = false;
+    if(m_locked != coat->isLocked()) result = false;
+    return result;
+}
+
+bool Coating::operator!=(Coating const* coat){
+    bool result = true;
+    if(*this == *coat) result = false;
+    return result;
+}

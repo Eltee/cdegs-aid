@@ -56,7 +56,10 @@ class Building : public Component
     public:
         Building();
         Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step);
+        Building(Building const* build);
         ~Building();
+        bool operator==(Building const* build);
+        bool operator!=(Building const* build);
     //Getters start---------------------------------------------------
         int const& getFaces() const;
         double const& getHeight() const;

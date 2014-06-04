@@ -84,6 +84,47 @@ Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* 
     m_cableType = cableType;
 }
 
+//Warning: do not use this copy. All components are cloned when a configuration is cloned, but none are meant to be cloned individually. Clones are for comparison purposes only, and since comparisons are only attribute or pointer based, being the same objects or not does not matter. No manipulations other than comparisons should be done on clones. When a cloned configuration is destroyed, all of its cloned components will also be destroyed. Others can theoretically be used to create entirely new components, but Conductor is the only one not to create a clone entirely independant of the original. Both share the same pointers. For comparison, this is fine. However it means the clone cannot be used for anything except comparison.
+Conductor::Conductor(Conductor const* cond){
+    m_id = cond->getId();
+    m_name = cond->getName();
+    m_locked = cond->isLocked();
+    m_saveable = cond->isSaveable();
+    m_radius = cond->getRadius();
+    m_subDivision = cond->getSubDivision();
+    m_startCoords = cond->getStartCoords();
+    m_endCoords = cond->getEndCoords();
+    m_leadType = cond->getLeadType();
+    m_conductorType = cond->getConductorType();
+    m_coating = cond->getCoating();
+    m_energization = cond->getEnergization();
+    m_cableType = cond->getCableType();
+}
+
+bool Conductor::operator==(Conductor const* cond){
+    bool result = true;
+    if(m_id != cond->getId()) result = false;
+    if(m_name != cond->getName()) result = false;
+    if(m_locked != cond->isLocked()) result = false;
+    if(m_saveable != cond->isSaveable()) result = false;
+    if(m_radius != cond->getRadius()) result = false;
+    if(m_subDivision != cond->getSubDivision()) result = false;
+    if(m_startCoords != cond->getStartCoords()) result = false;
+    if(m_endCoords != cond->getEndCoords()) result = false;
+    if(m_leadType != cond->getLeadType()) result = false;
+    if(m_conductorType != cond->getConductorType()) result = false;
+    if(m_coating != cond->getCoating()) result = false;
+    if(m_energization != cond->getEnergization()) result = false;
+    if(m_cableType != cond->getCableType()) result = false;
+    return result;
+}
+
+bool Conductor::operator!=(Conductor const* cond){
+    bool result = true;
+    if(*this == *cond) result = false;
+    return result;
+}
+
 /**
  * @brief
  *
