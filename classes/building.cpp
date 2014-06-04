@@ -66,12 +66,44 @@ Building::Building(int const& faces, double const& height, double const& distanc
     m_step = step;
 }
 
+Building::Building(Building const* build){
+    m_id = build->getId();
+    m_name = build->getName();
+    m_locked = build->isLocked();
+    m_saveable = build->isSaveable();
+    m_faces = build->getFaces();
+    m_height = build->getHeight();
+    m_distanceMin = build->getDistanceMin();
+    m_distanceMax = build->getDistanceMax();
+    m_step = build->getStep();
+}
+
 /*!
  \brief
 
  \fn Building::~Building
 */
 Building::~Building(){}
+
+bool Building::operator==(Building const* build){
+    bool result = true;
+    if(m_id != build->getId()) result = false;
+    if(m_name != build->getName()) result = false;
+    if(m_locked != build->isLocked()) result = false;
+    if(m_saveable != build->isSaveable()) result = false;
+    if(m_faces != build->getFaces()) result = false;
+    if(m_height != build->getHeight()) result = false;
+    if(m_distanceMin != build->getDistanceMin()) result = false;
+    if(m_distanceMax != build->getDistanceMax()) result = false;
+    if(m_step != build->getStep()) result = false;
+    return result;
+}
+
+bool Building::operator!=(Building const* build){
+    bool result = true;
+    if(*this == *build) result = false;
+    return result;
+}
 
 /*!
  \brief

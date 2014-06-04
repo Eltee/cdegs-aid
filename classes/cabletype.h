@@ -57,7 +57,10 @@ class CableType : public Component
     public:
         CableType();
         CableType(std::string const& name);
+        CableType(CableType const* cblType);
         ~CableType();
+        bool operator==(CableType const* cblType);
+        bool operator!=(CableType const* cblType);
 };
 
 #endif // CABLETYPE_H

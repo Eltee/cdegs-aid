@@ -50,9 +50,31 @@ CableType::CableType() : Component(0, "", false, false){}
 */
 CableType::CableType(std::string const& name) : Component(0, name, false, true){}
 
+CableType::CableType(CableType const* cblType){
+    m_id = cblType->getId();
+    m_name = cblType->getName();
+    m_saveable = cblType->isSaveable();
+    m_locked = cblType->isLocked();
+}
+
 /*!
  \brief
 
  \fn CableType::~CableType
 */
 CableType::~CableType(){}
+
+bool CableType::operator==(CableType const* cblType){
+    bool result = true;
+    if(m_id != cblType->getId()) result = false;
+    if(m_name != cblType->getName()) result = false;
+    if(m_saveable != cblType->isSaveable()) result = false;
+    if(m_locked != cblType->isLocked()) result = false;
+    return result;
+}
+
+bool CableType::operator!=(CableType const* cblType){
+    bool result = true;
+    if(*this == *cblType) result = false;
+    return result;
+}

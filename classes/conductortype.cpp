@@ -61,12 +61,40 @@ ConductorType::ConductorType(std::string const& type, std::string const& name, d
     m_permeability = permeability;
 }
 
+ConductorType::ConductorType(ConductorType const* cType){
+    m_id = cType->getId();
+    m_name = cType->getName();
+    m_saveable = cType->isSaveable();
+    m_locked = cType->isLocked();
+    m_type = cType->getType();
+    m_resistivity = cType->getResistivity();
+    m_permeability = cType->getPermeability();
+}
+
 /*!
  \brief
 
  \fn ConductorType::~ConductorType
 */
 ConductorType::~ConductorType(){}
+
+bool ConductorType::operator==(ConductorType const* cType){
+    bool result = true;
+    if(m_id != cType->getId()) result = false;
+    if(m_name != cType->getName()) result = false;
+    if(m_saveable != cType->isSaveable()) result = false;
+    if(m_locked != cType->isLocked()) result = false;
+    if(m_type != cType->getType()) result = false;
+    if(m_resistivity != cType->getResistivity()) result = false;
+    if(m_permeability != cType->getPermeability()) result = false;
+    return result;
+}
+
+bool ConductorType::operator!=(ConductorType const* cType){
+    bool result = true;
+    if(*this == *cType) result = false;
+    return result;
+}
 
 /*!
  \brief

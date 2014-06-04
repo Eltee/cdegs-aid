@@ -77,6 +77,23 @@ struct computations{
     bool MAGNETIC = false;
     bool VECTOR_POTENTIAL = false;
     bool GRADIENT_SCALAR = false;
+
+    bool operator==(computations const& c){
+        bool result = true;
+        if(GPR != c.GPR) result = false;
+        if(POTENTIAL_SCALAR != c.POTENTIAL_SCALAR) result = false;
+        if(ELECTRIC != c.ELECTRIC) result = false;
+        if(MAGNETIC != c.MAGNETIC) result = false;
+        if(VECTOR_POTENTIAL != c.VECTOR_POTENTIAL) result = false;
+        if(GRADIENT_SCALAR != c.GRADIENT_SCALAR) result = false;
+        return result;
+    }
+
+    bool operator!=(computations const& c){
+        bool result = true;
+        if(*this == c) result = false;
+        return result;
+    }
 };
 
 /*!
@@ -294,6 +311,8 @@ struct profile{
         bool result = true;
         if(ptNum !=  p.ptNum) result = false;
         if(prNum != p.prNum) result = false;
+        if(ptStep != p.ptStep) result = false;
+        if(prStep != p.prStep) result = false;
         if(start != p.start) result = false;
         return result;
     }
@@ -321,6 +340,21 @@ struct project_metadata{
         QDate date;
         std::string author;
         QTextDocument description;
+
+        bool operator==(const project_metadata& pm){
+            bool result = true;
+            if(author != pm.author) result = false;
+            if(date != pm.date) result = false;
+            if(description != pm.description) result = false;
+            if(name != pm.name) result = false;
+            return result;
+        }
+
+        bool operator!=(const project_metadata& pm){
+            bool result = true;
+            if(*this == pm) result = false;
+            return result;
+        }
 };
 
 /*!

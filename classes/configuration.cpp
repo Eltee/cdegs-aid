@@ -71,17 +71,50 @@ Configuration::Configuration(Configuration const* config){
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
-    m_leadTypes = config->getLeadTypes();
-    m_coatings = config->getCoatings();
-    m_energizations = config->getEnergizations();
+
+
+    for(auto& lType : config->getLeadTypes()){
+        m_leadTypes.emplace(lType.first, new LeadType(lType.second));
+    }
+
+    for(auto& coat : config->getCoatings()){
+        m_coatings.emplace(coat.first, new Coating(coat.second));
+    }
+
+    for(auto& ener : config->getEnergizations()){
+        m_energizations.emplace(ener.first, new Energization(ener.second));
+    }
+
     m_tolerances = config->getTolerances();
-    m_conductorTypes = config->getConductorTypes();
-    m_conductors = config->getConductors();
-    m_buildingConductors = config->getBuildingConductors();
-    m_buildings = config->getBuildings();
-    m_cableTypes = config->getCableTypes();
+
+    for(auto& cType : config->getConductorTypes()){
+        m_conductorTypes.emplace(cType.first, new ConductorType(cType.second));
+    }
+
+    for(auto& cond : config->getConductors()){
+        m_conductors.emplace(cond.first, new Conductor(cond.second));
+    }
+
+    for(auto& cond : config->getBuildingConductors()){
+        m_buildingConductors.emplace(cond.first, new Conductor(cond.second));
+    }
+
+    for(auto& build : config->getBuildings()){
+        m_buildings.emplace(build.first, new Building(build.second));
+    }
+
+    for(auto& cab : config->getCableTypes()){
+        m_cableTypes.emplace(cab.first, new CableType(cab.second));
+    }
+
     m_computations = config->getComputations();
-    m_profiles = config->getProfiles();
+
+    for(auto& pro : config->getProfiles()){
+        profile* p;
+        p = new profile();
+        *p = pro;
+        m_profiles.emplace(pro.first, p);
+    }
 }
 
 /*!
@@ -107,6 +140,113 @@ Configuration::~Configuration(){
     m_cableTypes.clear();
 
     m_profiles.clear();
+}
+
+bool Configuration::operator==(Configuration const* config){
+    bool result = true;
+    if(m_identifier != config->getIdentifier()) result = false;
+    if(m_units != config->getUnits()) result = false;
+    if(m_frequency != config->getFrequency()) result = false;
+
+    if(m_leadTypes.size() == config->getLeadTypes().size()){
+        for(auto& lType : m_leadTypes){
+            if(lType.second != config->getLeadTypes().at(lType.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_coatings.size() == config->getCoatings().size()){
+        for(auto& coat : m_coatings){
+            if(coat.second != config->getCoatings().at(coat.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_energizations.size() == config->getEnergizations().size()){
+        for(auto& ener : m_energizations){
+            if(ener.second != config->getEnergizations().at(ener.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_tolerances.size() == config->getTolerances().size()){
+        for(int i=0; i<m_tolerances.size(); i++){
+            if(m_tolerances.at(i) != config->getTolerances().at(i)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_conductorTypes.size() == config->getConductorTypes().size()){
+        for(auto& cType : m_conductorTypes){
+            if(cType.second != config->getConductorTypes().at(cType.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_conductors.size() == config->getConductors().size()){
+        for(auto& cond : m_conductors){
+            if(cond.second != config->getConductors().at(cond.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_buildingConductors.size() == config->getBuildingConductors().size()){
+        for(auto& cond : m_buildingConductors){
+            if(cond.second != config->getBuildingConductors().at(cond.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_buildings.size() == config->getBuildings().size()){
+        for(auto& build : m_buildings){
+            if(build.second != config->getBuildings().at(build.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_cableTypes.size() == config->getCableTypes().size()){
+        for(auto& cab : m_cableTypes){
+            if(cab.second != config->getCableTypes().at(cab.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    if(m_computations != config->getComputations()) result = false;
+
+    if(m_profiles.size() == config->getProfiles().size()){
+        for(auto& pro : m_profiles){
+            if(pro.second != config->getProfiles().at(pro.first)) result = false;
+        }
+    }
+    else{
+        result = false;
+    }
+
+    return result;
+}
+
+bool Configuration::operator!=(Configuration const* config){
+    bool result = true;
+    if(*this == config) result = false;
+    return result;
 }
 
 /*!

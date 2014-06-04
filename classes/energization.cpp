@@ -66,12 +66,45 @@ Energization::Energization(std::string const& identification, std::string const&
     m_magnitude = magnitude;
 }
 
+Energization::Energization(Energization const* ener){
+    m_id = ener->getId();
+    m_name = ener->getName();
+    m_locked = ener->isLocked();
+    m_saveable = ener->isSaveable();
+
+    m_identification = ener->getIdentification();
+    m_type = ener->getType();
+    m_frequency = ener->getFrequency();
+    m_angle = ener->getAngle();
+    m_magnitude = ener->getMagnitude();
+}
+
 /*!
  \brief
 
  \fn Energization::~Energization
 */
 Energization::~Energization(){}
+
+bool Energization::operator==(Energization const* ener){
+    bool result = true;
+    if(m_id != ener->getId()) result = false;
+    if(m_name != ener->getName()) result = false;
+    if(m_locked != ener->isLocked()) result = false;
+    if(m_saveable != ener->isSaveable()) result = false;
+    if(m_identification != ener->getIdentification()) result = false;
+    if(m_type != ener->getType()) result = false;
+    if(m_frequency != ener->getFrequency()) result = false;
+    if(m_angle != ener->getAngle()) result = false;
+    if(m_magnitude != ener->getMagnitude()) result = false;
+    return result;
+}
+
+bool Energization::operator!=(Energization const* ener){
+    bool result = true;
+    if(*this == *ener) result = false;
+    return result;
+}
 
 /*!
  \brief
