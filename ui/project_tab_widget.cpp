@@ -46,15 +46,19 @@
  \param dp
  \param p
 */
-project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, Project* p) :
+project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, std::shared_ptr<Project> p) :
     QWidget(parent),
     ui(new Ui::project_tab_widget)
 {
     ui->setupUi(this);
+    projectOrig.reset(new Project(p.get()));
     project = p;
     connectSlots();
     defParent = dp;
-    ui->tabProject->addTab(new project_widget(this, this, p), "Project Settings");
+    project_widget* tab = new project_widget(this, this, project, projectOrig);
+    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
+            this, SLOT(tabModified(QWidget*)));
+    ui->tabProject->addTab(tab, "Project Settings");
 }
 
 /*!
@@ -73,7 +77,7 @@ project_tab_widget::~project_tab_widget()
  \fn project_tab_widget::getProject
  \return Project
 */
-Project* project_tab_widget::getProject(){
+std::shared_ptr<Project> project_tab_widget::getProject(){
     return project;
 }
 
@@ -96,12 +100,13 @@ void project_tab_widget::connectSlots(){
  \fn project_tab_widget::getConfig
  \return Configuration
 */
-Configuration* project_tab_widget::getConfig(){
+std::shared_ptr<Configuration> project_tab_widget::getConfig(){
     if(ui->tabProject->currentIndex() > 0){
         return dynamic_cast<configuration_widget*>(ui->tabProject->currentWidget())->getConfig();
     }
     else{
-        return NULL;
+        std::shared_ptr<Configuration> nol;
+        return nol;
     }
 }
 
@@ -112,6 +117,7 @@ Configuration* project_tab_widget::getConfig(){
 */
 void project_tab_widget::refresh(){
     defParent->refresh();
+    if(*project.get() != projectOrig.get()) emit dataModified(this);
 }
 
 /*!
@@ -120,8 +126,11 @@ void project_tab_widget::refresh(){
  \fn project_tab_widget::addConfig
  \param config
 */
-void project_tab_widget::addConfig(Configuration* config){
-    int index = ui->tabProject->addTab(new configuration_widget(this, this, config), QString::fromStdString(config->getIdentifier()));
+void project_tab_widget::addConfig(std::shared_ptr<Configuration> config){
+    configuration_widget* tab = new configuration_widget(this, this, config);
+    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
+            this, SLOT(tabModified(QWidget*)));
+    int index = ui->tabProject->addTab(tab, QString::fromStdString(config->getIdentifier()));
     ui->tabProject->setCurrentIndex(index);
 }
 
@@ -143,11 +152,18 @@ void project_tab_widget::changeTab(){
 void project_tab_widget::closeConfig(int index){
 
     if(index > 0){
-        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
-            delete(dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig());
+        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig().reset();
             ui->tabProject->removeTab(index);
         }
     }
 
     refresh();
+}
+
+void project_tab_widget::tabModified(QWidget* widget){
+    int index = ui->tabProject->indexOf(widget);
+    QString name = ui->tabProject->tabText(index);
+    if(!name.endsWith("*")) name.append("*");
+    ui->tabProject->setTabText(index, name);
 }

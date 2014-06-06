@@ -92,7 +92,7 @@ bool ConductorType::operator==(ConductorType const* cType){
 
 bool ConductorType::operator!=(ConductorType const* cType){
     bool result = true;
-    if(*this == *cType) result = false;
+    if(*this == cType) result = false;
     return result;
 }
 

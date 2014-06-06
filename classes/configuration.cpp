@@ -71,6 +71,23 @@ Configuration::Configuration(Configuration const* config){
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
+    m_leadTypes = config->getLeadTypes();
+    m_coatings = config->getCoatings();
+    m_energizations = config->getEnergizations();
+    m_tolerances = config->getTolerances();
+    m_conductorTypes = config->getConductorTypes();
+    m_conductors = config->getConductors();
+    m_buildingConductors = config->getBuildingConductors();
+    m_buildings = config->getBuildings();
+    m_cableTypes = config->getCableTypes();
+    m_computations = config->getComputations();
+    m_profiles = config->getProfiles();
+}
+
+/*Configuration::Configuration(Configuration const* config){
+    m_identifier = config->getIdentifier();
+    m_units = config->getUnits();
+    m_frequency = config->getFrequency();
 
 
     for(auto& lType : config->getLeadTypes()){
@@ -112,10 +129,10 @@ Configuration::Configuration(Configuration const* config){
     for(auto& pro : config->getProfiles()){
         profile* p;
         p = new profile();
-        *p = pro;
+        *p = *pro.second;
         m_profiles.emplace(pro.first, p);
     }
-}
+}*/
 
 /*!
  \brief
@@ -331,7 +348,7 @@ Configuration& Configuration::setComputations(computations const& comp){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addLeadType(LeadType *leadType, bool const& newAdd){
+Configuration& Configuration::addLeadType(std::shared_ptr<LeadType> leadType, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -356,7 +373,7 @@ Configuration& Configuration::addLeadType(LeadType *leadType, bool const& newAdd
  \param leadType
  \return Configuration
 */
-Configuration& Configuration::removeLeadType(LeadType *leadType){
+Configuration& Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
     if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
 
     return *this;
@@ -370,7 +387,7 @@ Configuration& Configuration::removeLeadType(LeadType *leadType){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addCoating(Coating *coating, bool const& newAdd){
+Configuration& Configuration::addCoating(std::shared_ptr<Coating> coating, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -395,7 +412,7 @@ Configuration& Configuration::addCoating(Coating *coating, bool const& newAdd){
  \param coating
  \return Configuration
 */
-Configuration& Configuration::removeCoating(Coating *coating){
+Configuration& Configuration::removeCoating(std::shared_ptr<Coating> coating){
     if(m_coatings.count(coating->getId())) m_coatings.erase(coating->getId());
 
     return *this;
@@ -409,7 +426,7 @@ Configuration& Configuration::removeCoating(Coating *coating){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addEnergization(Energization *energization, bool const& newAdd){
+Configuration& Configuration::addEnergization(std::shared_ptr<Energization> energization, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -434,7 +451,7 @@ Configuration& Configuration::addEnergization(Energization *energization, bool c
  \param energization
  \return Configuration
 */
-Configuration& Configuration::removeEnergization(Energization *energization){
+Configuration& Configuration::removeEnergization(std::shared_ptr<Energization> energization){
     if(m_energizations.count(energization->getId())) m_energizations.erase(energization->getId());
 
     return *this;
@@ -485,7 +502,7 @@ Configuration& Configuration::removeTolerance(double const& tolerance){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addConductorType(ConductorType *conductorType, bool const& newAdd){
+Configuration& Configuration::addConductorType(std::shared_ptr<ConductorType> conductorType, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -510,7 +527,7 @@ Configuration& Configuration::addConductorType(ConductorType *conductorType, boo
  \param conductorType
  \return Configuration
 */
-Configuration& Configuration::removeConductorType(ConductorType *conductorType){
+Configuration& Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorType){
     if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.erase(conductorType->getId());
 
     return *this;
@@ -604,7 +621,7 @@ Configuration& Configuration::removeBuildingConductor(Conductor *conductor){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addBuilding(Building *building, bool const& newAdd){
+Configuration& Configuration::addBuilding(std::shared_ptr<Building> building, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -629,7 +646,7 @@ Configuration& Configuration::addBuilding(Building *building, bool const& newAdd
  \param building
  \return Configuration
 */
-Configuration& Configuration::removeBuilding(Building *building){
+Configuration& Configuration::removeBuilding(std::shared_ptr<Building> building){
     if(m_buildings.count(building->getId())) m_buildings.erase(building->getId());
 
     return *this;
@@ -643,7 +660,7 @@ Configuration& Configuration::removeBuilding(Building *building){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addProfile(profile* p, bool const& newAdd){
+Configuration& Configuration::addProfile(std::shared_ptr<profile> p, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -668,7 +685,7 @@ Configuration& Configuration::addProfile(profile* p, bool const& newAdd){
  \param p
  \return Configuration
 */
-Configuration& Configuration::removeProfile(profile* p){
+Configuration& Configuration::removeProfile(std::shared_ptr<profile> p){
     if(m_profiles.count(p->id)) m_profiles.erase(p->id);
 
     return *this;
@@ -682,7 +699,7 @@ Configuration& Configuration::removeProfile(profile* p){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addCableType(CableType* cableType, bool const& newAdd){
+Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType, bool const& newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -707,7 +724,7 @@ Configuration& Configuration::addCableType(CableType* cableType, bool const& new
  \param cableType
  \return Configuration
 */
-Configuration& Configuration::removeCableType(CableType* cableType){
+Configuration& Configuration::removeCableType(std::shared_ptr<CableType> cableType){
     if(m_cableTypes.count(cableType->getId())) m_cableTypes.erase(cableType->getId());
 
     return *this;
@@ -759,7 +776,7 @@ std::string const& Configuration::getFrequency() const{
  \fn Configuration::getLeadTypes
  \return std::unordered_map<int, LeadType *>
 */
-std::unordered_map<int, LeadType*> Configuration::getLeadTypes() const{
+std::unordered_map<int, std::shared_ptr<LeadType> > Configuration::getLeadTypes() const{
     return m_leadTypes;
 }
 
@@ -769,7 +786,7 @@ std::unordered_map<int, LeadType*> Configuration::getLeadTypes() const{
  \fn Configuration::getCoatings
  \return std::unordered_map<int, Coating *>
 */
-std::unordered_map<int, Coating*> Configuration::getCoatings() const{
+std::unordered_map<int, std::shared_ptr<Coating>> Configuration::getCoatings() const{
     return m_coatings;
 }
 
@@ -779,7 +796,7 @@ std::unordered_map<int, Coating*> Configuration::getCoatings() const{
  \fn Configuration::getEnergizations
  \return std::unordered_map<int, Energization *>
 */
-std::unordered_map<int, Energization*> Configuration::getEnergizations() const{
+std::unordered_map<int, std::shared_ptr<Energization> > Configuration::getEnergizations() const{
     return m_energizations;
 }
 
@@ -799,7 +816,7 @@ std::vector<double> Configuration::getTolerances() const{
  \fn Configuration::getConductorTypes
  \return std::unordered_map<int, ConductorType *>
 */
-std::unordered_map<int, ConductorType*> Configuration::getConductorTypes() const{
+std::unordered_map<int, std::shared_ptr<ConductorType> > Configuration::getConductorTypes() const{
     return m_conductorTypes;
 }
 
@@ -829,7 +846,7 @@ std::unordered_map<int, Conductor*> Configuration::getBuildingConductors() const
  \fn Configuration::getBuildings
  \return std::unordered_map<int, Building *>
 */
-std::unordered_map<int, Building*> Configuration::getBuildings() const{
+std::unordered_map<int, std::shared_ptr<Building> > Configuration::getBuildings() const{
     return m_buildings;
 }
 
@@ -849,7 +866,7 @@ computations const& Configuration::getComputations() const{
  \fn Configuration::getProfiles
  \return std::unordered_map<int, profile *>
 */
-std::unordered_map<int, profile*> Configuration::getProfiles() const{
+std::unordered_map<int, std::shared_ptr<profile> > Configuration::getProfiles() const{
     return m_profiles;
 }
 
@@ -859,7 +876,7 @@ std::unordered_map<int, profile*> Configuration::getProfiles() const{
  \fn Configuration::getCableTypes
  \return std::unordered_map<int, CableType *>
 */
-std::unordered_map<int, CableType*> Configuration::getCableTypes() const{
+std::unordered_map<int, std::shared_ptr<CableType> > Configuration::getCableTypes() const{
     return m_cableTypes;
 }
 

@@ -39,6 +39,7 @@
 #define CONFIGURATION_WIDGET_H
 
 #include <QWidget>
+#include <memory>
 #include "project_tab_widget.h"
 #include "classes/configuration.h"
 
@@ -61,14 +62,17 @@ class configuration_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit configuration_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, Configuration* config = NULL);
-        Configuration* getConfig();
+        explicit configuration_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Configuration> config = std::make_shared<Configuration>());
+        std::shared_ptr<Configuration> getConfig();
         void refresh();
         ~configuration_widget();
 
+    signals:
+        void dataModified(QWidget* widget);
+
     private:
         Ui::configuration_widget *ui;
-        Configuration* configuration, configOrig;
+        std::shared_ptr<Configuration> configuration, configOrig;
         project_tab_widget* defParent;
 };
 

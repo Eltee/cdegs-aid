@@ -46,11 +46,12 @@
  \param dp
  \param p
 */
-project_widget::project_widget(QWidget *parent, project_tab_widget* dp, Project* p) :
+project_widget::project_widget(QWidget *parent, project_tab_widget* dp, std::shared_ptr<Project> p, std::shared_ptr<Project> p2) :
     QWidget(parent),
     ui(new Ui::project_widget)
 {
     project = p;
+    projectOrig = p2;
     ui->setupUi(this);
     defParent = dp;
     refresh();
@@ -63,7 +64,7 @@ project_widget::project_widget(QWidget *parent, project_tab_widget* dp, Project*
  \fn project_widget::getProject
  \return Project
 */
-Project* project_widget::getProject(){
+std::shared_ptr<Project> project_widget::getProject(){
     return project;
 }
 
@@ -130,7 +131,7 @@ void project_widget::disconnectSlots(){
 void project_widget::refresh(){
     disconnectSlots();
     defParent->refresh();
-    if(project != NULL){
+    if(project){
         std::string filePath = project->getAbsPath() + "/" + project->getFileName();
         ui->lineEdit_pAuthor->setText(QString::fromStdString(project->getMetadata().author));
         ui->lineEdit_pId->setText(QString::fromStdString(project->getId()));
@@ -138,40 +139,41 @@ void project_widget::refresh(){
         ui->lineEdit_pPath->setText(QString::fromStdString(filePath));
         ui->dateEdit_pDate->setDate(project->getMetadata().date);
         ui->textEdit_pDesc->setDocument(project->getMetadata().description.clone());
+        if(*project.get() != projectOrig.get()) emit dataModified(this);
     }
     connectSlots();
 }
 
 void project_widget::changeDate(QDate date){
-    if(project != NULL){
+    if(project){
         project->setMetaDate(date);
         refresh();
     }
 }
 
 void project_widget::changeName(QString name){
-    if(project != NULL){
+    if(project){
         project->setMetaName(name.toStdString());
         refresh();
     }
 }
 
 void project_widget::changeAuthor(QString author){
-    if(project != NULL){
+    if(project){
         project->setMetaAuthor(author.toStdString());
         refresh();
     }
 }
 
 void project_widget::changeDescription(){
-    if(project != NULL){
+    if(project){
         project->setMetaDescription(ui->textEdit_pDesc->document()->toPlainText().toStdString());
         refresh();
     }
 }
 
 void project_widget::changeFilepath(QString path){
-    if(project != NULL){
+    if(project){
         int index, toGo;
         index = path.lastIndexOf("/");
         toGo = path.size() - path.lastIndexOf("/");

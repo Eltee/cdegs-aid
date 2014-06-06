@@ -57,11 +57,8 @@ cdegs_main::cdegs_main(QWidget *parent) :
 */
 cdegs_main::~cdegs_main(){
     delete ui;
-    if(project != NULL){
-        config = NULL;
-        delete(project);
-        project = NULL;
-    }
+    project.reset();
+    config.reset();
 }
 
 /*!
@@ -123,7 +120,7 @@ void cdegs_main::refresh(){
  \fn cdegs_main::updateTab
 */
 void cdegs_main::updateTab(){ //TO-DO: CHANGE
-    if(project != NULL && ui->tabProjects->count() > 0){
+    if(project && ui->tabProjects->count() > 0){
         ui->tabProjects->setTabText(ui->tabProjects->currentIndex(), QString::fromStdString(project->getFileName()));
     }
 }
@@ -138,7 +135,7 @@ void cdegs_main::updateProject(){
         project = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getProject();
     }
     else{
-        project = NULL;
+        project.reset();
     }
 
 }
@@ -153,7 +150,7 @@ void cdegs_main::updateConfig(){
         config = dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->getConfig();
     }
     else{
-        config = NULL;
+        config.reset();
     }
 }
 
@@ -163,7 +160,7 @@ void cdegs_main::updateConfig(){
  \fn cdegs_main::updateActions
 */
 void cdegs_main::updateActions(){
-    if(project != NULL){
+    if(project){
         ui->actionSave_Project->setEnabled(true);
         ui->actionSave_Project_as->setEnabled(true);
         ui->actionClose_Project->setEnabled(true);
@@ -178,7 +175,7 @@ void cdegs_main::updateActions(){
         ui->actionOpen_Config->setEnabled(false);
     }
 
-    if(config != NULL){
+    if(config){
         ui->actionClose_Config->setEnabled(true);
         ui->actionSave_Config->setEnabled(true);
         ui->actionExport_Config->setEnabled(true);
@@ -198,10 +195,10 @@ void cdegs_main::updateActions(){
  \fn cdegs_main::updateTitle
 */
 void cdegs_main::updateTitle(){
-    if(project != NULL){
+    if(project){
         QString title;
         std::string stdTitle;
-        if(config != NULL){
+        if(config){
             stdTitle = "CDEGS Aid - " + project->getFileName() + " - " + config->getIdentifier();
         }
         else{
@@ -221,9 +218,14 @@ void cdegs_main::updateTitle(){
  \fn cdegs_main::newProject
 */
 void cdegs_main::newProject(){
-    project = new Project();
+    project.reset(new Project());
 
-    int index = ui->tabProjects->addTab(new project_tab_widget(this, this, project), QString::fromStdString(project->getFileName()));
+    project_tab_widget* tab = new project_tab_widget(this, this, project);
+
+    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
+            this, SLOT(tabModified(QWidget*)));
+
+    int index = ui->tabProjects->addTab(tab, QString::fromStdString(project->getFileName()));
 
     ui->tabProjects->setCurrentIndex(index);
 
@@ -238,9 +240,15 @@ void cdegs_main::newProject(){
 */
 void cdegs_main::openProject(){
     QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
-    project = AppUtils::getInstance().loadProject(filePath.toStdWString().c_str());
+    project.reset(AppUtils::getInstance().loadProject(filePath.toStdWString().c_str()));
 
-    int index = ui->tabProjects->addTab(new project_tab_widget(this, this, project), QString::fromStdString(project->getFileName()));
+    project_tab_widget* tab = new project_tab_widget(this, this, project);
+
+    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
+            this, SLOT(tabModified(QWidget*)));
+
+    int index = ui->tabProjects->addTab(tab, QString::fromStdString(project->getFileName()));
+
     ui->tabProjects->setCurrentIndex(index);
 
     refresh();
@@ -252,7 +260,7 @@ void cdegs_main::openProject(){
  \fn cdegs_main::saveProject
 */
 void cdegs_main::saveProject(){
-    if(project != NULL) AppUtils::getInstance().saveProject(*project);
+    if(project) AppUtils::getInstance().saveProject(*project.get());
 }
 
 /*!
@@ -261,12 +269,12 @@ void cdegs_main::saveProject(){
  \fn cdegs_main::saveProjectAs
 */
 void cdegs_main::saveProjectAs(){
-    if(project!= NULL){
+    if(project){
         QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS-Aid Project File (*.cdp)");
         QDir d = QFileInfo(filePath).absoluteDir();
         project->setAbsPath(d.absolutePath().toStdString()).setRelPath(d.path().toStdString());
         project->setFileName(QFileInfo(filePath).fileName().toStdString());
-        AppUtils::getInstance().saveProject(*project);
+        AppUtils::getInstance().saveProject(*project.get());
     }
 
     refresh();
@@ -279,9 +287,8 @@ void cdegs_main::saveProjectAs(){
 */
 void cdegs_main::closeProject(){
     if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
-        delete(project);
-        config = NULL;
-        project = NULL;
+        config.reset();
+        project.reset();
         ui->tabProjects->removeTab(ui->tabProjects->currentIndex());
     }
 
@@ -296,7 +303,7 @@ void cdegs_main::closeProject(){
 */
 void cdegs_main::closeProject(int index){
     if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
-        delete(dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject());
+        dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject().reset();
         ui->tabProjects->removeTab(index);
     }
 
@@ -314,7 +321,7 @@ void cdegs_main::changeProject(int index){
         project = dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject();
     }
     else{
-        project = NULL;
+        project.reset();
     }
 
     refresh();
@@ -335,7 +342,7 @@ void cdegs_main::changeTab(){
  \fn cdegs_main::newConfig
 */
 void cdegs_main::newConfig(){
-    config = new Configuration();
+    config.reset(new Configuration());
 
     if(ui->tabProjects->currentIndex() != -1){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
@@ -349,7 +356,7 @@ void cdegs_main::newConfig(){
 
  \fn cdegs_main::openConfig
 */
-void cdegs_main::openConfig(Configuration* config){
+void cdegs_main::openConfig(std::shared_ptr<Configuration> config){
     if(ui->tabProjects->currentIndex() != -1){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
 
@@ -434,14 +441,21 @@ void cdegs_main::changeStyle(std::string style){
  \fn cdegs_main::openConfigDialog
 */
 void cdegs_main::openConfigDialog(){
-    if(project != NULL){
+    if(project){
         configuration_chooser_dialog* diag = new configuration_chooser_dialog(this, project);
-        QObject::connect(diag, SIGNAL(returnConfig(Configuration*)),
-                         this, SLOT(openConfig(Configuration*)));
+        QObject::connect(diag, SIGNAL(returnConfig(std::shared_ptr<Configuration>)),
+                         this, SLOT(openConfig(std::shared_ptr<Configuration>)));
         diag->exec();
-        QObject::disconnect(diag, SIGNAL(returnConfig(Configuration*)),
-                            this, SLOT(openConfig(Configuration*)));
+        QObject::disconnect(diag, SIGNAL(returnConfig(std::shared_ptr<Configuration>)),
+                            this, SLOT(openConfig(std::shared_ptr<Configuration>)));
         delete diag;
     }
+}
+
+void cdegs_main::tabModified(QWidget* widget){
+    int index = ui->tabProjects->indexOf(widget);
+    QString name = ui->tabProjects->tabText(index);
+    if(!name.endsWith("*")) name.append("*");
+    ui->tabProjects->setTabText(index, name);
 }
 

@@ -102,7 +102,7 @@ bool Energization::operator==(Energization const* ener){
 
 bool Energization::operator!=(Energization const* ener){
     bool result = true;
-    if(*this == *ener) result = false;
+    if(*this == ener) result = false;
     return result;
 }
 

@@ -74,7 +74,7 @@ Conductor::Conductor(Configuration const& config, const int& leadType, const int
  * @param cableType
  * @param radius
  */
-Conductor::Conductor(LeadType* leadType, ConductorType* conductorType, Coating* coating, Energization* energization, CableType* cableType, double const& radius) : Component(0, "", false, true){
+Conductor::Conductor(std::shared_ptr<LeadType> leadType, std::shared_ptr<ConductorType> conductorType, std::shared_ptr<Coating> coating, std::shared_ptr<Energization> energization, std::shared_ptr<CableType> cableType, const double& radius) : Component(0, "", false, true){
     m_radius = radius;
 
     m_leadType = leadType;
@@ -121,7 +121,7 @@ bool Conductor::operator==(Conductor const* cond){
 
 bool Conductor::operator!=(Conductor const* cond){
     bool result = true;
-    if(*this == *cond) result = false;
+    if(*this == cond) result = false;
     return result;
 }
 
@@ -129,14 +129,20 @@ bool Conductor::operator!=(Conductor const* cond){
  * @brief
  *
  */
-Conductor::~Conductor(){}
+Conductor::~Conductor(){
+    m_leadType.reset();
+    m_conductorType.reset();
+    m_coating.reset();
+    m_energization.reset();
+    m_cableType.reset();
+}
 
 /**
  * @brief
  *
  * @return LeadType
  */
-LeadType* Conductor::getLeadType() const{
+std::shared_ptr<LeadType> Conductor::getLeadType() const{
     return m_leadType;
 }
 
@@ -145,7 +151,7 @@ LeadType* Conductor::getLeadType() const{
  *
  * @return ConductorType
  */
-ConductorType* Conductor::getConductorType() const{
+std::shared_ptr<ConductorType> Conductor::getConductorType() const{
     return m_conductorType;
 }
 
@@ -154,7 +160,7 @@ ConductorType* Conductor::getConductorType() const{
  *
  * @return Coating
  */
-Coating* Conductor::getCoating() const{
+std::shared_ptr<Coating> Conductor::getCoating() const{
     return m_coating;
 }
 
@@ -163,7 +169,7 @@ Coating* Conductor::getCoating() const{
  *
  * @return Energization
  */
-Energization* Conductor::getEnergization() const{
+std::shared_ptr<Energization> Conductor::getEnergization() const{
     return m_energization;
 }
 
@@ -172,7 +178,7 @@ Energization* Conductor::getEnergization() const{
  *
  * @return CableType
  */
-CableType* Conductor::getCableType() const{
+std::shared_ptr<CableType> Conductor::getCableType() const{
     return m_cableType;
 }
 
@@ -218,7 +224,7 @@ const int& Conductor::getSubDivision() const{
  * @param leadType
  * @return Conductor
  */
-Conductor& Conductor::setLeadType(LeadType* leadType){
+Conductor& Conductor::setLeadType(std::shared_ptr<LeadType> leadType){
     m_leadType = leadType;
     return *this;
 }
@@ -229,7 +235,7 @@ Conductor& Conductor::setLeadType(LeadType* leadType){
  * @param conductorType
  * @return Conductor
  */
-Conductor& Conductor::setConductorType(ConductorType* conductorType){
+Conductor& Conductor::setConductorType(std::shared_ptr<ConductorType> conductorType){
     m_conductorType = conductorType;
     return *this;
 }
@@ -240,7 +246,7 @@ Conductor& Conductor::setConductorType(ConductorType* conductorType){
  * @param coating
  * @return Conductor
  */
-Conductor& Conductor::setCoating(Coating* coating){
+Conductor& Conductor::setCoating(std::shared_ptr<Coating> coating){
     m_coating = coating;
     return *this;
 }
@@ -251,7 +257,7 @@ Conductor& Conductor::setCoating(Coating* coating){
  * @param energization
  * @return Conductor
  */
-Conductor& Conductor::setEnergization(Energization* energization){
+Conductor& Conductor::setEnergization(std::shared_ptr<Energization> energization){
     m_energization = energization;
     return *this;
 }
@@ -319,7 +325,7 @@ Conductor& Conductor::setSubDivision(const int& subD){
  * @param cableType
  * @return Conductor
  */
-Conductor& Conductor::setCableType(CableType* cableType){
+Conductor& Conductor::setCableType(std::shared_ptr<CableType> cableType){
     m_cableType = cableType;
     return *this;
 }

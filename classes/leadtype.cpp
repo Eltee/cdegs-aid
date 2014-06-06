@@ -76,6 +76,6 @@ bool LeadType::operator==(LeadType const* lType){
 
 bool LeadType::operator!=(LeadType const* lType){
     bool result = true;
-    if(*this == *lType) result = false;
+    if(*this == lType) result = false;
     return result;
 }

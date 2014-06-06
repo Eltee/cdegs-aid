@@ -62,8 +62,69 @@ int main(int argc, char* argv[])
 
     maine.show();
 
-    return app.exec()
-            ;
+    return app.exec();
+
+}
+
+    /*std::shared_ptr<Project> p, p2, p3;
+
+    std::cout << p.get() << std::endl;
+
+    p.reset();
+
+    std::cout << NULL << std::endl;
+
+    p.reset(new Project());
+
+    p2 = p;
+
+    p3 = p;
+
+    std::cout << p.use_count() << std::endl;
+
+    std::cout << p3->getId() << std::endl;
+
+    std::cout << p.get() << " " << p2.get() << " " << p3.get() << std::endl;
+
+    std::cout << p.use_count() << std::endl;
+
+    std::cout << p.get() << " " << p.get()->getId() << std::endl;
+
+    p.reset();
+
+    std::cout << p3.use_count() << std::endl;
+
+    std::cout << p3->getId() << std::endl;
+
+    p2.reset();
+
+    std::cout << p3.use_count() << std::endl;
+
+    do{
+        std::shared_ptr<Project> p4;
+        p4 = p3;
+        std::cout << p3.use_count() << std::endl;
+    }while(0 != 0);
+
+    std::weak_ptr<Project> wp;
+
+    std::cout << p3.use_count() << std::endl;
+
+    wp = p3;
+
+    std::cout << p3.use_count() << std::endl;
+
+    std::cout << p3.get() << std::endl;
+
+    std::cout << wp.lock().get() << std::endl;
+
+    std::cout << p3.use_count() << std::endl;
+
+    std::cout << p2.get() << std::endl;
+
+    std::cout << "last line before main return" << std::endl;
+
+    return 0;
 }
 
 /*

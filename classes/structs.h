@@ -345,7 +345,7 @@ struct project_metadata{
             bool result = true;
             if(author != pm.author) result = false;
             if(date != pm.date) result = false;
-            if(description != pm.description) result = false;
+            //if(description != pm.description) result = false;
             if(name != pm.name) result = false;
             return result;
         }

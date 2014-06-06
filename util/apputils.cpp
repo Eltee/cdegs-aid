@@ -244,21 +244,24 @@ void AppUtils::loadDefaultConfig(){
         LeadType* lt = new LeadType(it->attribute("Name").value());
         lt->setId(it->attribute("Id").as_int());
         lt->setLocked(true);
-        m_defaultConfig->addLeadType(lt);
+        std::shared_ptr<LeadType> ptr(lt);
+        m_defaultConfig->addLeadType(ptr);
     }
 
     for(pugi::xml_node_iterator it = node.child("Coatings").children().begin(); it != node.child("Coatings").children().end(); it++){
         Coating* co = new Coating(it->attribute("Name").value());
         co->setId(it->attribute("Id").as_int());
         co->setLocked(true);
-        m_defaultConfig->addCoating(co);
+        std::shared_ptr<Coating> ptr(co);
+        m_defaultConfig->addCoating(ptr);
     }
 
     for(pugi::xml_node_iterator it = node.child("Energizations").children().begin(); it != node.child("Energizations").children().end(); it++){
         Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_double(), it->attribute("Angle").as_double());
         en->setId(it->attribute("Id").as_int());
         en->setLocked(true);
-        m_defaultConfig->addEnergization(en);
+        std::shared_ptr<Energization> ptr(en);
+        m_defaultConfig->addEnergization(ptr);
     }
 
     for(pugi::xml_node_iterator it = node.child("Tolerances").children().begin(); it != node.child("Tolerances").children().end(); it++){
@@ -269,14 +272,16 @@ void AppUtils::loadDefaultConfig(){
         ConductorType* ct = new ConductorType(it->attribute("Type").value(), it->attribute("Name").value(), it->attribute("Resistivity").as_double(), it->attribute("Permeability").as_double());
         ct->setId(it->attribute("Id").as_int());
         ct->setLocked(true);
-        m_defaultConfig->addConductorType(ct);
+        std::shared_ptr<ConductorType> ptr(ct);
+        m_defaultConfig->addConductorType(ptr);
     }
 
     for(pugi::xml_node_iterator it = node.child("CableTypes").children().begin(); it != node.child("CableTypes").children().end(); it++){
         CableType* cbt = new CableType(it->attribute("Name").value());
         cbt->setId(it->attribute("Id").as_int());
         cbt->setLocked(true);
-        m_defaultConfig->addCableType(cbt);
+        std::shared_ptr<CableType> ptr(cbt);
+        m_defaultConfig->addCableType(ptr);
     }
 
     m_defaultConfig->setComputations().GPR = node.child("Computations").child("GPR").first_attribute().as_bool();
@@ -556,21 +561,24 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         LeadType* lt = new LeadType(it->attribute("Name").value());
         lt->setId(it->attribute("Id").as_int());
         lt->setLocked(it->attribute("Locked").as_bool());
-        config->addLeadType(lt);
+        std::shared_ptr<LeadType> ptr(lt);
+        config->addLeadType(ptr);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Coatings").children().begin(); it != configNode.child("Coatings").children().end(); it++){
         Coating* co = new Coating(it->attribute("Name").value());
         co->setId(it->attribute("Id").as_int());
         co->setLocked(it->attribute("Locked").as_bool());
-        config->addCoating(co);
+        std::shared_ptr<Coating> ptr(co);
+        config->addCoating(ptr);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Energizations").children().begin(); it != configNode.child("Energizations").children().end(); it++){
         Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_int(), it->attribute("Angle").as_double());
         en->setId(it->attribute("Id").as_int());
         en->setLocked(it->attribute("Locked").as_bool());
-        config->addEnergization(en);
+        std::shared_ptr<Energization> ptr(en);
+        config->addEnergization(ptr);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Tolerances").children().begin(); it != configNode.child("Tolerances").children().end(); it++){
@@ -581,14 +589,16 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         ConductorType* ct = new ConductorType(it->attribute("Type").value(), it->attribute("Name").value(), it->attribute("Resistivity").as_double(), it->attribute("Permeability").as_double());
         ct->setId(it->attribute("Id").as_int());
         ct->setLocked(it->attribute("Locked").as_bool());
-        config->addConductorType(ct);
+        std::shared_ptr<ConductorType> ptr(ct);
+        config->addConductorType(ptr);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("CableTypes").children().begin(); it != configNode.child("CableTypes").children().end(); it++){
         CableType* cbt = new CableType(it->attribute("Name").value());
         cbt->setId(it->attribute("Id").as_int());
         cbt->setLocked(it->attribute("Locked").as_bool());
-        config->addCableType(cbt);
+        std::shared_ptr<CableType> ptr(cbt);
+        config->addCableType(ptr);
     }
 
 
@@ -648,7 +658,8 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     for(pugi::xml_node_iterator it = configNode.child("Buildings").children().begin(); it != configNode.child("Buildings").children().end(); it++){
         Building* b = new Building(it->child("Faces").attribute("Value").as_int(), it->child("Height").attribute("Value").as_double(), it->child("Distance").attribute("Min").as_double(), it->child("Distance").attribute("Max").as_double(), it->child("Step").attribute("Value").as_double());
         b->setId(it->attribute("Id").as_int());
-        config->addBuilding(b);
+        std::shared_ptr<Building> ptr(b);
+        config->addBuilding(ptr);
     }
 
     config->setComputations().GPR = configNode.child("Computations").child("GPR").first_attribute().as_bool();
@@ -672,7 +683,8 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         p->prStep.z = it->child("ProfileStep").attribute("Dz").as_double();
         p->ptNum = it->child("NumberPoints").attribute("Value").as_int();
         p->prNum = it->child("NumberProfiles").attribute("Value").as_int();
-        config->addProfile(p);
+        std::shared_ptr<profile> ptr(p);
+        config->addProfile(ptr);
     }
 
     return config;
@@ -726,7 +738,8 @@ Project* AppUtils::loadProject(const QString& folder, const QString& filename){
     node = doc.last_child();
 
     for(pugi::xml_node_iterator it = node.children().begin(); it != node.children().end(); it++){
-        project->addConfiguration(loadConfig(*it));
+        std::shared_ptr<Configuration> ptr(loadConfig(*it));
+        project->addConfiguration(ptr);
     }
 
     std::string key;
@@ -789,7 +802,8 @@ Project* AppUtils::loadProject(const wchar_t* fullPath){
     node = doc.last_child();
 
     for(pugi::xml_node_iterator it = node.children().begin(); it != node.children().end(); it++){
-        project->addConfiguration(loadConfig(*it));
+        std::shared_ptr<Configuration> ptr(loadConfig(*it));
+        project->addConfiguration(ptr);
     }
 
     std::string key;
@@ -1100,14 +1114,14 @@ void AppUtils::saveProject(const Project &project, std::string& path){
 
     //DefaultConfig node
     node = projectNode.append_child("DefaultConfig");
-    if(project.getDefaultConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getDefaultConfig()->getIdentifier().c_str());
+    if(project.getDefaultConfig().lock().get() != NULL){
+        node.append_attribute("Value").set_value(project.getDefaultConfig().lock()->getIdentifier().c_str());
     }
 
     //LastConfig node
     node = projectNode.append_child("LastConfig");
-    if(project.getLastConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getLastConfig()->getIdentifier().c_str());
+    if(project.getLastConfig().lock().get() != NULL){
+        node.append_attribute("Value").set_value(project.getLastConfig().lock()->getIdentifier().c_str());
     }
 
     //DefaultWindow node
@@ -1166,7 +1180,7 @@ void AppUtils::saveProject(const Project &project, std::string& path){
     pugi::xml_node configNode = doc.append_child("Configurations");
 
     for(auto& config : project.getConfigurations()){ //BREAKS HERE
-        saveConfiguration(config.second, configNode);
+        saveConfiguration(config.second.get(), configNode);
     }
 
     if(path == ""){
@@ -1212,14 +1226,14 @@ void AppUtils::saveProject(const Project &project){
 
     //DefaultConfig node
     node = projectNode.append_child("DefaultConfig");
-    if(project.getDefaultConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getDefaultConfig()->getIdentifier().c_str());
+    if(project.getDefaultConfig().lock().get() != NULL){
+        node.append_attribute("Value").set_value(project.getDefaultConfig().lock()->getIdentifier().c_str());
     }
 
     //LastConfig node
     node = projectNode.append_child("LastConfig");
-    if(project.getLastConfig() != NULL){
-        node.append_attribute("Value").set_value(project.getLastConfig()->getIdentifier().c_str());
+    if(project.getLastConfig().lock().get() != NULL){
+        node.append_attribute("Value").set_value(project.getLastConfig().lock()->getIdentifier().c_str());
     }
 
     //DefaultWindow node
@@ -1278,7 +1292,7 @@ void AppUtils::saveProject(const Project &project){
     pugi::xml_node configNode = doc.append_child("Configurations");
 
     for(auto& config : project.getConfigurations()){
-        saveConfiguration(config.second, configNode);
+        saveConfiguration(config.second.get(), configNode);
     }
 
     QString folder = QString::fromStdString(project.getAbsPath());

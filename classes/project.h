@@ -66,16 +66,16 @@ class Project
         ~Project();
         Project(Project const* project);
         Project& operator=(Project const* project);
-        bool operator==(Project const* project) const;
-        bool operator!=(Project const* project) const;
+        bool operator==(Project const* project);
+        bool operator!=(Project const* project);
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);
         Project& setRelPath(std::string const& relPath);
         Project& setFileName(const std::string& fileName);
         Project& setDefaultWindow(std::string const& defaultWindow);
         Project& setLastWindow(std::string const& lastWindow);
-        Project& setDefaultConfig(Configuration* defaultConfig);
-        Project& setLastConfig(Configuration* lastConfig);
+        Project& setDefaultConfig(std::shared_ptr<Configuration> defaultConfig);
+        Project& setLastConfig(std::shared_ptr<Configuration> lastConfig);
         Project& setMetaName(std::string const& name);
         Project& setMetaAuthor(std::string const& author);
         Project& setMetaDescription(std::string const& description);
@@ -85,8 +85,8 @@ class Project
         Project& setProjSet2(std::string const& set2);
         Project& setProjSet3(std::string const& set3);
         Project& setProjSet4(std::string const& set4);
-        Project& addConfiguration(Configuration* config);
-        Project& removeConfiguration(Configuration* config);
+        Project& addConfiguration(std::shared_ptr<Configuration> config);
+        Project& removeConfiguration(std::shared_ptr<Configuration> config);
         Project& setId(std::string const& id);
     //Setters end-----------------------------------------------------------------
     //Getters start---------------------------------------------------------------
@@ -96,19 +96,19 @@ class Project
         std::string const& getFileName() const;
         std::string const& getDefaultWindow() const;
         std::string const& getLastWindow() const;
-        Configuration* getDefaultConfig() const;
-        Configuration* getLastConfig() const;
+        std::weak_ptr<Configuration> getDefaultConfig() const;
+        std::weak_ptr<Configuration> getLastConfig() const;
         project_metadata const& getMetadata() const;
         project_settings const& getSettings() const;
-        std::unordered_map<std::string, Configuration*> getConfigurations() const;
+        std::unordered_map<std::string, std::shared_ptr<Configuration>> getConfigurations() const;
     //Getters end-----------------------------------------------------------------
     private:
         std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow, m_fileName;
-        Configuration* m_defaultConfig = NULL;
-        Configuration* m_lastConfig = NULL;
+        std::weak_ptr<Configuration> m_defaultConfig;
+        std::weak_ptr<Configuration> m_lastConfig;
         project_metadata m_metadata;
         project_settings m_projectSettings;
-        std::unordered_map<std::string, Configuration*> m_configurations;
+        std::unordered_map<std::string, std::shared_ptr<Configuration>> m_configurations;
 };
 
 #endif // PROJECT_H

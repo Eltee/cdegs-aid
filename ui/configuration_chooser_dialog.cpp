@@ -38,7 +38,7 @@
 #include "configuration_chooser_dialog.h"
 #include "ui_configuration_chooser_dialog.h"
 
-configuration_chooser_dialog::configuration_chooser_dialog(QWidget *parent, Project* project) :
+configuration_chooser_dialog::configuration_chooser_dialog(QWidget *parent, std::shared_ptr<Project> project) :
     QDialog(parent),
     ui(new Ui::configuration_chooser_dialog)
 {

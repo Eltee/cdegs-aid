@@ -101,7 +101,7 @@ bool Building::operator==(Building const* build){
 
 bool Building::operator!=(Building const* build){
     bool result = true;
-    if(*this == *build) result = false;
+    if(*this == build) result = false;
     return result;
 }
 

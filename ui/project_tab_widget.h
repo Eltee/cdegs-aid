@@ -39,6 +39,7 @@
 #define PROJECT_TAB_WIDGET_H
 
 #include <QWidget>
+#include <memory>
 #include "classes/project.h"
 #include "classes/configuration.h"
 #include "project_widget.h"
@@ -66,10 +67,10 @@ class project_tab_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, Project* p = NULL);
-        Project* getProject();
-        Configuration* getConfig();
-        void addConfig(Configuration* config);
+        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>());
+        std::shared_ptr<Project> getProject();
+        std::shared_ptr<Configuration> getConfig();
+        void addConfig(std::shared_ptr<Configuration> config);
         void refresh();
         void connectSlots();
         ~project_tab_widget();
@@ -77,10 +78,14 @@ class project_tab_widget : public QWidget
     private slots:
         void changeTab();
         void closeConfig(int index);
+        void tabModified(QWidget* widget);
+
+    signals:
+        void dataModified(QWidget* widget);
 
     private:
         Ui::project_tab_widget *ui;
-        Project* project;
+        std::shared_ptr<Project> project, projectOrig;
         cdegs_main* defParent;
 };
 

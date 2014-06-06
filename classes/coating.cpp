@@ -75,6 +75,6 @@ bool Coating::operator==(Coating const* coat){
 
 bool Coating::operator!=(Coating const* coat){
     bool result = true;
-    if(*this == *coat) result = false;
+    if(*this == coat) result = false;
     return result;
 }

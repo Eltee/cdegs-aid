@@ -46,12 +46,12 @@
  \param dp
  \param config
 */
-configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* dp, Configuration* config) :
+configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* dp, std::shared_ptr<Configuration> config) :
     QWidget(parent),
     ui(new Ui::configuration_widget)
 {
     configOrig = config;
-    configuration = new Configuration(config);
+    configuration.reset(new Configuration(config.get()));
     ui->setupUi(this);
     defParent = dp;
 }
@@ -62,7 +62,7 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
  \fn configuration_widget::getConfig
  \return Configuration
 */
-Configuration* configuration_widget::getConfig(){
+std::shared_ptr<Configuration> configuration_widget::getConfig(){
     return configuration;
 }
 
@@ -83,4 +83,5 @@ configuration_widget::~configuration_widget()
 */
 void configuration_widget::refresh(){
     defParent->refresh();
+    if(*configuration.get() != configOrig.get()) emit dataModified(this);
 }

@@ -91,9 +91,9 @@ Project::Project(std::string const& name, std::string fileName, QDate const& dat
  \fn Project::~Project
 */
 Project::~Project(){
-    for(std::unordered_map<std::string, Configuration*>::iterator it=m_configurations.begin(); it!=m_configurations.end(); it++){
-        delete(it->second);
-    }
+    m_configurations.clear();
+    m_defaultConfig.reset();
+    m_lastConfig.reset();
 }
 
 /*!
@@ -149,13 +149,13 @@ Project& Project::operator=(Project const* project){
     return *this;
 }
 
-bool Project::operator==(Project const* project) const{
+bool Project::operator==(Project const* project){
     bool result = true;
     if(m_id != project->getId()) result = false;
     if(m_absPath != project->getAbsPath()) result = false;
     if(m_relPath != project->getRelPath()) result = false;
-    if(m_defaultConfig != project->getDefaultConfig()) result = false;
-    if(m_lastConfig != project->getLastConfig()) result = false;
+    if(m_defaultConfig.lock().get() != project->getDefaultConfig().lock().get()) result = false;
+    if(m_lastConfig.lock().get() != project->getLastConfig().lock().get()) result = false;
     if(m_defaultWindow != project->getDefaultWindow()) result = false;
     if(m_lastWindow != project->getLastWindow()) result = false;
     if(m_metadata != project->getMetadata()) result = false;
@@ -170,7 +170,7 @@ bool Project::operator==(Project const* project) const{
     return result;
 }
 
-bool Project::operator!=(Project const* project) const{
+bool Project::operator!=(Project const* project){
     bool result = true;
     if(*this == project) result = false;
     return result;
@@ -242,7 +242,7 @@ std::string const& Project::getLastWindow() const{
  \fn Project::getDefaultConfig
  \return Configuration
 */
-Configuration* Project::getDefaultConfig() const{
+std::weak_ptr<Configuration> Project::getDefaultConfig() const{
     return m_defaultConfig;
 }
 
@@ -252,7 +252,7 @@ Configuration* Project::getDefaultConfig() const{
  \fn Project::getLastConfig
  \return Configuration
 */
-Configuration* Project::getLastConfig() const{
+std::weak_ptr<Configuration> Project::getLastConfig() const{
     return m_lastConfig;
 }
 
@@ -282,7 +282,7 @@ project_settings const& Project::getSettings() const{
  \fn Project::getConfigurations
  \return std::unordered_map<std::string, Configuration *>
 */
-std::unordered_map<std::string, Configuration*> Project::getConfigurations() const{
+std::unordered_map<std::string, std::shared_ptr<Configuration> > Project::getConfigurations() const{
     return m_configurations;
 }
 
@@ -354,7 +354,7 @@ Project& Project::setLastWindow(std::string const& lastWindow){
  \param defaultConfig
  \return Project
 */
-Project& Project::setDefaultConfig(Configuration* defaultConfig){
+Project& Project::setDefaultConfig(std::shared_ptr<Configuration> defaultConfig){
     m_defaultConfig = defaultConfig;
     return *this;
 }
@@ -366,7 +366,7 @@ Project& Project::setDefaultConfig(Configuration* defaultConfig){
  \param lastConfig
  \return Project
 */
-Project& Project::setLastConfig(Configuration* lastConfig){
+Project& Project::setLastConfig(std::shared_ptr<Configuration> lastConfig){
     m_lastConfig = lastConfig;
     return *this;
 }
@@ -486,7 +486,7 @@ Project& Project::setProjSet4(std::string const& set4){
  \param config
  \return Project
 */
-Project& Project::addConfiguration(Configuration* config){
+Project& Project::addConfiguration(std::shared_ptr<Configuration> config){
     bool alreadyPresent=false;
 
     if(m_configurations.count(config->getIdentifier())) alreadyPresent = true;
@@ -503,7 +503,7 @@ Project& Project::addConfiguration(Configuration* config){
  \param config
  \return Project
 */
-Project& Project::removeConfiguration(Configuration* config){
+Project& Project::removeConfiguration(std::shared_ptr<Configuration> config){
     if(m_configurations.count(config->getIdentifier())) m_configurations.erase(config->getIdentifier());
 
     return *this;

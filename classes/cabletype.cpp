@@ -75,6 +75,6 @@ bool CableType::operator==(CableType const* cblType){
 
 bool CableType::operator!=(CableType const* cblType){
     bool result = true;
-    if(*this == *cblType) result = false;
+    if(*this == cblType) result = false;
     return result;
 }

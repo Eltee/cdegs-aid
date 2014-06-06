@@ -46,6 +46,7 @@
 #include <QtUiTools/QUiLoader>
 #include <iostream>
 #include <QFileInfo>
+#include <memory>
 #include "configuration_widget.h"
 #include "project_tab_widget.h"
 #include "project_widget.h"
@@ -94,7 +95,7 @@ class cdegs_main : public QMainWindow
         void changeTab();
         void changeProject(int index);
         void newConfig();
-        void openConfig(Configuration* config);
+        void openConfig(std::shared_ptr<Configuration> config);
         void saveConfig();
         void closeConfig();
         void exportConfig();
@@ -103,11 +104,12 @@ class cdegs_main : public QMainWindow
         void changeStyle(std::string style);
         void openConfigDialog();
         void about();
+        void tabModified(QWidget* widget);
 
     private:
         Ui::cdegs_main *ui;
-        Project* project = NULL;
-        Configuration* config = NULL;
+        std::shared_ptr<Project> project;
+        std::shared_ptr<Configuration> config;
 };
 
 #endif // CDEGS_MAIN_H

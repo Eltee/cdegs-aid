@@ -41,6 +41,7 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QDir>
+#include <memory>
 #include "project_tab_widget.h"
 #include "classes/project.h"
 
@@ -63,8 +64,8 @@ class project_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, Project* p = NULL);
-        Project* getProject();
+        explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>(), std::shared_ptr<Project> p2 = std::make_shared<Project>());
+        std::shared_ptr<Project> getProject();
         void connectSlots();
         void disconnectSlots();
         void refresh();
@@ -78,9 +79,12 @@ class project_widget : public QWidget
         void changeFilepath(QString path);
         void openFilepath();
 
+    signals:
+        void dataModified(QWidget* widget);
+
     private:
         Ui::project_widget *ui;
-        Project* project;
+        std::shared_ptr<Project> project, projectOrig;
         project_tab_widget* defParent;
 };
 

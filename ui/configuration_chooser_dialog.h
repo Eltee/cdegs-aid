@@ -41,6 +41,7 @@
 #include <QDialog>
 #include <QStringListModel>
 #include <QStringList>
+#include <memory>
 #include "../classes/project.h"
 #include "../classes/configuration.h"
 
@@ -53,7 +54,7 @@ class configuration_chooser_dialog : public QDialog
         Q_OBJECT
 
     public:
-        explicit configuration_chooser_dialog(QWidget *parent = 0, Project* project = NULL);
+        explicit configuration_chooser_dialog(QWidget *parent = 0, std::shared_ptr<Project> project = std::make_shared<Project>());
         void populateModel();
         void connectSlots();
         ~configuration_chooser_dialog();
@@ -65,13 +66,13 @@ class configuration_chooser_dialog : public QDialog
         void selectConfig(QModelIndex index);
 
     signals:
-        std::string returnConfig(Configuration* config);
+        std::string returnConfig(std::shared_ptr<Configuration> config);
 
     private:
         Ui::configuration_chooser_dialog *ui;
-        Project* m_project;
+        std::shared_ptr<Project> m_project;
         QStringListModel* m_model;
-        Configuration* m_config;
+        std::shared_ptr<Configuration> m_config;
 };
 
 #endif // CONFIGURATION_CHOOSER_DIALOG_H
