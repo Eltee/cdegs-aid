@@ -46,19 +46,23 @@
  \param dp
  \param p
 */
-project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, std::shared_ptr<Project> p) :
+project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, std::shared_ptr<Project> p, QString name) :
     QWidget(parent),
     ui(new Ui::project_tab_widget)
 {
     ui->setupUi(this);
+    m_name = name;
     projectOrig.reset(new Project(p.get()));
     project = p;
     connectSlots();
     defParent = dp;
-    project_widget* tab = new project_widget(this, this, project, projectOrig);
-    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
-            this, SLOT(tabModified(QWidget*)));
-    ui->tabProject->addTab(tab, "Project Settings");
+    m_projectModified = project->isModified();
+    project_widget* tab = new project_widget(this, this, project, projectOrig, "Project Settings");
+
+    QObject::connect(defParent, SIGNAL(saveOccurred()),
+                     tab, SLOT(refresh()));
+
+    ui->tabProject->addTab(tab, tab->getName());
 }
 
 /*!
@@ -79,6 +83,10 @@ project_tab_widget::~project_tab_widget()
 */
 std::shared_ptr<Project> project_tab_widget::getProject(){
     return project;
+}
+
+QString const& project_tab_widget::getName() const{
+    return m_name;
 }
 
 /*!
@@ -117,7 +125,12 @@ std::shared_ptr<Configuration> project_tab_widget::getConfig(){
 */
 void project_tab_widget::refresh(){
     defParent->refresh();
-    if(*project.get() != projectOrig.get()) emit dataModified(this);
+    if(project->isModified() != m_projectModified){
+        m_projectModified = project->isModified();
+        QString newName = m_name;
+        if(project->isModified()) newName.append("*");
+        defParent->changeTabName(this, newName);
+    }
 }
 
 /*!
@@ -128,8 +141,10 @@ void project_tab_widget::refresh(){
 */
 void project_tab_widget::addConfig(std::shared_ptr<Configuration> config){
     configuration_widget* tab = new configuration_widget(this, this, config);
-    QObject::connect(tab, SIGNAL(dataModified(QWidget*)),
-            this, SLOT(tabModified(QWidget*)));
+
+    QObject::connect(defParent, SIGNAL(saveOccurred()),
+                     tab, SLOT(refresh()));
+
     int index = ui->tabProject->addTab(tab, QString::fromStdString(config->getIdentifier()));
     ui->tabProject->setCurrentIndex(index);
 }
@@ -161,9 +176,7 @@ void project_tab_widget::closeConfig(int index){
     refresh();
 }
 
-void project_tab_widget::tabModified(QWidget* widget){
+void project_tab_widget::changeTabName(QWidget* widget, QString name){
     int index = ui->tabProject->indexOf(widget);
-    QString name = ui->tabProject->tabText(index);
-    if(!name.endsWith("*")) name.append("*");
     ui->tabProject->setTabText(index, name);
 }

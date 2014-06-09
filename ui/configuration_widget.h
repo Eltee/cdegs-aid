@@ -62,18 +62,24 @@ class configuration_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit configuration_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Configuration> config = std::make_shared<Configuration>());
+        explicit configuration_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Configuration> config = std::make_shared<Configuration>(), QString name = "");
         std::shared_ptr<Configuration> getConfig();
-        void refresh();
+        QString const& getName() const;
         ~configuration_widget();
+        void populateFields();
+        void populateConfSettings();
+        void populateLTypes();
+        void connectSlots();
 
-    signals:
-        void dataModified(QWidget* widget);
+    public slots:
+        void refresh();
 
     private:
         Ui::configuration_widget *ui;
         std::shared_ptr<Configuration> configuration, configOrig;
         project_tab_widget* defParent;
+        QString m_name;
+        bool configModified;
 };
 
 #endif // CONFIGURATION_WIDGET_H

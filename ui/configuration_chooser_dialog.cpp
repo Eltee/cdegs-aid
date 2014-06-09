@@ -74,9 +74,14 @@ void configuration_chooser_dialog::connectSlots(){
 void configuration_chooser_dialog::buttonOk(){
     std::string identifier = m_model->data(ui->listView_config->currentIndex(), Qt::DisplayRole).toString().toStdString();
 
-    m_config = m_project->getConfigurations().at(identifier);
+    try{
+        m_config = m_project->getConfigurations().at(identifier);
 
-    emit returnConfig(m_config);
+        emit returnConfig(m_config);
+    }
+    catch(std::out_of_range e){
+        QMessageBox::warning(this, "Warning", "No configuration was selected.");
+    }
 
     this->close();
 }

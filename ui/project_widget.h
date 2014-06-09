@@ -64,28 +64,28 @@ class project_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>(), std::shared_ptr<Project> p2 = std::make_shared<Project>());
+        explicit project_widget(QWidget *parent = 0, project_tab_widget* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>(), std::shared_ptr<Project> p2 = std::make_shared<Project>(), QString name = "");
         std::shared_ptr<Project> getProject();
+        QString const& getName() const;
         void connectSlots();
         void disconnectSlots();
-        void refresh();
         ~project_widget();
+
+    public slots:
+        void refresh();
 
     private slots:
         void changeDate(QDate date);
         void changeName(QString name);
         void changeAuthor(QString author);
         void changeDescription();
-        void changeFilepath(QString path);
-        void openFilepath();
-
-    signals:
-        void dataModified(QWidget* widget);
 
     private:
         Ui::project_widget *ui;
         std::shared_ptr<Project> project, projectOrig;
         project_tab_widget* defParent;
+        QString m_name;
+        bool m_projectModified;
 };
 
 #endif // PROJECT_WIDGET_H

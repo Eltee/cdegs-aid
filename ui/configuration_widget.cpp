@@ -46,14 +46,23 @@
  \param dp
  \param config
 */
-configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* dp, std::shared_ptr<Configuration> config) :
+configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* dp, std::shared_ptr<Configuration> config, QString name) :
     QWidget(parent),
     ui(new Ui::configuration_widget)
 {
     configOrig = config;
+    m_name = name;
     configuration.reset(new Configuration(config.get()));
     ui->setupUi(this);
     defParent = dp;
+    configModified = configuration->isModified();
+    populateFields();
+    connectSlots();
+}
+
+void configuration_widget::connectSlots(){
+    QObject::connect(ui->comboBox_page, SIGNAL(currentIndexChanged(int)),
+                     ui->stackedWidget_config, SLOT(setCurrentIndex(int)));
 }
 
 /*!
@@ -64,6 +73,10 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
 */
 std::shared_ptr<Configuration> configuration_widget::getConfig(){
     return configuration;
+}
+
+QString const& configuration_widget::getName() const{
+    return m_name;
 }
 
 /*!
@@ -83,5 +96,41 @@ configuration_widget::~configuration_widget()
 */
 void configuration_widget::refresh(){
     defParent->refresh();
-    if(*configuration.get() != configOrig.get()) emit dataModified(this);
+    if(configuration->isModified() != configModified){
+        configModified = configuration->isModified();
+        QString newName = m_name;
+        if(configuration->isModified()) newName.append("*");
+        defParent->changeTabName(this, newName);
+    }
+}
+
+void configuration_widget::populateFields(){
+    populateConfSettings();
+    populateLTypes();
+}
+
+void configuration_widget::populateConfSettings(){
+    ui->lineEdit_settings_identifier->setText(QString::fromStdString(configuration->getIdentifier()));
+
+    if(configuration->getUnits() == "Metric") ui->comboBox_settings_units->setCurrentIndex(0);
+    else ui->comboBox_settings_units->setCurrentIndex(1);
+
+    if(configuration->getFrequency() == "AC") ui->comboBox_settings_frequency->setCurrentIndex(0);
+    else ui->comboBox_settings_frequency->setCurrentIndex(1);
+
+    ui->lineEdit_settings_lTypes->setText(QString::number(configuration->getLeadTypes().size()));
+    ui->lineEdit_settings_coatings->setText(QString::number(configuration->getCoatings().size()));
+    ui->lineEdit_settings_energizations->setText(QString::number(configuration->getEnergizations().size()));
+    ui->lineEdit_settings_cTypes->setText(QString::number(configuration->getConductorTypes().size()));
+    ui->lineEdit_settings_cbTypes->setText(QString::number(configuration->getCableTypes().size()));
+    ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
+}
+
+void configuration_widget::populateLTypes(){
+    std::cout << "GUH" << std::endl;
+    for(int i = 0; i < configuration->getLeadTypes().size(); i++){
+        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getLeadTypes().at(i-1)->getName());
+        std::cout << "Entry: " << text.toStdString() << std::endl;
+        ui->comboBox_lTypes_chooser->addItem(text);
+    }
 }

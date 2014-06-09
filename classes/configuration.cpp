@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 * Projet:     CDEGS-Aid
 *  /Project
 *
@@ -44,7 +44,7 @@ Configuration::Configuration(){
     m_identifier = "default";
     m_units = "Metric";
     m_frequency = "AC";
-
+    m_modified = false;
 }
 
 /*!
@@ -59,6 +59,7 @@ Configuration::Configuration(std::string const& identifier, std::string const& u
     m_identifier = identifier;
     m_units = units;
     m_frequency = frequency;
+    m_modified = false;
 }
 
 /*!
@@ -82,6 +83,7 @@ Configuration::Configuration(Configuration const* config){
     m_cableTypes = config->getCableTypes();
     m_computations = config->getComputations();
     m_profiles = config->getProfiles();
+    m_modified = false;
 }
 
 /*Configuration::Configuration(Configuration const* config){
@@ -928,4 +930,13 @@ int Configuration::idGenerator(const std::string& type){
     }
 
     return result;
+}
+
+Configuration& Configuration::setModified(bool const& modified){
+    m_modified = modified;
+    return *this;
+}
+
+bool const& Configuration::isModified() const{
+    return m_modified;
 }

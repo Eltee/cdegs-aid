@@ -83,6 +83,9 @@ class cdegs_main : public QMainWindow
         void updateProject();
         void updateConfig();
         void updateTab();
+        void changeTabName(QWidget* widget, QString name);
+
+    public slots:
         void refresh();
 
     private slots:
@@ -104,7 +107,9 @@ class cdegs_main : public QMainWindow
         void changeStyle(std::string style);
         void openConfigDialog();
         void about();
-        void tabModified(QWidget* widget);
+
+    signals:
+        void saveOccurred();
 
     private:
         Ui::cdegs_main *ui;

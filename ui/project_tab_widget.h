@@ -67,26 +67,28 @@ class project_tab_widget : public QWidget
         Q_OBJECT
 
     public:
-        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>());
+        explicit project_tab_widget(QWidget *parent = 0, cdegs_main* dp = NULL, std::shared_ptr<Project> p = std::make_shared<Project>(), QString name = "");
         std::shared_ptr<Project> getProject();
         std::shared_ptr<Configuration> getConfig();
+        QString const& getName() const;
         void addConfig(std::shared_ptr<Configuration> config);
-        void refresh();
         void connectSlots();
         ~project_tab_widget();
+        void changeTabName(QWidget* widget, QString name);
+
+    public slots:
+        void refresh();
 
     private slots:
         void changeTab();
         void closeConfig(int index);
-        void tabModified(QWidget* widget);
-
-    signals:
-        void dataModified(QWidget* widget);
 
     private:
         Ui::project_tab_widget *ui;
         std::shared_ptr<Project> project, projectOrig;
         cdegs_main* defParent;
+        QString m_name;
+        bool m_projectModified;
 };
 
 #endif // PROJECT_TAB_WIDGET_H

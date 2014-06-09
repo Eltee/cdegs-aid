@@ -42,6 +42,8 @@
 #include <QStringListModel>
 #include <QStringList>
 #include <memory>
+#include <stdexcept>
+#include <QMessageBox>
 #include "../classes/project.h"
 #include "../classes/configuration.h"
 

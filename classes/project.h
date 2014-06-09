@@ -88,6 +88,7 @@ class Project
         Project& addConfiguration(std::shared_ptr<Configuration> config);
         Project& removeConfiguration(std::shared_ptr<Configuration> config);
         Project& setId(std::string const& id);
+        Project& setModified(bool const& mod);
     //Setters end-----------------------------------------------------------------
     //Getters start---------------------------------------------------------------
         std::string const& getId() const;
@@ -101,6 +102,7 @@ class Project
         project_metadata const& getMetadata() const;
         project_settings const& getSettings() const;
         std::unordered_map<std::string, std::shared_ptr<Configuration>> getConfigurations() const;
+        bool const& isModified() const;
     //Getters end-----------------------------------------------------------------
     private:
         std::string m_id, m_absPath, m_relPath, m_defaultWindow, m_lastWindow, m_fileName;
@@ -109,6 +111,7 @@ class Project
         project_metadata m_metadata;
         project_settings m_projectSettings;
         std::unordered_map<std::string, std::shared_ptr<Configuration>> m_configurations;
+        bool m_modified;
 };
 
 #endif // PROJECT_H

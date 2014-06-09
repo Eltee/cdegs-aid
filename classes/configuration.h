@@ -103,6 +103,7 @@ class Configuration
         Configuration& addCableType(std::shared_ptr<CableType> cableType, bool const& newAdd=false);
         Configuration& removeCableType(std::shared_ptr<CableType> cableType);
         computations& setComputations();
+        Configuration& setModified(bool const& modified);
     //Setters end-------------------------------------------------------
     //Getters start-----------------------------------------------------
         std::string const& getIdentifier() const;
@@ -119,6 +120,7 @@ class Configuration
         computations const& getComputations() const;
         std::unordered_map<int, std::shared_ptr<profile>> getProfiles() const;
         std::unordered_map<int, std::shared_ptr<CableType>> getCableTypes() const;
+        bool const& isModified() const;
     //Getters end-------------------------------------------------------
 
     private:
@@ -144,6 +146,7 @@ class Configuration
                 double buildingId=1;
                 double profileId=1;
         } m_ids;
+        bool m_modified;
 };
 
 #endif // CONFIGURATION_H

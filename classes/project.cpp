@@ -55,6 +55,7 @@ Project::Project(){
     m_projectSettings.set2 = "";
     m_projectSettings.set3 = "";
     m_projectSettings.set4 = "";
+    m_modified = false;
 }
 
 /*!
@@ -83,6 +84,7 @@ Project::Project(std::string const& name, std::string fileName, QDate const& dat
     m_projectSettings.set2 = "";
     m_projectSettings.set3 = "";
     m_projectSettings.set4 = "";
+    m_modified = false;
 }
 
 /*!
@@ -119,6 +121,7 @@ Project::Project(Project const* project){
     m_projectSettings.set3 = "";
     m_projectSettings.set4 = "";
     m_configurations = project->getConfigurations();
+    m_modified = false;
 }
 
 /*!
@@ -520,4 +523,13 @@ Project& Project::setId(std::string const& id){
     m_id = id;
 
     return *this;
+}
+
+Project& Project::setModified(bool const& mod){
+    m_modified = mod;
+    return *this;
+}
+
+bool const& Project::isModified() const{
+    return m_modified;
 }
