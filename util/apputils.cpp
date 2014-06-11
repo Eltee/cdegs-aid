@@ -243,7 +243,7 @@ void AppUtils::loadDefaultConfig(){
     for(pugi::xml_node_iterator it = node.child("LeadTypes").children().begin(); it != node.child("LeadTypes").children().end(); it++){
         LeadType* lt = new LeadType(it->attribute("Name").value());
         lt->setId(it->attribute("Id").as_int());
-        lt->setLocked(true);
+        lt->setLocked(it->attribute("Locked").as_bool());
         std::shared_ptr<LeadType> ptr(lt);
         m_defaultConfig->addLeadType(ptr);
     }
@@ -251,7 +251,7 @@ void AppUtils::loadDefaultConfig(){
     for(pugi::xml_node_iterator it = node.child("Coatings").children().begin(); it != node.child("Coatings").children().end(); it++){
         Coating* co = new Coating(it->attribute("Name").value());
         co->setId(it->attribute("Id").as_int());
-        co->setLocked(true);
+        co->setLocked(it->attribute("Locked").as_bool());
         std::shared_ptr<Coating> ptr(co);
         m_defaultConfig->addCoating(ptr);
     }
@@ -259,7 +259,7 @@ void AppUtils::loadDefaultConfig(){
     for(pugi::xml_node_iterator it = node.child("Energizations").children().begin(); it != node.child("Energizations").children().end(); it++){
         Energization* en = new Energization(it->attribute("Identification").value(), it->attribute("Type").value(), it->attribute("Frequency").value(), it->attribute("Magnitude").as_double(), it->attribute("Angle").as_double());
         en->setId(it->attribute("Id").as_int());
-        en->setLocked(true);
+        en->setLocked(it->attribute("Locked").as_bool());
         std::shared_ptr<Energization> ptr(en);
         m_defaultConfig->addEnergization(ptr);
     }
@@ -271,7 +271,7 @@ void AppUtils::loadDefaultConfig(){
     for(pugi::xml_node_iterator it = node.child("ConductorTypes").children().begin(); it != node.child("ConductorTypes").children().end(); it++){
         ConductorType* ct = new ConductorType(it->attribute("Type").value(), it->attribute("Name").value(), it->attribute("Resistivity").as_double(), it->attribute("Permeability").as_double());
         ct->setId(it->attribute("Id").as_int());
-        ct->setLocked(true);
+        ct->setLocked(it->attribute("Locked").as_bool());
         std::shared_ptr<ConductorType> ptr(ct);
         m_defaultConfig->addConductorType(ptr);
     }
@@ -279,7 +279,7 @@ void AppUtils::loadDefaultConfig(){
     for(pugi::xml_node_iterator it = node.child("CableTypes").children().begin(); it != node.child("CableTypes").children().end(); it++){
         CableType* cbt = new CableType(it->attribute("Name").value());
         cbt->setId(it->attribute("Id").as_int());
-        cbt->setLocked(true);
+        cbt->setLocked(it->attribute("Locked").as_bool());
         std::shared_ptr<CableType> ptr(cbt);
         m_defaultConfig->addCableType(ptr);
     }
@@ -360,7 +360,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Name").set_value("Aluminium");
     node.append_attribute("Resistivity").set_value("1.64");
     node.append_attribute("Permeability").set_value("1.0");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     node = conductorTypesNode.append_child("ConductorType");
     node.append_attribute("Id").set_value("2");
@@ -368,7 +368,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Name").set_value("Steel");
     node.append_attribute("Resistivity").set_value("12.0");
     node.append_attribute("Permeability").set_value("250.0");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     //ConductorTypes end------------------------------------------------------------
 
@@ -406,7 +406,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("0");
     node.append_attribute("Magnitude").set_value("441700");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
     node.append_attribute("Id").set_value("2");
@@ -415,7 +415,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("-120");
     node.append_attribute("Magnitude").set_value("441700");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
     node.append_attribute("Id").set_value("3");
@@ -424,7 +424,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("120");
     node.append_attribute("Magnitude").set_value("441700");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
     node.append_attribute("Id").set_value("4");
@@ -442,7 +442,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Frequency").set_value("DC");
     node.append_attribute("Angle").set_value("0");
     node.append_attribute("Magnitude").set_value("441700000");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
     node.append_attribute("Id").set_value("6");
@@ -451,7 +451,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Frequency").set_value("DC");
     node.append_attribute("Angle").set_value("0");
     node.append_attribute("Magnitude").set_value("441700000");
-    node.append_attribute("Locked").set_value("1");
+    node.append_attribute("Locked").set_value("0");
 
     //Energizations end------------------------------------------------------------
 
@@ -670,7 +670,7 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     config->setComputations().GRADIENT_SCALAR = configNode.child("Computations").child("GRADIENT-SCALAR ").first_attribute().as_bool();
 
     for(pugi::xml_node_iterator it = configNode.child("Profiles").children().begin(); it != configNode.child("Profiles").children().end(); it++){
-        profile* p = new profile;
+        profile* p = new profile();
         p->id = it->attribute("Id").as_int();
         p->start.x = it->child("ProfileStart").attribute("X").as_double();
         p->start.y = it->child("ProfileStart").attribute("Y").as_double();

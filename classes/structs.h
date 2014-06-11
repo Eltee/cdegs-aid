@@ -102,6 +102,35 @@ struct computations{
  \class profile configuration.h "classes/configuration.h"
 */
 struct profile{
+
+    profile(){
+        ptNum = 0;
+        prNum = 0;
+        start.x = 0;
+        start.y = 0;
+        start.z = 0;
+        ptStep.x = 0;
+        ptStep.y = 0;
+        ptStep.z = 0;
+        prStep.x = 0;
+        prStep.y = 0;
+        prStep.z = 0;
+    }
+
+    profile(profile const* pro){
+        ptNum = pro->ptNum;
+        prNum = pro->prNum;
+        start.x = pro->start.x;
+        start.y = pro->start.y;
+        start.z = pro->start.z;
+        ptStep.x = pro->ptStep.x;
+        ptStep.y = pro->ptStep.y;
+        ptStep.z = pro->ptStep.z;
+        prStep.x = pro->prStep.x;
+        prStep.y = pro->prStep.y;
+        prStep.z = pro->prStep.z;
+    }
+
     int id = 1;
 
     coords start, ptStep, prStep;

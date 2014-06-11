@@ -69,10 +69,86 @@ class configuration_widget : public QWidget
         void populateFields();
         void populateConfSettings();
         void populateLTypes();
+        void populateCoatings();
+        void populateEnergizations();
+        void populateCTypes();
+        void populateCbTypes();
+        void populateComputations();
+        void populateProfiles();
         void connectSlots();
+        void disconnectSlots();
+        void refreshLType();
+        void refreshCoating();
+        void refreshEnergization();
+        void refreshCType();
+        void refreshCbType();
+        void refreshProfile();
 
     public slots:
         void refresh();
+
+    private slots:
+        //COMBOBOX CONNECTIONS
+        void fetchLType(QString id);
+        void fetchCoating(QString id);
+        void fetchEnergization(QString id);
+        void fetchCType(QString id);
+        void fetchCbType(QString id);
+        void fetchProfile(QString id);
+
+        //LTYPE CONNECTIONS
+        void changeLTypeName(QString text);
+        void newLType();
+        void removeLType();
+        void saveLType();
+
+        //COATING CONNECTIONS
+        void changeCoatName(QString text);
+        void newCoat();
+        void removeCoat();
+        void saveCoat();
+
+        //ENERG CONNECTIONS
+        void changeEnerFreq(QString text);
+        void changeEnerIdent(QString text);
+        void changeEnerType(QString text);
+        void changeEnerMag(int i);
+        void changeEnerAng(int i);
+        void newEner();
+        void removeEner();
+        void saveEner();
+
+        //CTYPE CONNECTIONS
+        void changeCTypeName(QString text);
+        void changeCTypeType(QString text);
+        void changeCTypePerm(double d);
+        void changeCTypeRes(double d);
+        void newCType();
+        void removeCType();
+        void saveCType();
+
+        //CBTYPE CONNECTIONS
+        void changeCbTypeName(QString text);
+        void newCbType();
+        void removeCbType();
+        void saveCbType();
+
+        //PROFILE CONNECTIONS
+        void changeProNumPt(int i);
+        void changeProNumPr(int i);
+        void changeProPtStepX(double d);
+        void changeProPtStepY(double d);
+        void changeProPtStepZ(double d);
+        void changeProStartX(double d);
+        void changeProStartY(double d);
+        void changeProStartZ(double d);
+        void changeProPrStepX(double d);
+        void changeProPrStepY(double d);
+        void changeProPrStepZ(double d);
+        void newPro();
+        void removePro();
+        void savePro();
+
 
     private:
         Ui::configuration_widget *ui;
@@ -80,6 +156,12 @@ class configuration_widget : public QWidget
         project_tab_widget* defParent;
         QString m_name;
         bool configModified;
+        std::shared_ptr<LeadType> lType, lTypeOrig;
+        std::shared_ptr<Coating> coat, coatOrig;
+        std::shared_ptr<Energization> ener, enerOrig;
+        std::shared_ptr<ConductorType> cType, cTypeOrig;
+        std::shared_ptr<CableType> cbType, cbTypeOrig;
+        std::shared_ptr<profile> pro, proOrig;
 };
 
 #endif // CONFIGURATION_WIDGET_H

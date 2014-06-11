@@ -75,6 +75,7 @@ class project_tab_widget : public QWidget
         void connectSlots();
         ~project_tab_widget();
         void changeTabName(QWidget* widget, QString name);
+        void modifyProject();
 
     public slots:
         void refresh();

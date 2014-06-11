@@ -54,7 +54,7 @@ void configuration_chooser_dialog::populateModel(){
     QStringList stringList;
 
     for(auto& entry : m_project->getConfigurations()){
-        stringList.push_back(QString::fromStdString(entry.second->getIdentifier()));
+        stringList.push_back(QString::fromStdString(entry.first));
     }
 
     m_model->setStringList(stringList);
@@ -88,6 +88,8 @@ void configuration_chooser_dialog::buttonOk(){
 
 void configuration_chooser_dialog::selectConfig(QModelIndex index){
     std::string identifier = m_model->data(index, Qt::DisplayRole).toString().toStdString();
+
+    std::cout << identifier << std::endl;
 
     m_config = m_project->getConfigurations().at(identifier);
 

@@ -180,3 +180,7 @@ void project_tab_widget::changeTabName(QWidget* widget, QString name){
     int index = ui->tabProject->indexOf(widget);
     ui->tabProject->setTabText(index, name);
 }
+
+void project_tab_widget::modifyProject(){
+    project->setModified(true);
+}
