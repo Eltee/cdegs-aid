@@ -113,7 +113,7 @@ class configuration_widget : public QWidget
         void changeEnerIdent(QString text);
         void changeEnerType(QString text);
         void changeEnerMag(int i);
-        void changeEnerAng(int i);
+        void changeEnerAng(double i);
         void newEner();
         void removeEner();
         void saveEner();
@@ -149,19 +149,22 @@ class configuration_widget : public QWidget
         void removePro();
         void savePro();
 
+        //COMPUTATION CONNECTIONS
+        void changeComputations(int i);
+
 
     private:
         Ui::configuration_widget *ui;
-        std::shared_ptr<Configuration> configuration, configOrig;
+        std::shared_ptr<Configuration> configuration;
         project_tab_widget* defParent;
         QString m_name;
         bool configModified;
-        std::shared_ptr<LeadType> lType, lTypeOrig;
-        std::shared_ptr<Coating> coat, coatOrig;
-        std::shared_ptr<Energization> ener, enerOrig;
-        std::shared_ptr<ConductorType> cType, cTypeOrig;
-        std::shared_ptr<CableType> cbType, cbTypeOrig;
-        std::shared_ptr<profile> pro, proOrig;
+        std::shared_ptr<LeadType> lType;
+        std::shared_ptr<Coating> coat;
+        std::shared_ptr<Energization> ener;
+        std::shared_ptr<ConductorType> cType;
+        std::shared_ptr<CableType> cbType;
+        std::shared_ptr<profile> pro;
 };
 
 #endif // CONFIGURATION_WIDGET_H

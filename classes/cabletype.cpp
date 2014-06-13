@@ -40,7 +40,7 @@
 
  \fn CableType::CableType
 */
-CableType::CableType() : Component(0, "", false, false){}
+CableType::CableType() : Component(-2, "", false, false){}
 
 /*!
  \brief
@@ -48,7 +48,7 @@ CableType::CableType() : Component(0, "", false, false){}
  \fn CableType::CableType
  \param name
 */
-CableType::CableType(std::string const& name) : Component(0, name, false, true){}
+CableType::CableType(std::string const& name) : Component(-2, name, false, true){}
 
 CableType::CableType(CableType const* cblType){
     m_id = cblType->getId();

@@ -40,7 +40,7 @@
 
  \fn ConductorType::ConductorType
 */
-ConductorType::ConductorType() : Component(0, "", false, true){
+ConductorType::ConductorType() : Component(-2, "", false, true){
     m_type = "default";
     m_resistivity = 1.64;
     m_permeability = 1.0;
@@ -55,7 +55,7 @@ ConductorType::ConductorType() : Component(0, "", false, true){
  \param resistivity
  \param permeability
 */
-ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(0, name, false, true){
+ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(-2, name, false, true){
     m_type = type;
     m_resistivity = resistivity;
     m_permeability = permeability;

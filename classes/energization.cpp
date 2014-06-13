@@ -40,9 +40,9 @@
 
  \fn Energization::Energization
 */
-Energization::Energization() : Component(0, "", false, true){
+Energization::Energization() : Component(-2, "", false, true){
     m_identification = "default";
-    m_type = "default";
+    m_type = "Computed";
     m_frequency = "AC";
     m_angle = 0;
     m_magnitude = 0;
@@ -58,7 +58,7 @@ Energization::Energization() : Component(0, "", false, true){
  \param magnitude
  \param angle
 */
-Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component(0, "", false, true){
+Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component(-2, "", false, true){
     m_identification = identification;
     m_type = type;
     m_frequency = frequency;

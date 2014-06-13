@@ -50,7 +50,6 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     QWidget(parent),
     ui(new Ui::configuration_widget)
 {
-    configOrig = config;
     m_name = name;
     configuration.reset(new Configuration(config.get()));
     ui->setupUi(this);
@@ -112,7 +111,7 @@ void configuration_widget::connectSlots(){
                      this, SLOT(saveCoat()));
 
     //ENERG CONNECTIONS
-    QObject::connect(ui->lineEdit_energization_frequency, SIGNAL(textChanged(QString)),
+    QObject::connect(ui->comboBox_energizations_frequency, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(changeEnerFreq(QString)));
 
     QObject::connect(ui->lineEdit_energization_identification, SIGNAL(textChanged(QString)),
@@ -125,7 +124,7 @@ void configuration_widget::connectSlots(){
                      this, SLOT(changeEnerMag(int)));
 
     QObject::connect(ui->doubleSpinBox_energization_angle, SIGNAL(valueChanged(double)),
-                     this, SLOT(changeEnerAng(int)));
+                     this, SLOT(changeEnerAng(double)));
 
     QObject::connect(ui->pushButton_new_energization, SIGNAL(clicked()),
                      this, SLOT(newEner()));
@@ -185,7 +184,7 @@ void configuration_widget::connectSlots(){
                      this, SLOT(changeProPtStepY(double)));
 
     QObject::connect(ui->doubleSpinBox_point_step_z, SIGNAL(valueChanged(double)),
-                     this, SLOT(changeProStepZ(double)));
+                     this, SLOT(changeProPtStepZ(double)));
 
     QObject::connect(ui->doubleSpinBox_profile_start_x, SIGNAL(valueChanged(double)),
                      this, SLOT(changeProStartX(double)));
@@ -213,6 +212,26 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->pushButton_save_profile, SIGNAL(clicked()),
                      this, SLOT(savePro()));
+
+    //COMPUTATION CONNECTIONS
+
+    QObject::connect(ui->checkBox_comp_ELECTRIC, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_GPR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_GRADIENT_SCALAR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_MAGNETIC, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_POTENTIAL_SCALAR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_VECTOR_POTENTIAL, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
 }
 
 void configuration_widget::disconnectSlots(){
@@ -266,7 +285,7 @@ void configuration_widget::disconnectSlots(){
                      this, SLOT(saveCoat()));
 
     //ENERG CONNECTIONS
-    QObject::disconnect(ui->lineEdit_energization_frequency, SIGNAL(textChanged(QString)),
+    QObject::disconnect(ui->comboBox_energizations_frequency, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(changeEnerFreq(QString)));
 
     QObject::disconnect(ui->lineEdit_energization_identification, SIGNAL(textChanged(QString)),
@@ -279,7 +298,7 @@ void configuration_widget::disconnectSlots(){
                      this, SLOT(changeEnerMag(int)));
 
     QObject::disconnect(ui->doubleSpinBox_energization_angle, SIGNAL(valueChanged(double)),
-                     this, SLOT(changeEnerAng(int)));
+                     this, SLOT(changeEnerAng(double)));
 
     QObject::disconnect(ui->pushButton_new_energization, SIGNAL(clicked()),
                      this, SLOT(newEner()));
@@ -367,6 +386,26 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_save_profile, SIGNAL(clicked()),
                      this, SLOT(savePro()));
+
+    //COMPUTATION CONNECTIONS
+
+    QObject::connect(ui->checkBox_comp_ELECTRIC, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_GPR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_GRADIENT_SCALAR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_MAGNETIC, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_POTENTIAL_SCALAR, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
+
+    QObject::connect(ui->checkBox_comp_VECTOR_POTENTIAL, SIGNAL(stateChanged(int)),
+                     this, SLOT(changeComputations(int)));
 }
 
 /*!
@@ -391,20 +430,13 @@ QString const& configuration_widget::getName() const{
 configuration_widget::~configuration_widget()
 {
     delete ui;
-    configOrig.reset();
     configuration.reset();
     lType.reset();
-    lTypeOrig.reset();
     coat.reset();
-    coatOrig.reset();
     ener.reset();
-    enerOrig.reset();
     cType.reset();
-    cTypeOrig.reset();
     cbType.reset();
-    cbTypeOrig.reset();
     pro.reset();
-    proOrig.reset();
 }
 
 /*!
@@ -428,6 +460,8 @@ void configuration_widget::refresh(){
         defParent->changeTabName(this, newName);
     }
 }
+
+//COMBOBOX CONNECTIONS
 
 void configuration_widget::populateFields(){
     populateConfSettings();
@@ -470,8 +504,7 @@ void configuration_widget::fetchLType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        lTypeOrig = configuration->getLeadTypes().at(index);
-        lType.reset(new LeadType(lTypeOrig.get()));
+        lType.reset(new LeadType(configuration->getLeadTypes().at(index).get()));
         refresh();
     }
 }
@@ -489,8 +522,7 @@ void configuration_widget::fetchCoating(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        coatOrig = configuration->getCoatings().at(index);
-        coat.reset(new Coating(coatOrig.get()));
+        coat.reset(new Coating(configuration->getCoatings().at(index).get()));
         refresh();
     }
 }
@@ -508,8 +540,7 @@ void configuration_widget::fetchEnergization(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        enerOrig = configuration->getEnergizations().at(index);
-        ener.reset(new Energization(enerOrig.get()));
+        ener.reset(new Energization(configuration->getEnergizations().at(index).get()));
         refresh();
     }
 }
@@ -527,8 +558,7 @@ void configuration_widget::fetchCType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        cTypeOrig = configuration->getConductorTypes().at(index);
-        cType.reset(new ConductorType(cTypeOrig.get()));
+        cType.reset(new ConductorType(configuration->getConductorTypes().at(index).get()));
         refresh();
     }
 }
@@ -546,8 +576,7 @@ void configuration_widget::fetchCbType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        cbTypeOrig = configuration->getCableTypes().at(index);
-        cbType.reset(new CableType(cbTypeOrig.get()));
+        cbType.reset(new CableType(configuration->getCableTypes().at(index).get()));
         refresh();
     }
 }
@@ -575,8 +604,7 @@ void configuration_widget::fetchProfile(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        proOrig = configuration->getProfiles().at(index);
-        pro.reset(new profile(proOrig.get()));
+        pro.reset(new profile(configuration->getProfiles().at(index).get()));
         refresh();
     }
 }
@@ -619,14 +647,14 @@ void configuration_widget::refreshCoating(){
 
 void configuration_widget::refreshEnergization(){
     if(ener){
-        ui->lineEdit_energization_frequency->setText(QString::fromStdString(ener->getFrequency()));
+        ui->comboBox_energizations_frequency->setCurrentText(QString::fromStdString(ener->getFrequency()));
         ui->lineEdit_energization_identification->setText(QString::fromStdString(ener->getIdentification()));
         ui->lineEdit_energization_type->setText(QString::fromStdString(ener->getType()));
         ui->spinBox_energization_magnitude->setValue(ener->getMagnitude());
         ui->doubleSpinBox_energization_angle->setValue(ener->getAngle());
         if(!ener->isLocked()){
             ui->pushButton_remove_energization->setEnabled(true);
-            ui->lineEdit_energization_frequency->setEnabled(true);
+            ui->comboBox_energizations_frequency->setEnabled(true);
             ui->lineEdit_energization_identification->setEnabled(true);
             ui->lineEdit_energization_type->setEnabled(true);
             ui->spinBox_energization_magnitude->setEnabled(true);
@@ -634,7 +662,7 @@ void configuration_widget::refreshEnergization(){
         }
         else{
             ui->pushButton_remove_energization->setDisabled(true);
-            ui->lineEdit_energization_frequency->setDisabled(true);
+            ui->comboBox_energizations_frequency->setDisabled(true);
             ui->lineEdit_energization_identification->setDisabled(true);
             ui->lineEdit_energization_type->setDisabled(true);
             ui->spinBox_energization_magnitude->setDisabled(true);
@@ -643,7 +671,7 @@ void configuration_widget::refreshEnergization(){
     }
     else{
         ui->pushButton_remove_energization->setDisabled(true);
-        ui->lineEdit_energization_frequency->setDisabled(true);
+        ui->comboBox_energizations_frequency->setDisabled(true);
         ui->lineEdit_energization_identification->setDisabled(true);
         ui->lineEdit_energization_type->setDisabled(true);
         ui->spinBox_energization_magnitude->setDisabled(true);
@@ -741,3 +769,267 @@ void configuration_widget::refreshProfile(){
     }
 }
 
+//LTYPE CONNECTIONS
+void configuration_widget::changeLTypeName(QString text){
+    if(lType){
+        lType->setName(text.toStdString());
+    }
+}
+
+void configuration_widget::newLType(){
+
+}
+
+void configuration_widget::removeLType(){
+
+}
+
+void configuration_widget::saveLType(){
+    if(configuration->getLeadTypes().count(lType->getId()) > 0){
+        configuration->replaceLeadType(lType);
+    }
+    else{
+        configuration->addLeadType(lType, true);
+    }
+    populateLTypes();
+}
+
+//COATING CONNECTIONS
+void configuration_widget::changeCoatName(QString text){
+    if(coat){
+        coat->setName(text.toStdString());
+    }
+}
+
+void configuration_widget::newCoat(){
+
+}
+
+void configuration_widget::removeCoat(){
+
+}
+
+void configuration_widget::saveCoat(){
+    if(configuration->getCoatings().count(coat->getId()) > 0){
+        configuration->replaceCoating(coat);
+    }
+    else{
+        configuration->addCoating(coat, true);
+    }
+    populateCoatings();
+}
+
+//ENERG CONNECTIONS
+void configuration_widget::changeEnerFreq(QString text){
+    if(ener){
+        ener->setFrequency(text.toStdString());
+    }
+}
+
+void configuration_widget::changeEnerIdent(QString text){
+    if(ener){
+        ener->setIdentification(text.toStdString());
+    }
+}
+
+void configuration_widget::changeEnerType(QString text){
+    if(ener){
+        ener->setType(text.toStdString());
+    }
+}
+
+void configuration_widget::changeEnerMag(int i){
+    if(ener){
+        ener->setMagnitude(i);
+    }
+}
+
+void configuration_widget::changeEnerAng(double d){
+    if(ener){
+        ener->setAngle(d);
+    }
+}
+
+void configuration_widget::newEner(){
+    ener.reset(new Energization());
+    configuration->addEnergization(ener, true);
+    populateEnergizations();
+}
+
+void configuration_widget::removeEner(){
+
+}
+
+void configuration_widget::saveEner(){
+    if(configuration->getEnergizations().count(ener->getId()) > 0){
+        configuration->replaceEnergization(ener);
+    }
+    else{
+        configuration->addEnergization(ener, true);
+    }
+    populateEnergizations();
+}
+
+//CTYPE CONNECTIONS
+void configuration_widget::changeCTypeName(QString text){
+    if(cType){
+        cType->setName(text.toStdString());
+    }
+}
+
+void configuration_widget::changeCTypeType(QString text){
+    if(cType){
+        cType->setType(text.toStdString());
+    }
+}
+
+void configuration_widget::changeCTypePerm(double d){
+    if(cType){
+        cType->setPermeability(d);
+    }
+}
+
+void configuration_widget::changeCTypeRes(double d){
+    if(cType){
+        cType->setResistivity(d);
+    }
+}
+
+void configuration_widget::newCType(){
+
+}
+
+void configuration_widget::removeCType(){
+
+}
+
+void configuration_widget::saveCType(){
+    if(configuration->getConductorTypes().count(cType->getId()) > 0){
+        configuration->replaceConductorType(cType);
+    }
+    else{
+        configuration->addConductorType(cType, true);
+    }
+    populateCTypes();
+}
+
+//CBTYPE CONNECTIONS
+void configuration_widget::changeCbTypeName(QString text){
+    if(cbType){
+        cbType->setName(text.toStdString());
+    }
+}
+
+void configuration_widget::newCbType(){
+
+}
+
+void configuration_widget::removeCbType(){
+
+}
+
+void configuration_widget::saveCbType(){
+    if(configuration->getCableTypes().count(cbType->getId()) > 0){
+        configuration->replaceCableType(cbType);
+    }
+    else{
+        configuration->addCableType(cbType, true);
+    }
+    populateCbTypes();
+}
+
+//PROFILE CONNECTIONS
+void configuration_widget::changeProNumPt(int i){
+    if(pro){
+        pro->ptNum = i;
+    }
+}
+
+void configuration_widget::changeProNumPr(int i){
+    if(pro){
+        pro->prNum = i;
+    }
+}
+
+void configuration_widget::changeProPtStepX(double d){
+    if(pro){
+        pro->ptStep.x = d;
+    }
+}
+
+void configuration_widget::changeProPtStepY(double d){
+    if(pro){
+        pro->ptStep.y = d;
+    }
+}
+
+void configuration_widget::changeProPtStepZ(double d){
+    if(pro){
+        pro->ptStep.z = d;
+    }
+}
+
+void configuration_widget::changeProStartX(double d){
+    if(pro){
+        pro->start.x = d;
+    }
+}
+
+void configuration_widget::changeProStartY(double d){
+    if(pro){
+        pro->start.y = d;
+    }
+}
+
+void configuration_widget::changeProStartZ(double d){
+    if(pro){
+        pro->start.z = d;
+    }
+}
+
+void configuration_widget::changeProPrStepX(double d){
+    if(pro){
+        pro->prStep.x = d;
+    }
+}
+
+void configuration_widget::changeProPrStepY(double d){
+    if(pro){
+        pro->prStep.y = d;
+    }
+}
+
+void configuration_widget::changeProPrStepZ(double d){
+    if(pro){
+        pro->prStep.z = d;
+    }
+}
+
+void configuration_widget::newPro(){
+
+}
+
+void configuration_widget::removePro(){
+
+}
+
+void configuration_widget::savePro(){
+    if(configuration->getProfiles().count(pro->id) > 0){
+        configuration->removeProfile(pro).addProfile(pro);
+    }
+    else{
+        configuration->addProfile(pro, true);
+    }
+    populateEnergizations();
+}
+
+void configuration_widget::changeComputations(int i){
+    if(configuration){
+        configuration->setComputations().ELECTRIC = ui->checkBox_comp_ELECTRIC->isChecked();
+        configuration->setComputations().GPR = ui->checkBox_comp_GPR->isChecked();
+        configuration->setComputations().GRADIENT_SCALAR = ui->checkBox_comp_GRADIENT_SCALAR->isChecked();
+        configuration->setComputations().MAGNETIC = ui->checkBox_comp_MAGNETIC->isChecked();
+        configuration->setComputations().POTENTIAL_SCALAR = ui->checkBox_comp_POTENTIAL_SCALAR->isChecked();
+        configuration->setComputations().VECTOR_POTENTIAL = ui->checkBox_comp_VECTOR_POTENTIAL->isChecked();
+    }
+}

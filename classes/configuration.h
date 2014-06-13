@@ -76,21 +76,24 @@ class Configuration
         bool operator!=(Configuration const* config);
         Configuration& operator=(Configuration const* config);
         void setDefaultTypes();
-        int idGenerator(const std::string& type);
     //Setters start-----------------------------------------------------
         Configuration& setIdentifier(std::string const& identifier);
         Configuration& setUnits(std::string const& units);
         Configuration& setFrequency(std::string const& frequency);
         Configuration& addLeadType(std::shared_ptr<LeadType> leadType, bool const& newAdd=false);
-        Configuration& removeLeadType(std::shared_ptr<LeadType> leadType);
+        int removeLeadType(std::shared_ptr<LeadType> leadType);
+        int replaceLeadType(std::shared_ptr<LeadType> leadType);
         Configuration& addCoating(std::shared_ptr<Coating> coating, bool const& newAdd=false);
-        Configuration& removeCoating(std::shared_ptr<Coating> coating);
+        int removeCoating(std::shared_ptr<Coating> coating);
+        int replaceCoating(std::shared_ptr<Coating> coating);
         Configuration& addEnergization(std::shared_ptr<Energization> energization, bool const& newAdd=false);
-        Configuration& removeEnergization(std::shared_ptr<Energization> energization);
+        int removeEnergization(std::shared_ptr<Energization> energization);
+        int replaceEnergization(std::shared_ptr<Energization> energization);
         Configuration& addTolerance(double const& tolerance);
         Configuration& removeTolerance(double const& tolerance);
         Configuration& addConductorType(std::shared_ptr<ConductorType> conductorType, bool const& newAdd=false);
-        Configuration& removeConductorType(std::shared_ptr<ConductorType> conductorType);
+        int removeConductorType(std::shared_ptr<ConductorType> conductorType);
+        int replaceConductorType(std::shared_ptr<ConductorType> conductorType);
         Configuration& addConductor(Conductor* conductor, bool const& newAdd=false);
         Configuration& removeConductor(Conductor* conductor);
         Configuration& addBuildingConductor(Conductor* conductor, bool const& newAdd=false);
@@ -101,7 +104,8 @@ class Configuration
         Configuration& addProfile(std::shared_ptr<profile> p, bool const& newAdd=false);
         Configuration& removeProfile(std::shared_ptr<profile> p);
         Configuration& addCableType(std::shared_ptr<CableType> cableType, bool const& newAdd=false);
-        Configuration& removeCableType(std::shared_ptr<CableType> cableType);
+        int removeCableType(std::shared_ptr<CableType> cableType);
+        int replaceCableType(std::shared_ptr<CableType> cableType);
         computations& setComputations();
         Configuration& setModified(bool const& modified);
     //Setters end-------------------------------------------------------
@@ -135,17 +139,6 @@ class Configuration
         std::unordered_map<int, std::shared_ptr<CableType>> m_cableTypes;
         computations m_computations;
         std::unordered_map<int, std::shared_ptr<profile>> m_profiles;
-        struct ids{
-                double leadTypeId=1;
-                double coatingId=1;
-                double energizationId=1;
-                double conductorTypeId=1;
-                double cableTypeId=1;
-                double conductorId=1;
-                double buildingConductorId=1;
-                double buildingId=1;
-                double profileId=1;
-        } m_ids;
         bool m_modified;
 };
 

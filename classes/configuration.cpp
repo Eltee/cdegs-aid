@@ -360,7 +360,12 @@ Configuration& Configuration::addLeadType(std::shared_ptr<LeadType> leadType, bo
         if(m_leadTypes.count(leadType->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            leadType->setId(idGenerator("LeadTypeId"));
+            if(m_leadTypes.count(m_leadTypes.size()-1)){
+                leadType->setId(m_leadTypes.size());
+            }
+            else{
+                leadType->setId(m_leadTypes.size()-1);
+            }
             m_leadTypes.emplace(leadType->getId(), leadType);
         }
     }
@@ -375,10 +380,49 @@ Configuration& Configuration::addLeadType(std::shared_ptr<LeadType> leadType, bo
  \param leadType
  \return Configuration
 */
-Configuration& Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
-    if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
+int Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
+    int errorCode = 0;
 
-    return *this;
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getLeadType() == leadType) errorCode = 1;
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getLeadType() == leadType) errorCode = 1;
+        }
+
+        if(errorCode == 0){
+            if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
+        }
+    }
+    else{
+        if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceLeadType(std::shared_ptr<LeadType> leadType){
+    int errorCode = 0;
+
+    if(m_leadTypes.count(leadType->getId())) m_leadTypes.at(leadType->getId()) = leadType;
+
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getLeadType()->getId() == leadType->getId()){
+                cond.second->setLeadType(m_leadTypes.at(leadType->getId()));
+            }
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getLeadType()->getId() == leadType->getId()){
+                cond.second->setLeadType(m_leadTypes.at(leadType->getId()));
+            }
+        }
+    }
+
+    return errorCode;
 }
 
 /*!
@@ -399,7 +443,12 @@ Configuration& Configuration::addCoating(std::shared_ptr<Coating> coating, bool 
         if(m_coatings.count(coating->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            coating->setId(idGenerator("CoatingId"));
+            if(m_coatings.count(m_coatings.size()-1)){
+                coating->setId(m_coatings.size());
+            }
+            else{
+                coating->setId(m_coatings.size()-1);
+            }
             m_coatings.emplace(coating->getId(), coating);
         }
     }
@@ -414,10 +463,49 @@ Configuration& Configuration::addCoating(std::shared_ptr<Coating> coating, bool 
  \param coating
  \return Configuration
 */
-Configuration& Configuration::removeCoating(std::shared_ptr<Coating> coating){
-    if(m_coatings.count(coating->getId())) m_coatings.erase(coating->getId());
+int Configuration::removeCoating(std::shared_ptr<Coating> coating){
+    int errorCode = 0;
 
-    return *this;
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getCoating() == coating) errorCode = 1;
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getCoating() == coating) errorCode = 1;
+        }
+
+        if(errorCode == 0){
+            if(m_coatings.count(coating->getId())) m_coatings.erase(coating->getId());
+        }
+    }
+    else{
+        if(m_coatings.count(coating->getId())) m_coatings.erase(coating->getId());
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceCoating(std::shared_ptr<Coating> coating){
+    int errorCode = 0;
+
+    if(m_coatings.count(coating->getId())) m_coatings.at(coating->getId()) = coating;
+
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getCoating()->getId() == coating->getId()){
+                cond.second->setCoating(m_coatings.at(coating->getId()));
+            }
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getCoating()->getId() == coating->getId()){
+                cond.second->setCoating(m_coatings.at(coating->getId()));
+            }
+        }
+    }
+
+    return errorCode;
 }
 
 /*!
@@ -438,7 +526,12 @@ Configuration& Configuration::addEnergization(std::shared_ptr<Energization> ener
         if(m_energizations.count(energization->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            energization->setId(idGenerator("EnergizationId"));
+            if(m_energizations.count(m_energizations.size())){
+                energization->setId(m_energizations.size()+1);
+            }
+            else{
+                energization->setId(m_energizations.size());
+            }
             m_energizations.emplace(energization->getId(), energization);
         }
     }
@@ -453,10 +546,49 @@ Configuration& Configuration::addEnergization(std::shared_ptr<Energization> ener
  \param energization
  \return Configuration
 */
-Configuration& Configuration::removeEnergization(std::shared_ptr<Energization> energization){
-    if(m_energizations.count(energization->getId())) m_energizations.erase(energization->getId());
+int Configuration::removeEnergization(std::shared_ptr<Energization> energization){
+    int errorCode = 0;
 
-    return *this;
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getEnergization() == energization) errorCode = 1;
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getEnergization() == energization) errorCode = 1;
+        }
+
+        if(errorCode == 0){
+            if(m_energizations.count(energization->getId())) m_energizations.erase(energization->getId());
+        }
+    }
+    else{
+        if(m_energizations.count(energization->getId())) m_energizations.erase(energization->getId());
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceEnergization(std::shared_ptr<Energization> energization){
+    int errorCode = 0;
+
+    if(m_energizations.count(energization->getId())) m_energizations.at(energization->getId()) = energization;
+
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getEnergization()->getId() == energization->getId()){
+                cond.second->setEnergization(m_energizations.at(energization->getId()));
+            }
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getEnergization()->getId() == energization->getId()){
+                cond.second->setEnergization(m_energizations.at(energization->getId()));
+            }
+        }
+    }
+
+    return errorCode;
 }
 
 /*!
@@ -514,7 +646,12 @@ Configuration& Configuration::addConductorType(std::shared_ptr<ConductorType> co
         if(m_conductorTypes.count(conductorType->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            conductorType->setId(idGenerator("ConductorTypeId"));
+            if(m_conductorTypes.count(m_conductorTypes.size()-1)){
+                conductorType->setId(m_conductorTypes.size());
+            }
+            else{
+                conductorType->setId(m_conductorTypes.size()-1);
+            }
             m_conductorTypes.emplace(conductorType->getId(), conductorType);
         }
     }
@@ -529,10 +666,49 @@ Configuration& Configuration::addConductorType(std::shared_ptr<ConductorType> co
  \param conductorType
  \return Configuration
 */
-Configuration& Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorType){
-    if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.erase(conductorType->getId());
+int Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorType){
+    int errorCode = 0;
 
-    return *this;
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getConductorType() == conductorType) errorCode = 1;
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getConductorType() == conductorType) errorCode = 1;
+        }
+
+        if(errorCode == 0){
+            if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.erase(conductorType->getId());
+        }
+    }
+    else{
+        if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.erase(conductorType->getId());
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceConductorType(std::shared_ptr<ConductorType> conductorType){
+    int errorCode = 0;
+
+    if(m_conductorTypes.count(conductorType->getId())) m_conductorTypes.at(conductorType->getId()) = conductorType;
+
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getConductorType()->getId() == conductorType->getId()){
+                cond.second->setConductorType(m_conductorTypes.at(conductorType->getId()));
+            }
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getConductorType()->getId() == conductorType->getId()){
+                cond.second->setConductorType(m_conductorTypes.at(conductorType->getId()));
+            }
+        }
+    }
+
+    return errorCode;
 }
 
 /*!
@@ -553,7 +729,12 @@ Configuration& Configuration::addConductor(Conductor *conductor, bool const& new
         if(m_conductors.count(conductor->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            conductor->setId(idGenerator("ConductorId"));
+            if(m_conductors.count(m_conductors.size())){
+                conductor->setId(m_conductors.size()+1);
+            }
+            else{
+                conductor->setId(m_conductors.size());
+            }
             m_conductors.emplace(conductor->getId(), conductor);
         }
     }
@@ -592,7 +773,12 @@ Configuration& Configuration::addBuildingConductor(Conductor *conductor, bool co
         if(m_buildingConductors.count(conductor->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            conductor->setId(idGenerator("BuildingConductorId"));
+            if(m_buildingConductors.count(m_buildingConductors.size())){
+                conductor->setId(m_buildingConductors.size()+1);
+            }
+            else{
+                conductor->setId(m_buildingConductors.size());
+            }
             m_buildingConductors.emplace(conductor->getId(), conductor);
         }
     }
@@ -633,7 +819,12 @@ Configuration& Configuration::addBuilding(std::shared_ptr<Building> building, bo
         if(m_buildings.count(building->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            building->setId(idGenerator("BuildingId"));
+            if(m_buildings.count(m_buildings.size())){
+                building->setId(m_buildings.size()+1);
+            }
+            else{
+                building->setId(m_buildings.size());
+            }
             m_buildings.emplace(building->getId(), building);
         }
     }
@@ -672,7 +863,12 @@ Configuration& Configuration::addProfile(std::shared_ptr<profile> p, bool const&
         if(m_profiles.count(p->id)) alreadyPresent = true;
 
         if(!alreadyPresent){
-            p->id = idGenerator("ProfileId");
+            if(m_profiles.count(m_profiles.size()+1)){
+                p->id = m_profiles.size()+2;
+            }
+            else{
+                p->id = m_profiles.size()+1;
+            }
             m_profiles.emplace(p->id, p);
         }
     }
@@ -711,7 +907,7 @@ Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType,
         if(m_cableTypes.count(cableType->getId())) alreadyPresent = true;
 
         if(!alreadyPresent){
-            cableType->setId(idGenerator("CableTypeId"));
+            cableType->setId(m_cableTypes.size());
             m_cableTypes.emplace(cableType->getId(), cableType);
         }
     }
@@ -726,10 +922,49 @@ Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType,
  \param cableType
  \return Configuration
 */
-Configuration& Configuration::removeCableType(std::shared_ptr<CableType> cableType){
-    if(m_cableTypes.count(cableType->getId())) m_cableTypes.erase(cableType->getId());
+int Configuration::removeCableType(std::shared_ptr<CableType> cableType){
+    int errorCode = 0;
 
-    return *this;
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getCableType() == cableType) errorCode = 1;
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getCableType() == cableType) errorCode = 1;
+        }
+
+        if(errorCode == 0){
+            if(m_cableTypes.count(cableType->getId())) m_cableTypes.erase(cableType->getId());
+        }
+    }
+    else{
+        if(m_cableTypes.count(cableType->getId())) m_cableTypes.erase(cableType->getId());
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceCableType(std::shared_ptr<CableType> cableType){
+    int errorCode = 0;
+
+    if(m_cableTypes.count(cableType->getId())) m_cableTypes.at(cableType->getId()) = cableType;
+
+    if(!m_conductors.empty() || !m_buildingConductors.empty()){
+        for(auto& cond : m_conductors){
+            if(cond.second->getCableType()->getId() == cableType->getId()){
+                cond.second->setCableType(m_cableTypes.at(cableType->getId()));
+            }
+        }
+
+        for(auto& cond : m_buildingConductors){
+            if(cond.second->getCableType()->getId() == cableType->getId()){
+                cond.second->setCableType(m_cableTypes.at(cableType->getId()));
+            }
+        }
+    }
+
+    return errorCode;
 }
 
 /*!
@@ -880,56 +1115,6 @@ std::unordered_map<int, std::shared_ptr<profile> > Configuration::getProfiles() 
 */
 std::unordered_map<int, std::shared_ptr<CableType> > Configuration::getCableTypes() const{
     return m_cableTypes;
-}
-
-/*!
- \brief
-
- \fn Configuration::idGenerator
- \param type
- \return int
-*/
-int Configuration::idGenerator(const std::string& type){
-    int result = 0;
-
-    if(type == "LeadTypeId"){
-        result = m_ids.leadTypeId;
-        m_ids.leadTypeId += 1;
-    }
-    else if(type == "CoatingId"){
-        result = m_ids.coatingId;
-        m_ids.coatingId += 1;
-    }
-    else if(type == "EnergizationId"){
-        result = m_ids.energizationId;
-        m_ids.energizationId += 1;
-    }
-    else if(type == "ConductorTypeId"){
-        result = m_ids.conductorTypeId;
-        m_ids.conductorTypeId += 1;
-    }
-    else if(type == "CableTypeId"){
-        result = m_ids.cableTypeId;
-        m_ids.cableTypeId += 1;
-    }
-    else if(type == "ConductorId"){
-        result = m_ids.conductorId;
-        m_ids.conductorId += 1;
-    }
-    else if(type == "BuildingConductorId"){
-        result = m_ids.buildingConductorId;
-        m_ids.buildingConductorId += 1;
-    }
-    else if(type == "BuildingId"){
-        result = m_ids.buildingId;
-        m_ids.buildingId += 1;
-    }
-    else if(type == "ProfileId"){
-        result = m_ids.profileId;
-        m_ids.profileId += 1;
-    }
-
-    return result;
 }
 
 Configuration& Configuration::setModified(bool const& modified){
