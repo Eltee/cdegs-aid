@@ -99,6 +99,12 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionOpen_Config, SIGNAL(triggered()),
                      this, SLOT(openConfigDialog()));
+
+    QObject::connect(ui->actionSave_Config, SIGNAL(triggered()),
+                     this, SLOT(saveConfig()));
+
+    QObject::connect(ui->actionClose_Config, SIGNAL(triggered()),
+                     this, SLOT(closeConfig()));
 }
 
 /*!
@@ -240,18 +246,27 @@ void cdegs_main::newProject(){
 */
 void cdegs_main::openProject(){
     QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
-    project.reset(AppUtils::getInstance().loadProject(filePath.toStdWString().c_str()));
 
-    project_tab_widget* tab = new project_tab_widget(this, this, project, QString::fromStdString(project->getFileName()));
+    bool alreadyPresent = false;
 
-    QObject::connect(this, SIGNAL(saveOccurred()),
-                     tab, SLOT(refresh()));
+    for(int i = 0; i < ui->tabProjects->count(); i++){
+        if(dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getAbsPath() + "/" + dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getFileName() == filePath.toStdString()) alreadyPresent = true;
+    }
 
-    int index = ui->tabProjects->addTab(tab, tab->getName());
+    if(!alreadyPresent){
+        project.reset(AppUtils::getInstance().loadProject(filePath.toStdWString().c_str()));
 
-    ui->tabProjects->setCurrentIndex(index);
+        project_tab_widget* tab = new project_tab_widget(this, this, project, QString::fromStdString(project->getFileName()));
 
-    refresh();
+        QObject::connect(this, SIGNAL(saveOccurred()),
+                         tab, SLOT(refresh()));
+
+        int index = ui->tabProjects->addTab(tab, tab->getName());
+
+        ui->tabProjects->setCurrentIndex(index);
+
+        refresh();
+    }
 }
 
 /*!
@@ -378,7 +393,15 @@ void cdegs_main::openConfig(std::shared_ptr<Configuration> config){
  \fn cdegs_main::saveConfig
 */
 void cdegs_main::saveConfig(){
-
+    if(project->getConfigurations().count(config->getId()) > 0){
+        project->replaceConfiguration(config);
+    }
+    else{
+        project->addConfiguration(config, true);
+    }
+    config->setModified(false);
+    emit saveOccurred();
+    refresh();
 }
 
 /*!
@@ -387,7 +410,9 @@ void cdegs_main::saveConfig(){
  \fn cdegs_main::closeConfig
 */
 void cdegs_main::closeConfig(){
-
+    if(ui->tabProjects->currentIndex() != -1 && config){
+        dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->closeConfig();
+    }
 }
 
 /*!

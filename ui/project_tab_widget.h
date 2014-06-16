@@ -76,6 +76,8 @@ class project_tab_widget : public QWidget
         ~project_tab_widget();
         void changeTabName(QWidget* widget, QString name);
         void modifyProject();
+        void saveConfig();
+        void closeConfig();
 
     public slots:
         void refresh();

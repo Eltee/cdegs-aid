@@ -234,6 +234,8 @@ void AppUtils::loadDefaultConfig(){
 
     pugi::xml_node node = doc.first_child().first_child();
 
+    m_defaultConfig->setId(node.first_attribute().as_int());
+
     m_defaultConfig->setIdentifier(node.child("Identifier").first_attribute().value());
 
     m_defaultConfig->setUnits(node.child("Units").first_attribute().value());
@@ -307,6 +309,8 @@ void AppUtils::generateDefaultConfig(){
     pugi::xml_node node;
 
     //Configuration node-------------------------------------------------------
+
+    configNode.append_attribute("Id").set_value(0);
 
     //Identifier node
     node = configNode.append_child("Identifier");
@@ -551,6 +555,8 @@ Configuration const* AppUtils::getDefaultConfig() const{
 Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     Configuration* config = new Configuration();
 
+    config->setId(configNode.first_attribute().as_int());
+
     config->setIdentifier(configNode.child("Identifier").first_attribute().value());
 
     config->setUnits(configNode.child("Units").first_attribute().value());
@@ -742,15 +748,15 @@ Project* AppUtils::loadProject(const QString& folder, const QString& filename){
         project->addConfiguration(ptr);
     }
 
-    std::string key;
+    int key;
 
     node = doc.first_child();
 
-    key = node.child("DefaultConfig").first_attribute().value();
-    if(key != "") project->setDefaultConfig(project->getConfigurations().at(key));
+    key = node.child("DefaultConfig").first_attribute().as_int();
+    if(key != 0) project->setDefaultConfig(project->getConfigurations().at(key));
 
-    key = node.child("LastConfig").first_attribute().value();
-    if(key != "") project->setLastConfig(project->getConfigurations().at(key));
+    key = node.child("LastConfig").first_attribute().as_int();
+    if(key != 0) project->setLastConfig(project->getConfigurations().at(key));
 
     return project;
 }
@@ -806,15 +812,15 @@ Project* AppUtils::loadProject(const wchar_t* fullPath){
         project->addConfiguration(ptr);
     }
 
-    std::string key;
+    int key;
 
     node = doc.first_child();
 
-    key = node.child("DefaultConfig").first_attribute().value();
-    if(key != "") project->setDefaultConfig(project->getConfigurations().at(key));
+    key = node.child("DefaultConfig").first_attribute().as_int();
+    if(key != 0) project->setDefaultConfig(project->getConfigurations().at(key));
 
-    key = node.child("LastConfig").first_attribute().value();
-    if(key != "") project->setLastConfig(project->getConfigurations().at(key));
+    key = node.child("LastConfig").first_attribute().as_int();
+    if(key != 0) project->setLastConfig(project->getConfigurations().at(key));
 
     return project;
 }
@@ -1179,7 +1185,7 @@ void AppUtils::saveProject(const Project &project, std::string& path){
     //Configurations
     pugi::xml_node configNode = doc.append_child("Configurations");
 
-    for(auto& config : project.getConfigurations()){ //BREAKS HERE
+    for(auto& config : project.getConfigurations()){
         saveConfiguration(config.second.get(), configNode);
     }
 
@@ -1315,6 +1321,8 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
     pugi::xml_node node;
 
     //Configuration node-------------------------------------------------------
+
+    configNode.append_attribute("Id").set_value(config->getId());
 
     //Identifier node
     node = configNode.append_child("Identifier");

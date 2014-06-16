@@ -84,6 +84,20 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->comboBox_profiles_chooser, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(fetchProfile(QString)));
 
+    //CONF CONNECTIONS
+
+    QObject::connect(ui->lineEdit_settings_identifier, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeConfIdentifier(QString)));
+
+    QObject::connect(ui->comboBox_settings_units, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(changeConfUnits(QString)));
+
+    QObject::connect(ui->comboBox_settings_frequency, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(changeConfFrequency(QString)));
+
+    QObject::connect(ui->pushButton_save_conf, SIGNAL(clicked()),
+                     this, SLOT(saveConfig()));
+
     //LTYPE CONNECTIONS
     QObject::connect(ui->lineEdit_lType_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeLTypeName(QString)));
@@ -257,6 +271,20 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->comboBox_profiles_chooser, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(fetchProfile(QString)));
+
+    //CONF CONNECTIONS
+
+    QObject::disconnect(ui->lineEdit_settings_identifier, SIGNAL(textChanged(QString)),
+                     this, SLOT(changeConfIdentifier(QString)));
+
+    QObject::disconnect(ui->comboBox_settings_units, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(changeConfUnits(QString)));
+
+    QObject::disconnect(ui->comboBox_settings_frequency, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(changeConfFrequency(QString)));
+
+    QObject::disconnect(ui->pushButton_save_conf, SIGNAL(clicked()),
+                     this, SLOT(saveConfig()));
 
     //LTYPE CONNECTIONS
     QObject::disconnect(ui->lineEdit_lType_name, SIGNAL(textChanged(QString)),
@@ -446,12 +474,15 @@ configuration_widget::~configuration_widget()
 */
 void configuration_widget::refresh(){
     defParent->refresh();
+    disconnectSlots();
+    refreshConfSettings();
     refreshLType();
     refreshCoating();
     refreshEnergization();
     refreshCType();
     refreshCbType();
     refreshProfile();
+    connectSlots();
     if(configuration->isModified() != configModified){
         configModified = configuration->isModified();
         QString newName = m_name;
@@ -464,7 +495,6 @@ void configuration_widget::refresh(){
 //COMBOBOX CONNECTIONS
 
 void configuration_widget::populateFields(){
-    populateConfSettings();
     populateLTypes();
     populateCoatings();
     populateEnergizations();
@@ -472,23 +502,6 @@ void configuration_widget::populateFields(){
     populateCbTypes();
     populateComputations();
     populateProfiles();
-}
-
-void configuration_widget::populateConfSettings(){
-    ui->lineEdit_settings_identifier->setText(QString::fromStdString(configuration->getIdentifier()));
-
-    if(configuration->getUnits() == "Metric") ui->comboBox_settings_units->setCurrentIndex(0);
-    else ui->comboBox_settings_units->setCurrentIndex(1);
-
-    if(configuration->getFrequency() == "AC") ui->comboBox_settings_frequency->setCurrentIndex(0);
-    else ui->comboBox_settings_frequency->setCurrentIndex(1);
-
-    ui->lineEdit_settings_lTypes->setText(QString::number(configuration->getLeadTypes().size()));
-    ui->lineEdit_settings_coatings->setText(QString::number(configuration->getCoatings().size()));
-    ui->lineEdit_settings_energizations->setText(QString::number(configuration->getEnergizations().size()));
-    ui->lineEdit_settings_cTypes->setText(QString::number(configuration->getConductorTypes().size()));
-    ui->lineEdit_settings_cbTypes->setText(QString::number(configuration->getCableTypes().size()));
-    ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
 }
 
 void configuration_widget::populateLTypes(){
@@ -769,19 +782,53 @@ void configuration_widget::refreshProfile(){
     }
 }
 
+//CONF CONNECTIONS
+void configuration_widget::changeConfIdentifier(QString ident){
+    configuration->setIdentifier(ident.toStdString());
+    m_name = ident;
+    configuration->setModified(true);
+    refresh();
+}
+
+void configuration_widget::changeConfUnits(QString units){
+    configuration->setUnits(units.toStdString());
+    configuration->setModified(true);
+    refresh();
+}
+
+void configuration_widget::changeConfFrequency(QString frequency){
+    configuration->setFrequency(frequency.toStdString());
+    configuration->setModified(true);
+    refresh();
+}
+
+void configuration_widget::saveConfig(){
+    defParent->saveConfig();
+}
+
 //LTYPE CONNECTIONS
 void configuration_widget::changeLTypeName(QString text){
     if(lType){
         lType->setName(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::newLType(){
-
+    lType.reset(new LeadType());
+    configuration->addLeadType(lType, true);
+    populateLTypes();
 }
 
 void configuration_widget::removeLType(){
-
+    int result = configuration->removeLeadType(lType);
+    if(result == 1){
+        QMessageBox::critical(this, "Failure", "This LeadType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+    }
+    else{
+        lType.reset();
+        populateLTypes();
+    }
 }
 
 void configuration_widget::saveLType(){
@@ -798,15 +845,25 @@ void configuration_widget::saveLType(){
 void configuration_widget::changeCoatName(QString text){
     if(coat){
         coat->setName(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::newCoat(){
-
+    coat.reset(new Coating());
+    configuration->addCoating(coat, true);
+    populateCoatings();
 }
 
 void configuration_widget::removeCoat(){
-
+    int result = configuration->removeCoating(coat);
+    if(result == 1){
+        QMessageBox::critical(this, "Failure", "This Coating is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+    }
+    else{
+        coat.reset();
+        populateCoatings();
+    }
 }
 
 void configuration_widget::saveCoat(){
@@ -823,30 +880,35 @@ void configuration_widget::saveCoat(){
 void configuration_widget::changeEnerFreq(QString text){
     if(ener){
         ener->setFrequency(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeEnerIdent(QString text){
     if(ener){
         ener->setIdentification(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeEnerType(QString text){
     if(ener){
         ener->setType(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeEnerMag(int i){
     if(ener){
         ener->setMagnitude(i);
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeEnerAng(double d){
     if(ener){
         ener->setAngle(d);
+        configuration->setModified(true);
     }
 }
 
@@ -857,7 +919,14 @@ void configuration_widget::newEner(){
 }
 
 void configuration_widget::removeEner(){
-
+    int result = configuration->removeEnergization(ener);
+    if(result == 1){
+        QMessageBox::critical(this, "Failure", "This Energization is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+    }
+    else{
+        ener.reset();
+        populateEnergizations();
+    }
 }
 
 void configuration_widget::saveEner(){
@@ -874,33 +943,46 @@ void configuration_widget::saveEner(){
 void configuration_widget::changeCTypeName(QString text){
     if(cType){
         cType->setName(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeCTypeType(QString text){
     if(cType){
         cType->setType(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeCTypePerm(double d){
     if(cType){
         cType->setPermeability(d);
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeCTypeRes(double d){
     if(cType){
         cType->setResistivity(d);
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::newCType(){
-
+    cType.reset(new ConductorType());
+    configuration->addConductorType(cType, true);
+    populateCTypes();
 }
 
 void configuration_widget::removeCType(){
-
+    int result = configuration->removeConductorType(cType);
+    if(result == 1){
+        QMessageBox::critical(this, "Failure", "This ConductorType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+    }
+    else{
+        cType.reset();
+        populateCTypes();
+    }
 }
 
 void configuration_widget::saveCType(){
@@ -917,15 +999,25 @@ void configuration_widget::saveCType(){
 void configuration_widget::changeCbTypeName(QString text){
     if(cbType){
         cbType->setName(text.toStdString());
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::newCbType(){
-
+    cbType.reset(new CableType());
+    configuration->addCableType(cbType, true);
+    populateCbTypes();
 }
 
 void configuration_widget::removeCbType(){
-
+    int result = configuration->removeCableType(cbType);
+    if(result == 1){
+        QMessageBox::critical(this, "Failure", "This CableType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+    }
+    else{
+        cbType.reset();
+        populateCbTypes();
+    }
 }
 
 void configuration_widget::saveCbType(){
@@ -942,75 +1034,90 @@ void configuration_widget::saveCbType(){
 void configuration_widget::changeProNumPt(int i){
     if(pro){
         pro->ptNum = i;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProNumPr(int i){
     if(pro){
         pro->prNum = i;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPtStepX(double d){
     if(pro){
         pro->ptStep.x = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPtStepY(double d){
     if(pro){
         pro->ptStep.y = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPtStepZ(double d){
     if(pro){
         pro->ptStep.z = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProStartX(double d){
     if(pro){
         pro->start.x = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProStartY(double d){
     if(pro){
         pro->start.y = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProStartZ(double d){
     if(pro){
         pro->start.z = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPrStepX(double d){
     if(pro){
         pro->prStep.x = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPrStepY(double d){
     if(pro){
         pro->prStep.y = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::changeProPrStepZ(double d){
     if(pro){
         pro->prStep.z = d;
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::newPro(){
-
+    pro.reset(new profile());
+    configuration->addProfile(pro, true);
+    populateProfiles();
 }
 
 void configuration_widget::removePro(){
-
+    configuration->removeProfile(pro);
+    pro.reset();
+    populateProfiles();
 }
 
 void configuration_widget::savePro(){
@@ -1031,5 +1138,23 @@ void configuration_widget::changeComputations(int i){
         configuration->setComputations().MAGNETIC = ui->checkBox_comp_MAGNETIC->isChecked();
         configuration->setComputations().POTENTIAL_SCALAR = ui->checkBox_comp_POTENTIAL_SCALAR->isChecked();
         configuration->setComputations().VECTOR_POTENTIAL = ui->checkBox_comp_VECTOR_POTENTIAL->isChecked();
+        refresh();
     }
+}
+
+void configuration_widget::refreshConfSettings(){
+    ui->lineEdit_settings_identifier->setText(QString::fromStdString(configuration->getIdentifier()));
+
+    if(configuration->getUnits() == "Metric") ui->comboBox_settings_units->setCurrentIndex(0);
+    else ui->comboBox_settings_units->setCurrentIndex(1);
+
+    if(configuration->getFrequency() == "AC") ui->comboBox_settings_frequency->setCurrentIndex(0);
+    else ui->comboBox_settings_frequency->setCurrentIndex(1);
+
+    ui->lineEdit_settings_lTypes->setText(QString::number(configuration->getLeadTypes().size()));
+    ui->lineEdit_settings_coatings->setText(QString::number(configuration->getCoatings().size()));
+    ui->lineEdit_settings_energizations->setText(QString::number(configuration->getEnergizations().size()));
+    ui->lineEdit_settings_cTypes->setText(QString::number(configuration->getConductorTypes().size()));
+    ui->lineEdit_settings_cbTypes->setText(QString::number(configuration->getCableTypes().size()));
+    ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
 }

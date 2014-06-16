@@ -87,6 +87,7 @@ class cdegs_main : public QMainWindow
 
     public slots:
         void refresh();
+        void saveConfig();
 
     private slots:
         void newProject();
@@ -99,7 +100,6 @@ class cdegs_main : public QMainWindow
         void changeProject(int index);
         void newConfig();
         void openConfig(std::shared_ptr<Configuration> config);
-        void saveConfig();
         void closeConfig();
         void exportConfig();
         void exportConfigAs();

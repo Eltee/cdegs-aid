@@ -53,8 +53,9 @@ configuration_chooser_dialog::configuration_chooser_dialog(QWidget *parent, std:
 void configuration_chooser_dialog::populateModel(){
     QStringList stringList;
 
-    for(auto& entry : m_project->getConfigurations()){
-        stringList.push_back(QString::fromStdString(entry.first));
+    for(int i = 1; i<= m_project->getConfigurations().size(); i++){
+        QString text = QString::number(i) + " - " + QString::fromStdString(m_project->getConfigurations().at(i)->getIdentifier());
+        stringList.push_back(text);
     }
 
     m_model->setStringList(stringList);
@@ -72,10 +73,13 @@ void configuration_chooser_dialog::connectSlots(){
 }
 
 void configuration_chooser_dialog::buttonOk(){
-    std::string identifier = m_model->data(ui->listView_config->currentIndex(), Qt::DisplayRole).toString().toStdString();
+    QString identifier = m_model->data(ui->listView_config->currentIndex(), Qt::DisplayRole).toString();
 
     try{
-        m_config = m_project->getConfigurations().at(identifier);
+        identifier.truncate(identifier.indexOf(" "));
+        int index = identifier.toInt();
+
+        m_config = m_project->getConfigurations().at(index);
 
         emit returnConfig(m_config);
     }
@@ -87,11 +91,12 @@ void configuration_chooser_dialog::buttonOk(){
 }
 
 void configuration_chooser_dialog::selectConfig(QModelIndex index){
-    std::string identifier = m_model->data(index, Qt::DisplayRole).toString().toStdString();
+    QString identifier = m_model->data(index, Qt::DisplayRole).toString();
 
-    std::cout << identifier << std::endl;
+    identifier.truncate(identifier.indexOf(" "));
+    int ind = identifier.toInt();
 
-    m_config = m_project->getConfigurations().at(identifier);
+    m_config = m_project->getConfigurations().at(ind);
 
     emit returnConfig(m_config);
 

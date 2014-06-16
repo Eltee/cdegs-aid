@@ -140,13 +140,21 @@ void project_tab_widget::refresh(){
  \param config
 */
 void project_tab_widget::addConfig(std::shared_ptr<Configuration> config){
-    configuration_widget* tab = new configuration_widget(this, this, config);
+    bool alreadyPresent = false;
 
-    QObject::connect(defParent, SIGNAL(saveOccurred()),
-                     tab, SLOT(refresh()));
+    for(int i = 1; i < ui->tabProject->count(); i++){
+        if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(i))->getConfig()->getId() == config->getId()) alreadyPresent = true;
+    }
 
-    int index = ui->tabProject->addTab(tab, QString::fromStdString(config->getIdentifier()));
-    ui->tabProject->setCurrentIndex(index);
+    if(!alreadyPresent){
+        configuration_widget* tab = new configuration_widget(this, this, config, QString::fromStdString(config->getIdentifier()));
+
+        QObject::connect(defParent, SIGNAL(saveOccurred()),
+                         tab, SLOT(refresh()));
+
+        int index = ui->tabProject->addTab(tab, QString::fromStdString(config->getIdentifier()));
+        ui->tabProject->setCurrentIndex(index);
+    }
 }
 
 /*!
@@ -155,6 +163,17 @@ void project_tab_widget::addConfig(std::shared_ptr<Configuration> config){
  \fn project_tab_widget::changeTab
 */
 void project_tab_widget::changeTab(){
+    refresh();
+}
+
+void project_tab_widget::closeConfig(){
+    if(ui->tabProject->currentIndex() > 0){
+        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig().reset();
+            ui->tabProject->removeTab(ui->tabProject->currentIndex());
+        }
+    }
+
     refresh();
 }
 
@@ -183,4 +202,8 @@ void project_tab_widget::changeTabName(QWidget* widget, QString name){
 
 void project_tab_widget::modifyProject(){
     project->setModified(true);
+}
+
+void project_tab_widget::saveConfig(){
+    defParent->saveConfig();
 }

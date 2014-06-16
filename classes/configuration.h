@@ -108,8 +108,10 @@ class Configuration
         int replaceCableType(std::shared_ptr<CableType> cableType);
         computations& setComputations();
         Configuration& setModified(bool const& modified);
+        Configuration& setId(int const& i);
     //Setters end-------------------------------------------------------
     //Getters start-----------------------------------------------------
+        int const& getId() const;
         std::string const& getIdentifier() const;
         std::string const& getUnits() const;
         std::string const& getFrequency() const;
@@ -128,6 +130,7 @@ class Configuration
     //Getters end-------------------------------------------------------
 
     private:
+        int m_id;
         std::string m_identifier, m_units, m_frequency;
         std::unordered_map<int, std::shared_ptr<LeadType>> m_leadTypes;
         std::unordered_map<int, std::shared_ptr<Coating>> m_coatings;

@@ -40,6 +40,7 @@
 
 #include <QWidget>
 #include <memory>
+#include <QMessageBox>
 #include "project_tab_widget.h"
 #include "classes/configuration.h"
 
@@ -67,7 +68,6 @@ class configuration_widget : public QWidget
         QString const& getName() const;
         ~configuration_widget();
         void populateFields();
-        void populateConfSettings();
         void populateLTypes();
         void populateCoatings();
         void populateEnergizations();
@@ -77,6 +77,7 @@ class configuration_widget : public QWidget
         void populateProfiles();
         void connectSlots();
         void disconnectSlots();
+        void refreshConfSettings();
         void refreshLType();
         void refreshCoating();
         void refreshEnergization();
@@ -95,6 +96,12 @@ class configuration_widget : public QWidget
         void fetchCType(QString id);
         void fetchCbType(QString id);
         void fetchProfile(QString id);
+
+        //CONF CONNECTIONS
+        void changeConfIdentifier(QString ident);
+        void changeConfUnits(QString units);
+        void changeConfFrequency(QString frequency);
+        void saveConfig();
 
         //LTYPE CONNECTIONS
         void changeLTypeName(QString text);

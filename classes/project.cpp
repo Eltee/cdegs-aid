@@ -285,7 +285,7 @@ project_settings const& Project::getSettings() const{
  \fn Project::getConfigurations
  \return std::unordered_map<std::string, Configuration *>
 */
-std::unordered_map<std::string, std::shared_ptr<Configuration> > Project::getConfigurations() const{
+std::unordered_map<int, std::shared_ptr<Configuration> > Project::getConfigurations() const{
     return m_configurations;
 }
 
@@ -489,12 +489,20 @@ Project& Project::setProjSet4(std::string const& set4){
  \param config
  \return Project
 */
-Project& Project::addConfiguration(std::shared_ptr<Configuration> config){
+Project& Project::addConfiguration(std::shared_ptr<Configuration> config, bool const& newAdd){
     bool alreadyPresent=false;
 
-    if(m_configurations.count(config->getIdentifier())) alreadyPresent = true;
+    if(!newAdd){
+        m_configurations.emplace(config->getId(), config);
+    }
+    else{
+        if(m_configurations.count(config->getId())) alreadyPresent = true;
 
-    if(!alreadyPresent) m_configurations.emplace(config->getIdentifier(), config);
+        if(!alreadyPresent){
+            config->setId(m_configurations.size()+1);
+            m_configurations.emplace(config->getId(), config);
+        }
+    }
 
     return *this;
 }
@@ -507,9 +515,13 @@ Project& Project::addConfiguration(std::shared_ptr<Configuration> config){
  \return Project
 */
 Project& Project::removeConfiguration(std::shared_ptr<Configuration> config){
-    if(m_configurations.count(config->getIdentifier())) m_configurations.erase(config->getIdentifier());
+    if(m_configurations.count(config->getId())) m_configurations.erase(config->getId());
 
     return *this;
+}
+
+Project& Project::replaceConfiguration(std::shared_ptr<Configuration> config){
+    if(m_configurations.count(config->getId())) m_configurations.at(config->getId()) = config;
 }
 
 /*!

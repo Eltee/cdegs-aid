@@ -85,8 +85,9 @@ class Project
         Project& setProjSet2(std::string const& set2);
         Project& setProjSet3(std::string const& set3);
         Project& setProjSet4(std::string const& set4);
-        Project& addConfiguration(std::shared_ptr<Configuration> config);
+        Project& addConfiguration(std::shared_ptr<Configuration> config, const bool& newAdd=false);
         Project& removeConfiguration(std::shared_ptr<Configuration> config);
+        Project& replaceConfiguration(std::shared_ptr<Configuration> config);
         Project& setId(std::string const& id);
         Project& setModified(bool const& mod);
     //Setters end-----------------------------------------------------------------
@@ -101,7 +102,7 @@ class Project
         std::weak_ptr<Configuration> getLastConfig() const;
         project_metadata const& getMetadata() const;
         project_settings const& getSettings() const;
-        std::unordered_map<std::string, std::shared_ptr<Configuration>> getConfigurations() const;
+        std::unordered_map<int, std::shared_ptr<Configuration>> getConfigurations() const;
         bool const& isModified() const;
     //Getters end-----------------------------------------------------------------
     private:
@@ -110,7 +111,7 @@ class Project
         std::weak_ptr<Configuration> m_lastConfig;
         project_metadata m_metadata;
         project_settings m_projectSettings;
-        std::unordered_map<std::string, std::shared_ptr<Configuration>> m_configurations;
+        std::unordered_map<int, std::shared_ptr<Configuration>> m_configurations;
         bool m_modified;
 };
 

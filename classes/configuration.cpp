@@ -41,6 +41,7 @@
  \fn Configuration::Configuration
 */
 Configuration::Configuration(){
+    m_id = 0;
     m_identifier = "default";
     m_units = "Metric";
     m_frequency = "AC";
@@ -56,6 +57,7 @@ Configuration::Configuration(){
  \param frequency
 */
 Configuration::Configuration(std::string const& identifier, std::string const& units, std::string const& frequency){
+    m_id = 0;
     m_identifier = identifier;
     m_units = units;
     m_frequency = frequency;
@@ -69,6 +71,7 @@ Configuration::Configuration(std::string const& identifier, std::string const& u
  \param config
 */
 Configuration::Configuration(Configuration const* config){
+    m_id = config->getId();
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
@@ -163,6 +166,7 @@ Configuration::~Configuration(){
 
 bool Configuration::operator==(Configuration const* config){
     bool result = true;
+    if(m_id != config->getId()) result = false;
     if(m_identifier != config->getIdentifier()) result = false;
     if(m_units != config->getUnits()) result = false;
     if(m_frequency != config->getFrequency()) result = false;
@@ -276,6 +280,7 @@ bool Configuration::operator!=(Configuration const* config){
  \return Configuration &Configuration::operator
 */
 Configuration& Configuration::operator=(Configuration const* config){
+    m_id = config->getId();
     m_identifier = config->getIdentifier();
     m_units = config->getUnits();
     m_frequency = config->getFrequency();
@@ -385,11 +390,11 @@ int Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
 
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
-            if(cond.second->getLeadType() == leadType) errorCode = 1;
+            if(cond.second->getLeadType()->getId() == leadType->getId()) errorCode = 1;
         }
 
         for(auto& cond : m_buildingConductors){
-            if(cond.second->getLeadType() == leadType) errorCode = 1;
+            if(cond.second->getLeadType()->getId() == leadType->getId()) errorCode = 1;
         }
 
         if(errorCode == 0){
@@ -468,11 +473,11 @@ int Configuration::removeCoating(std::shared_ptr<Coating> coating){
 
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
-            if(cond.second->getCoating() == coating) errorCode = 1;
+            if(cond.second->getCoating()->getId() == coating->getId()) errorCode = 1;
         }
 
         for(auto& cond : m_buildingConductors){
-            if(cond.second->getCoating() == coating) errorCode = 1;
+            if(cond.second->getCoating()->getId() == coating->getId()) errorCode = 1;
         }
 
         if(errorCode == 0){
@@ -551,11 +556,11 @@ int Configuration::removeEnergization(std::shared_ptr<Energization> energization
 
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
-            if(cond.second->getEnergization() == energization) errorCode = 1;
+            if(cond.second->getEnergization()->getId() == energization->getId()) errorCode = 1;
         }
 
         for(auto& cond : m_buildingConductors){
-            if(cond.second->getEnergization() == energization) errorCode = 1;
+            if(cond.second->getEnergization()->getId() == energization->getId()) errorCode = 1;
         }
 
         if(errorCode == 0){
@@ -671,11 +676,11 @@ int Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorT
 
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
-            if(cond.second->getConductorType() == conductorType) errorCode = 1;
+            if(cond.second->getConductorType()->getId() == conductorType->getId()) errorCode = 1;
         }
 
         for(auto& cond : m_buildingConductors){
-            if(cond.second->getConductorType() == conductorType) errorCode = 1;
+            if(cond.second->getConductorType()->getId() == conductorType->getId()) errorCode = 1;
         }
 
         if(errorCode == 0){
@@ -927,11 +932,11 @@ int Configuration::removeCableType(std::shared_ptr<CableType> cableType){
 
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
-            if(cond.second->getCableType() == cableType) errorCode = 1;
+            if(cond.second->getCableType()->getId() == cableType->getId()) errorCode = 1;
         }
 
         for(auto& cond : m_buildingConductors){
-            if(cond.second->getCableType() == cableType) errorCode = 1;
+            if(cond.second->getCableType()->getId() == cableType->getId()) errorCode = 1;
         }
 
         if(errorCode == 0){
@@ -1124,4 +1129,13 @@ Configuration& Configuration::setModified(bool const& modified){
 
 bool const& Configuration::isModified() const{
     return m_modified;
+}
+
+Configuration& Configuration::setId(int const& i){
+    m_id = i;
+    return *this;
+}
+
+int const& Configuration::getId() const{
+    return m_id;
 }
