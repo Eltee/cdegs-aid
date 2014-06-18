@@ -85,7 +85,6 @@ class project_widget : public QWidget
         std::shared_ptr<Project> project, projectOrig;
         project_tab_widget* defParent;
         QString m_name;
-        bool m_projectModified;
 };
 
 #endif // PROJECT_WIDGET_H

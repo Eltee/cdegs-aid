@@ -76,6 +76,7 @@ class Configuration
         bool operator!=(Configuration const* config);
         Configuration& operator=(Configuration const* config);
         void setDefaultTypes();
+        bool validateConfig();
     //Setters start-----------------------------------------------------
         Configuration& setIdentifier(std::string const& identifier);
         Configuration& setUnits(std::string const& units);

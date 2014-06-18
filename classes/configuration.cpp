@@ -1139,3 +1139,68 @@ Configuration& Configuration::setId(int const& i){
 int const& Configuration::getId() const{
     return m_id;
 }
+
+bool Configuration::validateConfig(){
+    bool valid = true;
+
+    if(m_units != "Metric" && m_units != "Imperial") valid = false;
+    if(m_identifier == "" || QString::fromStdString(m_identifier).count(" ") == m_identifier.length()) valid = false;
+    if(m_frequency != "AC" && m_frequency != "DC") valid = false;
+
+    int validEner = 0;
+
+    for(auto& ener : m_energizations){
+        if(ener.first > 0 && ener.second->getIdentification() != "GND") validEner++;
+    }
+
+    if(validEner <= 0) valid = false;
+
+    if(m_profiles.size() != 1) valid = false;
+
+    int validComp = 0;
+
+    if(m_computations.ELECTRIC) validComp++;
+    if(m_computations.GPR) validComp++;
+    if(m_computations.GRADIENT_SCALAR) validComp++;
+    if(m_computations.MAGNETIC) validComp++;
+    if(m_computations.POTENTIAL_SCALAR) validComp++;
+    if(m_computations.VECTOR_POTENTIAL) validComp++;
+
+    if(validComp <= 0) valid = false;
+
+    for(auto& cond : m_conductors){
+        if(cond.first <= 0) valid = false;
+        if(cond.second->getRadius() <= 0) valid = false;
+        if(cond.second->getStartCoords().x < -9999 || cond.second->getStartCoords().x > 9999) valid = false;
+        if(cond.second->getStartCoords().y < -9999 || cond.second->getStartCoords().y > 9999) valid = false;
+        if(cond.second->getStartCoords().z < -9999 || cond.second->getStartCoords().z > 9999) valid = false;
+        if(cond.second->getEndCoords().x < -9999 || cond.second->getEndCoords().x > 9999) valid = false;
+        if(cond.second->getEndCoords().y < -9999 || cond.second->getEndCoords().y > 9999) valid = false;
+        if(cond.second->getEndCoords().z < -9999 || cond.second->getEndCoords().z > 9999) valid = false;
+        if(m_leadTypes.count(cond.second->getLeadType()->getId()) == 0) valid = false;
+        if(m_coatings.count(cond.second->getCoating()->getId()) == 0) valid = false;
+        if(m_energizations.count(cond.second->getEnergization()->getId()) == 0) valid = false;
+        if(m_energizations.at(cond.second->getEnergization()->getId())->getFrequency() != m_frequency) valid = false;
+        if(m_conductorTypes.count(cond.second->getConductorType()->getId()) == 0) valid = false;
+        if(m_cableTypes.count(cond.second->getCableType()->getId()) == 0) valid = false;
+    }
+
+    for(auto& cond : m_buildingConductors){
+        if(cond.first <= 0) valid = false;
+        if(cond.second->getRadius() <= 0) valid = false;
+        if(cond.second->getStartCoords().x < -9999 || cond.second->getStartCoords().x > 9999) valid = false;
+        if(cond.second->getStartCoords().y < -9999 || cond.second->getStartCoords().y > 9999) valid = false;
+        if(cond.second->getStartCoords().z < -9999 || cond.second->getStartCoords().z > 9999) valid = false;
+        if(cond.second->getEndCoords().x < -9999 || cond.second->getEndCoords().x > 9999) valid = false;
+        if(cond.second->getEndCoords().y < -9999 || cond.second->getEndCoords().y > 9999) valid = false;
+        if(cond.second->getEndCoords().z < -9999 || cond.second->getEndCoords().z > 9999) valid = false;
+        if(m_leadTypes.count(cond.second->getLeadType()->getId()) == 0) valid = false;
+        if(m_coatings.count(cond.second->getCoating()->getId()) == 0) valid = false;
+        if(m_energizations.count(cond.second->getEnergization()->getId()) == 0) valid = false;
+        if(m_energizations.at(cond.second->getEnergization()->getId())->getFrequency() != m_frequency) valid = false;
+        if(m_conductorTypes.count(cond.second->getConductorType()->getId()) == 0) valid = false;
+        if(m_cableTypes.count(cond.second->getCableType()->getId()) == 0) valid = false;
+    }
+
+    return valid;
+}

@@ -89,7 +89,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_settings">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -239,19 +239,11 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page_conductors">
-      <widget class="QLabel" name="label_17">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>330</y>
-         <width>46</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>aaaaa</string>
-       </property>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout_19">
+       <item row="0" column="0">
+        <widget class="QCustomPlot" name="cond_plot" native="true"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="page_buildings">
       <widget class="QLabel" name="label_18">
@@ -1249,6 +1241,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>lib/qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

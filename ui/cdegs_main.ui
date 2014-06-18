@@ -152,6 +152,7 @@
     <addaction name="actionNew_Config"/>
     <addaction name="actionOpen_Config"/>
     <addaction name="actionSave_Config"/>
+    <addaction name="actionSave_All_Configs"/>
     <addaction name="actionClose_Config"/>
    </widget>
    <widget class="QMenu" name="menuExport">
@@ -180,17 +181,50 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew_Project"/>
+   <addaction name="actionOpen_Project"/>
+   <addaction name="actionSave_Project"/>
+   <addaction name="actionSave_Project_as"/>
+   <addaction name="actionClose_Project"/>
+   <addaction name="separator"/>
+   <addaction name="actionNew_Config"/>
+   <addaction name="actionOpen_Config"/>
+   <addaction name="actionSave_Config"/>
+   <addaction name="actionSave_All_Configs"/>
+   <addaction name="actionClose_Config"/>
+   <addaction name="separator"/>
+   <addaction name="actionExport_Config"/>
+   <addaction name="actionExport_Config_as"/>
+  </widget>
   <action name="actionAbout">
    <property name="text">
     <string>About..</string>
    </property>
   </action>
   <action name="actionNew_Project">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-new-project.png</normaloff>:/res/res/mini-new-project.png</iconset>
+   </property>
    <property name="text">
     <string>New Project</string>
    </property>
   </action>
   <action name="actionOpen_Project">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-open-project.png</normaloff>:/res/res/mini-open-project.png</iconset>
+   </property>
    <property name="text">
     <string>Open Project..</string>
    </property>
@@ -199,21 +233,39 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-save-project.png</normaloff>:/res/res/mini-save-project.png</iconset>
+   </property>
    <property name="text">
     <string>Save Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSave_Project_as">
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-save-as-project.png</normaloff>:/res/res/mini-save-as-project.png</iconset>
+   </property>
    <property name="text">
     <string>Save Project as..</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionClose_Project">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-close-project.png</normaloff>:/res/res/mini-close-project.png</iconset>
    </property>
    <property name="text">
     <string>Close Project</string>
@@ -228,6 +280,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-new-config.png</normaloff>:/res/res/mini-new-config.png</iconset>
+   </property>
    <property name="text">
     <string>New Config</string>
    </property>
@@ -235,6 +291,10 @@
   <action name="actionOpen_Config">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-open-config.png</normaloff>:/res/res/mini-open-config.png</iconset>
    </property>
    <property name="text">
     <string>Open Config..</string>
@@ -244,6 +304,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-save-config.png</normaloff>:/res/res/mini-save-config.png</iconset>
+   </property>
    <property name="text">
     <string>Save Config</string>
    </property>
@@ -251,6 +315,10 @@
   <action name="actionClose_Config">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-close-config.png</normaloff>:/res/res/mini-close-config.png</iconset>
    </property>
    <property name="text">
     <string>Close Config</string>
@@ -260,6 +328,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-export.png</normaloff>:/res/res/mini-export.png</iconset>
+   </property>
    <property name="text">
     <string>Export Config</string>
    </property>
@@ -267,6 +339,10 @@
   <action name="actionExport_Config_as">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-export-as.png</normaloff>:/res/res/mini-export-as.png</iconset>
    </property>
    <property name="text">
     <string>Export Config as..</string>
@@ -277,8 +353,22 @@
     <string>Stylesheet..</string>
    </property>
   </action>
+  <action name="actionSave_All_Configs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-save-all-configs.png</normaloff>:/res/res/mini-save-all-configs.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save All Configs</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>

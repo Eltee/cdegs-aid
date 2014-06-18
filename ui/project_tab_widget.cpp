@@ -56,7 +56,6 @@ project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, std::sha
     project = p;
     connectSlots();
     defParent = dp;
-    m_projectModified = project->isModified();
     project_widget* tab = new project_widget(this, this, project, projectOrig, "Project Settings");
 
     QObject::connect(defParent, SIGNAL(saveOccurred()),
@@ -124,13 +123,16 @@ std::shared_ptr<Configuration> project_tab_widget::getConfig(){
  \fn project_tab_widget::refresh
 */
 void project_tab_widget::refresh(){
-    defParent->refresh();
-    if(project->isModified() != m_projectModified){
-        m_projectModified = project->isModified();
+    m_name = QString::fromStdString(project->getFileName());
+    if(project->isModified()){
         QString newName = m_name;
-        if(project->isModified()) newName.append("*");
+        newName.append("*");
         defParent->changeTabName(this, newName);
     }
+    else{
+        defParent->changeTabName(this, m_name);
+    }
+    defParent->refresh();
 }
 
 /*!
@@ -206,4 +208,23 @@ void project_tab_widget::modifyProject(){
 
 void project_tab_widget::saveConfig(){
     defParent->saveConfig();
+}
+
+void project_tab_widget::saveAllConfigs(){
+    std::shared_ptr<Configuration> config;
+
+    for(int i = 1; i < ui->tabProject->count(); i++){
+        config = dynamic_cast<configuration_widget*>(ui->tabProject->widget(i))->getConfig();
+
+        if(project->getConfigurations().count(config->getId()) > 0){
+            project->replaceConfiguration(config);
+        }
+        else{
+            project->addConfiguration(config, true);
+        }
+
+        config->setModified(false);
+
+        refresh();
+    }
 }

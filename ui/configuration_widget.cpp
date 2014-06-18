@@ -54,10 +54,84 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     configuration.reset(new Configuration(config.get()));
     ui->setupUi(this);
     defParent = dp;
-    configModified = configuration->isModified();
     populateFields();
     ui->stackedWidget_config->setCurrentIndex(0);
     connectSlots();
+    initPlot();
+}
+
+void configuration_widget::initPlot(){
+    ui->cond_plot->plotLayout()->insertRow(0);
+    QCPPlotTitle* title = new QCPPlotTitle(ui->cond_plot, "Position of Conductors");
+    title->setTextColor(Qt::white);
+    title->setAntialiased(true);
+    ui->cond_plot->plotLayout()->addElement(0, 0, title);
+    ui->cond_plot->legend->setVisible(false);
+    ui->cond_plot->legend->setAntialiased(true);
+
+    ui->cond_plot->addGraph();
+
+    ui->cond_plot->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->cond_plot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, QColor(0, 102, 255), 10));
+    ui->cond_plot->graph(0)->setPen(QPen(QColor(120, 120, 120), 2));
+    ui->cond_plot->graph(0)->setName("Conductors");
+    ui->cond_plot->graph(0)->setAntialiased(true);
+
+    ui->cond_plot->xAxis->setBasePen(QPen(Qt::white, 1));
+    ui->cond_plot->yAxis->setBasePen(QPen(Qt::white, 1));
+    ui->cond_plot->xAxis->setTickPen(QPen(Qt::white, 1));
+    ui->cond_plot->yAxis->setTickPen(QPen(Qt::white, 1));
+    ui->cond_plot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+    ui->cond_plot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+    ui->cond_plot->xAxis->setTickLabelColor(Qt::white);
+    ui->cond_plot->yAxis->setTickLabelColor(Qt::white);
+    ui->cond_plot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::SolidLine));
+    ui->cond_plot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::SolidLine));
+    ui->cond_plot->xAxis->grid()->setSubGridVisible(false);
+    ui->cond_plot->yAxis->grid()->setSubGridVisible(false);
+    ui->cond_plot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->cond_plot->xAxis->grid()->setAntialiased(true);
+    ui->cond_plot->yAxis->grid()->setAntialiased(true);
+    ui->cond_plot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->cond_plot->xAxis->setUpperEnding(QCPLineEnding::esSkewedBar);
+    ui->cond_plot->yAxis->setUpperEnding(QCPLineEnding::esSkewedBar);
+    QLinearGradient plotGradient;
+    plotGradient.setStart(0, 0);
+    plotGradient.setFinalStop(0, 350);
+    plotGradient.setColorAt(0, QColor(80, 80, 80));
+    plotGradient.setColorAt(1, QColor(50, 50, 50));
+    ui->cond_plot->setBackground(plotGradient);
+    QLinearGradient axisRectGradient;
+    axisRectGradient.setStart(0, 0);
+    axisRectGradient.setFinalStop(0, 350);
+    axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+    axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+    ui->cond_plot->axisRect()->setBackground(axisRectGradient);
+    ui->cond_plot->axisRect()->setAntialiased(true);
+
+    ui->cond_plot->xAxis->setLabel("Y - Distance from Line Center (m)");
+    ui->cond_plot->xAxis->setLabelColor(Qt::white);
+    ui->cond_plot->xAxis->setAntialiased(true);
+    ui->cond_plot->xAxis->setTicks(true);
+    ui->cond_plot->xAxis->setAutoTicks(true);
+    ui->cond_plot->xAxis->setRange(-10, 10);
+    ui->cond_plot->xAxis->setAutoTickStep(false);
+    ui->cond_plot->xAxis->setTickStep(1);
+    ui->cond_plot->xAxis->setTickLength(0, 2);
+    ui->cond_plot->xAxis->setSubTickCount(1);
+    ui->cond_plot->xAxis->setSubTickLength(0,1);
+
+    ui->cond_plot->yAxis->setLabel("Z - Height (m)");
+    ui->cond_plot->yAxis->setLabelColor(Qt::white);
+    ui->cond_plot->yAxis->setAntialiased(true);
+    ui->cond_plot->yAxis->setTicks(true);
+    ui->cond_plot->yAxis->setAutoTicks(true);
+    ui->cond_plot->yAxis->setRange(0, 20);
+    ui->cond_plot->yAxis->setAutoTickStep(false);
+    ui->cond_plot->yAxis->setTickStep(1);
+    ui->cond_plot->yAxis->setTickLength(0, 2);
+    ui->cond_plot->yAxis->setSubTickCount(1);
+    ui->cond_plot->yAxis->setSubTickLength(0,1);
 }
 
 void configuration_widget::connectSlots(){
@@ -473,7 +547,6 @@ configuration_widget::~configuration_widget()
  \fn configuration_widget::refresh
 */
 void configuration_widget::refresh(){
-    defParent->refresh();
     disconnectSlots();
     refreshConfSettings();
     refreshLType();
@@ -482,14 +555,18 @@ void configuration_widget::refresh(){
     refreshCType();
     refreshCbType();
     refreshProfile();
+    m_name = QString::fromStdString(configuration->getIdentifier());
     connectSlots();
-    if(configuration->isModified() != configModified){
-        configModified = configuration->isModified();
+    if(configuration->isModified()){
         QString newName = m_name;
-        if(configuration->isModified()) newName.append("*");
+        newName.append("*");
         defParent->modifyProject();
         defParent->changeTabName(this, newName);
     }
+    else{
+        defParent->changeTabName(this, m_name);
+    }
+    defParent->refresh();
 }
 
 //COMBOBOX CONNECTIONS
@@ -502,6 +579,10 @@ void configuration_widget::populateFields(){
     populateCbTypes();
     populateComputations();
     populateProfiles();
+}
+
+void configuration_widget::populateConductors(){
+
 }
 
 void configuration_widget::populateLTypes(){
@@ -620,6 +701,10 @@ void configuration_widget::fetchProfile(QString id){
         pro.reset(new profile(configuration->getProfiles().at(index).get()));
         refresh();
     }
+}
+
+void configuration_widget::refreshConductors(){
+
 }
 
 void configuration_widget::refreshLType(){
@@ -785,7 +870,6 @@ void configuration_widget::refreshProfile(){
 //CONF CONNECTIONS
 void configuration_widget::changeConfIdentifier(QString ident){
     configuration->setIdentifier(ident.toStdString());
-    m_name = ident;
     configuration->setModified(true);
     refresh();
 }

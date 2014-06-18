@@ -67,7 +67,9 @@ class configuration_widget : public QWidget
         std::shared_ptr<Configuration> getConfig();
         QString const& getName() const;
         ~configuration_widget();
+        void initPlot();
         void populateFields();
+        void populateConductors();
         void populateLTypes();
         void populateCoatings();
         void populateEnergizations();
@@ -78,6 +80,7 @@ class configuration_widget : public QWidget
         void connectSlots();
         void disconnectSlots();
         void refreshConfSettings();
+        void refreshConductors();
         void refreshLType();
         void refreshCoating();
         void refreshEnergization();
@@ -165,7 +168,6 @@ class configuration_widget : public QWidget
         std::shared_ptr<Configuration> configuration;
         project_tab_widget* defParent;
         QString m_name;
-        bool configModified;
         std::shared_ptr<LeadType> lType;
         std::shared_ptr<Coating> coat;
         std::shared_ptr<Energization> ener;

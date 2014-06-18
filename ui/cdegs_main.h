@@ -88,6 +88,7 @@ class cdegs_main : public QMainWindow
     public slots:
         void refresh();
         void saveConfig();
+        void saveAllConfigs();
 
     private slots:
         void newProject();

@@ -1,7 +1,16 @@
 <RCC>
     <qresource prefix="/res">
-        <file>res/icon_nouveau.png</file>
-        <file>res/icon_ouvrir.png</file>
-        <file>res/icon_quit.png</file>
+        <file>res/mini-close-config.png</file>
+        <file>res/mini-close-project.png</file>
+        <file>res/mini-export.png</file>
+        <file>res/mini-export-as.png</file>
+        <file>res/mini-new-config.png</file>
+        <file>res/mini-new-project.png</file>
+        <file>res/mini-open-config.png</file>
+        <file>res/mini-open-project.png</file>
+        <file>res/mini-save-as-project.png</file>
+        <file>res/mini-save-config.png</file>
+        <file>res/mini-save-project.png</file>
+        <file>res/mini-save-all-configs.png</file>
     </qresource>
 </RCC>

@@ -55,7 +55,6 @@ project_widget::project_widget(QWidget *parent, project_tab_widget* dp, std::sha
     ui->setupUi(this);
     m_name = name;
     defParent = dp;
-    m_projectModified = project->isModified();
     refresh();
     connectSlots();
 }
@@ -125,7 +124,6 @@ void project_widget::disconnectSlots(){
 */
 void project_widget::refresh(){
     disconnectSlots();
-    defParent->refresh();
     if(project){
         std::string filePath = project->getAbsPath() + "/" + project->getFileName();
         ui->lineEdit_pAuthor->setText(QString::fromStdString(project->getMetadata().author));
@@ -133,14 +131,17 @@ void project_widget::refresh(){
         ui->lineEdit_pPath->setText(QString::fromStdString(filePath));
         ui->dateEdit_pDate->setDate(project->getMetadata().date);
         ui->textEdit_pDesc->setDocument(project->getMetadata().description.clone());
-        if(project->isModified() != m_projectModified){
-            m_projectModified = project->isModified();
+        if(project->isModified()){
             QString newName = m_name;
-            if(project->isModified()) newName.append("*");
+            newName.append("*");
             defParent->changeTabName(this, newName);
+        }
+        else{
+            defParent->changeTabName(this, m_name);
         }
     }
     connectSlots();
+    defParent->refresh();
 }
 
 void project_widget::changeDate(QDate date){

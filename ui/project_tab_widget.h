@@ -78,6 +78,7 @@ class project_tab_widget : public QWidget
         void modifyProject();
         void saveConfig();
         void closeConfig();
+        void saveAllConfigs();
 
     public slots:
         void refresh();
@@ -91,7 +92,6 @@ class project_tab_widget : public QWidget
         std::shared_ptr<Project> project, projectOrig;
         cdegs_main* defParent;
         QString m_name;
-        bool m_projectModified;
 };
 
 #endif // PROJECT_TAB_WIDGET_H

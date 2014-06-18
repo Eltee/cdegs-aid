@@ -105,6 +105,15 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionClose_Config, SIGNAL(triggered()),
                      this, SLOT(closeConfig()));
+
+    QObject::connect(ui->actionExport_Config, SIGNAL(triggered()),
+                     this, SLOT(exportConfig()));
+
+    QObject::connect(ui->actionExport_Config_as, SIGNAL(triggered()),
+                     this, SLOT(exportConfigAs()));
+
+    QObject::connect(ui->actionSave_All_Configs, SIGNAL(triggered()),
+                     this, SLOT(saveAllConfigs()));
 }
 
 /*!
@@ -184,12 +193,14 @@ void cdegs_main::updateActions(){
     if(config){
         ui->actionClose_Config->setEnabled(true);
         ui->actionSave_Config->setEnabled(true);
+        ui->actionSave_All_Configs->setEnabled(true);
         ui->actionExport_Config->setEnabled(true);
         ui->actionExport_Config_as->setEnabled(true);
     }
     else{
         ui->actionClose_Config->setEnabled(false);
         ui->actionSave_Config->setEnabled(false);
+        ui->actionSave_All_Configs->setEnabled(false);
         ui->actionExport_Config->setEnabled(false);
         ui->actionExport_Config_as->setEnabled(false);
     }
@@ -247,25 +258,27 @@ void cdegs_main::newProject(){
 void cdegs_main::openProject(){
     QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
 
-    bool alreadyPresent = false;
+    if(!filePath.isNull()){
+        bool alreadyPresent = false;
 
-    for(int i = 0; i < ui->tabProjects->count(); i++){
-        if(dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getAbsPath() + "/" + dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getFileName() == filePath.toStdString()) alreadyPresent = true;
-    }
+        for(int i = 0; i < ui->tabProjects->count(); i++){
+            if(dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getAbsPath() + "/" + dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(i))->getProject()->getFileName() == filePath.toStdString()) alreadyPresent = true;
+        }
 
-    if(!alreadyPresent){
-        project.reset(AppUtils::getInstance().loadProject(filePath.toStdWString().c_str()));
+        if(!alreadyPresent){
+            project.reset(AppUtils::getInstance().loadProject(filePath.toStdWString().c_str()));
 
-        project_tab_widget* tab = new project_tab_widget(this, this, project, QString::fromStdString(project->getFileName()));
+            project_tab_widget* tab = new project_tab_widget(this, this, project, QString::fromStdString(project->getFileName()));
 
-        QObject::connect(this, SIGNAL(saveOccurred()),
-                         tab, SLOT(refresh()));
+            QObject::connect(this, SIGNAL(saveOccurred()),
+                             tab, SLOT(refresh()));
 
-        int index = ui->tabProjects->addTab(tab, tab->getName());
+            int index = ui->tabProjects->addTab(tab, tab->getName());
 
-        ui->tabProjects->setCurrentIndex(index);
+            ui->tabProjects->setCurrentIndex(index);
 
-        refresh();
+            refresh();
+        }
     }
 }
 
@@ -276,6 +289,7 @@ void cdegs_main::openProject(){
 */
 void cdegs_main::saveProject(){
     if(project){
+        saveAllConfigs();
         project->setModified(false);
         AppUtils::getInstance().saveProject(*project.get());
         emit saveOccurred();
@@ -291,13 +305,16 @@ void cdegs_main::saveProject(){
 */
 void cdegs_main::saveProjectAs(){
     if(project){
+        if(config) saveConfig();
         QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS-Aid Project File (*.cdp)");
-        QDir d = QFileInfo(filePath).absoluteDir();
-        project->setAbsPath(d.absolutePath().toStdString()).setRelPath(d.path().toStdString());
-        project->setFileName(QFileInfo(filePath).fileName().toStdString());
-        project->setModified(false);
-        AppUtils::getInstance().saveProject(*project.get());
-        emit saveOccurred();
+        if(!filePath.isNull()){
+            QDir d = QFileInfo(filePath).absoluteDir();
+            project->setAbsPath(d.absolutePath().toStdString()).setRelPath(d.path().toStdString());
+            project->setFileName(QFileInfo(filePath).fileName().toStdString());
+            project->setModified(false);
+            AppUtils::getInstance().saveProject(*project.get());
+            emit saveOccurred();
+        }
     }
 
     refresh();
@@ -404,6 +421,12 @@ void cdegs_main::saveConfig(){
     refresh();
 }
 
+void cdegs_main::saveAllConfigs(){
+    if(project && config){
+        dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->saveAllConfigs();
+    }
+}
+
 /*!
  \brief
 
@@ -421,7 +444,13 @@ void cdegs_main::closeConfig(){
  \fn cdegs_main::exportConfig
 */
 void cdegs_main::exportConfig(){
-
+    if(config->validateConfig()){
+        AppUtils::getInstance().exportConfiguration(config.get(), project->getAbsPath() + "/hi_" + config->getIdentifier() + ".f05");
+        QMessageBox::information(this, "Success", "Configuration has been exported.");
+    }
+    else{
+        QMessageBox::critical(this, "Error", "Configuration is invalid and cannot be exported.");
+    }
 }
 
 /*!
@@ -430,7 +459,17 @@ void cdegs_main::exportConfig(){
  \fn cdegs_main::exportConfigAs
 */
 void cdegs_main::exportConfigAs(){
-
+    if(config->validateConfig()){
+        QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS Hi-Freq SESCAD Configuration File (*.f05)");
+        if(!filePath.isNull()){
+            if(!filePath.right(filePath.length() - filePath.lastIndexOf("/")).contains("hi_")) filePath.insert(filePath.lastIndexOf("/")+1, "hi_");
+            AppUtils::getInstance().exportConfiguration(config.get(), filePath.toStdString());
+            QMessageBox::information(this, "Success", "Configuration has been exported.");
+        }
+    }
+    else{
+        QMessageBox::critical(this, "Error", "Configuration is invalid and cannot be exported.");
+    }
 }
 
 /*!
