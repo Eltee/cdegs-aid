@@ -69,7 +69,6 @@ class configuration_widget : public QWidget
         ~configuration_widget();
         void initPlot();
         void populateFields();
-        void populateConductors();
         void populateLTypes();
         void populateCoatings();
         void populateEnergizations();
@@ -77,16 +76,20 @@ class configuration_widget : public QWidget
         void populateCbTypes();
         void populateComputations();
         void populateProfiles();
+        void populateConductors();
+        void populateBuildings();
         void connectSlots();
         void disconnectSlots();
         void refreshConfSettings();
-        void refreshConductors();
         void refreshLType();
         void refreshCoating();
         void refreshEnergization();
         void refreshCType();
         void refreshCbType();
         void refreshProfile();
+        void refreshConductor();
+        void refreshBuilding();
+        void refreshPlot();
 
     public slots:
         void refresh();
@@ -99,12 +102,19 @@ class configuration_widget : public QWidget
         void fetchCType(QString id);
         void fetchCbType(QString id);
         void fetchProfile(QString id);
+        void fetchConductor(QString id);
+        void fetchBuilding(QString id);
 
         //CONF CONNECTIONS
         void changeConfIdentifier(QString ident);
         void changeConfUnits(QString units);
         void changeConfFrequency(QString frequency);
         void saveConfig();
+
+        //COND CONNECTIONS
+
+
+        //BUILD CONNECTIONS
 
         //LTYPE CONNECTIONS
         void changeLTypeName(QString text);
@@ -174,6 +184,7 @@ class configuration_widget : public QWidget
         std::shared_ptr<ConductorType> cType;
         std::shared_ptr<CableType> cbType;
         std::shared_ptr<profile> pro;
+        std::shared_ptr<Conductor> cond;
 };
 
 #endif // CONFIGURATION_WIDGET_H

@@ -114,7 +114,7 @@ void configuration_widget::initPlot(){
     ui->cond_plot->xAxis->setAntialiased(true);
     ui->cond_plot->xAxis->setTicks(true);
     ui->cond_plot->xAxis->setAutoTicks(true);
-    ui->cond_plot->xAxis->setRange(-10, 10);
+    ui->cond_plot->xAxis->setRange(-5, 5);
     ui->cond_plot->xAxis->setAutoTickStep(false);
     ui->cond_plot->xAxis->setTickStep(1);
     ui->cond_plot->xAxis->setTickLength(0, 2);
@@ -126,12 +126,14 @@ void configuration_widget::initPlot(){
     ui->cond_plot->yAxis->setAntialiased(true);
     ui->cond_plot->yAxis->setTicks(true);
     ui->cond_plot->yAxis->setAutoTicks(true);
-    ui->cond_plot->yAxis->setRange(0, 20);
+    ui->cond_plot->yAxis->setRange(0, 10);
     ui->cond_plot->yAxis->setAutoTickStep(false);
     ui->cond_plot->yAxis->setTickStep(1);
     ui->cond_plot->yAxis->setTickLength(0, 2);
     ui->cond_plot->yAxis->setSubTickCount(1);
     ui->cond_plot->yAxis->setSubTickLength(0,1);
+
+    ui->cond_plot->rescaleAxes();
 }
 
 void configuration_widget::connectSlots(){
@@ -157,6 +159,14 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->comboBox_profiles_chooser, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(fetchProfile(QString)));
+
+    QObject::connect(ui->comboBox_conductors, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(fetchConductor(QString)));
+
+    //COND CONNECTIONS
+
+
+    //BUILD CONNECTIONS
 
     //CONF CONNECTIONS
 
@@ -345,6 +355,9 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->comboBox_profiles_chooser, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(fetchProfile(QString)));
+
+    QObject::disconnect(ui->comboBox_conductors, SIGNAL(currentIndexChanged(QString)),
+                     this, SLOT(fetchConductor(QString)));
 
     //CONF CONNECTIONS
 
@@ -555,6 +568,7 @@ void configuration_widget::refresh(){
     refreshCType();
     refreshCbType();
     refreshProfile();
+    refreshConductor();
     m_name = QString::fromStdString(configuration->getIdentifier());
     connectSlots();
     if(configuration->isModified()){
@@ -579,10 +593,7 @@ void configuration_widget::populateFields(){
     populateCbTypes();
     populateComputations();
     populateProfiles();
-}
-
-void configuration_widget::populateConductors(){
-
+    populateConductors();
 }
 
 void configuration_widget::populateLTypes(){
@@ -701,10 +712,6 @@ void configuration_widget::fetchProfile(QString id){
         pro.reset(new profile(configuration->getProfiles().at(index).get()));
         refresh();
     }
-}
-
-void configuration_widget::refreshConductors(){
-
 }
 
 void configuration_widget::refreshLType(){
@@ -865,6 +872,82 @@ void configuration_widget::refreshProfile(){
         ui->doubleSpinBox_profile_step_y->setDisabled(true);
         ui->doubleSpinBox_profile_step_z->setDisabled(true);
     }
+}
+
+void configuration_widget::populateConductors(){
+    ui->comboBox_conductors->clear();
+    for(int i = 1; i <= configuration->getConductors().size(); i++){
+        QString text = QString::number(i) + " - Conductor(X:" + QString::number(configuration->getConductors().at(i)->getStartCoords().x) + ", Y:" + QString::number(configuration->getConductors().at(i)->getStartCoords().y) + ", Z:" + QString::number(configuration->getConductors().at(i)->getStartCoords().z) + ")";
+        ui->comboBox_conductors->addItem(text);
+    }
+    fetchConductor(ui->comboBox_conductors->currentText());
+}
+
+void configuration_widget::fetchConductor(QString id){
+    if(!id.isEmpty()){
+        id.truncate(id.indexOf(" "));
+        int index = id.toInt();
+        cond.reset(new Conductor(configuration->getConductors().at(index)));
+        refresh();
+    }
+}
+
+void configuration_widget::refreshConductor(){
+    if(cond){
+        ui->pushButton_cond_remove->setEnabled(true);
+        ui->comboBox_cond_cbType->setEnabled(true);
+        ui->comboBox_cond_coating->setEnabled(true);
+        ui->comboBox_cond_cType->setEnabled(true);
+        ui->comboBox_cond_energization->setEnabled(true);
+        ui->comboBox_cond_lType->setEnabled(true);
+        ui->doubleSpinBox_cond_endX->setEnabled(true);
+        ui->doubleSpinBox_cond_endY->setEnabled(true);
+        ui->doubleSpinBox_cond_endZ->setEnabled(true);
+        ui->doubleSpinBox_cond_radius->setEnabled(true);
+        ui->doubleSpinBox_cond_startX->setEnabled(true);
+        ui->doubleSpinBox_cond_startY->setEnabled(true);
+        ui->doubleSpinBox_cond_startZ->setEnabled(true);
+        ui->doubleSpinBox_cond_endX->setValue(cond->getEndCoords().x);
+        ui->doubleSpinBox_cond_endY->setValue(cond->getEndCoords().y);
+        ui->doubleSpinBox_cond_endZ->setValue(cond->getEndCoords().z);
+        ui->doubleSpinBox_cond_startX->setValue(cond->getStartCoords().x);
+        ui->doubleSpinBox_cond_startY->setValue(cond->getStartCoords().y);
+        ui->doubleSpinBox_cond_startZ->setValue(cond->getStartCoords().z);
+        ui->doubleSpinBox_cond_radius->setValue(cond->getRadius());
+        ui->cond_plot->setEnabled(true);
+    }
+    else{
+        ui->pushButton_cond_remove->setEnabled(false);
+        ui->comboBox_cond_cbType->setEnabled(false);
+        ui->comboBox_cond_coating->setEnabled(false);
+        ui->comboBox_cond_cType->setEnabled(false);
+        ui->comboBox_cond_energization->setEnabled(false);
+        ui->comboBox_cond_lType->setEnabled(false);
+        ui->doubleSpinBox_cond_endX->setEnabled(false);
+        ui->doubleSpinBox_cond_endY->setEnabled(false);
+        ui->doubleSpinBox_cond_endZ->setEnabled(false);
+        ui->doubleSpinBox_cond_radius->setEnabled(false);
+        ui->doubleSpinBox_cond_startX->setEnabled(false);
+        ui->doubleSpinBox_cond_startY->setEnabled(false);
+        ui->doubleSpinBox_cond_startZ->setEnabled(false);
+        ui->cond_plot->setEnabled(false);
+    }
+}
+
+void configuration_widget::populateBuildings(){
+
+}
+
+void configuration_widget::fetchBuilding(QString id){
+
+}
+
+void configuration_widget::refreshBuilding(){
+
+}
+
+void configuration_widget::refreshPlot(){
+
 }
 
 //CONF CONNECTIONS
