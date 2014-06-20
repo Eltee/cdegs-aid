@@ -112,7 +112,8 @@ class configuration_widget : public QWidget
         void saveConfig();
 
         //COND CONNECTIONS
-
+        void newCond();
+        void removeCond();
 
         //BUILD CONNECTIONS
 

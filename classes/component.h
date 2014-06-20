@@ -51,22 +51,19 @@ class Component
 {
     public:
         Component();
-        Component(int const& id, std::string const& name, bool const& locked, bool const& saveable);
+        Component(std::string const& name, bool const& locked, bool const& saveable);
         ~Component();
     //Getters start-----------------------------------------------
-        int const& getId() const;
         std::string const& getName() const;
         bool const& isLocked() const;
         bool const& isSaveable() const;
     //Getters end-------------------------------------------------
     //Setters start-----------------------------------------------
-        Component& setId(int const& id);
         Component& setName(std::string const& name);
         Component& setLocked(bool const& locked);
         Component& setSaveable(bool const& saveable);
     //Setters end-------------------------------------------------
     protected:
-        int m_id; /*!< \brief L'identificateur numérique, normallement utilisée pour l'ordre dans le fichier de simulation */
         std::string m_name; /*!< \brief Le nom de la composante */
         bool m_locked; /*!< \brief Booléen qui permet l'édition/la suppression de la composante ou pas */
         bool m_saveable; /*!< \brief Booléen qui permet la sauvegarde de la composante ou pas */

@@ -41,7 +41,6 @@
  \fn Component::Component
 */
 Component::Component(){
-    m_id = 0;
     m_name = "default";
     m_locked = false;
     m_saveable = false;
@@ -56,8 +55,7 @@ Component::Component(){
  \param locked Barré(?)
  \param saveable Sauvegardable(?)
 */
-Component::Component(int const& id, std::string const& name, bool const& locked, bool const& saveable){
-    m_id = id;
+Component::Component(std::string const& name, bool const& locked, bool const& saveable){
     m_name = name;
     m_locked = locked;
     m_saveable = saveable;
@@ -69,16 +67,6 @@ Component::Component(int const& id, std::string const& name, bool const& locked,
  \fn Component::~Component
 */
 Component::~Component(){}
-
-/*!
- \brief Fonction qui retourne l'identificateur.
-
- \fn Component::getId
- \return L'identificateur
-*/
-const int& Component::getId() const{
-    return m_id;
-}
 
 /*!
  \brief Fonction qui retourne le nom.
@@ -108,18 +96,6 @@ bool const& Component::isLocked() const{
 */
 bool const& Component::isSaveable() const{
     return m_saveable;
-}
-
-/*!
- \brief Fonction permetttant de changer l'identificateur.
-
- \fn Component::setId
- \param id Le nouvel identificateur
- \return L'objet lui-même (chaîne d'appels)
-*/
-Component& Component::setId(const int& id){
-    m_id = id;
-    return *this;
 }
 
 /*!
