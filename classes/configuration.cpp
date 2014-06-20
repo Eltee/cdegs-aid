@@ -251,31 +251,78 @@ Configuration& Configuration::addLeadType(std::shared_ptr<LeadType> leadType){
 int Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
     int errorCode = 0;
 
-    if(!m_conductors.empty() || !m_buildingConductors.empty()){
-        for(auto& cond : m_conductors){
-            if(cond.second->getLeadType()->getId() == leadType->getId()) errorCode = 1;
-        }
+    std::vector<std::shared_ptr<LeadType> >::iterator it = m_leadTypes.begin();
+    bool found = false;
 
-        for(auto& cond : m_buildingConductors){
-            if(cond.second->getLeadType()->getId() == leadType->getId()) errorCode = 1;
+    while(!found || it != m_leadTypes.end()){
+        if(*it == leadType){
+            found = true;
         }
+        else{
+            it++;
+        }
+    }
 
-        if(errorCode == 0){
-            if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
+    if(found){
+        if(!m_conductors.empty() || !m_buildingConductors.empty()){
+            for(auto& cond : m_conductors){
+                if(cond->getLeadType() == leadType) errorCode = 1;
+            }
+
+            for(auto& cond : m_buildingConductors){
+                if(cond->getLeadType() == leadType) errorCode = 1;
+            }
+
+            if(errorCode == 0) m_leadTypes.erase(it);
+        }
+        else{
+            m_leadTypes.erase(it);
         }
     }
     else{
-        if(m_leadTypes.count(leadType->getId())) m_leadTypes.erase(leadType->getId());
+        errorCode = 2;
     }
 
     return errorCode;
 }
 
+//THIS PIECE IS DANGEROUS. FIX IT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHH
 int Configuration::replaceLeadType(std::shared_ptr<LeadType> leadType){
     int errorCode = 0;
 
-    if(m_leadTypes.count(leadType->getId())) m_leadTypes.at(leadType->getId()) = leadType;
+    std::vector<std::shared_ptr<LeadType> >::iterator it = m_leadTypes.begin();
+    bool found = false;
 
+    //THIS DOESN'T WORK THEY ARE NOT THE SAME
+    while(!found || it != m_leadTypes.end()){
+        if(*it == leadType){
+            found = true;
+        }
+        else{
+            it++;
+        }
+    }
+
+    //SAME GOES HERE, HOW CAN YOU FIND WHICH USED TO BE WHICH JUST GOING BY THIS AAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+    if(found){
+        std::vector<int> condDependencies;
+        std::vector<int> buildCondDependencies;
+
+        if(!m_conductors.empty() || !m_buildingConductors.empty()){
+            for(int i=0; i<m_conductors.size(); i++){
+                if(m_conductors.at(i)->getLeadType())
+            }
+
+            for(int i=0; i<m_buildingConductors.size(); i++){
+
+            }
+        }
+
+        m_leadTypes.erase(it);
+        m_leadTypes.insert(it, leadType);
+    }
+
+    //THIS IS OLD AND DECREPIT, MUCH LIKE MY POSTING
     if(!m_conductors.empty() || !m_buildingConductors.empty()){
         for(auto& cond : m_conductors){
             if(cond.second->getLeadType()->getId() == leadType->getId()){
@@ -686,20 +733,14 @@ Configuration& Configuration::removeProfile(std::shared_ptr<profile> p){
  \param newAdd
  \return Configuration
 */
-Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType, bool const& newAdd){
+Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType){
     bool alreadyPresent=false;
 
-    if(!newAdd){
-        m_cableTypes.emplace(cableType->getId(), cableType);
+    for(auto& cbType : m_cableTypes){
+        if(cbType->getName() == cableType->getName()) alreadyPresent = true;
     }
-    else{
-        if(m_cableTypes.count(cableType->getId())) alreadyPresent = true;
 
-        if(!alreadyPresent){
-            cableType->setId(m_cableTypes.size());
-            m_cableTypes.emplace(cableType->getId(), cableType);
-        }
-    }
+    if(!alreadyPresent) m_cableTypes.push_back(cableType);
 
     return *this;
 }

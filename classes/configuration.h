@@ -104,7 +104,7 @@ class Configuration
         Configuration& setComputations(computations const& comp);
         Configuration& addProfile(std::shared_ptr<profile> p);
         Configuration& removeProfile(std::shared_ptr<profile> p);
-        Configuration& addCableType(std::shared_ptr<CableType> cableType, bool const& newAdd=false);
+        Configuration& addCableType(std::shared_ptr<CableType> cableType);
         int removeCableType(std::shared_ptr<CableType> cableType);
         int replaceCableType(std::shared_ptr<CableType> cableType);
         computations& setComputations();
