@@ -101,6 +101,8 @@ class AppUtils
         void readXML(const pugi::xml_node& toIter, int iteration=0);
 
         std::string uniqueIdGenerator(); //done
+        double componentIdGenerator();
+        void setCurrentProject(std::shared_ptr<Project> project);
 
         void loadStylesheets();
         std::unordered_map<std::string, QString> const& getStyleSheets() const;
@@ -126,6 +128,7 @@ class AppUtils
         AppUtils(AppUtils const&);
         void operator=(AppUtils const&);
         double m_projectId=0;
+        std::shared_ptr<Project> m_currentProject;
         Configuration* m_defaultConfig;
         std::unordered_map<std::string, QString> m_styleSheets;
 };

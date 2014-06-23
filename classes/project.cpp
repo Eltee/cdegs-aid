@@ -179,6 +179,11 @@ bool Project::operator!=(Project const* project){
     return result;
 }
 
+double Project::componentIdGenerator(){
+    m_componentId += 1;
+    return m_componentId;
+}
+
 /*!
  \brief
 

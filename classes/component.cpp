@@ -41,6 +41,7 @@
  \fn Component::Component
 */
 Component::Component(){
+    //m_id = AppUtils::getInstance().componentIdGenerator();
     m_name = "default";
     m_locked = false;
     m_saveable = false;
@@ -56,6 +57,7 @@ Component::Component(){
  \param saveable Sauvegardable(?)
 */
 Component::Component(std::string const& name, bool const& locked, bool const& saveable){
+    //m_id = AppUtils::getInstance().componentIdGenerator();
     m_name = name;
     m_locked = locked;
     m_saveable = saveable;
@@ -67,6 +69,15 @@ Component::Component(std::string const& name, bool const& locked, bool const& sa
  \fn Component::~Component
 */
 Component::~Component(){}
+
+bool const& Component::compare(Component const* c) const{
+    if(m_id == c->getId()) return true;
+    else return false;
+}
+
+double const& Component::getId() const{
+    return m_id;
+}
 
 /*!
  \brief Fonction qui retourne le nom.
@@ -131,6 +142,11 @@ Component& Component::setLocked(bool const& locked){
 */
 Component& Component::setSaveable(bool const& saveable){
     m_saveable = saveable;
+    return *this;
+}
+
+Component& Component::setId(double const& id){
+    m_id = id;
     return *this;
 }
 

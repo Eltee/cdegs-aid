@@ -37,6 +37,7 @@
 #define COMPONENT_H
 
 #include <string>
+//#include "util/apputils.h"
 
 /*!
  \brief Classe mère des composantes.
@@ -53,17 +54,21 @@ class Component
         Component();
         Component(std::string const& name, bool const& locked, bool const& saveable);
         ~Component();
+        bool const& compare(const Component* c) const;
     //Getters start-----------------------------------------------
+        double const& getId() const;
         std::string const& getName() const;
         bool const& isLocked() const;
         bool const& isSaveable() const;
     //Getters end-------------------------------------------------
     //Setters start-----------------------------------------------
+        Component& setId(double const& id);
         Component& setName(std::string const& name);
         Component& setLocked(bool const& locked);
         Component& setSaveable(bool const& saveable);
     //Setters end-------------------------------------------------
     protected:
+        double m_id;
         std::string m_name; /*!< \brief Le nom de la composante */
         bool m_locked; /*!< \brief Booléen qui permet l'édition/la suppression de la composante ou pas */
         bool m_saveable; /*!< \brief Booléen qui permet la sauvegarde de la composante ou pas */

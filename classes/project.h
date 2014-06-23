@@ -68,6 +68,7 @@ class Project
         Project& operator=(Project const* project);
         bool operator==(Project const* project);
         bool operator!=(Project const* project);
+        double componentIdGenerator();
     //Setters start---------------------------------------------------------------
         Project& setAbsPath(std::string const& absPath);
         Project& setRelPath(std::string const& relPath);
@@ -113,6 +114,7 @@ class Project
         project_settings m_projectSettings;
         std::unordered_map<int, std::shared_ptr<Configuration>> m_configurations;
         bool m_modified;
+        double m_componentId = 0;
 };
 
 #endif // PROJECT_H

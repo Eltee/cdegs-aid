@@ -1085,6 +1085,24 @@ std::string AppUtils::uniqueIdGenerator(){
     return result;
 }
 
+double AppUtils::componentIdGenerator(){
+    if(m_currentProject){
+        return m_currentProject->componentIdGenerator();
+    }
+    else{
+        return -1;
+    }
+}
+
+void AppUtils::setCurrentProject(std::shared_ptr<Project> project){
+    if(project){
+        m_currentProject = project;
+    }
+    else{
+        m_currentProject.reset();
+    }
+}
+
 /*!
  \brief
 

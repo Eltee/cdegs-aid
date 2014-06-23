@@ -104,6 +104,7 @@ struct computations{
 struct profile{
 
     profile(){
+        id = -1;
         ptNum = 0;
         prNum = 0;
         start.x = 0;
@@ -118,6 +119,7 @@ struct profile{
     }
 
     profile(profile const* pro){
+        id = pro->id;
         ptNum = pro->ptNum;
         prNum = pro->prNum;
         start.x = pro->start.x;
@@ -131,12 +133,17 @@ struct profile{
         prStep.z = pro->prStep.z;
     }
 
-    int id = 1;
+    double id = -1;
 
     coords start, ptStep, prStep;
 
     int ptNum = 0.0;
     int prNum = 0.0;
+
+    bool compare(profile const* pro){
+        if(id == pro->id) return true;
+        else return false;
+    }
 
     std::vector<coords> toCoords(){
         std::vector<coords> points;
