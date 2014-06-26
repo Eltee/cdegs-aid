@@ -77,6 +77,7 @@ class Configuration
         Configuration& operator=(Configuration const* config);
         void setDefaultTypes();
         bool validateConfig();
+        double componentIdGenerator();
     //Setters start-----------------------------------------------------
         Configuration& setIdentifier(std::string const& identifier);
         Configuration& setUnits(std::string const& units);
@@ -128,6 +129,15 @@ class Configuration
         std::vector<std::shared_ptr<profile>> getProfiles() const;
         std::vector<std::shared_ptr<CableType>> getCableTypes() const;
         bool const& isModified() const;
+        std::shared_ptr<LeadType> getLeadType(double id) const;
+        std::shared_ptr<Coating> getCoating(double id) const;
+        std::shared_ptr<Energization> getEnergization(double id) const;
+        std::shared_ptr<ConductorType> getConductorType(double id) const;
+        std::shared_ptr<Conductor> getConductor(double id) const;
+        std::shared_ptr<Conductor> getBuildingConductor(double id) const;
+        std::shared_ptr<Building> getBuilding(double id) const;
+        std::shared_ptr<profile> getProfile(double id) const;
+        std::shared_ptr<CableType> getCableType(double id) const;
     //Getters end-------------------------------------------------------
 
     private:
@@ -144,6 +154,7 @@ class Configuration
         computations m_computations;
         std::vector<std::shared_ptr<profile>> m_profiles;
         bool m_modified;
+        double m_componentId;
 };
 
 #endif // CONFIGURATION_H

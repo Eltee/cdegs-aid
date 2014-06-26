@@ -40,7 +40,9 @@
 
  \fn LeadType::LeadType
 */
-LeadType::LeadType() : Component(-2, "", false, true){}
+LeadType::LeadType() : Component("", false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
+}
 
 /*!
  \brief
@@ -48,7 +50,9 @@ LeadType::LeadType() : Component(-2, "", false, true){}
  \fn LeadType::LeadType
  \param name
 */
-LeadType::LeadType(std::string const& name) : Component(-2, name, false, true){}
+LeadType::LeadType(std::string const& name) : Component(name, false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
+}
 
 LeadType::LeadType(LeadType const* lType){
     m_id = lType->getId();

@@ -40,7 +40,8 @@
 
  \fn Building::Building
 */
-Building::Building() : Component(-2, "", false, true){
+Building::Building() : Component("", false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
     m_faces = 2;
     m_height = 6.0;
     m_distanceMin = 4.0;
@@ -58,7 +59,8 @@ Building::Building() : Component(-2, "", false, true){
  \param distanceMax
  \param step
 */
-Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step) : Component(-2, "", false, true){
+Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step) : Component("", false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
     m_faces = faces;
     m_height = height;
     m_distanceMin = distanceMin;

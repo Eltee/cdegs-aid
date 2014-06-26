@@ -102,7 +102,7 @@ class AppUtils
 
         std::string uniqueIdGenerator(); //done
         double componentIdGenerator();
-        void setCurrentProject(std::shared_ptr<Project> project);
+        void setCurrentConfig(std::shared_ptr<Configuration> config);
 
         void loadStylesheets();
         std::unordered_map<std::string, QString> const& getStyleSheets() const;
@@ -128,7 +128,7 @@ class AppUtils
         AppUtils(AppUtils const&);
         void operator=(AppUtils const&);
         double m_projectId=0;
-        std::shared_ptr<Project> m_currentProject;
+        std::shared_ptr<Configuration> m_currentConfig;
         Configuration* m_defaultConfig;
         std::unordered_map<std::string, QString> m_styleSheets;
 };

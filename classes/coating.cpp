@@ -40,7 +40,9 @@
 
  \fn Coating::Coating
 */
-Coating::Coating() : Component(-2, "", false, true){}
+Coating::Coating() : Component("", false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
+}
 
 /*!
  \brief
@@ -48,7 +50,9 @@ Coating::Coating() : Component(-2, "", false, true){}
  \fn Coating::Coating
  \param name
 */
-Coating::Coating(std::string const& name) : Component(-2, name, false, true){}
+Coating::Coating(std::string const& name) : Component(name, false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
+}
 
 Coating::Coating(Coating const* coat){
     m_id = coat->getId();

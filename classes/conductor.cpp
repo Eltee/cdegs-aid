@@ -39,7 +39,8 @@
  * @brief
  *
  */
-Conductor::Conductor() : Component(-2, "", false, true){
+Conductor::Conductor() : Component("", false, true){
+    m_id = AppUtils::getInstance().componentIdGenerator();
     m_radius = 0.0;
 }
 
@@ -54,9 +55,9 @@ Conductor::Conductor() : Component(-2, "", false, true){
  * @param cableType
  * @param radius
  */
-Conductor::Conductor(Configuration const& config, const int& leadType, const int& conductorType, const int& coating, const int& energization, const int& cableType, double const& radius) : Component(-2, "", false, true){
+Conductor::Conductor(Configuration const& config, const int& leadType, const int& conductorType, const int& coating, const int& energization, const int& cableType, double const& radius) : Component("", false, true){
     m_radius = radius;
-
+    m_id = AppUtils::getInstance().componentIdGenerator();
     m_leadType = config.getLeadTypes().at(leadType);
     m_conductorType = config.getConductorTypes().at(conductorType);
     m_coating = config.getCoatings().at(coating);
@@ -74,7 +75,7 @@ Conductor::Conductor(Configuration const& config, const int& leadType, const int
  * @param cableType
  * @param radius
  */
-Conductor::Conductor(std::shared_ptr<LeadType> leadType, std::shared_ptr<ConductorType> conductorType, std::shared_ptr<Coating> coating, std::shared_ptr<Energization> energization, std::shared_ptr<CableType> cableType, const double& radius) : Component(-2, "", false, true){
+Conductor::Conductor(std::shared_ptr<LeadType> leadType, std::shared_ptr<ConductorType> conductorType, std::shared_ptr<Coating> coating, std::shared_ptr<Energization> energization, std::shared_ptr<CableType> cableType, const double& radius) : Component("", false, true){
     m_radius = radius;
 
     m_leadType = leadType;

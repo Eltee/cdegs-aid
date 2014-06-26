@@ -611,7 +611,7 @@ void configuration_widget::populateFields(){
 void configuration_widget::populateLTypes(){
     ui->comboBox_lTypes_chooser->clear();
     for(int i = 0; i < configuration->getLeadTypes().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getLeadTypes().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getLeadTypes().at(i)->getName());
         ui->comboBox_lTypes_chooser->addItem(text);
     }
     fetchLType(ui->comboBox_lTypes_chooser->currentText());
@@ -629,7 +629,7 @@ void configuration_widget::fetchLType(QString id){
 void configuration_widget::populateCoatings(){
     ui->comboBox_coatings_chooser->clear();
     for(int i = 0; i < configuration->getCoatings().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getCoatings().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getCoatings().at(i)->getName());
         ui->comboBox_coatings_chooser->addItem(text);
     }
     fetchCoating(ui->comboBox_coatings_chooser->currentText());
@@ -665,7 +665,7 @@ void configuration_widget::fetchEnergization(QString id){
 void configuration_widget::populateCTypes(){
     ui->comboBox_cTypes_chooser->clear();
     for(int i = 0; i < configuration->getConductorTypes().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getConductorTypes().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getConductorTypes().at(i)->getName());
         ui->comboBox_cTypes_chooser->addItem(text);
     }
     fetchCType(ui->comboBox_cTypes_chooser->currentText());
@@ -709,7 +709,7 @@ void configuration_widget::populateComputations(){
 
 void configuration_widget::populateProfiles(){
     ui->comboBox_profiles_chooser->clear();
-    for(int i = 1; i <= configuration->getProfiles().size(); i++){
+    for(int i = 0; i < configuration->getProfiles().size(); i++){
         profile* p = configuration->getProfiles().at(i).get();
         QString text = QString::number(i) + " - Profile(X:" + QString::number(p->start.x) + ", Y:" + QString::number(p->start.y) + ", Z:" + QString::number(p->start.z) + ")";
         ui->comboBox_profiles_chooser->addItem(text);
@@ -888,23 +888,22 @@ void configuration_widget::refreshProfile(){
 
 void configuration_widget::populateConductors(){
     ui->comboBox_conductors->clear();
-    for(int i = 1; i <= configuration->getConductors().size(); i++){
-        QString text = QString::number(i) + " - Conductor(X:" + QString::number(configuration->getConductors().at(i)->getStartCoords().x) + ", Y:" + QString::number(configuration->
-        (i)->getStartCoords().y) + ", Z:" + QString::number(configuration->getConductors().at(i)->getStartCoords().z) + ")";
+    for(int i = 0; i <configuration->getConductors().size(); i++){
+        QString text = QString::number(i) + " - Conductor(X:" + QString::number(configuration->getConductors().at(i)->getStartCoords().x) + ", Y:" + QString::number(configuration->getConductors().at(i)->getStartCoords().y) + ", Z:" + QString::number(configuration->getConductors().at(i)->getStartCoords().z) + ")";
         ui->comboBox_conductors->addItem(text);
     }
 
     ui->comboBox_cond_lType->clear();
     ui->comboBox_cond_lType->addItem("None");
     for(int i = 0; i < configuration->getLeadTypes().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getLeadTypes().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getLeadTypes().at(i)->getName());
         ui->comboBox_cond_lType->addItem(text);
     }
 
     ui->comboBox_cond_coating->clear();
     ui->comboBox_cond_coating->addItem("None");
     for(int i = 0; i < configuration->getCoatings().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getCoatings().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getCoatings().at(i)->getName());
         ui->comboBox_cond_coating->addItem(text);
     }
 
@@ -918,7 +917,7 @@ void configuration_widget::populateConductors(){
     ui->comboBox_cond_cType->clear();
     ui->comboBox_cond_cType->addItem("None");
     for(int i = 0; i < configuration->getConductorTypes().size(); i++){
-        QString text = QString::number(i-1) + " - " + QString::fromStdString(configuration->getConductorTypes().at(i-1)->getName());
+        QString text = QString::number(i) + " - " + QString::fromStdString(configuration->getConductorTypes().at(i)->getName());
         ui->comboBox_cond_cType->addItem(text);
     }
 
@@ -936,7 +935,7 @@ void configuration_widget::fetchConductor(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
-        cond.reset(new Conductor(configuration->getConductors().at(index)));
+        cond.reset(new Conductor(configuration->getConductors().at(index).get()));
         refresh();
     }
 }
@@ -1073,12 +1072,12 @@ void configuration_widget::saveConfig(){
 //COND CONNECTIONS
 void configuration_widget::newCond(){
     cond.reset(new Conductor());
-    configuration->addConductor(cond.get(), true);
+    configuration->addConductor(cond);
     populateConductors();
 }
 
 void configuration_widget::removeCond(){
-    configuration->removeConductor(cond.get());
+    configuration->removeConductor(cond);
     cond.reset();
     populateConductors();
 }
@@ -1093,7 +1092,7 @@ void configuration_widget::changeLTypeName(QString text){
 
 void configuration_widget::newLType(){
     lType.reset(new LeadType());
-    configuration->addLeadType(lType, true);
+    configuration->addLeadType(lType);
     populateLTypes();
     populateConductors();
 }
@@ -1110,11 +1109,9 @@ void configuration_widget::removeLType(){
 }
 
 void configuration_widget::saveLType(){
-    if(configuration->getLeadTypes().count(lType->getId()) > 0){
-        configuration->replaceLeadType(lType);
-    }
-    else{
-        configuration->addLeadType(lType, true);
+    int result = configuration->replaceLeadType(lType);
+    if(result == 1){
+        configuration->addLeadType(lType);
     }
     populateLTypes();
 }
@@ -1129,7 +1126,7 @@ void configuration_widget::changeCoatName(QString text){
 
 void configuration_widget::newCoat(){
     coat.reset(new Coating());
-    configuration->addCoating(coat, true);
+    configuration->addCoating(coat);
     populateCoatings();
     populateConductors();
 }
@@ -1146,11 +1143,9 @@ void configuration_widget::removeCoat(){
 }
 
 void configuration_widget::saveCoat(){
-    if(configuration->getCoatings().count(coat->getId()) > 0){
-        configuration->replaceCoating(coat);
-    }
-    else{
-        configuration->addCoating(coat, true);
+    int result = configuration->replaceCoating(coat);
+    if(result == 1){
+        configuration->addCoating(coat);
     }
     populateCoatings();
 }
@@ -1193,7 +1188,7 @@ void configuration_widget::changeEnerAng(double d){
 
 void configuration_widget::newEner(){
     ener.reset(new Energization());
-    configuration->addEnergization(ener, true);
+    configuration->addEnergization(ener);
     populateEnergizations();
     populateConductors();
 }
@@ -1210,11 +1205,9 @@ void configuration_widget::removeEner(){
 }
 
 void configuration_widget::saveEner(){
-    if(configuration->getEnergizations().count(ener->getId()) > 0){
-        configuration->replaceEnergization(ener);
-    }
-    else{
-        configuration->addEnergization(ener, true);
+    int result = configuration->replaceEnergization(ener);
+    if(result == 1){
+        configuration->addEnergization(ener);
     }
     populateEnergizations();
 }
@@ -1250,7 +1243,7 @@ void configuration_widget::changeCTypeRes(double d){
 
 void configuration_widget::newCType(){
     cType.reset(new ConductorType());
-    configuration->addConductorType(cType, true);
+    configuration->addConductorType(cType);
     populateCTypes();
     populateConductors();
 }
@@ -1267,11 +1260,9 @@ void configuration_widget::removeCType(){
 }
 
 void configuration_widget::saveCType(){
-    if(configuration->getConductorTypes().count(cType->getId()) > 0){
-        configuration->replaceConductorType(cType);
-    }
-    else{
-        configuration->addConductorType(cType, true);
+    int result = configuration->replaceConductorType(cType);
+    if(result == 1){
+        configuration->addConductorType(cType);
     }
     populateCTypes();
 }
@@ -1286,7 +1277,7 @@ void configuration_widget::changeCbTypeName(QString text){
 
 void configuration_widget::newCbType(){
     cbType.reset(new CableType());
-    configuration->addCableType(cbType, true);
+    configuration->addCableType(cbType);
     populateCbTypes();
     populateConductors();
 }
@@ -1303,11 +1294,9 @@ void configuration_widget::removeCbType(){
 }
 
 void configuration_widget::saveCbType(){
-    if(configuration->getCableTypes().count(cbType->getId()) > 0){
-        configuration->replaceCableType(cbType);
-    }
-    else{
-        configuration->addCableType(cbType, true);
+    int result = configuration->replaceCableType(cbType);
+    if(result == 1){
+        configuration->addCableType(cbType);
     }
     populateCbTypes();
 }
@@ -1392,7 +1381,7 @@ void configuration_widget::changeProPrStepZ(double d){
 
 void configuration_widget::newPro(){
     pro.reset(new profile());
-    configuration->addProfile(pro, true);
+    configuration->addProfile(pro);
     populateProfiles();
 }
 
@@ -1403,13 +1392,9 @@ void configuration_widget::removePro(){
 }
 
 void configuration_widget::savePro(){
-    if(configuration->getProfiles().count(pro->id) > 0){
-        configuration->removeProfile(pro).addProfile(pro);
-    }
-    else{
-        configuration->addProfile(pro, true);
-    }
-    populateEnergizations();
+    configuration->removeProfile(pro);
+    configuration->addProfile(pro);
+    populateProfiles();
 }
 
 void configuration_widget::changeComputations(int i){

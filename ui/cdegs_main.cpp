@@ -152,7 +152,6 @@ void cdegs_main::updateProject(){
     else{
         project.reset();
     }
-
 }
 
 /*!
@@ -167,6 +166,7 @@ void cdegs_main::updateConfig(){
     else{
         config.reset();
     }
+    AppUtils::getInstance().setCurrentConfig(config);
 }
 
 /*!
@@ -424,6 +424,8 @@ void cdegs_main::saveConfig(){
 void cdegs_main::saveAllConfigs(){
     if(project && config){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->saveAllConfigs();
+        emit saveOccurred();
+        refresh();
     }
 }
 

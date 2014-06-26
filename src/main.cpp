@@ -54,6 +54,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
+    AppUtils::getInstance().generateDefaultConfig();
+
     AppUtils::getInstance().setDefaultConfig();
 
     AppUtils::getInstance().loadStylesheets();
