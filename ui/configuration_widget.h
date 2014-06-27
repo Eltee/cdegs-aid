@@ -41,6 +41,7 @@
 #include <QWidget>
 #include <memory>
 #include <QMessageBox>
+#include "classes/structs.h"
 #include "project_tab_widget.h"
 #include "classes/configuration.h"
 
@@ -114,6 +115,19 @@ class configuration_widget : public QWidget
         //COND CONNECTIONS
         void newCond();
         void removeCond();
+        void saveCond();
+        void changeCondCbType(int index);
+        void changeCondCoat(int index);
+        void changeCondCType(int index);
+        void changeCondEner(int index);
+        void changeCondLType(int index);
+        void changeCondRadius(double value);
+        void changeCondStartX(double value);
+        void changeCondStartY(double value);
+        void changeCondStartZ(double value);
+        void changeCondEndX(double value);
+        void changeCondEndY(double value);
+        void changeCondEndZ(double value);
 
         //BUILD CONNECTIONS
 

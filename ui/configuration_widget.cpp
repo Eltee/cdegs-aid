@@ -170,6 +170,45 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_cond_remove, SIGNAL(clicked()),
                      this, SLOT(removeCond()));
 
+    QObject::connect(ui->pushButton_cond_save, SIGNAL(clicked()),
+                     this, SLOT(saveCond()));
+
+    QObject::connect(ui->comboBox_cond_cbType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCbType(int)));
+
+    QObject::connect(ui->comboBox_cond_coating, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCoat(int)));
+
+    QObject::connect(ui->comboBox_cond_cType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCType(int)));
+
+    QObject::connect(ui->comboBox_cond_energization, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondEner(int)));
+
+    QObject::connect(ui->comboBox_cond_lType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondLType(int)));
+
+    QObject::connect(ui->doubleSpinBox_cond_endX, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndX(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_endY, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndY(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_endZ, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndZ(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_startX, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartX(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_startY, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartY(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_startZ, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartZ(double)));
+
+    QObject::connect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondRadius(double)));
+
 
     //BUILD CONNECTIONS
 
@@ -370,6 +409,45 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_cond_remove, SIGNAL(clicked()),
                      this, SLOT(removeCond()));
+
+    QObject::disconnect(ui->pushButton_cond_save, SIGNAL(clicked()),
+                     this, SLOT(saveCond()));
+
+    QObject::disconnect(ui->comboBox_cond_cbType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCbType(int)));
+
+    QObject::disconnect(ui->comboBox_cond_coating, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCoat(int)));
+
+    QObject::disconnect(ui->comboBox_cond_cType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondCType(int)));
+
+    QObject::disconnect(ui->comboBox_cond_energization, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondEner(int)));
+
+    QObject::disconnect(ui->comboBox_cond_lType, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(changeCondLType(int)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_endX, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndX(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_endY, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndY(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_endZ, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondEndZ(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_startX, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartX(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_startY, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartY(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_startZ, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondStartZ(double)));
+
+    QObject::disconnect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
+                     this, SLOT(changeCondRadius(double)));
 
     //CONF CONNECTIONS
 
@@ -624,6 +702,10 @@ void configuration_widget::fetchLType(QString id){
         lType.reset(new LeadType(configuration->getLeadTypes().at(index).get()));
         refresh();
     }
+    else{
+        lType.reset();
+        refresh();
+    }
 }
 
 void configuration_widget::populateCoatings(){
@@ -640,6 +722,10 @@ void configuration_widget::fetchCoating(QString id){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
         coat.reset(new Coating(configuration->getCoatings().at(index).get()));
+        refresh();
+    }
+    else{
+        coat.reset();
         refresh();
     }
 }
@@ -660,6 +746,10 @@ void configuration_widget::fetchEnergization(QString id){
         ener.reset(new Energization(configuration->getEnergizations().at(index).get()));
         refresh();
     }
+    else{
+        ener.reset();
+        refresh();
+    }
 }
 
 void configuration_widget::populateCTypes(){
@@ -678,6 +768,10 @@ void configuration_widget::fetchCType(QString id){
         cType.reset(new ConductorType(configuration->getConductorTypes().at(index).get()));
         refresh();
     }
+    else{
+        cType.reset();
+        refresh();
+    }
 }
 
 void configuration_widget::populateCbTypes(){
@@ -694,6 +788,10 @@ void configuration_widget::fetchCbType(QString id){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
         cbType.reset(new CableType(configuration->getCableTypes().at(index).get()));
+        refresh();
+    }
+    else{
+        cbType.reset();
         refresh();
     }
 }
@@ -722,6 +820,10 @@ void configuration_widget::fetchProfile(QString id){
         id.truncate(id.indexOf(" "));
         int index = id.toInt();
         pro.reset(new profile(configuration->getProfiles().at(index).get()));
+        refresh();
+    }
+    else{
+        pro.reset();
         refresh();
     }
 }
@@ -938,11 +1040,16 @@ void configuration_widget::fetchConductor(QString id){
         cond.reset(new Conductor(configuration->getConductors().at(index).get()));
         refresh();
     }
+    else{
+        cond.reset();
+        refresh();
+    }
 }
 
 void configuration_widget::refreshConductor(){
     if(cond){
         ui->pushButton_cond_remove->setEnabled(true);
+        ui->pushButton_cond_save->setEnabled(true);
         ui->comboBox_cond_cbType->setEnabled(true);
         ui->comboBox_cond_coating->setEnabled(true);
         ui->comboBox_cond_cType->setEnabled(true);
@@ -1002,6 +1109,7 @@ void configuration_widget::refreshConductor(){
     }
     else{
         ui->pushButton_cond_remove->setEnabled(false);
+        ui->pushButton_cond_save->setEnabled(false);
         ui->comboBox_cond_cbType->setEnabled(false);
         ui->comboBox_cond_coating->setEnabled(false);
         ui->comboBox_cond_cType->setEnabled(false);
@@ -1077,9 +1185,124 @@ void configuration_widget::newCond(){
 }
 
 void configuration_widget::removeCond(){
+    std::cout << "Cond Id to remove: " << cond->getId() << std::endl;
     configuration->removeConductor(cond);
     cond.reset();
     populateConductors();
+}
+
+void configuration_widget::saveCond(){
+    int result = configuration->replaceConductor(cond);
+    if(result == 1){
+        configuration->addConductor(cond);
+    }
+    populateConductors();
+}
+
+void configuration_widget::changeCondCbType(int index){
+    if(cond && index > 0){
+        cond->setCableType(configuration->getCableTypes().at(index-1));
+        refresh();
+    }
+}
+
+void configuration_widget::changeCondCoat(int index){
+    if(cond && index > 0){
+        cond->setCoating(configuration->getCoatings().at(index-1));
+        refresh();
+    }
+}
+
+void configuration_widget::changeCondCType(int index){
+    std::cout << index << std::endl;
+    if(cond && index > 0){
+        std::cout << configuration->getConductorTypes().at(index-1)->getName() << std::endl;
+        cond->setConductorType(configuration->getConductorTypes().at(index-1));
+        refresh();
+    }
+}
+
+void configuration_widget::changeCondEner(int index){
+    std::cout << index << std::endl;
+    if(cond && index > 0){
+        std::cout << configuration->getEnergizations().at(index-1)->getIdentification() << std::endl;
+        cond->setEnergization(configuration->getEnergizations().at(index-1));
+        refresh();
+    }
+}
+
+void configuration_widget::changeCondLType(int index){
+    if(cond && index > 0){
+        cond->setLeadType(configuration->getLeadTypes().at(index-1));
+        refresh();
+    }
+}
+
+void configuration_widget::changeCondRadius(double value){
+    if(cond){
+        cond->setRadius(value);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondStartX(double value){
+    if(cond){
+        coords start;
+        start = cond->getStartCoords();
+        start.x = value;
+        cond->setStartCoords(start);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondStartY(double value){
+    if(cond){
+        coords start;
+        start = cond->getStartCoords();
+        start.y = value;
+        cond->setStartCoords(start);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondStartZ(double value){
+    if(cond){
+        coords start;
+        start = cond->getStartCoords();
+        start.z = value;
+        cond->setStartCoords(start);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondEndX(double value){
+    if(cond){
+        coords end;
+        end = cond->getEndCoords();
+        end.x = value;
+        cond->setEndCoords(end);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondEndY(double value){
+    if(cond){
+        coords end;
+        end = cond->getEndCoords();
+        end.y = value;
+        cond->setEndCoords(end);
+        configuration->setModified(true);
+    }
+}
+
+void configuration_widget::changeCondEndZ(double value){
+    if(cond){
+        coords end;
+        end = cond->getEndCoords();
+        end.z = value;
+        cond->setEndCoords(end);
+        configuration->setModified(true);
+    }
 }
 
 //LTYPE CONNECTIONS

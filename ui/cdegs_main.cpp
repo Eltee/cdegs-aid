@@ -383,6 +383,7 @@ void cdegs_main::changeTab(){
 */
 void cdegs_main::newConfig(){
     config.reset(new Configuration(AppUtils::getInstance().getDefaultConfig()));
+    AppUtils::getInstance().setCurrentConfig(config);
 
     if(ui->tabProjects->currentIndex() != -1){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);

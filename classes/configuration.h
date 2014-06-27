@@ -98,13 +98,17 @@ class Configuration
         int replaceConductorType(std::shared_ptr<ConductorType> conductorType);
         Configuration& addConductor(std::shared_ptr<Conductor> conductor);
         int removeConductor(std::shared_ptr<Conductor> conductor);
+        int replaceConductor(std::shared_ptr<Conductor> conductor);
         Configuration& addBuildingConductor(std::shared_ptr<Conductor> conductor);
         int removeBuildingConductor(std::shared_ptr<Conductor> conductor);
+        int replaceBuildingConductor(std::shared_ptr<Conductor> conductor);
         Configuration& addBuilding(std::shared_ptr<Building> building);
         int removeBuilding(std::shared_ptr<Building> building);
+        int replaceBuilding(std::shared_ptr<Building> building);
         Configuration& setComputations(computations const& comp);
         Configuration& addProfile(std::shared_ptr<profile> p);
         int removeProfile(std::shared_ptr<profile> p);
+        int replaceProfile(std::shared_ptr<profile> p);
         Configuration& addCableType(std::shared_ptr<CableType> cableType);
         int removeCableType(std::shared_ptr<CableType> cableType);
         int replaceCableType(std::shared_ptr<CableType> cableType);

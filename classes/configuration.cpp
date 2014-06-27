@@ -545,8 +545,6 @@ int Configuration::replaceEnergization(std::shared_ptr<Energization> energizatio
 
     while(!found && it != m_energizations.end()){
         std::shared_ptr<Energization> sptr = *it;
-        std::cout << "Component in Config (SPTR) ID: " << sptr->getId() << std::endl;
-        std::cout << "Component wanting to replace ID: " << energization->getId() << std::endl;
         if(sptr->compare(energization.get())){
             found = true;
         }
@@ -777,6 +775,33 @@ int Configuration::removeConductor(std::shared_ptr<Conductor> conductor){
     return errorCode;
 }
 
+int Configuration::replaceConductor(std::shared_ptr<Conductor> conductor){
+    int errorCode = 0;
+
+    std::vector<std::shared_ptr<Conductor> >::iterator it = m_conductors.begin();
+    bool found = false;
+
+    while(!found && it != m_conductors.end()){
+        std::shared_ptr<Conductor> sptr = *it;
+        if(sptr->compare(conductor.get())){
+            found = true;
+        }
+        else{
+            it++;
+        }
+    }
+
+    if(found){
+        m_conductors.erase(it);
+        m_conductors.insert(it, conductor);
+    }
+    else{
+        errorCode = 1;
+    }
+
+    return errorCode;
+}
+
 /*!
  \brief
 
@@ -822,6 +847,33 @@ int Configuration::removeBuildingConductor(std::shared_ptr<Conductor> conductor)
 
     if(found){
         m_buildingConductors.erase(it);
+    }
+    else{
+        errorCode = 1;
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceBuildingConductor(std::shared_ptr<Conductor> conductor){
+    int errorCode = 0;
+
+    std::vector<std::shared_ptr<Conductor> >::iterator it = m_buildingConductors.begin();
+    bool found = false;
+
+    while(!found && it != m_buildingConductors.end()){
+        std::shared_ptr<Conductor> sptr = *it;
+        if(sptr->compare(conductor.get())){
+            found = true;
+        }
+        else{
+            it++;
+        }
+    }
+
+    if(found){
+        m_buildingConductors.erase(it);
+        m_buildingConductors.insert(it, conductor);
     }
     else{
         errorCode = 1;
@@ -883,6 +935,33 @@ int Configuration::removeBuilding(std::shared_ptr<Building> building){
     return errorCode;
 }
 
+int Configuration::replaceBuilding(std::shared_ptr<Building> building){
+    int errorCode = 0;
+
+    std::vector<std::shared_ptr<Building> >::iterator it = m_buildings.begin();
+    bool found = false;
+
+    while(!found && it != m_buildings.end()){
+        std::shared_ptr<Building> sptr = *it;
+        if(sptr->compare(building.get())){
+            found = true;
+        }
+        else{
+            it++;
+        }
+    }
+
+    if(found){
+        m_buildings.erase(it);
+        m_buildings.insert(it, building);
+    }
+    else{
+        errorCode = 1;
+    }
+
+    return errorCode;
+}
+
 /*!
  \brief
 
@@ -931,6 +1010,33 @@ int Configuration::removeProfile(std::shared_ptr<profile> p){
 
     if(found){
         m_profiles.erase(it);
+    }
+    else{
+        errorCode = 1;
+    }
+
+    return errorCode;
+}
+
+int Configuration::replaceProfile(std::shared_ptr<profile> p){
+    int errorCode = 0;
+
+    std::vector<std::shared_ptr<profile> >::iterator it = m_profiles.begin();
+    bool found = false;
+
+    while(!found && it != m_profiles.end()){
+        std::shared_ptr<profile> sptr = *it;
+        if(sptr->compare(p.get())){
+            found = true;
+        }
+        else{
+            it++;
+        }
+    }
+
+    if(found){
+        m_profiles.erase(it);
+        m_profiles.insert(it, p);
     }
     else{
         errorCode = 1;

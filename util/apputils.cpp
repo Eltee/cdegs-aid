@@ -1454,7 +1454,6 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
         conductorNode.append_attribute("Id").set_value(config->getConductors().at(i)->getId());
         conductorNode.append_attribute("Type").set_value("Conductor");
 
-        //OVER HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
         node = conductorNode.append_child("LeadTypeId");
         if(config->getConductors().at(i)->getLeadType() != NULL){
             node.append_attribute("Value").set_value(config->getConductors().at(i)->getLeadType()->getId());
