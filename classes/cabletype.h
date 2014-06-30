@@ -38,7 +38,6 @@
 
 #include <string>
 #include "component.h"
-#include "util/apputils.h"
 
 class CableType;
 

@@ -40,7 +40,6 @@
  *
  */
 Conductor::Conductor() : Component("", false, true){
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_radius = 0.0;
 }
 
@@ -57,7 +56,6 @@ Conductor::Conductor() : Component("", false, true){
  */
 Conductor::Conductor(Configuration const& config, const int& leadType, const int& conductorType, const int& coating, const int& energization, const int& cableType, double const& radius) : Component("", false, true){
     m_radius = radius;
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_leadType = config.getLeadTypes().at(leadType);
     m_conductorType = config.getConductorTypes().at(conductorType);
     m_coating = config.getCoatings().at(coating);

@@ -41,6 +41,7 @@
 #include <QWidget>
 #include <memory>
 #include <QMessageBox>
+#include <QVector>
 #include "classes/structs.h"
 #include "project_tab_widget.h"
 #include "classes/configuration.h"
@@ -81,6 +82,9 @@ class configuration_widget : public QWidget
         void populateBuildings();
         void connectSlots();
         void disconnectSlots();
+
+    public slots:
+        void refresh();
         void refreshConfSettings();
         void refreshLType();
         void refreshCoating();
@@ -91,9 +95,6 @@ class configuration_widget : public QWidget
         void refreshConductor();
         void refreshBuilding();
         void refreshPlot();
-
-    public slots:
-        void refresh();
 
     private slots:
         //COMBOBOX CONNECTIONS

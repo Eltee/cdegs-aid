@@ -41,7 +41,6 @@
  \fn ConductorType::ConductorType
 */
 ConductorType::ConductorType() : Component("", false, true){
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_type = "default";
     m_resistivity = 1.64;
     m_permeability = 1.0;
@@ -57,7 +56,6 @@ ConductorType::ConductorType() : Component("", false, true){
  \param permeability
 */
 ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(name, false, true){
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_type = type;
     m_resistivity = resistivity;
     m_permeability = permeability;

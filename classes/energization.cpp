@@ -41,7 +41,6 @@
  \fn Energization::Energization
 */
 Energization::Energization() : Component("", false, true){
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_identification = "default";
     m_type = "Computed";
     m_frequency = "AC";
@@ -60,7 +59,6 @@ Energization::Energization() : Component("", false, true){
  \param angle
 */
 Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component("", false, true){
-    m_id = AppUtils::getInstance().componentIdGenerator();
     m_identification = identification;
     m_type = type;
     m_frequency = frequency;

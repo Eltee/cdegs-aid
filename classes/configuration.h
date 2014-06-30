@@ -158,7 +158,7 @@ class Configuration
         computations m_computations;
         std::vector<std::shared_ptr<profile>> m_profiles;
         bool m_modified;
-        double m_componentId;
+        double m_componentId = -1;
 };
 
 #endif // CONFIGURATION_H

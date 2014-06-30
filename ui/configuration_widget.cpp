@@ -54,10 +54,10 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     configuration.reset(new Configuration(config.get()));
     ui->setupUi(this);
     defParent = dp;
+    initPlot();
     populateFields();
     ui->stackedWidget_config->setCurrentIndex(0);
     connectSlots();
-    initPlot();
 }
 
 void configuration_widget::initPlot(){
@@ -126,7 +126,8 @@ void configuration_widget::initPlot(){
     ui->cond_plot->yAxis->setAntialiased(true);
     ui->cond_plot->yAxis->setTicks(true);
     ui->cond_plot->yAxis->setAutoTicks(true);
-    ui->cond_plot->yAxis->setRange(0, 10);
+    ui->cond_plot->yAxis->setRange(0, -10);
+    ui->cond_plot->yAxis->setRangeReversed(true);
     ui->cond_plot->yAxis->setAutoTickStep(false);
     ui->cond_plot->yAxis->setTickStep(1);
     ui->cond_plot->yAxis->setTickLength(0, 2);
@@ -208,6 +209,9 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCondRadius(double)));
+
+    QObject::connect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
+                     this, SLOT(refreshConductor()));
 
 
     //BUILD CONNECTIONS
@@ -449,6 +453,9 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCondRadius(double)));
 
+    QObject::disconnect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
+                     this, SLOT(refreshConductor()));
+
     //CONF CONNECTIONS
 
     QObject::disconnect(ui->lineEdit_settings_identifier, SIGNAL(textChanged(QString)),
@@ -659,6 +666,7 @@ void configuration_widget::refresh(){
     refreshCbType();
     refreshProfile();
     refreshConductor();
+    refreshPlot();
     m_name = QString::fromStdString(configuration->getIdentifier());
     connectSlots();
     if(configuration->isModified()){
@@ -1055,13 +1063,22 @@ void configuration_widget::refreshConductor(){
         ui->comboBox_cond_cType->setEnabled(true);
         ui->comboBox_cond_energization->setEnabled(true);
         ui->comboBox_cond_lType->setEnabled(true);
-        ui->doubleSpinBox_cond_endX->setEnabled(true);
-        ui->doubleSpinBox_cond_endY->setEnabled(true);
-        ui->doubleSpinBox_cond_endZ->setEnabled(true);
         ui->doubleSpinBox_cond_radius->setEnabled(true);
         ui->doubleSpinBox_cond_startX->setEnabled(true);
         ui->doubleSpinBox_cond_startY->setEnabled(true);
         ui->doubleSpinBox_cond_startZ->setEnabled(true);
+
+        if(ui->checkBox_cond_advanced->isChecked()){
+            ui->doubleSpinBox_cond_endX->setEnabled(true);
+            ui->doubleSpinBox_cond_endY->setEnabled(true);
+            ui->doubleSpinBox_cond_endZ->setEnabled(true);
+        }
+        else{
+            ui->doubleSpinBox_cond_endX->setEnabled(false);
+            ui->doubleSpinBox_cond_endY->setEnabled(false);
+            ui->doubleSpinBox_cond_endZ->setEnabled(false);
+        }
+
         ui->doubleSpinBox_cond_endX->setValue(cond->getEndCoords().x);
         ui->doubleSpinBox_cond_endY->setValue(cond->getEndCoords().y);
         ui->doubleSpinBox_cond_endZ->setValue(cond->getEndCoords().z);
@@ -1072,7 +1089,7 @@ void configuration_widget::refreshConductor(){
         ui->cond_plot->setEnabled(true);
 
         if(cond->getLeadType()){
-            ui->comboBox_cond_lType->setCurrentIndex(ui->comboBox_cond_lType->findText(QString::number(cond->getLeadType()->getId()), Qt::MatchStartsWith));
+            ui->comboBox_cond_lType->setCurrentIndex(ui->comboBox_cond_lType->findText(QString::fromStdString(cond->getLeadType()->getName()), Qt::MatchEndsWith));
         }
         else{
             ui->comboBox_cond_lType->setCurrentIndex(0);
@@ -1080,28 +1097,28 @@ void configuration_widget::refreshConductor(){
 
 
         if(cond->getCoating()){
-            ui->comboBox_cond_coating->setCurrentIndex(ui->comboBox_cond_coating->findText(QString::number(cond->getCoating()->getId()), Qt::MatchStartsWith));
+            ui->comboBox_cond_coating->setCurrentIndex(ui->comboBox_cond_coating->findText(QString::fromStdString(cond->getCoating()->getName()), Qt::MatchEndsWith));
         }
         else{
             ui->comboBox_cond_coating->setCurrentIndex(0);
         }
 
         if(cond->getEnergization()){
-            ui->comboBox_cond_energization->setCurrentIndex(ui->comboBox_cond_energization->findText(QString::number(cond->getEnergization()->getId()), Qt::MatchStartsWith));
+            ui->comboBox_cond_energization->setCurrentIndex(ui->comboBox_cond_energization->findText(QString::fromStdString(cond->getEnergization()->getIdentification()), Qt::MatchEndsWith));
         }
         else{
             ui->comboBox_cond_energization->setCurrentIndex(0);
         }
 
         if(cond->getConductorType()){
-            ui->comboBox_cond_cType->setCurrentIndex(ui->comboBox_cond_cType->findText(QString::number(cond->getConductorType()->getId()), Qt::MatchStartsWith));
+            ui->comboBox_cond_cType->setCurrentIndex(ui->comboBox_cond_cType->findText(QString::fromStdString(cond->getConductorType()->getName()), Qt::MatchEndsWith));
         }
         else{
             ui->comboBox_cond_cType->setCurrentIndex(0);
         }
 
         if(cond->getCableType()){
-            ui->comboBox_cond_cbType->setCurrentIndex(ui->comboBox_cond_cbType->findText(QString::number(cond->getCableType()->getId()), Qt::MatchStartsWith));
+            ui->comboBox_cond_cbType->setCurrentIndex(ui->comboBox_cond_cbType->findText(QString::fromStdString(cond->getCableType()->getName()), Qt::MatchEndsWith));
         }
         else{
             ui->comboBox_cond_cbType->setCurrentIndex(0);
@@ -1151,7 +1168,13 @@ void configuration_widget::refreshBuilding(){
 }
 
 void configuration_widget::refreshPlot(){
-
+    QVector<double> keys, values;
+    for(std::shared_ptr<Conductor> cond : configuration->getConductors()){
+        keys.push_back(cond->getStartCoords().y);
+        values.push_back(cond->getStartCoords().z);
+    }
+    ui->cond_plot->graph(0)->setData(keys, values);
+    ui->cond_plot->replot();
 }
 
 //CONF CONNECTIONS
@@ -1180,6 +1203,9 @@ void configuration_widget::saveConfig(){
 //COND CONNECTIONS
 void configuration_widget::newCond(){
     cond.reset(new Conductor());
+    if(cond->getId() < 0){
+        cond->setId(configuration->componentIdGenerator());
+    }
     configuration->addConductor(cond);
     populateConductors();
 }
@@ -1194,6 +1220,7 @@ void configuration_widget::removeCond(){
 void configuration_widget::saveCond(){
     int result = configuration->replaceConductor(cond);
     if(result == 1){
+        if(cond->getId() < 0) cond->setId(configuration->componentIdGenerator());
         configuration->addConductor(cond);
     }
     populateConductors();
@@ -1251,6 +1278,15 @@ void configuration_widget::changeCondStartX(double value){
         start = cond->getStartCoords();
         start.x = value;
         cond->setStartCoords(start);
+
+        if(!ui->checkBox_cond_advanced->isChecked()){
+            coords end;
+            end = cond->getEndCoords();
+            end.x = -(start.x);
+            cond->setEndCoords(end);
+            ui->doubleSpinBox_cond_endX->setValue(end.x);
+        }
+
         configuration->setModified(true);
     }
 }
@@ -1261,6 +1297,15 @@ void configuration_widget::changeCondStartY(double value){
         start = cond->getStartCoords();
         start.y = value;
         cond->setStartCoords(start);
+
+        if(!ui->checkBox_cond_advanced->isChecked()){
+            coords end;
+            end = cond->getEndCoords();
+            end.y = start.y;
+            cond->setEndCoords(end);
+            ui->doubleSpinBox_cond_endY->setValue(end.y);
+        }
+
         configuration->setModified(true);
     }
 }
@@ -1271,6 +1316,15 @@ void configuration_widget::changeCondStartZ(double value){
         start = cond->getStartCoords();
         start.z = value;
         cond->setStartCoords(start);
+
+        if(!ui->checkBox_cond_advanced->isChecked()){
+            coords end;
+            end = cond->getEndCoords();
+            end.z = start.z;
+            cond->setEndCoords(end);
+            ui->doubleSpinBox_cond_endZ->setValue(end.z);
+        }
+
         configuration->setModified(true);
     }
 }
@@ -1315,6 +1369,7 @@ void configuration_widget::changeLTypeName(QString text){
 
 void configuration_widget::newLType(){
     lType.reset(new LeadType());
+    if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
     configuration->addLeadType(lType);
     populateLTypes();
     populateConductors();
@@ -1334,6 +1389,7 @@ void configuration_widget::removeLType(){
 void configuration_widget::saveLType(){
     int result = configuration->replaceLeadType(lType);
     if(result == 1){
+        if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
         configuration->addLeadType(lType);
     }
     populateLTypes();
@@ -1349,6 +1405,7 @@ void configuration_widget::changeCoatName(QString text){
 
 void configuration_widget::newCoat(){
     coat.reset(new Coating());
+    if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
     configuration->addCoating(coat);
     populateCoatings();
     populateConductors();
@@ -1368,6 +1425,7 @@ void configuration_widget::removeCoat(){
 void configuration_widget::saveCoat(){
     int result = configuration->replaceCoating(coat);
     if(result == 1){
+        if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
         configuration->addCoating(coat);
     }
     populateCoatings();
@@ -1411,6 +1469,7 @@ void configuration_widget::changeEnerAng(double d){
 
 void configuration_widget::newEner(){
     ener.reset(new Energization());
+    if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
     configuration->addEnergization(ener);
     populateEnergizations();
     populateConductors();
@@ -1430,6 +1489,7 @@ void configuration_widget::removeEner(){
 void configuration_widget::saveEner(){
     int result = configuration->replaceEnergization(ener);
     if(result == 1){
+        if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
         configuration->addEnergization(ener);
     }
     populateEnergizations();
@@ -1466,6 +1526,7 @@ void configuration_widget::changeCTypeRes(double d){
 
 void configuration_widget::newCType(){
     cType.reset(new ConductorType());
+    if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
     configuration->addConductorType(cType);
     populateCTypes();
     populateConductors();
@@ -1485,6 +1546,7 @@ void configuration_widget::removeCType(){
 void configuration_widget::saveCType(){
     int result = configuration->replaceConductorType(cType);
     if(result == 1){
+        if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
         configuration->addConductorType(cType);
     }
     populateCTypes();
@@ -1500,6 +1562,7 @@ void configuration_widget::changeCbTypeName(QString text){
 
 void configuration_widget::newCbType(){
     cbType.reset(new CableType());
+    if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->addCableType(cbType);
     populateCbTypes();
     populateConductors();
@@ -1519,6 +1582,7 @@ void configuration_widget::removeCbType(){
 void configuration_widget::saveCbType(){
     int result = configuration->replaceCableType(cbType);
     if(result == 1){
+        if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
         configuration->addCableType(cbType);
     }
     populateCbTypes();
@@ -1604,6 +1668,7 @@ void configuration_widget::changeProPrStepZ(double d){
 
 void configuration_widget::newPro(){
     pro.reset(new profile());
+    if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->addProfile(pro);
     populateProfiles();
 }
@@ -1615,6 +1680,7 @@ void configuration_widget::removePro(){
 }
 
 void configuration_widget::savePro(){
+    if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->removeProfile(pro);
     configuration->addProfile(pro);
     populateProfiles();
