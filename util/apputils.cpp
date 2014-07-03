@@ -612,22 +612,22 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     for(pugi::xml_node_iterator it = configNode.child("Conductors").children().begin(); it != configNode.child("Conductors").children().end(); it++){
         std::shared_ptr<Conductor> cd;
         cd.reset(new Conductor());
-        double key;
-        cd->setId(it->attribute("Id").as_double());
+        int key;
+        cd->setId(it->attribute("Id").as_int());
 
-        key = it->child("LeadTypeId").first_attribute().as_double();
+        key = it->child("LeadTypeId").first_attribute().as_int();
         cd->setLeadType(config->getLeadType(key));
 
-        key = it->child("CoatingId").first_attribute().as_double();
+        key = it->child("CoatingId").first_attribute().as_int();
         cd->setCoating(config->getCoating(key));
 
-        key = it->child("ConductorTypeId").first_attribute().as_double();
+        key = it->child("ConductorTypeId").first_attribute().as_int();
         cd->setConductorType(config->getConductorType(key));
 
-        key = it->child("EnergizationId").first_attribute().as_double();
+        key = it->child("EnergizationId").first_attribute().as_int();
         cd->setEnergization(config->getEnergization(key));
 
-        key = it->child("CableTypeId").first_attribute().as_double();
+        key = it->child("CableTypeId").first_attribute().as_int();
         cd->setCableType(config->getCableType(key));
 
         cd->setRadius(it->child("Radius").first_attribute().as_double());
@@ -640,30 +640,31 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         end.z = it->child("CoordsEnd").attribute("Z").as_double();
         cd->setCoords(start, end);
         config->addConductor(cd);
+        std::cout << "conductor added, size now: " << config->getConductors().size() << std::endl;
     }
 
     for(pugi::xml_node_iterator it = configNode.child("BuildingConductors").children().begin(); it != configNode.child("BuildingConductors").children().end(); it++){
         std::shared_ptr<Conductor> cd;
         cd.reset(new Conductor());
-        double key;
-        cd->setId(it->attribute("Id").as_double());
+        int key;
+        cd->setId(it->attribute("Id").as_int());
 
-        key = it->child("LeadTypeId").first_attribute().as_double();
+        key = it->child("LeadTypeId").first_attribute().as_int();
         cd->setLeadType(config->getLeadType(key));
 
-        key = it->child("CoatingId").first_attribute().as_double();
+        key = it->child("CoatingId").first_attribute().as_int();
         cd->setCoating(config->getCoating(key));
 
-        key = it->child("ConductorTypeId").first_attribute().as_double();
+        key = it->child("ConductorTypeId").first_attribute().as_int();
         cd->setConductorType(config->getConductorType(key));
 
-        key = it->child("EnergizationId").first_attribute().as_double();
+        key = it->child("EnergizationId").first_attribute().as_int();
         cd->setEnergization(config->getEnergization(key));
 
-        key = it->child("CableTypeId").first_attribute().as_double();
+        key = it->child("CableTypeId").first_attribute().as_int();
         cd->setCableType(config->getCableType(key));
 
-        cd->setRadius(it->child("Radius").first_attribute().as_double());
+        cd->setRadius(it->child("Radius").first_attribute().as_int());
         coords start, end;
         start.x = it->child("CoordsStart").attribute("X").as_double();
         start.y = it->child("CoordsStart").attribute("Y").as_double();
@@ -672,7 +673,7 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         end.y = it->child("CoordsEnd").attribute("Y").as_double();
         end.z = it->child("CoordsEnd").attribute("Z").as_double();
         cd->setCoords(start, end);
-        config->addConductor(cd);
+        config->addBuildingConductor(cd);
     }
 
     for(pugi::xml_node_iterator it = configNode.child("Buildings").children().begin(); it != configNode.child("Buildings").children().end(); it++){
@@ -896,44 +897,48 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << "    TOLERANCE,";
 
     for(double tolerance : config->getTolerances()){
-        tolerances.append(dbl2str(tolerance)).append(",");
+        tolerances.append(dbl2str(tolerance, true, false)).append(",");
     }
     tolerances.pop_back();
 
     configFile << tolerances << "\n";
 
     for(unsigned int i=1; i<config->getEnergizations().size(); i++){
-        configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << std::to_string(config->getEnergizations().at(i)->getRealPart()) << "," << std::to_string(config->getEnergizations().at(i)->getImaginaryPart()) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
 
-        if(config->getEnergizations().at(i)->getIdentification() == "PhaseA"){
-            configFile << phaseAIter << "\n";
-            phaseAIter++;
+        if(config->getEnergizations().at(i)->getFrequency() == config->getFrequency() || config->getEnergizations().at(i)->getFrequency() == "Both"){
+            configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << dbl2str(round(config->getEnergizations().at(i)->getRealPart(), 1), false, true) << "," << dbl2str(round(config->getEnergizations().at(i)->getImaginaryPart(), 1), false, true) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
+
+            if(config->getEnergizations().at(i)->getIdentification() == "PhaseA"){
+                configFile << phaseAIter << "\n";
+                phaseAIter++;
+            }
+            else if(config->getEnergizations().at(i)->getIdentification() == "PhaseB"){
+                configFile << phaseBIter << "\n";
+                phaseBIter++;
+            }
+            else if(config->getEnergizations().at(i)->getIdentification() == "PhaseC"){
+                configFile << phaseCIter << "\n";
+                phaseCIter++;
+            }
+            else if(config->getEnergizations().at(i)->getIdentification() == "PoleA"){
+                configFile << poleAIter << "\n";
+                poleAIter++;
+            }
+            else if(config->getEnergizations().at(i)->getIdentification() == "PoleB"){
+                configFile << poleBIter << "\n";
+                poleBIter++;
+            }
+            else if(config->getEnergizations().at(i)->getIdentification() == "GND"){
+                configFile << GNDIter << "\n";
+                GNDIter++;
+            }
         }
-        else if(config->getEnergizations().at(i)->getIdentification() == "PhaseB"){
-            configFile << phaseBIter << "\n";
-            phaseBIter++;
-        }
-        else if(config->getEnergizations().at(i)->getIdentification() == "PhaseC"){
-            configFile << phaseCIter << "\n";
-            phaseCIter++;
-        }
-        else if(config->getEnergizations().at(i)->getIdentification() == "PoleA"){
-            configFile << poleAIter << "\n";
-            poleAIter++;
-        }
-        else if(config->getEnergizations().at(i)->getIdentification() == "PoleB"){
-            configFile << poleBIter << "\n";
-            poleBIter++;
-        }
-        else if(config->getEnergizations().at(i)->getIdentification() == "GND"){
-            configFile << GNDIter << "\n";
-            GNDIter++;
-        }
+
     }
 
     configFile << "  CHARACTERISTICS\n";
 
-    for(unsigned int i=2; i<config->getConductorTypes().size()-1; i++){
+    for(unsigned int i=2; i<config->getConductorTypes().size(); i++){
         configFile << "    CONDUCTOR-TYPE," << config->getConductorTypes().at(i)->getType() << "," << dbl2str(config->getConductorTypes().at(i)->getResistivity()) << "," << dbl2str(config->getConductorTypes().at(i)->getPermeability()) << ",,,,,,," << config->getConductorTypes().at(i)->getName() << "\n";
     }
 
@@ -947,12 +952,34 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << "    MAIN-GROUND\n";
     configFile << "\n";
 
-    for(unsigned int i=1; i<=config->getConductors().size(); i++){
-        configFile << "      CONDUCTOR, " << std::to_string(config->getConductors().at(i)->getLeadType()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getConductorType()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getCoating()->getId()) << ", " << std::to_string(config->getConductors().at(i)->getEnergization()->getId()) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().x) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().y) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().z) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().x) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().y) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().z) << "," << dbl2str(config->getConductors().at(i)->getRadius()) << "," << std::to_string(config->getConductors().at(i)->getSubDivision()) << ",0\n";
+    //TEMP ID ATTRIBUTION CENTER
+
+    for(unsigned int i=0; i<config->getLeadTypes().size(); i++){
+        config->getLeadTypes().at(i)->setTempId(i-1);
     }
 
-    for(unsigned int i=1; i<=config->getBuildingConductors().size(); i++){
-        configFile << "      CONDUCTOR, " << std::to_string(config->getBuildingConductors().at(i)->getLeadType()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getConductorType()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getCoating()->getId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getEnergization()->getId()) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getRadius()) << "," << std::to_string(config->getBuildingConductors().at(i)->getSubDivision()) << ",0\n";
+    for(unsigned int i=0; i<config->getCoatings().size(); i++){
+        config->getCoatings().at(i)->setTempId(i-1);
+    }
+
+    for(unsigned int i=0; i<config->getConductorTypes().size(); i++){
+        config->getConductorTypes().at(i)->setTempId(i-1);
+    }
+
+    for(unsigned int i=0; i<config->getEnergizations().size(); i++){
+        config->getEnergizations().at(i)->setTempId(i);
+    }
+
+    for(unsigned int i=0; i<config->getCableTypes().size(); i++){
+        config->getCableTypes().at(i)->setTempId(i);
+    }
+
+    for(unsigned int i=0; i<config->getConductors().size(); i++){
+        configFile << "      CONDUCTOR, " << std::to_string(config->getConductors().at(i)->getLeadType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getConductorType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getCoating()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getEnergization()->getTempId()) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getRadius(), true, true) << "," << std::to_string(config->getConductors().at(i)->getSubDivision()) << ",0\n";
+    }
+
+    for(unsigned int i=0; i<config->getBuildingConductors().size(); i++){
+        configFile << "      CONDUCTOR, " << std::to_string(config->getBuildingConductors().at(i)->getLeadType()->getTempId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getConductorType()->getTempId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getCoating()->getTempId()) << ", " << std::to_string(config->getBuildingConductors().at(i)->getEnergization()->getTempId()) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getStartCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().x) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().y) << "," << dbl2str(config->getBuildingConductors().at(i)->getEndCoords().z) << "," << dbl2str(config->getBuildingConductors().at(i)->getRadius()) << "," << std::to_string(config->getBuildingConductors().at(i)->getSubDivision()) << ",0\n";
     }
 
     configFile << "\n\n";
@@ -1004,7 +1031,7 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
 
     configFile << "  OBSERVATION\n";
 
-    for(unsigned int i=1; i<=config->getProfiles().size(); i++){
+    for(unsigned int i=0; i<config->getProfiles().size(); i++){
         configFile << "    PROFILE, " << std::to_string(config->getProfiles().at(i)->ptNum)
                    << "," << dbl2str(config->getProfiles().at(i)->start.x)
                    << "," << dbl2str(config->getProfiles().at(i)->start.y)
@@ -1027,6 +1054,12 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile.close();
 }
 
+double AppUtils::round(double value, int precision)
+{
+    const int adjustment = pow((double)10,precision);
+    return floor( value*(adjustment) + 0.5 )/adjustment;
+}
+
 /*!
  \brief
 
@@ -1034,7 +1067,7 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
  \param d
  \return std::string
 */
-std::string AppUtils::dbl2str(const double& d)
+std::string AppUtils::dbl2str(const double& d, bool zeroFront, bool zeroBack)
 {
     if(d == 0.0) return "0";
     size_t len = std::snprintf(0, 0, "%.10f", d);
@@ -1047,10 +1080,15 @@ std::string AppUtils::dbl2str(const double& d)
     s.erase(s.find_last_not_of('0') + 1, std::string::npos);
     // remove trailing point
     if(s.back() == '.') {
-        s.pop_back();
+        if(!zeroBack){
+            s.pop_back();
+        }
+        else{
+            s.push_back('0');
+        }
     }
     // remove front zero
-    if(s.front() == '0'){
+    if(s.front() == '0' && !zeroFront){
         s.erase(s.begin());
     }
     return s;
@@ -1401,7 +1439,7 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
         node.append_attribute("Identification").set_value(config->getEnergizations().at(i)->getIdentification().c_str());
         node.append_attribute("Type").set_value(config->getEnergizations().at(i)->getType().c_str());
         node.append_attribute("Frequency").set_value(config->getEnergizations().at(i)->getFrequency().c_str());
-        node.append_attribute("Angle").set_value(dbl2str(config->getEnergizations().at(i)->getAngle()).c_str());
+        node.append_attribute("Angle").set_value(dbl2str(config->getEnergizations().at(i)->getAngle(), true, false).c_str());
         node.append_attribute("Magnitude").set_value(config->getEnergizations().at(i)->getMagnitude());
         node.append_attribute("Locked").set_value(config->getEnergizations().at(i)->isLocked());
     }
@@ -1480,17 +1518,17 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
         }
 
         node = conductorNode.append_child("CoordsStart");
-        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().x, true, true).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().y, true, true).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getStartCoords().z, true, true).c_str());
 
         node = conductorNode.append_child("CoordsEnd");
-        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().x).c_str());
-        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().y).c_str());
-        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().z).c_str());
+        node.append_attribute("X").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().x, true, true).c_str());
+        node.append_attribute("Y").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().y, true, true).c_str());
+        node.append_attribute("Z").set_value(dbl2str(config->getConductors().at(i)->getEndCoords().z, true, true).c_str());
 
         node = conductorNode.append_child("Radius");
-        node.append_attribute("Value").set_value(dbl2str(config->getConductors().at(i)->getRadius()).c_str());
+        node.append_attribute("Value").set_value(dbl2str(config->getConductors().at(i)->getRadius(), true, true).c_str());
     }
 
     //Conductors end-----------------------------------------------------------------

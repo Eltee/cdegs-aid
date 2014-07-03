@@ -101,7 +101,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_settings">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -297,7 +297,7 @@
              <string> (m)</string>
             </property>
             <property name="decimals">
-             <number>4</number>
+             <number>5</number>
             </property>
             <property name="maximum">
              <double>360.000000000000000</double>
@@ -401,6 +401,12 @@
              </item>
              <item row="1" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_endY">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -411,6 +417,12 @@
              </item>
              <item row="2" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_endZ">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -421,6 +433,12 @@
              </item>
              <item row="0" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_endX">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -479,6 +497,12 @@
              </item>
              <item row="0" column="1">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_startX">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -499,6 +523,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_startY">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -519,6 +549,12 @@
              </item>
              <item row="2" column="1">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_cond_startZ">
+               <property name="suffix">
+                <string> (m)</string>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
                <property name="minimum">
                 <double>-9999.000000000000000</double>
                </property>
@@ -553,19 +589,25 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page_buildings">
-      <widget class="QLabel" name="label_18">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>310</y>
-         <width>46</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>bbbbbbbbb</string>
-       </property>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout_23">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton_remove_building">
+         <property name="text">
+          <string>Remove</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_add_building">
+         <property name="text">
+          <string>Add new..</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QComboBox" name="comboBox_buildings"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="page_lTypes">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -1113,7 +1155,7 @@
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton_new_cbType">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

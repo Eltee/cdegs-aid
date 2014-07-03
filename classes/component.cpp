@@ -73,8 +73,12 @@ bool const& Component::compare(Component const* c) const{
     else return false;
 }
 
-double const& Component::getId() const{
+int const& Component::getId() const{
     return m_id;
+}
+
+int const& Component::getTempId() const{
+    return m_tempId;
 }
 
 /*!
@@ -143,8 +147,13 @@ Component& Component::setSaveable(bool const& saveable){
     return *this;
 }
 
-Component& Component::setId(double const& id){
+Component& Component::setId(int const& id){
     m_id = id;
+    return *this;
+}
+
+Component& Component::setTempId(int const& id){
+    m_tempId = id;
     return *this;
 }
 

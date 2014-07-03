@@ -152,14 +152,14 @@ const double& Energization::getAngle() const{
  \fn Energization::getRealPart
  \return const int
 */
-int const& Energization::getRealPart() const{
+double const& Energization::getRealPart() const{
     if(m_angle != 0){
-        int result = static_cast<int>((m_magnitude * std::cos(m_angle * PI / 180)));
+        double result = (m_magnitude * std::cos(m_angle * PI / 180));
         if(result > 0){
-            return result + 1;
+            return result;// + 1;
         }
         else{
-            return result - 1;
+            return result;// - 1;
         }
     }
     else{
@@ -173,9 +173,9 @@ int const& Energization::getRealPart() const{
  \fn Energization::getImaginaryPart
  \return const int
 */
-int const& Energization::getImaginaryPart() const{
+const double& Energization::getImaginaryPart() const{
     if(m_angle != 0){
-        return static_cast<int>((m_magnitude * std::sin(m_angle * PI / 180)));
+        return (m_magnitude * std::sin(m_angle * PI / 180));
     }
     else{
         return 0;

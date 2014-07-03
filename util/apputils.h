@@ -48,6 +48,7 @@
 #include <math.h>
 #include <unordered_map>
 #include <wchar.h>
+#include <iomanip>
 #include "lib/pugixml.hpp"
 #include "classes/project.h"
 #include "classes/configuration.h"
@@ -121,8 +122,9 @@ class AppUtils
 
         std::string my_utf8(const char * str) { return str; }
         std::string my_utf8(const wchar_t * str) { return pugi::as_utf8(str); }
-        std::string dbl2str(const double& d);
+        std::string dbl2str(const double& d, bool zeroFront = false, bool zeroBack = false);
         void append_dbl2str(std::string &s, const double& d);
+        double round( double value, int precision );
     private:
         AppUtils() {}
         AppUtils(AppUtils const&);

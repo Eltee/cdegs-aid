@@ -71,8 +71,8 @@ class Energization : public Component
         std::string const& getType() const;
         std::string const& getFrequency() const;
         double const& getAngle() const;
-        int const & getRealPart() const;
-        int const& getImaginaryPart() const;
+        const double& getRealPart() const;
+        double const& getImaginaryPart() const;
         int const& getMagnitude() const;
     //Getters end------------------------------------------------------
     //Setters start----------------------------------------------------

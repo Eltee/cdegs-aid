@@ -126,7 +126,7 @@ void configuration_widget::initPlot(){
     ui->cond_plot->yAxis->setAntialiased(true);
     ui->cond_plot->yAxis->setTicks(true);
     ui->cond_plot->yAxis->setAutoTicks(true);
-    ui->cond_plot->yAxis->setRange(0, -10);
+    ui->cond_plot->yAxis->setRange(-10, 5);
     ui->cond_plot->yAxis->setRangeReversed(true);
     ui->cond_plot->yAxis->setAutoTickStep(false);
     ui->cond_plot->yAxis->setTickStep(1);
@@ -1169,10 +1169,21 @@ void configuration_widget::refreshBuilding(){
 
 void configuration_widget::refreshPlot(){
     QVector<double> keys, values;
+    int lowX = -4;
+    int lowY = -9;
+    int highX = 4;
+    int highY = 4;
     for(std::shared_ptr<Conductor> cond : configuration->getConductors()){
+        if(cond->getStartCoords().y < lowX) lowX = cond->getStartCoords().y;
+        if(cond->getStartCoords().z < lowY) lowY = cond->getStartCoords().z;
+        if(cond->getEndCoords().y > highX) highX = cond->getEndCoords().y;
+        if(cond->getEndCoords().z > highY) highY = cond->getEndCoords().z;
         keys.push_back(cond->getStartCoords().y);
         values.push_back(cond->getStartCoords().z);
     }
+    ui->cond_plot->xAxis->setRange((lowX - 1), (highX + 1));
+    ui->cond_plot->yAxis->setRange((lowY - 1), (highY + 1));
+    ui->cond_plot->yAxis->setRangeReversed(true);
     ui->cond_plot->graph(0)->setData(keys, values);
     ui->cond_plot->replot();
 }
@@ -1211,7 +1222,7 @@ void configuration_widget::newCond(){
 }
 
 void configuration_widget::removeCond(){
-    std::cout << "Cond Id to remove: " << cond->getId() << std::endl;
+    //std::cout << "Cond Id to remove: " << cond->getId() << std::endl;
     configuration->removeConductor(cond);
     cond.reset();
     populateConductors();
@@ -1241,18 +1252,18 @@ void configuration_widget::changeCondCoat(int index){
 }
 
 void configuration_widget::changeCondCType(int index){
-    std::cout << index << std::endl;
+    //std::cout << index << std::endl;
     if(cond && index > 0){
-        std::cout << configuration->getConductorTypes().at(index-1)->getName() << std::endl;
+        //std::cout << configuration->getConductorTypes().at(index-1)->getName() << std::endl;
         cond->setConductorType(configuration->getConductorTypes().at(index-1));
         refresh();
     }
 }
 
 void configuration_widget::changeCondEner(int index){
-    std::cout << index << std::endl;
+    //std::cout << index << std::endl;
     if(cond && index > 0){
-        std::cout << configuration->getEnergizations().at(index-1)->getIdentification() << std::endl;
+        //std::cout << configuration->getEnergizations().at(index-1)->getIdentification() << std::endl;
         cond->setEnergization(configuration->getEnergizations().at(index-1));
         refresh();
     }

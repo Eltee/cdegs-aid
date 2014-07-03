@@ -103,7 +103,7 @@ class Conductor : public Component
         std::shared_ptr<Energization> m_energization;
         coords m_startCoords, m_endCoords;
         double m_radius;
-        int m_subDivision;
+        int m_subDivision = 1;
         std::shared_ptr<CableType> m_cableType;
 };
 
