@@ -156,13 +156,16 @@ double const& Energization::getRealPart() const{
     if(m_angle != 0){
         double result = (m_magnitude * std::cos(m_angle * PI / 180));
         if(result > 0){
+            std::cout << result << std::endl;
             return result;// + 1;
         }
         else{
+            std::cout << result << std::endl;
             return result;// - 1;
         }
     }
     else{
+        std::cout << m_magnitude << std::endl;
         return m_magnitude;
     }
 }
@@ -175,6 +178,7 @@ double const& Energization::getRealPart() const{
 */
 const double& Energization::getImaginaryPart() const{
     if(m_angle != 0){
+        std::cout << (m_magnitude * std::sin(m_angle * PI / 180)) << std::endl;
         return (m_magnitude * std::sin(m_angle * PI / 180));
     }
     else{

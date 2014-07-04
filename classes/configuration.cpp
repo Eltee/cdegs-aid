@@ -269,7 +269,7 @@ Configuration& Configuration::addLeadType(std::shared_ptr<LeadType> leadType){
     bool alreadyPresent=false;
 
     for(auto& lType : m_leadTypes){
-        if(lType->compare(leadType.get())) alreadyPresent = true;
+        if(lType->getId() == leadType->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_leadTypes.push_back(leadType);
@@ -292,7 +292,7 @@ int Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
 
     while(!found && it != m_leadTypes.end()){
         std::shared_ptr<LeadType> sptr = *it;
-        if(sptr->compare(leadType.get())){
+        if(sptr->getId() == leadType->getId()){
             found = true;
         }
         else{
@@ -303,11 +303,11 @@ int Configuration::removeLeadType(std::shared_ptr<LeadType> leadType){
     if(found){
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getLeadType()->compare(leadType.get())) errorCode = 1;
+                if(cond->getLeadType()->getId() == leadType->getId()) errorCode = 1;
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getLeadType()->compare(leadType.get())) errorCode = 1;
+                if(cond->getLeadType()->getId() == leadType->getId()) errorCode = 1;
             }
 
             if(errorCode == 0) m_leadTypes.erase(it);
@@ -331,7 +331,7 @@ int Configuration::replaceLeadType(std::shared_ptr<LeadType> leadType){
 
     while(!found && it != m_leadTypes.end()){
         std::shared_ptr<LeadType> sptr = *it;
-        if(sptr->compare(leadType.get())){
+        if(sptr->getId() == leadType->getId()){
             found = true;
         }
         else{
@@ -347,13 +347,13 @@ int Configuration::replaceLeadType(std::shared_ptr<LeadType> leadType){
 
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getLeadType()->compare(leadType.get())){
+                if(cond->getLeadType()->getId() == leadType->getId()){
                     cond->setLeadType(*it);
                 }
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getLeadType()->compare(leadType.get())){
+                if(cond->getLeadType()->getId() == leadType->getId()){
                     cond->setLeadType(*it);
                 }
             }
@@ -378,7 +378,7 @@ Configuration& Configuration::addCoating(std::shared_ptr<Coating> coating){
     bool alreadyPresent=false;
 
     for(auto& coat : m_coatings){
-        if(coat->compare(coating.get())) alreadyPresent = true;
+        if(coat->getId() == coating->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_coatings.push_back(coating);
@@ -401,7 +401,7 @@ int Configuration::removeCoating(std::shared_ptr<Coating> coating){
 
     while(!found && it != m_coatings.end()){
         std::shared_ptr<Coating> sptr = *it;
-        if(sptr->compare(coating.get())){
+        if(sptr->getId() == coating->getId()){
             found = true;
         }
         else{
@@ -412,11 +412,11 @@ int Configuration::removeCoating(std::shared_ptr<Coating> coating){
     if(found){
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getCoating()->compare(coating.get())) errorCode = 1;
+                if(cond->getCoating()->getId() == coating->getId()) errorCode = 1;
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getCoating()->compare(coating.get())) errorCode = 1;
+                if(cond->getCoating()->getId() == coating->getId()) errorCode = 1;
             }
 
             if(errorCode == 0) m_coatings.erase(it);
@@ -440,7 +440,7 @@ int Configuration::replaceCoating(std::shared_ptr<Coating> coating){
 
     while(!found && it != m_coatings.end()){
         std::shared_ptr<Coating> sptr = *it;
-        if(sptr->compare(coating.get())){
+        if(sptr->getId() == coating->getId()){
             found = true;
         }
         else{
@@ -456,13 +456,13 @@ int Configuration::replaceCoating(std::shared_ptr<Coating> coating){
 
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getCoating()->compare(coating.get())){
+                if(cond->getCoating()->getId() == coating->getId()){
                     cond->setCoating(*it);
                 }
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getCoating()->compare(coating.get())){
+                if(cond->getCoating()->getId() == coating->getId()){
                     cond->setCoating(*it);
                 }
             }
@@ -487,7 +487,7 @@ Configuration& Configuration::addEnergization(std::shared_ptr<Energization> ener
     bool alreadyPresent=false;
 
     for(auto& ener : m_energizations){
-        if(ener->compare(energization.get())) alreadyPresent = true;
+        if(ener->getId() == energization->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_energizations.push_back(energization);
@@ -510,7 +510,7 @@ int Configuration::removeEnergization(std::shared_ptr<Energization> energization
 
     while(!found && it != m_energizations.end()){
         std::shared_ptr<Energization> sptr = *it;
-        if(sptr->compare(energization.get())){
+        if(sptr->getId() == energization->getId()){
             found = true;
         }
         else{
@@ -521,11 +521,11 @@ int Configuration::removeEnergization(std::shared_ptr<Energization> energization
     if(found){
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getEnergization()->compare(energization.get())) errorCode = 1;
+                if(cond->getEnergization()->getId() == energization->getId()) errorCode = 1;
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getEnergization()->compare(energization.get())) errorCode = 1;
+                if(cond->getEnergization()->getId() == energization->getId()) errorCode = 1;
             }
 
             if(errorCode == 0) m_energizations.erase(it);
@@ -549,7 +549,7 @@ int Configuration::replaceEnergization(std::shared_ptr<Energization> energizatio
 
     while(!found && it != m_energizations.end()){
         std::shared_ptr<Energization> sptr = *it;
-        if(sptr->compare(energization.get())){
+        if(sptr->getId() == energization->getId()){
             found = true;
         }
         else{
@@ -565,13 +565,15 @@ int Configuration::replaceEnergization(std::shared_ptr<Energization> energizatio
 
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getEnergization()->compare(energization.get())){
+                if(cond->getEnergization()->getId() == energization->getId()){
+                    std::cout << "if this happens this is it" << std::endl;
+                    std::cout << cond->getEnergization()->getId() << " and " << energization->getId() << std::endl;
                     cond->setEnergization(*it);
                 }
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getEnergization()->compare(energization.get())){
+                if(cond->getEnergization()->getId() == energization->getId()){
                     cond->setEnergization(*it);
                 }
             }
@@ -633,7 +635,7 @@ Configuration& Configuration::addConductorType(std::shared_ptr<ConductorType> co
     bool alreadyPresent=false;
 
     for(auto& cType : m_conductorTypes){
-        if(cType->compare(conductorType.get())) alreadyPresent = true;
+        if(cType->getId() == conductorType->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_conductorTypes.push_back(conductorType);
@@ -656,7 +658,7 @@ int Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorT
 
     while(!found && it != m_conductorTypes.end()){
         std::shared_ptr<ConductorType> sptr = *it;
-        if(sptr->compare(conductorType.get())){
+        if(sptr->getId() == conductorType->getId()){
             found = true;
         }
         else{
@@ -667,11 +669,11 @@ int Configuration::removeConductorType(std::shared_ptr<ConductorType> conductorT
     if(found){
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getConductorType()->compare(conductorType.get())) errorCode = 1;
+                if(cond->getConductorType()->getId() == conductorType->getId()) errorCode = 1;
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getConductorType()->compare(conductorType.get())) errorCode = 1;
+                if(cond->getConductorType()->getId() == conductorType->getId()) errorCode = 1;
             }
 
             if(errorCode == 0) m_conductorTypes.erase(it);
@@ -695,7 +697,7 @@ int Configuration::replaceConductorType(std::shared_ptr<ConductorType> conductor
 
     while(!found && it != m_conductorTypes.end()){
         std::shared_ptr<ConductorType> sptr = *it;
-        if(sptr->compare(conductorType.get())){
+        if(sptr->getId() == conductorType->getId()){
             found = true;
         }
         else{
@@ -711,13 +713,13 @@ int Configuration::replaceConductorType(std::shared_ptr<ConductorType> conductor
 
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getConductorType()->compare(conductorType.get())){
+                if(cond->getConductorType()->getId() == conductorType->getId()){
                     cond->setConductorType(*it);
                 }
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getConductorType()->compare(conductorType.get())){
+                if(cond->getConductorType()->getId() == conductorType->getId()){
                     cond->setConductorType(*it);
                 }
             }
@@ -742,7 +744,7 @@ Configuration& Configuration::addConductor(std::shared_ptr<Conductor> conductor)
     bool alreadyPresent=false;
 
     for(auto& cond : m_conductors){
-        if(cond->compare(conductor.get())) alreadyPresent = true;
+        if(cond->getId() == conductor->getId()) alreadyPresent = true;
     }
 
     std::cout << "adding conductor. alreadyPresent: " << alreadyPresent << std::endl;
@@ -767,7 +769,7 @@ int Configuration::removeConductor(std::shared_ptr<Conductor> conductor){
 
     while(!found && it != m_conductors.end()){
         std::shared_ptr<Conductor> sptr = *it;
-        if(sptr->compare(conductor.get())){
+        if(sptr->getId() == conductor->getId()){
             found = true;
         }
         else{
@@ -793,7 +795,7 @@ int Configuration::replaceConductor(std::shared_ptr<Conductor> conductor){
 
     while(!found && it != m_conductors.end()){
         std::shared_ptr<Conductor> sptr = *it;
-        if(sptr->compare(conductor.get())){
+        if(sptr->getId() == conductor->getId()){
             found = true;
         }
         else{
@@ -826,7 +828,7 @@ Configuration& Configuration::addBuildingConductor(std::shared_ptr<Conductor> co
     bool alreadyPresent=false;
 
     for(auto& cond : m_buildingConductors){
-        if(cond->compare(conductor.get())) alreadyPresent = true;
+        if(cond->getId() == conductor->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_buildingConductors.push_back(conductor);
@@ -849,7 +851,7 @@ int Configuration::removeBuildingConductor(std::shared_ptr<Conductor> conductor)
 
     while(!found && it != m_buildingConductors.end()){
         std::shared_ptr<Conductor> sptr = *it;
-        if(sptr->compare(conductor.get())){
+        if(sptr->getId() == conductor->getId()){
             found = true;
         }
         else{
@@ -875,7 +877,7 @@ int Configuration::replaceBuildingConductor(std::shared_ptr<Conductor> conductor
 
     while(!found && it != m_buildingConductors.end()){
         std::shared_ptr<Conductor> sptr = *it;
-        if(sptr->compare(conductor.get())){
+        if(sptr->getId() == conductor->getId()){
             found = true;
         }
         else{
@@ -908,7 +910,7 @@ Configuration& Configuration::addBuilding(std::shared_ptr<Building> building){
     bool alreadyPresent=false;
 
     for(auto& build : m_buildings){
-        if(build->compare(building.get())) alreadyPresent = true;
+        if(build->getId() == building->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_buildings.push_back(building);
@@ -931,7 +933,7 @@ int Configuration::removeBuilding(std::shared_ptr<Building> building){
 
     while(!found && it != m_buildings.end()){
         std::shared_ptr<Building> sptr = *it;
-        if(sptr->compare(building.get())){
+        if(sptr->getId() == building->getId()){
             found = true;
         }
         else{
@@ -957,7 +959,7 @@ int Configuration::replaceBuilding(std::shared_ptr<Building> building){
 
     while(!found && it != m_buildings.end()){
         std::shared_ptr<Building> sptr = *it;
-        if(sptr->compare(building.get())){
+        if(sptr->getId() == building->getId()){
             found = true;
         }
         else{
@@ -990,7 +992,7 @@ Configuration& Configuration::addProfile(std::shared_ptr<profile> p){
     bool alreadyPresent=false;
 
     for(auto& pro : m_profiles){
-        if(pro->compare(p.get())) alreadyPresent = true;
+        if(pro->id == p->id) alreadyPresent = true;
     }
 
     if(!alreadyPresent){
@@ -1016,7 +1018,7 @@ int Configuration::removeProfile(std::shared_ptr<profile> p){
 
     while(!found && it != m_profiles.end()){
         std::shared_ptr<profile> sptr = *it;
-        if(sptr->compare(p.get())){
+        if(sptr->id == p->id){
             found = true;
         }
         else{
@@ -1042,7 +1044,7 @@ int Configuration::replaceProfile(std::shared_ptr<profile> p){
 
     while(!found && it != m_profiles.end()){
         std::shared_ptr<profile> sptr = *it;
-        if(sptr->compare(p.get())){
+        if(sptr->id == p->id){
             found = true;
         }
         else{
@@ -1075,7 +1077,7 @@ Configuration& Configuration::addCableType(std::shared_ptr<CableType> cableType)
     bool alreadyPresent=false;
 
     for(auto& cbType : m_cableTypes){
-        if(cbType->compare(cableType.get())) alreadyPresent = true;
+        if(cbType->getId() == cableType->getId()) alreadyPresent = true;
     }
 
     if(!alreadyPresent) m_cableTypes.push_back(cableType);
@@ -1098,7 +1100,7 @@ int Configuration::removeCableType(std::shared_ptr<CableType> cableType){
 
     while(!found && it != m_cableTypes.end()){
         std::shared_ptr<CableType> sptr = *it;
-        if(sptr->compare(cableType.get())){
+        if(sptr->getId() == cableType->getId()){
             found = true;
         }
         else{
@@ -1109,11 +1111,11 @@ int Configuration::removeCableType(std::shared_ptr<CableType> cableType){
     if(found){
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getCableType()->compare(cableType.get())) errorCode = 1;
+                if(cond->getCableType()->getId() == cableType->getId()) errorCode = 1;
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getCableType()->compare(cableType.get())) errorCode = 1;
+                if(cond->getCableType()->getId() == cableType->getId()) errorCode = 1;
             }
 
             if(errorCode == 0) m_cableTypes.erase(it);
@@ -1137,7 +1139,7 @@ int Configuration::replaceCableType(std::shared_ptr<CableType> cableType){
 
     while(!found && it != m_cableTypes.end()){
         std::shared_ptr<CableType> sptr = *it;
-        if(sptr->compare(cableType.get())){
+        if(sptr->getId() == cableType->getId()){
             found = true;
         }
         else{
@@ -1153,13 +1155,13 @@ int Configuration::replaceCableType(std::shared_ptr<CableType> cableType){
 
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
-                if(cond->getCableType()->compare(cableType.get())){
+                if(cond->getCableType()->getId() == cableType->getId()){
                     cond->setCableType(*it);
                 }
             }
 
             for(auto& cond : m_buildingConductors){
-                if(cond->getCableType()->compare(cableType.get())){
+                if(cond->getCableType()->getId() == cableType->getId()){
                     cond->setCableType(*it);
                 }
             }
@@ -1343,8 +1345,6 @@ int const& Configuration::getId() const{
 bool Configuration::validateConfig(){
     bool valid = true;
 
-    std::cout << "Current step: init. Status: " << valid << std::endl;
-
     if(m_units != "Metric" && m_units != "Imperial") valid = false;
     if(m_identifier == "" || QString::fromStdString(m_identifier).count(" ") == m_identifier.length()) valid = false;
     if(m_frequency != "AC" && m_frequency != "DC") valid = false;
@@ -1367,8 +1367,10 @@ bool Configuration::validateConfig(){
     for(std::shared_ptr<Conductor> cond : m_conductors){
         int validity = 0;
 
+        std::cout << "Current step: init. Status: " << valid << std::endl;
+
         for(auto& lType : m_leadTypes){
-            if(lType->compare(cond->getLeadType().get())) validity++;
+            if(lType->getId() == cond->getLeadType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
@@ -1376,7 +1378,7 @@ bool Configuration::validateConfig(){
         std::cout << "Current step: lTypes. Status: " << valid << std::endl;
 
         for(auto& coat : m_coatings){
-            if(coat->compare(cond->getCoating().get())) validity++;
+            if(coat->getId() == cond->getCoating()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
@@ -1384,9 +1386,12 @@ bool Configuration::validateConfig(){
         std::cout << "Current step: coats. Status: " << valid << std::endl;
 
         for(auto& ener : m_energizations){
-            if(ener->compare(cond->getEnergization().get())){
+            if(ener->getId() == cond->getEnergization()->getId()){
                 validity++;
-                if(ener->getFrequency() != m_frequency) valid = false;
+                std::cout << "could it be? : " << valid << std::endl;
+                std::cout << "ener freq: " << ener->getFrequency() << std::endl << "config freq: " << m_frequency << std::endl;
+                if(ener->getFrequency() != m_frequency && ener->getFrequency() != "Both") valid = false;
+                std::cout << "is it???? : " << valid << std::endl;
             }
         }
         if(validity <= 0) valid = false;
@@ -1395,7 +1400,7 @@ bool Configuration::validateConfig(){
         std::cout << "Current step: eners. Status: " << valid << std::endl;
 
         for(auto& cType : m_conductorTypes){
-            if(cType->compare(cond->getConductorType().get())) validity++;
+            if(cType->getId() == cond->getConductorType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
@@ -1403,7 +1408,7 @@ bool Configuration::validateConfig(){
         std::cout << "Current step: cTypes. Status: " << valid << std::endl;
 
         for(auto& cbType : m_cableTypes){
-            if(cbType->compare(cond->getCableType().get())) validity++;
+            if(cbType->getId() == cond->getCableType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
@@ -1423,19 +1428,19 @@ bool Configuration::validateConfig(){
         int validity = 0;
 
         for(auto& lType : m_leadTypes){
-            if(lType->compare(cond->getLeadType().get())) validity++;
+            if(lType->getId() == cond->getLeadType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
 
         for(auto& coat : m_coatings){
-            if(coat->compare(cond->getCoating().get())) validity++;
+            if(coat->getId() == cond->getCoating()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
 
         for(auto& ener : m_energizations){
-            if(ener->compare(cond->getEnergization().get())){
+            if(ener->getId() == cond->getEnergization()->getId()){
                 validity++;
                 if(ener->getFrequency() != m_frequency) valid = false;
             }
@@ -1444,13 +1449,13 @@ bool Configuration::validateConfig(){
         validity = 0;
 
         for(auto& cType : m_conductorTypes){
-            if(cType->compare(cond->getConductorType().get())) validity++;
+            if(cType->getId() == cond->getConductorType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
 
         for(auto& cbType : m_cableTypes){
-            if(cbType->compare(cond->getCableType().get())) validity++;
+            if(cbType->getId() == cond->getCableType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;

@@ -69,8 +69,12 @@ Component::Component(std::string const& name, bool const& locked, bool const& sa
 Component::~Component(){}
 
 bool const& Component::compare(Component const* c) const{
-    if(m_id == c->getId()) return true;
-    else return false;
+    if(m_id == c->getId()){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 int const& Component::getId() const{
