@@ -56,7 +56,7 @@ Configuration::Configuration(){
  \param units
  \param frequency
 */
-Configuration::Configuration(std::string const& identifier, std::string const& units, std::string const& frequency){
+Configuration::Configuration(const std::string identifier, const std::string units, const std::string frequency){
     m_id = 0;
     m_identifier = identifier;
     m_units = units;
@@ -216,7 +216,7 @@ Configuration& Configuration::operator=(Configuration const* config){
  \param identifier
  \return Configuration
 */
-Configuration& Configuration::setIdentifier(std::string const& identifier){
+Configuration& Configuration::setIdentifier(std::string const identifier){
     m_identifier = identifier;
     return *this;
 }
@@ -228,7 +228,7 @@ Configuration& Configuration::setIdentifier(std::string const& identifier){
  \param units
  \return Configuration
 */
-Configuration& Configuration::setUnits(std::string const& units){
+Configuration& Configuration::setUnits(std::string const units){
     m_units = units;
     return *this;
 }
@@ -240,7 +240,7 @@ Configuration& Configuration::setUnits(std::string const& units){
  \param frequency
  \return Configuration
 */
-Configuration& Configuration::setFrequency(std::string const& frequency){
+Configuration& Configuration::setFrequency(std::string const frequency){
     m_frequency = frequency;
     return *this;
 }
@@ -566,8 +566,6 @@ int Configuration::replaceEnergization(std::shared_ptr<Energization> energizatio
         if(!m_conductors.empty() || !m_buildingConductors.empty()){
             for(auto& cond : m_conductors){
                 if(cond->getEnergization()->getId() == energization->getId()){
-                    std::cout << "if this happens this is it" << std::endl;
-                    std::cout << cond->getEnergization()->getId() << " and " << energization->getId() << std::endl;
                     cond->setEnergization(*it);
                 }
             }
@@ -593,7 +591,7 @@ int Configuration::replaceEnergization(std::shared_ptr<Energization> energizatio
  \param tolerance
  \return Configuration
 */
-Configuration& Configuration::addTolerance(double const& tolerance){
+Configuration& Configuration::addTolerance(double const tolerance){
     m_tolerances.push_back(tolerance);
 
     return *this;
@@ -606,7 +604,7 @@ Configuration& Configuration::addTolerance(double const& tolerance){
  \param tolerance
  \return Configuration
 */
-Configuration& Configuration::removeTolerance(double const& tolerance){
+Configuration& Configuration::removeTolerance(double const tolerance){
     bool done;
 
     do{
@@ -746,8 +744,6 @@ Configuration& Configuration::addConductor(std::shared_ptr<Conductor> conductor)
     for(auto& cond : m_conductors){
         if(cond->getId() == conductor->getId()) alreadyPresent = true;
     }
-
-    std::cout << "adding conductor. alreadyPresent: " << alreadyPresent << std::endl;
 
     if(!alreadyPresent) m_conductors.push_back(conductor);
 
@@ -1190,7 +1186,7 @@ computations& Configuration::setComputations(){
  \fn Configuration::getIdentifier
  \return const std::string
 */
-std::string const& Configuration::getIdentifier() const{
+std::string Configuration::getIdentifier() const{
     return m_identifier;
 }
 
@@ -1200,7 +1196,7 @@ std::string const& Configuration::getIdentifier() const{
  \fn Configuration::getUnits
  \return const std::string
 */
-std::string const& Configuration::getUnits() const{
+std::string Configuration::getUnits() const{
     return m_units;
 }
 
@@ -1210,7 +1206,7 @@ std::string const& Configuration::getUnits() const{
  \fn Configuration::getFrequency
  \return const std::string
 */
-std::string const& Configuration::getFrequency() const{
+std::string Configuration::getFrequency() const{
     return m_frequency;
 }
 
@@ -1324,21 +1320,21 @@ std::vector<std::shared_ptr<CableType>> Configuration::getCableTypes() const{
     return m_cableTypes;
 }
 
-Configuration& Configuration::setModified(bool const& modified){
+Configuration& Configuration::setModified(bool const modified){
     m_modified = modified;
     return *this;
 }
 
-bool const& Configuration::isModified() const{
+bool Configuration::isModified() const{
     return m_modified;
 }
 
-Configuration& Configuration::setId(int const& i){
+Configuration& Configuration::setId(int const i){
     m_id = i;
     return *this;
 }
 
-int const& Configuration::getId() const{
+int Configuration::getId() const{
     return m_id;
 }
 
@@ -1346,7 +1342,11 @@ bool Configuration::validateConfig(){
     bool valid = true;
 
     if(m_units != "Metric" && m_units != "Imperial") valid = false;
+
+#pragma GCC diagnostic ignored "-Wsign-compare"
     if(m_identifier == "" || QString::fromStdString(m_identifier).count(" ") == m_identifier.length()) valid = false;
+#pragma GCC diagnostic pop
+
     if(m_frequency != "AC" && m_frequency != "DC") valid = false;
 
     if(m_energizations.size() <= 1) valid = false;
@@ -1367,15 +1367,11 @@ bool Configuration::validateConfig(){
     for(std::shared_ptr<Conductor> cond : m_conductors){
         int validity = 0;
 
-        std::cout << "Current step: init. Status: " << valid << std::endl;
-
         for(auto& lType : m_leadTypes){
             if(lType->getId() == cond->getLeadType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
-
-        std::cout << "Current step: lTypes. Status: " << valid << std::endl;
 
         for(auto& coat : m_coatings){
             if(coat->getId() == cond->getCoating()->getId()) validity++;
@@ -1383,21 +1379,14 @@ bool Configuration::validateConfig(){
         if(validity <= 0) valid = false;
         validity = 0;
 
-        std::cout << "Current step: coats. Status: " << valid << std::endl;
-
         for(auto& ener : m_energizations){
             if(ener->getId() == cond->getEnergization()->getId()){
                 validity++;
-                std::cout << "could it be? : " << valid << std::endl;
-                std::cout << "ener freq: " << ener->getFrequency() << std::endl << "config freq: " << m_frequency << std::endl;
                 if(ener->getFrequency() != m_frequency && ener->getFrequency() != "Both") valid = false;
-                std::cout << "is it???? : " << valid << std::endl;
             }
         }
         if(validity <= 0) valid = false;
         validity = 0;
-
-        std::cout << "Current step: eners. Status: " << valid << std::endl;
 
         for(auto& cType : m_conductorTypes){
             if(cType->getId() == cond->getConductorType()->getId()) validity++;
@@ -1405,26 +1394,14 @@ bool Configuration::validateConfig(){
         if(validity <= 0) valid = false;
         validity = 0;
 
-        std::cout << "Current step: cTypes. Status: " << valid << std::endl;
-
         for(auto& cbType : m_cableTypes){
             if(cbType->getId() == cond->getCableType()->getId()) validity++;
         }
         if(validity <= 0) valid = false;
         validity = 0;
-
-        std::cout << "Current step: cbTypes. Status: " << valid << std::endl;
     }
 
-    for(auto& cond : m_buildingConductors){
-        if(cond->getRadius() <= 0) valid = false;
-        if(cond->getStartCoords().x < -9999 || cond->getStartCoords().x > 9999) valid = false;
-        if(cond->getStartCoords().y < -9999 || cond->getStartCoords().y > 9999) valid = false;
-        if(cond->getStartCoords().z < -9999 || cond->getStartCoords().z > 9999) valid = false;
-        if(cond->getEndCoords().x < -9999 || cond->getEndCoords().x > 9999) valid = false;
-        if(cond->getEndCoords().y < -9999 || cond->getEndCoords().y > 9999) valid = false;
-        if(cond->getEndCoords().z < -9999 || cond->getEndCoords().z > 9999) valid = false;
-
+    for(std::shared_ptr<Conductor> cond : m_buildingConductors){
         int validity = 0;
 
         for(auto& lType : m_leadTypes){
@@ -1442,7 +1419,7 @@ bool Configuration::validateConfig(){
         for(auto& ener : m_energizations){
             if(ener->getId() == cond->getEnergization()->getId()){
                 validity++;
-                if(ener->getFrequency() != m_frequency) valid = false;
+                if(ener->getFrequency() != m_frequency && ener->getFrequency() != "Both") valid = false;
             }
         }
         if(validity <= 0) valid = false;
@@ -1549,4 +1526,18 @@ std::shared_ptr<CableType> Configuration::getCableType(double id) const{
 double Configuration::componentIdGenerator(){
     m_componentId += 1;
     return m_componentId;
+}
+
+void Configuration::updateBuildingConductors(std::shared_ptr<Building> build){
+    m_buildingConductors = build->generateConductors();
+
+    for(std::shared_ptr<Conductor> cond : m_buildingConductors){
+        if(cond->getId() < 0){
+            cond->setId(componentIdGenerator());
+        }
+    }
+}
+
+void Configuration::clearBuildingConductors(){
+    m_buildingConductors.clear();
 }

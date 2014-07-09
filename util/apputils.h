@@ -87,18 +87,18 @@ class AppUtils
                                               // Instantiated on first use.
             return instance;
         }
-        void saveProject(const Project& project, std::string& path); //done
+        void saveProject(const Project& project, std::string path); //done
         void saveProject(const Project& project); //done
         void saveConfiguration(const Configuration* config, pugi::xml_node& parent); //done
-        void exportConfiguration(const Configuration* config, const std::string& fullPath); //done
+        void exportConfiguration(const Configuration* config, const std::string fullPath); //done
 
         std::vector<double> drange(double start, double end, double step);
         std::string getOsName();
         double pi() { return std::atan(1)*4; }
-        double radians(const double& d);
-        double degrees(const double& r);
+        double radians(const double d);
+        double degrees(const double r);
         std::string stringToUpper(std::string strToConvert);
-        inline const char* BoolToString(const bool& b) const;
+        inline const char* BoolToString(const bool b) const;
         void readXML(const pugi::xml_node& toIter, int iteration=0);
 
         std::string uniqueIdGenerator(); //done
@@ -107,23 +107,23 @@ class AppUtils
 
         void loadStylesheets();
         std::unordered_map<std::string, QString> const& getStyleSheets() const;
-        QString const& getStyle(std::string name) const;
+        QString const getStyle(std::string name) const;
         std::string getAppData();
-        std::string getPath(const QString& folderPath, const QString& filename);
-        std::string getPath(const QString& filename);
+        std::string getPath(const QString folderPath, const QString filename);
+        std::string getPath(const QString filename);
 
         void setDefaultConfig(); //done
         void loadDefaultConfig(); //done
         void generateDefaultConfig(); //done
         Configuration const* getDefaultConfig() const; //done
         Configuration* loadConfig(pugi::xml_node configNode) const; //done
-        Project* loadProject(const QString& folder, const QString& filename); //done
+        Project* loadProject(const QString folder, const QString filename); //done
         Project* loadProject(const wchar_t* fullPath); //done
 
         std::string my_utf8(const char * str) { return str; }
         std::string my_utf8(const wchar_t * str) { return pugi::as_utf8(str); }
-        std::string dbl2str(const double& d, bool zeroFront = false, bool zeroBack = false);
-        void append_dbl2str(std::string &s, const double& d);
+        std::string dbl2str(const double d, bool zeroFront = false, bool zeroBack = false);
+        void append_dbl2str(std::string s, const double d);
         double round( double value, int precision );
     private:
         AppUtils() {}

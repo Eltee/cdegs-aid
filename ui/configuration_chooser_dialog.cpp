@@ -53,7 +53,7 @@ configuration_chooser_dialog::configuration_chooser_dialog(QWidget *parent, std:
 void configuration_chooser_dialog::populateModel(){
     QStringList stringList;
 
-    for(int i = 1; i<= m_project->getConfigurations().size(); i++){
+    for(unsigned int i = 1; i<= m_project->getConfigurations().size(); i++){
         QString text = QString::number(i) + " - " + QString::fromStdString(m_project->getConfigurations().at(i)->getIdentifier());
         stringList.push_back(text);
     }

@@ -57,7 +57,7 @@ class Coating : public Component
 {
     public:
         Coating();
-        Coating(std::string const& name);
+        Coating(std::string const name);
         Coating(Coating const* coat);
         ~Coating();
         bool operator==(Coating const* coat);

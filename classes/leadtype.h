@@ -56,7 +56,7 @@ class LeadType : public Component
 {
     public:
         LeadType();
-        LeadType(std::string const& name);
+        LeadType(std::string const name);
         LeadType(LeadType const* lType);
         ~LeadType();
         bool operator==(LeadType const* lType);

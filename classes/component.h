@@ -52,22 +52,22 @@ class Component
 {
     public:
         Component();
-        Component(std::string const& name, bool const& locked, bool const& saveable);
+        Component(const std::string name, const bool locked, const bool saveable);
         ~Component();
-        bool const& compare(const Component* c) const;
+        bool compare(const Component* c) const;
     //Getters start-----------------------------------------------
-        int const& getId() const;
-        int const& getTempId() const;
-        std::string const& getName() const;
-        bool const& isLocked() const;
-        bool const& isSaveable() const;
+        int getId() const;
+        int getTempId() const;
+        std::string getName() const;
+        bool isLocked() const;
+        bool isSaveable() const;
     //Getters end-------------------------------------------------
     //Setters start-----------------------------------------------
-        Component& setId(int const& id);
-        Component& setTempId(int const& id);
-        Component& setName(std::string const& name);
-        Component& setLocked(bool const& locked);
-        Component& setSaveable(bool const& saveable);
+        Component& setId(int const id);
+        Component& setTempId(int const id);
+        Component& setName(std::string const name);
+        Component& setLocked(bool const locked);
+        Component& setSaveable(bool const saveable);
     //Setters end-------------------------------------------------
     protected:
         int m_id = -2;

@@ -43,9 +43,9 @@
 Building::Building() : Component("", false, true){
     m_faces = 2;
     m_height = 6.0;
-    m_distanceMin = 4.0;
-    m_distanceMax = 6.0;
-    m_step = 0.5;
+    m_distance = 4.0;
+    m_length = 6.0;
+    m_step = 0.01;
 }
 
 /*!
@@ -58,11 +58,10 @@ Building::Building() : Component("", false, true){
  \param distanceMax
  \param step
 */
-Building::Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step) : Component("", false, true){
+Building::Building(const int faces, const double height, const double distance, const double step) : Component("", false, true){
     m_faces = faces;
     m_height = height;
-    m_distanceMin = distanceMin;
-    m_distanceMax = distanceMax;
+    m_distance = distance;
     m_step = step;
 }
 
@@ -73,9 +72,16 @@ Building::Building(Building const* build){
     m_saveable = build->isSaveable();
     m_faces = build->getFaces();
     m_height = build->getHeight();
-    m_distanceMin = build->getDistanceMin();
-    m_distanceMax = build->getDistanceMax();
+    m_distance = build->getDistance();
+    m_length = build->getLength();
+    m_width = build->getWidth();
+    m_radius = build->getRadius();
     m_step = build->getStep();
+    m_leadType = build->getLeadType();
+    m_conductorType = build->getConductorType();
+    m_coating = build->getCoating();
+    m_energization = build->getEnergization();
+    m_cableType = build->getCableType();
 }
 
 /*!
@@ -93,9 +99,16 @@ bool Building::operator==(Building const* build){
     if(m_saveable != build->isSaveable()) result = false;
     if(m_faces != build->getFaces()) result = false;
     if(m_height != build->getHeight()) result = false;
-    if(m_distanceMin != build->getDistanceMin()) result = false;
-    if(m_distanceMax != build->getDistanceMax()) result = false;
+    if(m_width != build->getWidth()) result = false;
+    if(m_distance != build->getDistance()) result = false;
+    if(m_length != build->getLength()) result = false;
     if(m_step != build->getStep()) result = false;
+    if(m_radius != build->getRadius()) result = false;
+    if(m_leadType->getId() != build->getLeadType()->getId()) result = false;
+    if(m_conductorType->getId() != build->getConductorType()->getId()) result = false;
+    if(m_coating->getId() != build->getCoating()->getId()) result = false;
+    if(m_energization->getId() != build->getEnergization()->getId()) result = false;
+    if(m_cableType->getId() != build->getCableType()->getId()) result = false;
     return result;
 }
 
@@ -111,7 +124,7 @@ bool Building::operator!=(Building const* build){
  \fn Building::getFaces
  \return const int
 */
-int const& Building::getFaces() const{
+int Building::getFaces() const{
     return m_faces;
 }
 
@@ -121,7 +134,7 @@ int const& Building::getFaces() const{
  \fn Building::getHeight
  \return const double
 */
-double const& Building::getHeight() const{
+int Building::getHeight() const{
     return m_height;
 }
 
@@ -131,8 +144,8 @@ double const& Building::getHeight() const{
  \fn Building::getDistanceMin
  \return const double
 */
-double const& Building::getDistanceMin() const{
-    return m_distanceMin;
+int Building::getDistance() const{
+    return m_distance;
 }
 
 /*!
@@ -141,8 +154,18 @@ double const& Building::getDistanceMin() const{
  \fn Building::getDistanceMax
  \return const double
 */
-double const& Building::getDistanceMax() const{
-    return m_distanceMax;
+int Building::getLength() const{
+    return m_length;
+}
+
+/*!
+ \brief
+
+ \fn Building::getDistanceMax
+ \return const double
+*/
+int Building::getWidth() const{
+    return m_width;
 }
 
 /*!
@@ -151,8 +174,57 @@ double const& Building::getDistanceMax() const{
  \fn Building::getStep
  \return const double
 */
-double const& Building::getStep() const{
+double Building::getStep() const{
     return m_step;
+}
+
+double Building::getRadius() const{
+    return m_radius;
+}
+
+/**
+ * @brief
+ *
+ * @return LeadType
+ */
+std::shared_ptr<LeadType> Building::getLeadType() const{
+    return m_leadType;
+}
+
+/**
+ * @brief
+ *
+ * @return ConductorType
+ */
+std::shared_ptr<ConductorType> Building::getConductorType() const{
+    return m_conductorType;
+}
+
+/**
+ * @brief
+ *
+ * @return Coating
+ */
+std::shared_ptr<Coating> Building::getCoating() const{
+    return m_coating;
+}
+
+/**
+ * @brief
+ *
+ * @return Energization
+ */
+std::shared_ptr<Energization> Building::getEnergization() const{
+    return m_energization;
+}
+
+/**
+ * @brief
+ *
+ * @return CableType
+ */
+std::shared_ptr<CableType> Building::getCableType() const{
+    return m_cableType;
 }
 
 /*!
@@ -162,7 +234,7 @@ double const& Building::getStep() const{
  \param faces
  \return Building
 */
-Building& Building::setFaces(int const& faces){
+Building& Building::setFaces(int const faces){
     m_faces = faces;
     return *this;
 }
@@ -174,7 +246,7 @@ Building& Building::setFaces(int const& faces){
  \param height
  \return Building
 */
-Building& Building::setHeight(double const& height){
+Building& Building::setHeight(int const height){
     m_height = height;
     return *this;
 }
@@ -186,8 +258,8 @@ Building& Building::setHeight(double const& height){
  \param distanceMin
  \return Building
 */
-Building& Building::setDistanceMin(double const& distanceMin){
-    m_distanceMin = distanceMin;
+Building& Building::setDistance(int const distance){
+    m_distance = distance;
     return *this;
 }
 
@@ -198,8 +270,20 @@ Building& Building::setDistanceMin(double const& distanceMin){
  \param distanceMax
  \return Building
 */
-Building& Building::setDistanceMax(double const& distanceMax){
-    m_distanceMax = distanceMax;
+Building& Building::setLength(int const length){
+    m_length = length;
+    return *this;
+}
+
+/*!
+ \brief
+
+ \fn Building::setDistanceMax
+ \param distanceMax
+ \return Building
+*/
+Building& Building::setWidth(int const width){
+    m_width = width;
     return *this;
 }
 
@@ -210,8 +294,317 @@ Building& Building::setDistanceMax(double const& distanceMax){
  \param step
  \return Building
 */
-Building& Building::setStep(double const& step){
+Building& Building::setStep(double const step){
     m_step = step;
     return *this;
 }
 
+Building& Building::setRadius(double const radius){
+    m_radius = radius;
+    return *this;
+}
+
+/**
+ * @brief
+ *
+ * @param leadType
+ * @return Conductor
+ */
+Building& Building::setLeadType(std::shared_ptr<LeadType> leadType){
+    m_leadType = leadType;
+    return *this;
+}
+
+/**
+ * @brief
+ *
+ * @param conductorType
+ * @return Conductor
+ */
+Building& Building::setConductorType(std::shared_ptr<ConductorType> conductorType){
+    m_conductorType = conductorType;
+    return *this;
+}
+
+/**
+ * @brief
+ *
+ * @param coating
+ * @return Conductor
+ */
+Building& Building::setCoating(std::shared_ptr<Coating> coating){
+    m_coating = coating;
+    return *this;
+}
+
+/**
+ * @brief
+ *
+ * @param energization
+ * @return Conductor
+ */
+Building& Building::setEnergization(std::shared_ptr<Energization> energization){
+    m_energization = energization;
+    return *this;
+}
+
+/**
+ * @brief
+ *
+ * @param cableType
+ * @return Conductor
+ */
+Building& Building::setCableType(std::shared_ptr<CableType> cableType){
+    m_cableType = cableType;
+    return *this;
+}
+
+bool Building::validateBuilding(){
+    bool valid = true;
+
+    if(!m_leadType) valid = false;
+    if(!m_coating) valid = false;
+    if(!m_conductorType) valid = false;
+    if(!m_energization) valid = false;
+    if(!m_cableType) valid = false;
+
+    if(m_faces < 2 || m_faces > 5) valid = false;
+    if(m_height < 1 || m_height > 9999) valid = false;
+    if(m_distance < 1 || m_distance > 9999) valid = false;
+    if(m_length < 1 || m_length > 9999) valid = false;
+    if(m_radius <= 0 || m_radius > 9999) valid = false;
+    if(m_step == 0) valid = false;
+
+    return valid;
+}
+
+std::vector<std::shared_ptr<Conductor>> Building::generateConductors(){
+    std::vector<std::shared_ptr<Conductor>> conductors;
+
+    int startX, startY, startZ;
+
+    startX = -(m_width / 2);
+    startZ = 1;
+    startY = m_distance;
+
+    if(m_faces >= 2){
+        //front face - horizontal
+        for(double d = startZ; d >= -m_height; d -= m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = startX;
+            end.x = (startX + m_width - 1);
+            start.y = startY;
+            end.y = startY;
+            start.z = d;
+            end.z = d;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //front face - vertical
+        for(double d = startX; d <= (startX + m_width - 1); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = d;
+            end.x = d;
+            start.y = startY;
+            end.y = startY;
+            start.z = startZ;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //roof - horizontal (skips the first, already done by front - horizontal)
+        for(double d = (startY + m_step); d <= (startY + m_length - 1); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = startX;
+            end.x = (startX + m_width - 1);
+            start.y = d;
+            end.y = d;
+            start.z = -m_height;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //roof - vertical
+        for(double d = startX; d <= (startX + m_width - 1); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = d;
+            end.x = d;
+            start.y = startY;
+            end.y = (startY + m_length - 1);
+            start.z = -m_height;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+    }
+
+    //side faces
+    if(m_faces >= 3){
+        //horizontal (skips the last, already done by roof - vertical)
+        for(double d = startZ; d >= -(m_height - m_step); d -= m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = startX;
+            end.x = startX;
+            start.y = startY;
+            end.y = (startY + m_length - 1);
+            start.z = d;
+            end.z = d;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //vertical (skips the first, already done by front - vertical)
+        for(double d = (startY + m_step); d <= (startY + m_length - 1); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = startX;
+            end.x = startX;
+            start.y = d;
+            end.y = d;
+            start.z = startZ;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+    }
+
+    if(m_faces >= 4){
+        //horizontal (skips the last, already done by roof - vertical)
+        for(double d = startZ; d >= -(m_height - m_step); d -= m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = (startX + m_width - 1);
+            end.x = (startX + m_width - 1);
+            start.y = startY;
+            end.y = (startY + m_length - 1);
+            start.z = d;
+            end.z = d;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //vertical (skips the first, already done by front - vertical)
+        for(double d = (startY + m_step); d <= (startY + m_length - 1); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = (startX + m_width - 1);
+            end.x = (startX + m_width - 1);
+            start.y = d;
+            end.y = d;
+            start.z = startZ;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+    }
+
+    if(m_faces >= 5){
+        //back face - horizontal (skips the last; already done by roof - horizontal)
+        for(double d = startZ; d >= -(m_height - m_step); d -= m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = startX;
+            end.x = (startX + m_width - 1);
+            start.y = (startY + m_length - 1);
+            end.y = (startY + m_length - 1);
+            start.z = d;
+            end.z = d;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+
+        //back face - vertical (skips first and last; both done by both sides)
+        for(double d = (startX + m_step); d <= (startX + m_width - 1 - m_step); d += m_step){
+            std::shared_ptr<Conductor> cond;
+            cond.reset(new Conductor());
+            coords start, end;
+            start.x = d;
+            end.x = d;
+            start.y = (startY + m_length - 1);
+            end.y = (startY + m_length - 1);
+            start.z = startZ;
+            end.z = -m_height;
+            cond->setCoords(start, end);
+            cond->setRadius(m_radius);
+            cond->setLeadType(m_leadType);
+            cond->setCoating(m_coating);
+            cond->setConductorType(m_conductorType);
+            cond->setEnergization(m_energization);
+            cond->setCableType(m_cableType);
+            conductors.push_back(cond);
+        }
+    }
+
+    return conductors;
+}

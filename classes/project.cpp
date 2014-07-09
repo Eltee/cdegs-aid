@@ -68,7 +68,7 @@ Project::Project(){
  \param author
  \param description
 */
-Project::Project(std::string const& name, std::string fileName, QDate const& date, std::string const& author, std::string const& description){
+Project::Project(const std::string name, std::string fileName, const QDate date, const std::string author, const std::string description){
     m_id = AppUtils::getInstance().uniqueIdGenerator();
     m_absPath = QDir::current().absolutePath().toStdString();
     m_relPath = QDir::current().path().toStdString();
@@ -185,7 +185,7 @@ bool Project::operator!=(Project const* project){
  \fn Project::getId
  \return const std::string
 */
-std::string const& Project::getId() const{
+std::string Project::getId() const{
     return m_id;
 }
 
@@ -195,7 +195,7 @@ std::string const& Project::getId() const{
  \fn Project::getAbsPath
  \return const std::string
 */
-std::string const& Project::getAbsPath() const{
+std::string Project::getAbsPath() const{
     return m_absPath;
 }
 
@@ -205,7 +205,7 @@ std::string const& Project::getAbsPath() const{
  \fn Project::getRelPath
  \return const std::string
 */
-std::string const& Project::getRelPath() const{
+std::string Project::getRelPath() const{
     return m_relPath;
 }
 
@@ -215,7 +215,7 @@ std::string const& Project::getRelPath() const{
  \fn Project::getFileName
  \return const std::string
 */
-std::string const& Project::getFileName() const{
+std::string Project::getFileName() const{
     return m_fileName;
 }
 
@@ -225,7 +225,7 @@ std::string const& Project::getFileName() const{
  \fn Project::getDefaultWindow
  \return const std::string
 */
-std::string const& Project::getDefaultWindow() const{
+std::string Project::getDefaultWindow() const{
     return m_defaultWindow;
 }
 
@@ -235,7 +235,7 @@ std::string const& Project::getDefaultWindow() const{
  \fn Project::getLastWindow
  \return const std::string
 */
-std::string const& Project::getLastWindow() const{
+std::string Project::getLastWindow() const{
     return m_lastWindow;
 }
 
@@ -275,7 +275,7 @@ project_metadata const& Project::getMetadata() const{
  \fn Project::getSettings
  \return const project_settings
 */
-project_settings const& Project::getSettings() const{
+project_settings Project::getSettings() const{
     return m_projectSettings;
 }
 
@@ -296,7 +296,7 @@ std::unordered_map<int, std::shared_ptr<Configuration> > Project::getConfigurati
  \param absPath
  \return Project
 */
-Project& Project::setAbsPath(std::string const& absPath){
+Project& Project::setAbsPath(std::string const absPath){
     m_absPath = absPath;
     return *this;
 }
@@ -308,7 +308,7 @@ Project& Project::setAbsPath(std::string const& absPath){
  \param relPath
  \return Project
 */
-Project& Project::setRelPath(std::string const& relPath){
+Project& Project::setRelPath(std::string const relPath){
     m_relPath = relPath;
     return *this;
 }
@@ -320,7 +320,7 @@ Project& Project::setRelPath(std::string const& relPath){
  \param fileName
  \return Project
 */
-Project& Project::setFileName(std::string const& fileName){
+Project& Project::setFileName(std::string const fileName){
     m_fileName = fileName;
     m_fileName.erase(remove_if(m_fileName.begin(), m_fileName.end(), isspace), m_fileName.end());
     return *this;
@@ -333,7 +333,7 @@ Project& Project::setFileName(std::string const& fileName){
  \param defaultWindow
  \return Project
 */
-Project& Project::setDefaultWindow(std::string const& defaultWindow){
+Project& Project::setDefaultWindow(std::string const defaultWindow){
     m_defaultWindow = defaultWindow;
     return *this;
 }
@@ -345,7 +345,7 @@ Project& Project::setDefaultWindow(std::string const& defaultWindow){
  \param lastWindow
  \return Project
 */
-Project& Project::setLastWindow(std::string const& lastWindow){
+Project& Project::setLastWindow(std::string const lastWindow){
     m_lastWindow = lastWindow;
     return *this;
 }
@@ -381,7 +381,7 @@ Project& Project::setLastConfig(std::shared_ptr<Configuration> lastConfig){
  \param name
  \return Project
 */
-Project& Project::setMetaName(std::string const& name){
+Project& Project::setMetaName(std::string const name){
     m_metadata.name = name;
     return *this;
 }
@@ -393,7 +393,7 @@ Project& Project::setMetaName(std::string const& name){
  \param author
  \return Project
 */
-Project& Project::setMetaAuthor(std::string const& author){
+Project& Project::setMetaAuthor(std::string const author){
     m_metadata.author = author;
     return *this;
 }
@@ -405,7 +405,7 @@ Project& Project::setMetaAuthor(std::string const& author){
  \param description
  \return Project
 */
-Project& Project::setMetaDescription(std::string const& description){
+Project& Project::setMetaDescription(std::string const description){
     m_metadata.description.setPlainText(QString::fromStdString(description));
     return *this;
 }
@@ -417,7 +417,7 @@ Project& Project::setMetaDescription(std::string const& description){
  \param date
  \return Project
 */
-Project& Project::setMetaDate(std::string const& date){
+Project& Project::setMetaDate(std::string const date){
     m_metadata.date = QDate::fromString(QString::fromStdString(date));
     return *this;
 }
@@ -429,7 +429,7 @@ Project& Project::setMetaDate(std::string const& date){
  \param date
  \return Project
 */
-Project& Project::setMetaDate(QDate const& date){
+Project& Project::setMetaDate(QDate const date){
     m_metadata.date = date;
     return *this;
 }
@@ -441,7 +441,7 @@ Project& Project::setMetaDate(QDate const& date){
  \param set1
  \return Project
 */
-Project& Project::setProjSet1(std::string const& set1){
+Project& Project::setProjSet1(std::string const set1){
     m_projectSettings.set1 = set1;
     return *this;
 }
@@ -453,7 +453,7 @@ Project& Project::setProjSet1(std::string const& set1){
  \param set2
  \return Project
 */
-Project& Project::setProjSet2(std::string const& set2){
+Project& Project::setProjSet2(std::string const set2){
     m_projectSettings.set2 = set2;
     return *this;
 }
@@ -465,7 +465,7 @@ Project& Project::setProjSet2(std::string const& set2){
  \param set3
  \return Project
 */
-Project& Project::setProjSet3(std::string const& set3){
+Project& Project::setProjSet3(std::string const set3){
     m_projectSettings.set3 = set3;
     return *this;
 }
@@ -477,7 +477,7 @@ Project& Project::setProjSet3(std::string const& set3){
  \param set4
  \return Project
 */
-Project& Project::setProjSet4(std::string const& set4){
+Project& Project::setProjSet4(std::string const set4){
     m_projectSettings.set4 = set4;
     return *this;
 }
@@ -489,7 +489,7 @@ Project& Project::setProjSet4(std::string const& set4){
  \param config
  \return Project
 */
-Project& Project::addConfiguration(std::shared_ptr<Configuration> config, bool const& newAdd){
+Project& Project::addConfiguration(std::shared_ptr<Configuration> config, bool const newAdd){
     bool alreadyPresent=false;
 
     if(!newAdd){
@@ -522,6 +522,8 @@ Project& Project::removeConfiguration(std::shared_ptr<Configuration> config){
 
 Project& Project::replaceConfiguration(std::shared_ptr<Configuration> config){
     if(m_configurations.count(config->getId())) m_configurations.at(config->getId()) = config;
+
+    return *this;
 }
 
 /*!
@@ -531,17 +533,17 @@ Project& Project::replaceConfiguration(std::shared_ptr<Configuration> config){
  \param id
  \return Project
 */
-Project& Project::setId(std::string const& id){
+Project& Project::setId(std::string const id){
     m_id = id;
 
     return *this;
 }
 
-Project& Project::setModified(bool const& mod){
+Project& Project::setModified(const bool mod){
     m_modified = mod;
     return *this;
 }
 
-bool const& Project::isModified() const{
+bool Project::isModified() const{
     return m_modified;
 }

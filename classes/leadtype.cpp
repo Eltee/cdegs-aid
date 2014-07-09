@@ -48,7 +48,7 @@ LeadType::LeadType() : Component("", false, true){}
  \fn LeadType::LeadType
  \param name
 */
-LeadType::LeadType(std::string const& name) : Component(name, false, true){}
+LeadType::LeadType(const std::string name) : Component(name, false, true){}
 
 LeadType::LeadType(LeadType const* lType){
     m_id = lType->getId();

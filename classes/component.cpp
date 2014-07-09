@@ -55,7 +55,7 @@ Component::Component(){
  \param locked Barré(?)
  \param saveable Sauvegardable(?)
 */
-Component::Component(std::string const& name, bool const& locked, bool const& saveable){
+Component::Component(std::string const name, bool const locked, bool const saveable){
     m_name = name;
     m_locked = locked;
     m_saveable = saveable;
@@ -68,7 +68,7 @@ Component::Component(std::string const& name, bool const& locked, bool const& sa
 */
 Component::~Component(){}
 
-bool const& Component::compare(Component const* c) const{
+bool Component::compare(Component const* c) const{
     if(m_id == c->getId()){
         return true;
     }
@@ -77,11 +77,11 @@ bool const& Component::compare(Component const* c) const{
     }
 }
 
-int const& Component::getId() const{
+int Component::getId() const{
     return m_id;
 }
 
-int const& Component::getTempId() const{
+int Component::getTempId() const{
     return m_tempId;
 }
 
@@ -91,7 +91,7 @@ int const& Component::getTempId() const{
  \fn Component::getName
  \return Le nom
 */
-std::string const& Component::getName() const{
+std::string Component::getName() const{
     return m_name;
 }
 
@@ -101,7 +101,7 @@ std::string const& Component::getName() const{
  \fn Component::isLocked
  \return Barré: vrai/faux
 */
-bool const& Component::isLocked() const{
+bool Component::isLocked() const{
     return m_locked;
 }
 
@@ -111,7 +111,7 @@ bool const& Component::isLocked() const{
  \fn Component::isSaveable
  \return Sauvegardable: vrai/faux
 */
-bool const& Component::isSaveable() const{
+bool Component::isSaveable() const{
     return m_saveable;
 }
 
@@ -122,7 +122,7 @@ bool const& Component::isSaveable() const{
  \param name Le nouveau nom
  \return L'objet lui-même (chaîne d'appels)
 */
-Component& Component::setName(std::string const& name){
+Component& Component::setName(std::string const name){
     m_name = name;
     return *this;
 }
@@ -134,7 +134,7 @@ Component& Component::setName(std::string const& name){
  \param locked Le nouveau booléen barré(?)
  \return L'objet lui-même (chaîne d'appels)
 */
-Component& Component::setLocked(bool const& locked){
+Component& Component::setLocked(bool const locked){
     m_locked = locked;
     return *this;
 }
@@ -146,17 +146,17 @@ Component& Component::setLocked(bool const& locked){
  \param saveable Le nouveau booléen sauvegardable(?)
  \return L'objet lui-même (chaîne d'appels)
 */
-Component& Component::setSaveable(bool const& saveable){
+Component& Component::setSaveable(const bool saveable){
     m_saveable = saveable;
     return *this;
 }
 
-Component& Component::setId(int const& id){
+Component& Component::setId(int const id){
     m_id = id;
     return *this;
 }
 
-Component& Component::setTempId(int const& id){
+Component& Component::setTempId(int const id){
     m_tempId = id;
     return *this;
 }

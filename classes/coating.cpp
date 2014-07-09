@@ -48,7 +48,7 @@ Coating::Coating() : Component("", false, true){}
  \fn Coating::Coating
  \param name
 */
-Coating::Coating(std::string const& name) : Component(name, false, true){}
+Coating::Coating(const std::string name) : Component(name, false, true){}
 
 Coating::Coating(Coating const* coat){
     m_id = coat->getId();

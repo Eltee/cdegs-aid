@@ -58,7 +58,7 @@ Energization::Energization() : Component("", false, true){
  \param magnitude
  \param angle
 */
-Energization::Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle) : Component("", false, true){
+Energization::Energization(const std::string identification, const std::string type, const std::string frequency, const double magnitude, const int angle) : Component("", false, true){
     m_identification = identification;
     m_type = type;
     m_frequency = frequency;
@@ -112,7 +112,7 @@ bool Energization::operator!=(Energization const* ener){
  \fn Energization::getIdentification
  \return const std::string
 */
-std::string const& Energization::getIdentification() const{
+std::string Energization::getIdentification() const{
     return m_identification;
 }
 
@@ -122,7 +122,7 @@ std::string const& Energization::getIdentification() const{
  \fn Energization::getType
  \return const std::string
 */
-std::string const& Energization::getType() const{
+std::string Energization::getType() const{
     return m_type;
 }
 
@@ -132,7 +132,7 @@ std::string const& Energization::getType() const{
  \fn Energization::getFrequency
  \return const std::string
 */
-std::string const& Energization::getFrequency() const{
+std::string Energization::getFrequency() const{
     return m_frequency;
 }
 
@@ -142,7 +142,7 @@ std::string const& Energization::getFrequency() const{
  \fn Energization::getAngle
  \return const double
 */
-const double& Energization::getAngle() const{
+double Energization::getAngle() const{
     return m_angle;
 }
 
@@ -152,20 +152,12 @@ const double& Energization::getAngle() const{
  \fn Energization::getRealPart
  \return const int
 */
-double const& Energization::getRealPart() const{
+double Energization::getRealPart() const{
     if(m_angle != 0){
         double result = (m_magnitude * std::cos(m_angle * PI / 180));
-        if(result > 0){
-            std::cout << result << std::endl;
-            return result;// + 1;
-        }
-        else{
-            std::cout << result << std::endl;
-            return result;// - 1;
-        }
+        return result;
     }
     else{
-        std::cout << m_magnitude << std::endl;
         return m_magnitude;
     }
 }
@@ -176,10 +168,10 @@ double const& Energization::getRealPart() const{
  \fn Energization::getImaginaryPart
  \return const int
 */
-const double& Energization::getImaginaryPart() const{
+double Energization::getImaginaryPart() const{
     if(m_angle != 0){
-        std::cout << (m_magnitude * std::sin(m_angle * PI / 180)) << std::endl;
-        return (m_magnitude * std::sin(m_angle * PI / 180));
+        double result = (m_magnitude * std::sin(m_angle * PI / 180));
+        return result;
     }
     else{
         return 0;
@@ -192,7 +184,7 @@ const double& Energization::getImaginaryPart() const{
  \fn Energization::getMagnitude
  \return const int
 */
-int const& Energization::getMagnitude() const{
+int Energization::getMagnitude() const{
     return m_magnitude;
 }
 
@@ -203,7 +195,7 @@ int const& Energization::getMagnitude() const{
  \param identification
  \return Energization
 */
-Energization& Energization::setIdentification(std::string const& identification){
+Energization& Energization::setIdentification(std::string const identification){
     m_identification = identification;
     return *this;
 }
@@ -215,7 +207,7 @@ Energization& Energization::setIdentification(std::string const& identification)
  \param type
  \return Energization
 */
-Energization& Energization::setType(std::string const& type){
+Energization& Energization::setType(std::string const type){
     m_type = type;
     return *this;
 }
@@ -227,7 +219,7 @@ Energization& Energization::setType(std::string const& type){
  \param frequency
  \return Energization
 */
-Energization& Energization::setFrequency(std::string const& frequency){
+Energization& Energization::setFrequency(std::string const frequency){
     m_frequency = frequency;
     return *this;
 }
@@ -239,7 +231,7 @@ Energization& Energization::setFrequency(std::string const& frequency){
  \param angle
  \return Energization
 */
-Energization& Energization::setAngle(double const& angle){
+Energization& Energization::setAngle(double const angle){
     m_angle = angle;
     return *this;
 }
@@ -251,7 +243,7 @@ Energization& Energization::setAngle(double const& angle){
  \param magnitude
  \return Energization
 */
-Energization& Energization::setMagnitude(const int& magnitude){
+Energization& Energization::setMagnitude(const int magnitude){
     m_magnitude = magnitude;
     return *this;
 }

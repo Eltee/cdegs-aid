@@ -37,9 +37,18 @@
 #define BUILDING_H
 
 #include <string>
+#include <math.h>
 #include "component.h"
+#include "conductor.h"
+#include "leadtype.h"
+#include "conductortype.h"
+#include "coating.h"
+#include "energization.h"
+#include "cabletype.h"
 #include "util/apputils.h"
 
+class Conductor;
+class Energization;
 class Component;
 
 /*!
@@ -55,28 +64,49 @@ class Building : public Component
 {
     public:
         Building();
-        Building(int const& faces, double const& height, double const& distanceMin, double const& distanceMax, double const& step);
+        Building(int const faces, double const height, double const distance, double const step);
         Building(Building const* build);
         ~Building();
         bool operator==(Building const* build);
         bool operator!=(Building const* build);
+        bool validateBuilding();
+        std::vector<std::shared_ptr<Conductor>> generateConductors();
     //Getters start---------------------------------------------------
-        int const& getFaces() const;
-        double const& getHeight() const;
-        double const& getDistanceMin() const;
-        double const& getDistanceMax() const;
-        double const& getStep() const;
+        int getFaces() const;
+        int getHeight() const;
+        int getDistance() const;
+        int getLength() const;
+        double getStep() const;
+        int getWidth() const;
+        double getRadius() const;
+        std::shared_ptr<LeadType> getLeadType() const;
+        std::shared_ptr<ConductorType> getConductorType() const;
+        std::shared_ptr<Coating> getCoating() const;
+        std::shared_ptr<Energization> getEnergization() const;
+        std::shared_ptr<CableType> getCableType() const;
     //Getters end-----------------------------------------------------
     //Setters start---------------------------------------------------
-        Building& setFaces(int const& faces);
-        Building& setHeight(double const& height);
-        Building& setDistanceMin(double const& distanceMin);
-        Building& setDistanceMax(double const& distanceMax);
-        Building& setStep(double const& step);
+        Building& setFaces(int const faces);
+        Building& setHeight(int const height);
+        Building& setDistance(int const distance);
+        Building& setLength(int const length);
+        Building& setStep(double const step);
+        Building& setWidth(int const width);
+        Building& setRadius(double const radius);
+        Building& setLeadType(std::shared_ptr<LeadType> leadType);
+        Building& setConductorType(std::shared_ptr<ConductorType> conductorType);
+        Building& setCoating(std::shared_ptr<Coating> coating);
+        Building& setEnergization(std::shared_ptr<Energization> energization);
+        Building& setCableType(std::shared_ptr<CableType> cableType);
     //Setters end-----------------------------------------------------
     private:
-        int m_faces;
-        double m_height, m_distanceMin, m_distanceMax, m_step;
+        int m_faces, m_height, m_distance, m_length, m_width;
+        double m_step, m_radius;
+        std::shared_ptr<LeadType> m_leadType;
+        std::shared_ptr<ConductorType> m_conductorType;
+        std::shared_ptr<Coating> m_coating;
+        std::shared_ptr<Energization> m_energization;
+        std::shared_ptr<CableType> m_cableType;
 };
 
 #endif // BUILDING_H

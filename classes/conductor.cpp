@@ -54,7 +54,7 @@ Conductor::Conductor() : Component("", false, true){
  * @param cableType
  * @param radius
  */
-Conductor::Conductor(Configuration const& config, const int& leadType, const int& conductorType, const int& coating, const int& energization, const int& cableType, double const& radius) : Component("", false, true){
+Conductor::Conductor(Configuration const& config, const int leadType, const int conductorType, const int coating, const int energization, const int cableType, const double radius) : Component("", false, true){
     m_radius = radius;
     m_leadType = config.getLeadTypes().at(leadType);
     m_conductorType = config.getConductorTypes().at(conductorType);
@@ -204,7 +204,7 @@ coords const& Conductor::getEndCoords() const{
  *
  * @return const double
  */
-double const& Conductor::getRadius() const{
+double Conductor::getRadius() const{
     return m_radius;
 }
 
@@ -213,7 +213,7 @@ double const& Conductor::getRadius() const{
  *
  * @return const int
  */
-const int& Conductor::getSubDivision() const{
+int Conductor::getSubDivision() const{
     return m_subDivision;
 }
 
@@ -302,7 +302,7 @@ Conductor& Conductor::setCoords(coords const& start, coords const& end){
  * @param radius
  * @return Conductor
  */
-Conductor& Conductor::setRadius(double const& radius){
+Conductor& Conductor::setRadius(double const radius){
     m_radius = radius;
     return *this;
 }
@@ -313,7 +313,7 @@ Conductor& Conductor::setRadius(double const& radius){
  * @param subD
  * @return Conductor
  */
-Conductor& Conductor::setSubDivision(const int& subD){
+Conductor& Conductor::setSubDivision(const int subD){
     m_subDivision = subD;
     return *this;
 }

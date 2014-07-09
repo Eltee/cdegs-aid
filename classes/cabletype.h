@@ -55,7 +55,7 @@ class CableType : public Component
 {
     public:
         CableType();
-        CableType(std::string const& name);
+        CableType(std::string const name);
         CableType(CableType const* cblType);
         ~CableType();
         bool operator==(CableType const* cblType);

@@ -131,6 +131,23 @@ class configuration_widget : public QWidget
         void changeCondEndZ(double value);
 
         //BUILD CONNECTIONS
+        void newBuilding();
+        void removeBuilding();
+        void saveBuilding();
+        void changeBuildFaces(QString index);
+        void changeBuildHeight(int value);
+        void changeBuildStep(QString index);
+        void changeBuildDistance(int value);
+        void changeBuildLength(int value);
+        void changeBuildWidth(int value);
+        void changeBuildRadius(double value);
+        void changeBuildCbType(int index);
+        void changeBuildCoat(int index);
+        void changeBuildCType(int index);
+        void changeBuildEner(int index);
+        void changeBuildLType(int index);
+        void generateBuildingConductors();
+        void clearBuildingConductors();
 
         //LTYPE CONNECTIONS
         void changeLTypeName(QString text);
@@ -200,7 +217,8 @@ class configuration_widget : public QWidget
         std::shared_ptr<ConductorType> cType;
         std::shared_ptr<CableType> cbType;
         std::shared_ptr<profile> pro;
-        std::shared_ptr<Conductor> cond;
+        std::shared_ptr<Conductor> conductor;
+        std::shared_ptr<Building> building;
 };
 
 #endif // CONFIGURATION_WIDGET_H

@@ -67,7 +67,7 @@ class Conductor : public Component
 {
     public:
         Conductor();
-        Conductor(Configuration const& config, int const& leadType, int const& conductorType, int const& coating, int const& energization, int const& cableType, const double& radius=0.0);
+        Conductor(Configuration const& config, int const leadType, int const conductorType, int const coating, int const energization, int const cableType, const double radius=0.0);
         Conductor(std::shared_ptr<LeadType> leadType, std::shared_ptr<ConductorType> conductorType, std::shared_ptr<Coating> coating, std::shared_ptr<Energization> energization, std::shared_ptr<CableType> cableType, const double& radius=0.0);
         Conductor(Conductor const* cond);
         bool operator==(Conductor const* cond);
@@ -81,8 +81,8 @@ class Conductor : public Component
         std::shared_ptr<CableType> getCableType() const;
         coords const& getStartCoords() const;
         coords const& getEndCoords() const;
-        double const& getRadius() const;
-        int const& getSubDivision() const;
+        double getRadius() const;
+        int getSubDivision() const;
     //Getters end----------------------------------------------------------
     //Setters start--------------------------------------------------------
         Conductor& setLeadType(std::shared_ptr<LeadType> leadType);
@@ -92,8 +92,8 @@ class Conductor : public Component
         Conductor& setStartCoords(coords const& start);
         Conductor& setEndCoords(coords const& end);
         Conductor& setCoords(coords const& start, coords const& end);
-        Conductor& setRadius(double const& radius);
-        Conductor& setSubDivision(int const& subD);
+        Conductor& setRadius(double const radius);
+        Conductor& setSubDivision(int const subD);
         Conductor& setCableType(std::shared_ptr<CableType> cableType);
     //Setters end----------------------------------------------------------
     private:
@@ -101,10 +101,10 @@ class Conductor : public Component
         std::shared_ptr<ConductorType> m_conductorType;
         std::shared_ptr<Coating> m_coating;
         std::shared_ptr<Energization> m_energization;
+        std::shared_ptr<CableType> m_cableType;
         coords m_startCoords, m_endCoords;
         double m_radius;
         int m_subDivision = 1;
-        std::shared_ptr<CableType> m_cableType;
 };
 
 #endif // CONDUCTOR_H

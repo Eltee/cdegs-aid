@@ -55,7 +55,7 @@ ConductorType::ConductorType() : Component("", false, true){
  \param resistivity
  \param permeability
 */
-ConductorType::ConductorType(std::string const& type, std::string const& name, double const& resistivity, double const& permeability) : Component(name, false, true){
+ConductorType::ConductorType(const std::string type, const std::string name, const double resistivity, const double permeability) : Component(name, false, true){
     m_type = type;
     m_resistivity = resistivity;
     m_permeability = permeability;
@@ -102,7 +102,7 @@ bool ConductorType::operator!=(ConductorType const* cType){
  \fn ConductorType::getType
  \return const std::string
 */
-std::string const& ConductorType::getType() const{
+std::string ConductorType::getType() const{
     return m_type;
 }
 
@@ -112,7 +112,7 @@ std::string const& ConductorType::getType() const{
  \fn ConductorType::getResistivity
  \return const double
 */
-double const& ConductorType::getResistivity() const{
+double ConductorType::getResistivity() const{
     return m_resistivity;
 }
 
@@ -122,7 +122,7 @@ double const& ConductorType::getResistivity() const{
  \fn ConductorType::getPermeability
  \return const double
 */
-double const& ConductorType::getPermeability() const{
+double ConductorType::getPermeability() const{
     return m_permeability;
 }
 
@@ -133,7 +133,7 @@ double const& ConductorType::getPermeability() const{
  \param type
  \return ConductorType
 */
-ConductorType& ConductorType::setType(std::string const& type){
+ConductorType& ConductorType::setType(std::string const type){
     m_type = type;
     return *this;
 }
@@ -145,7 +145,7 @@ ConductorType& ConductorType::setType(std::string const& type){
  \param resistivity
  \return ConductorType
 */
-ConductorType& ConductorType::setResistivity(double const& resistivity){
+ConductorType& ConductorType::setResistivity(double const resistivity){
     m_resistivity = resistivity;
     return *this;
 }
@@ -157,7 +157,7 @@ ConductorType& ConductorType::setResistivity(double const& resistivity){
  \param permeability
  \return ConductorType
 */
-ConductorType& ConductorType::setPermeability(double const& permeability){
+ConductorType& ConductorType::setPermeability(double const permeability){
     m_permeability = permeability;
     return *this;
 }

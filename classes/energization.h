@@ -61,26 +61,26 @@ class Energization : public Component
 {
     public:
         Energization();
-        Energization(std::string const& identification, std::string const& type, std::string const& frequency, double const& magnitude, int const& angle);
+        Energization(std::string const identification, std::string const type, std::string const frequency, double const magnitude, int const angle);
         Energization(Energization const* ener);
         ~Energization();
         bool operator==(Energization const* ener);
         bool operator!=(Energization const* ener);
     //Getters start----------------------------------------------------
-        std::string const& getIdentification() const;
-        std::string const& getType() const;
-        std::string const& getFrequency() const;
-        double const& getAngle() const;
-        const double& getRealPart() const;
-        double const& getImaginaryPart() const;
-        int const& getMagnitude() const;
+        std::string getIdentification() const;
+        std::string getType() const;
+        std::string getFrequency() const;
+        double getAngle() const;
+        double getRealPart() const;
+        double getImaginaryPart() const;
+        int getMagnitude() const;
     //Getters end------------------------------------------------------
     //Setters start----------------------------------------------------
-        Energization& setIdentification(std::string const& identification);
-        Energization& setType(std::string const& type);
-        Energization& setFrequency(std::string const& frequency);
-        Energization& setAngle(double const& angle);
-        Energization& setMagnitude(int const& magnitude);
+        Energization& setIdentification(std::string const identification);
+        Energization& setType(std::string const type);
+        Energization& setFrequency(std::string const frequency);
+        Energization& setAngle(double const angle);
+        Energization& setMagnitude(int const magnitude);
     //Setters end------------------------------------------------------
     private:
         std::string m_identification, m_type, m_frequency;
