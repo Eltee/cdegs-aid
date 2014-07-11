@@ -154,6 +154,7 @@ void project_tab_widget::addConfig(std::shared_ptr<Configuration> config){
         QObject::connect(defParent, SIGNAL(saveOccurred()),
                          tab, SLOT(refresh()));
 
+        project->setModified(true);
         int index = ui->tabProject->addTab(tab, QString::fromStdString(config->getIdentifier()));
         ui->tabProject->setCurrentIndex(index);
     }
@@ -171,6 +172,11 @@ void project_tab_widget::changeTab(){
 void project_tab_widget::closeConfig(){
     if(ui->tabProject->currentIndex() > 0){
         if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig()->isModified()){
+                if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
+                    saveConfig();
+                }
+            }
             dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig().reset();
             ui->tabProject->removeTab(ui->tabProject->currentIndex());
         }
@@ -189,6 +195,22 @@ void project_tab_widget::closeConfig(int index){
 
     if(index > 0){
         if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig()->isModified()){
+                if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
+                    std::shared_ptr<Configuration> config = dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig();
+
+                    if(project->getConfigurations().count(config->getId()) > 0){
+                        project->replaceConfiguration(config);
+                    }
+                    else{
+                        project->addConfiguration(config, true);
+                    }
+
+                    config->setModified(false);
+
+                    refresh();
+                }
+            }
             dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig().reset();
             ui->tabProject->removeTab(index);
         }

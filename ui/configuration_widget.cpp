@@ -178,6 +178,9 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_cond_add, SIGNAL(clicked()),
                      this, SLOT(newCond()));
 
+    QObject::connect(ui->pushButton_cond_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCond()));
+
     QObject::connect(ui->pushButton_cond_remove, SIGNAL(clicked()),
                      this, SLOT(removeCond()));
 
@@ -227,6 +230,9 @@ void configuration_widget::connectSlots(){
     //BUILD CONNECTIONS
     QObject::connect(ui->pushButton_add_building, SIGNAL(clicked()),
                      this, SLOT(newBuilding()));
+
+    QObject::connect(ui->pushButton_build_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateBuilding()));
 
     QObject::connect(ui->pushButton_remove_building, SIGNAL(clicked()),
                      this, SLOT(removeBuilding()));
@@ -297,6 +303,9 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_new_lType, SIGNAL(clicked()),
                      this, SLOT(newLType()));
 
+    QObject::connect(ui->pushButton_lType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateLType()));
+
     QObject::connect(ui->pushButton_remove_lType, SIGNAL(clicked()),
                      this, SLOT(removeLType()));
 
@@ -309,6 +318,9 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->pushButton_new_coating, SIGNAL(clicked()),
                      this, SLOT(newCoat()));
+
+    QObject::connect(ui->pushButton_coat_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCoat()));
 
     QObject::connect(ui->pushButton_remove_coating, SIGNAL(clicked()),
                      this, SLOT(removeCoat()));
@@ -335,6 +347,9 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_new_energization, SIGNAL(clicked()),
                      this, SLOT(newEner()));
 
+    QObject::connect(ui->pushButton_ener_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateEner()));
+
     QObject::connect(ui->pushButton_remove_energization, SIGNAL(clicked()),
                      this, SLOT(removeEner()));
 
@@ -357,6 +372,9 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_new_cType, SIGNAL(clicked()),
                      this, SLOT(newCType()));
 
+    QObject::connect(ui->pushButton_cType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCType()));
+
     QObject::connect(ui->pushButton_remove_cType, SIGNAL(clicked()),
                      this, SLOT(removeCType()));
 
@@ -369,6 +387,9 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->pushButton_new_cbType, SIGNAL(clicked()),
                      this, SLOT(newCbType()));
+
+    QObject::connect(ui->pushButton_cbType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCbType()));
 
     QObject::connect(ui->pushButton_remove_cbType, SIGNAL(clicked()),
                      this, SLOT(removeCbType()));
@@ -412,6 +433,9 @@ void configuration_widget::connectSlots(){
 
     QObject::connect(ui->pushButton_new_profile, SIGNAL(clicked()),
                      this, SLOT(newPro()));
+
+    QObject::connect(ui->pushButton_pro_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicatePro()));
 
     QObject::connect(ui->pushButton_remove_profile, SIGNAL(clicked()),
                      this, SLOT(removePro()));
@@ -474,6 +498,9 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->pushButton_cond_add, SIGNAL(clicked()),
                      this, SLOT(newCond()));
 
+    QObject::disconnect(ui->pushButton_cond_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCond()));
+
     QObject::disconnect(ui->pushButton_cond_remove, SIGNAL(clicked()),
                      this, SLOT(removeCond()));
 
@@ -522,6 +549,9 @@ void configuration_widget::disconnectSlots(){
     //BUILD CONNECTIONS
     QObject::disconnect(ui->pushButton_add_building, SIGNAL(clicked()),
                      this, SLOT(newBuilding()));
+
+    QObject::disconnect(ui->pushButton_build_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateBuilding()));
 
     QObject::disconnect(ui->pushButton_remove_building, SIGNAL(clicked()),
                      this, SLOT(removeBuilding()));
@@ -592,6 +622,9 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->pushButton_new_lType, SIGNAL(clicked()),
                      this, SLOT(newLType()));
 
+    QObject::disconnect(ui->pushButton_lType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateLType()));
+
     QObject::disconnect(ui->pushButton_remove_lType, SIGNAL(clicked()),
                      this, SLOT(removeLType()));
 
@@ -604,6 +637,9 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_new_coating, SIGNAL(clicked()),
                      this, SLOT(newCoat()));
+
+    QObject::disconnect(ui->pushButton_coat_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCoat()));
 
     QObject::disconnect(ui->pushButton_remove_coating, SIGNAL(clicked()),
                      this, SLOT(removeCoat()));
@@ -630,6 +666,9 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->pushButton_new_energization, SIGNAL(clicked()),
                      this, SLOT(newEner()));
 
+    QObject::disconnect(ui->pushButton_ener_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateEner()));
+
     QObject::disconnect(ui->pushButton_remove_energization, SIGNAL(clicked()),
                      this, SLOT(removeEner()));
 
@@ -652,6 +691,9 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->pushButton_new_cType, SIGNAL(clicked()),
                      this, SLOT(newCType()));
 
+    QObject::disconnect(ui->pushButton_cType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCType()));
+
     QObject::disconnect(ui->pushButton_remove_cType, SIGNAL(clicked()),
                      this, SLOT(removeCType()));
 
@@ -664,6 +706,9 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_new_cbType, SIGNAL(clicked()),
                      this, SLOT(newCbType()));
+
+    QObject::disconnect(ui->pushButton_cbType_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicateCbType()));
 
     QObject::disconnect(ui->pushButton_remove_cbType, SIGNAL(clicked()),
                      this, SLOT(removeCbType()));
@@ -707,6 +752,9 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_new_profile, SIGNAL(clicked()),
                      this, SLOT(newPro()));
+
+    QObject::disconnect(ui->pushButton_pro_duplicate, SIGNAL(clicked()),
+                     this, SLOT(duplicatePro()));
 
     QObject::disconnect(ui->pushButton_remove_profile, SIGNAL(clicked()),
                      this, SLOT(removePro()));
@@ -958,15 +1006,18 @@ void configuration_widget::refreshLType(){
         ui->lineEdit_lType_name->setText(QString::fromStdString(lType->getName()));
         if(lType->isLocked()){
             ui->pushButton_remove_lType->setDisabled(true);
+            ui->pushButton_lType_duplicate->setEnabled(false);
             ui->lineEdit_lType_name->setDisabled(true);
         }
         else{
             ui->pushButton_remove_lType->setEnabled(true);
+            ui->pushButton_lType_duplicate->setEnabled(true);
             ui->lineEdit_lType_name->setEnabled(true);
         }
     }
     else{
         ui->pushButton_remove_lType->setDisabled(true);
+        ui->pushButton_lType_duplicate->setEnabled(false);
         ui->lineEdit_lType_name->setDisabled(true);
     }
 }
@@ -976,15 +1027,18 @@ void configuration_widget::refreshCoating(){
         ui->lineEdit_coating_name->setText(QString::fromStdString(coat->getName()));
         if(!coat->isLocked()){
             ui->pushButton_remove_coating->setEnabled(true);
+            ui->pushButton_coat_duplicate->setEnabled(true);
             ui->lineEdit_coating_name->setEnabled(true);
         }
         else{
             ui->pushButton_remove_coating->setDisabled(true);
+            ui->pushButton_coat_duplicate->setEnabled(false);
             ui->lineEdit_coating_name->setDisabled(true);
         }
     }
     else{
         ui->pushButton_remove_coating->setDisabled(true);
+        ui->pushButton_coat_duplicate->setEnabled(false);
         ui->lineEdit_coating_name->setDisabled(true);
     }
 }
@@ -998,6 +1052,7 @@ void configuration_widget::refreshEnergization(){
         ui->doubleSpinBox_energization_angle->setValue(ener->getAngle());
         if(!ener->isLocked()){
             ui->pushButton_remove_energization->setEnabled(true);
+            ui->pushButton_ener_duplicate->setEnabled(true);
             ui->comboBox_energizations_frequency->setEnabled(true);
             ui->lineEdit_energization_identification->setEnabled(true);
             ui->lineEdit_energization_type->setEnabled(true);
@@ -1006,6 +1061,7 @@ void configuration_widget::refreshEnergization(){
         }
         else{
             ui->pushButton_remove_energization->setDisabled(true);
+            ui->pushButton_ener_duplicate->setEnabled(false);
             ui->comboBox_energizations_frequency->setDisabled(true);
             ui->lineEdit_energization_identification->setDisabled(true);
             ui->lineEdit_energization_type->setDisabled(true);
@@ -1015,6 +1071,7 @@ void configuration_widget::refreshEnergization(){
     }
     else{
         ui->pushButton_remove_energization->setDisabled(true);
+        ui->pushButton_ener_duplicate->setEnabled(false);
         ui->comboBox_energizations_frequency->setDisabled(true);
         ui->lineEdit_energization_identification->setDisabled(true);
         ui->lineEdit_energization_type->setDisabled(true);
@@ -1031,6 +1088,7 @@ void configuration_widget::refreshCType(){
         ui->doubleSpinBox_cType_resistivity->setValue(cType->getResistivity());
         if(!cType->isLocked()){
             ui->pushButton_remove_cType->setEnabled(true);
+            ui->pushButton_cType_duplicate->setEnabled(true);
             ui->lineEdit_cType_name->setEnabled(true);
             ui->lineEdit_cType_type->setEnabled(true);
             ui->doubleSpinBox_cType_permeability->setEnabled(true);
@@ -1038,6 +1096,7 @@ void configuration_widget::refreshCType(){
         }
         else{
             ui->pushButton_remove_cType->setDisabled(true);
+            ui->pushButton_cType_duplicate->setEnabled(false);
             ui->lineEdit_cType_name->setDisabled(true);
             ui->lineEdit_cType_type->setDisabled(true);
             ui->doubleSpinBox_cType_permeability->setDisabled(true);
@@ -1045,6 +1104,7 @@ void configuration_widget::refreshCType(){
         }
     }
     else{
+        ui->pushButton_cType_duplicate->setEnabled(false);
         ui->pushButton_remove_cType->setDisabled(true);
         ui->lineEdit_cType_name->setDisabled(true);
         ui->lineEdit_cType_type->setDisabled(true);
@@ -1058,15 +1118,18 @@ void configuration_widget::refreshCbType(){
         ui->lineEdit_cbType_name->setText(QString::fromStdString(cbType->getName()));
         if(!cbType->isLocked()){
             ui->pushButton_remove_cbType->setEnabled(true);
+            ui->pushButton_cbType_duplicate->setEnabled(true);
             ui->lineEdit_cbType_name->setEnabled(true);
         }
         else{
             ui->pushButton_remove_cbType->setDisabled(true);
+            ui->pushButton_cbType_duplicate->setEnabled(false);
             ui->lineEdit_cbType_name->setDisabled(true);
         }
     }
     else{
         ui->pushButton_remove_cbType->setDisabled(true);
+        ui->pushButton_cbType_duplicate->setEnabled(false);
         ui->lineEdit_cbType_name->setDisabled(true);
     }
 }
@@ -1075,6 +1138,7 @@ void configuration_widget::refreshProfile(){
     if(pro){
         ui->pushButton_new_profile->setEnabled(false);
         ui->pushButton_remove_profile->setEnabled(true);
+        ui->pushButton_pro_duplicate->setEnabled(false);
         ui->spinBox_number_points->setEnabled(true);
         ui->spinBox_number_profiles->setEnabled(true);
         ui->doubleSpinBox_point_step_x->setEnabled(true);
@@ -1101,6 +1165,7 @@ void configuration_widget::refreshProfile(){
     else{
         ui->pushButton_new_profile->setEnabled(true);
         ui->pushButton_remove_profile->setDisabled(true);
+        ui->pushButton_pro_duplicate->setEnabled(false);
         ui->spinBox_number_points->setDisabled(true);
         ui->spinBox_number_profiles->setDisabled(true);
         ui->doubleSpinBox_point_step_x->setDisabled(true);
@@ -1177,6 +1242,7 @@ void configuration_widget::refreshConductor(){
     if(conductor){
         ui->pushButton_cond_remove->setEnabled(true);
         ui->pushButton_cond_save->setEnabled(true);
+        ui->pushButton_cond_duplicate->setEnabled(true);
         ui->comboBox_cond_cbType->setEnabled(true);
         ui->comboBox_cond_coating->setEnabled(true);
         ui->comboBox_cond_cType->setEnabled(true);
@@ -1245,6 +1311,7 @@ void configuration_widget::refreshConductor(){
     else{
         ui->pushButton_cond_remove->setEnabled(false);
         ui->pushButton_cond_save->setEnabled(false);
+        ui->pushButton_cond_duplicate->setEnabled(false);
         ui->comboBox_cond_cbType->setEnabled(false);
         ui->comboBox_cond_coating->setEnabled(false);
         ui->comboBox_cond_cType->setEnabled(false);
@@ -1342,6 +1409,7 @@ void configuration_widget::refreshBuilding(){
         ui->spinBox_building_length->setEnabled(true);
         ui->spinBox_building_width->setEnabled(true);
         ui->pushButton_add_building->setEnabled(false);
+        ui->pushButton_build_duplicate->setEnabled(true);
         ui->pushButton_remove_building->setEnabled(true);
         ui->pushButton_save_building->setEnabled(true);
         ui->pushButton_building_generate->setEnabled(true);
@@ -1433,6 +1501,7 @@ void configuration_widget::refreshBuilding(){
         ui->pushButton_save_building->setEnabled(false);
         ui->pushButton_building_generate->setEnabled(false);
         ui->pushButton_building_clear->setEnabled(true);
+        ui->pushButton_build_duplicate->setEnabled(false);
     }
 }
 
@@ -1492,11 +1561,24 @@ void configuration_widget::newCond(){
         conductor->setId(configuration->componentIdGenerator());
     }
     configuration->addConductor(conductor);
+    configuration->setModified(true);
     populateConductors();
+}
+
+void configuration_widget::duplicateCond(){
+    if(conductor){
+        std::shared_ptr<Conductor> cond;
+        cond.reset(new Conductor(conductor.get()));
+        cond->setId(configuration->componentIdGenerator());
+        configuration->addConductor(cond);
+        configuration->setModified(true);
+        populateConductors();
+    }
 }
 
 void configuration_widget::removeCond(){
     configuration->removeConductor(conductor);
+    configuration->setModified(true);
     conductor.reset();
     populateConductors();
 }
@@ -1507,6 +1589,7 @@ void configuration_widget::saveCond(){
         if(conductor->getId() < 0) conductor->setId(configuration->componentIdGenerator());
         configuration->addConductor(conductor);
     }
+    configuration->setModified(true);
     populateConductors();
 }
 
@@ -1647,10 +1730,9 @@ void configuration_widget::changeCondEndZ(double value){
 //BUILD CONNECTIONS
 
 void configuration_widget::newBuilding(){
-    std::cout << "new build call" << std::endl;
-
     if(!configuration->getLeadTypes().empty() && !configuration->getCoatings().empty() && !configuration->getEnergizations().empty() && !configuration->getConductorTypes().empty() && !configuration->getCableTypes().empty()){
         building.reset(new Building());
+        configuration->setModified(true);
         building->setLeadType(configuration->getLeadTypes().at(0));
         building->setCoating(configuration->getCoatings().at(0));
         building->setEnergization(configuration->getEnergizations().at(0));
@@ -1667,8 +1749,13 @@ void configuration_widget::newBuilding(){
     }
 }
 
+void configuration_widget::duplicateBuilding(){
+
+}
+
 void configuration_widget::removeBuilding(){
     configuration->removeBuilding(building);
+    configuration->setModified(true);
     building.reset();
     populateBuildings();
 }
@@ -1679,6 +1766,7 @@ void configuration_widget::saveBuilding(){
         if(building->getId() < 0) building->setId(configuration->componentIdGenerator());
         configuration->addBuilding(building);
     }
+    configuration->setModified(true);
     populateBuildings();
 }
 
@@ -1771,12 +1859,14 @@ void configuration_widget::changeBuildLType(int index){
 void configuration_widget::generateBuildingConductors(){
     if(building){
         configuration->updateBuildingConductors(building);
+        configuration->setModified(true);
     }
 }
 
 void configuration_widget::clearBuildingConductors(){
     if(building){
         configuration->clearBuildingConductors();
+        configuration->setModified(true);
     }
 }
 
@@ -1792,8 +1882,13 @@ void configuration_widget::newLType(){
     lType.reset(new LeadType());
     if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
     configuration->addLeadType(lType);
+    configuration->setModified(true);
     populateLTypes();
     populateConductors();
+}
+
+void configuration_widget::duplicateLType(){
+
 }
 
 void configuration_widget::removeLType(){
@@ -1802,6 +1897,7 @@ void configuration_widget::removeLType(){
         QMessageBox::critical(this, "Failure", "This LeadType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
     }
     else{
+        configuration->setModified(true);
         lType.reset();
         populateLTypes();
     }
@@ -1813,6 +1909,7 @@ void configuration_widget::saveLType(){
         if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
         configuration->addLeadType(lType);
     }
+    configuration->setModified(true);
     populateLTypes();
 }
 
@@ -1828,8 +1925,13 @@ void configuration_widget::newCoat(){
     coat.reset(new Coating());
     if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
     configuration->addCoating(coat);
+    configuration->setModified(true);
     populateCoatings();
     populateConductors();
+}
+
+void configuration_widget::duplicateCoat(){
+
 }
 
 void configuration_widget::removeCoat(){
@@ -1838,6 +1940,7 @@ void configuration_widget::removeCoat(){
         QMessageBox::critical(this, "Failure", "This Coating is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
     }
     else{
+        configuration->setModified(true);
         coat.reset();
         populateCoatings();
     }
@@ -1849,6 +1952,7 @@ void configuration_widget::saveCoat(){
         if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
         configuration->addCoating(coat);
     }
+    configuration->setModified(true);
     populateCoatings();
 }
 
@@ -1892,8 +1996,13 @@ void configuration_widget::newEner(){
     ener.reset(new Energization());
     if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
     configuration->addEnergization(ener);
+    configuration->setModified(true);
     populateEnergizations();
     populateConductors();
+}
+
+void configuration_widget::duplicateEner(){
+
 }
 
 void configuration_widget::removeEner(){
@@ -1902,6 +2011,7 @@ void configuration_widget::removeEner(){
         QMessageBox::critical(this, "Failure", "This Energization is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
     }
     else{
+        configuration->setModified(true);
         ener.reset();
         populateEnergizations();
     }
@@ -1913,6 +2023,7 @@ void configuration_widget::saveEner(){
         if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
         configuration->addEnergization(ener);
     }
+    configuration->setModified(true);
     populateEnergizations();
 }
 
@@ -1949,8 +2060,13 @@ void configuration_widget::newCType(){
     cType.reset(new ConductorType());
     if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
     configuration->addConductorType(cType);
+    configuration->setModified(true);
     populateCTypes();
     populateConductors();
+}
+
+void configuration_widget::duplicateCType(){
+
 }
 
 void configuration_widget::removeCType(){
@@ -1959,6 +2075,7 @@ void configuration_widget::removeCType(){
         QMessageBox::critical(this, "Failure", "This ConductorType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
     }
     else{
+        configuration->setModified(true);
         cType.reset();
         populateCTypes();
     }
@@ -1970,6 +2087,7 @@ void configuration_widget::saveCType(){
         if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
         configuration->addConductorType(cType);
     }
+    configuration->setModified(true);
     populateCTypes();
 }
 
@@ -1985,8 +2103,13 @@ void configuration_widget::newCbType(){
     cbType.reset(new CableType());
     if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->addCableType(cbType);
+    configuration->setModified(true);
     populateCbTypes();
     populateConductors();
+}
+
+void configuration_widget::duplicateCbType(){
+
 }
 
 void configuration_widget::removeCbType(){
@@ -1995,6 +2118,7 @@ void configuration_widget::removeCbType(){
         QMessageBox::critical(this, "Failure", "This CableType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
     }
     else{
+        configuration->setModified(true);
         cbType.reset();
         populateCbTypes();
     }
@@ -2005,6 +2129,7 @@ void configuration_widget::saveCbType(){
     if(result == 1){
         if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
         configuration->addCableType(cbType);
+        configuration->setModified(true);
     }
     populateCbTypes();
 }
@@ -2091,11 +2216,17 @@ void configuration_widget::newPro(){
     pro.reset(new profile());
     if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->addProfile(pro);
+    configuration->setModified(true);
     populateProfiles();
+}
+
+void configuration_widget::duplicatePro(){
+
 }
 
 void configuration_widget::removePro(){
     configuration->removeProfile(pro);
+    configuration->setModified(true);
     pro.reset();
     populateProfiles();
 }
@@ -2104,6 +2235,7 @@ void configuration_widget::savePro(){
     if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->removeProfile(pro);
     configuration->addProfile(pro);
+    configuration->setModified(true);
     populateProfiles();
 }
 
@@ -2116,6 +2248,7 @@ void configuration_widget::changeComputations(int i){
         configuration->setComputations().MAGNETIC = ui->checkBox_comp_MAGNETIC->isChecked();
         configuration->setComputations().POTENTIAL_SCALAR = ui->checkBox_comp_POTENTIAL_SCALAR->isChecked();
         configuration->setComputations().VECTOR_POTENTIAL = ui->checkBox_comp_VECTOR_POTENTIAL->isChecked();
+        configuration->setModified(true);
         refresh();
     }
 }

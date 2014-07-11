@@ -101,7 +101,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="page_settings">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -252,7 +252,7 @@
      </widget>
      <widget class="QWidget" name="page_conductors">
       <layout class="QGridLayout" name="gridLayout_19">
-       <item row="6" column="3" colspan="8">
+       <item row="6" column="4" colspan="8">
         <widget class="QComboBox" name="comboBox_conductors"/>
        </item>
        <item row="6" column="0">
@@ -262,7 +262,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0" rowspan="5" colspan="11">
+       <item row="0" column="0" rowspan="5" colspan="12">
         <widget class="QCustomPlot" name="cond_plot" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -278,14 +278,14 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="6" column="2">
         <widget class="QPushButton" name="pushButton_cond_remove">
          <property name="text">
           <string>Remove</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="11">
+       <item row="7" column="0" colspan="12">
         <widget class="QGroupBox" name="groupBox_10">
          <property name="title">
           <string>Conductor Parameters</string>
@@ -579,10 +579,17 @@
          </layout>
         </widget>
        </item>
-       <item row="6" column="2">
+       <item row="6" column="3">
         <widget class="QPushButton" name="pushButton_cond_save">
          <property name="text">
           <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QPushButton" name="pushButton_cond_duplicate">
+         <property name="text">
+          <string>Duplicate</string>
          </property>
         </widget>
        </item>
@@ -600,7 +607,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="2">
         <widget class="QPushButton" name="pushButton_remove_building">
          <property name="enabled">
           <bool>false</bool>
@@ -610,14 +617,14 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="6">
+       <item row="0" column="7">
         <widget class="QLineEdit" name="lineEdit_building_status">
          <property name="enabled">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="7">
+       <item row="1" column="0" colspan="8">
         <widget class="QGroupBox" name="groupBox_building_">
          <property name="title">
           <string>Conductor Properties</string>
@@ -737,7 +744,7 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0" colspan="7">
+       <item row="2" column="0" colspan="8">
         <widget class="QGroupBox" name="groupBox_13">
          <property name="title">
           <string>Building Properties</string>
@@ -902,7 +909,7 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="2" colspan="4">
+       <item row="0" column="3" colspan="4">
         <widget class="QComboBox" name="comboBox_buildings">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -919,17 +926,27 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="5" colspan="2">
+       <item row="3" column="6" colspan="2">
         <widget class="QPushButton" name="pushButton_building_clear">
          <property name="text">
           <string>Clear building conductors..</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" colspan="4">
+       <item row="3" column="2" colspan="4">
         <widget class="QPushButton" name="pushButton_building_generate">
          <property name="text">
           <string>Generate conductors from building..</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton_build_duplicate">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Duplicate</string>
          </property>
         </widget>
        </item>
@@ -994,7 +1011,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_lType">
             <property name="enabled">
              <bool>true</bool>
@@ -1007,6 +1024,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_lType_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>
@@ -1065,7 +1089,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_coating">
             <property name="enabled">
              <bool>true</bool>
@@ -1078,6 +1102,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_coat_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>
@@ -1218,7 +1249,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_energization">
             <property name="enabled">
              <bool>true</bool>
@@ -1231,6 +1262,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_ener_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>
@@ -1376,7 +1414,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_cType">
             <property name="enabled">
              <bool>true</bool>
@@ -1389,6 +1427,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_cType_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>
@@ -1494,7 +1539,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_cbType">
             <property name="enabled">
              <bool>true</bool>
@@ -1507,6 +1552,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_cbType_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>
@@ -1681,7 +1733,7 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="pushButton_remove_profile">
             <property name="enabled">
              <bool>true</bool>
@@ -1694,6 +1746,13 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_pro_duplicate">
+            <property name="text">
+             <string>Duplicate</string>
             </property>
            </widget>
           </item>

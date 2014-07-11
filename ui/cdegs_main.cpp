@@ -327,6 +327,12 @@ void cdegs_main::saveProjectAs(){
 */
 void cdegs_main::closeProject(){
     if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+        if(project->isModified()){
+            if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                saveProject();
+            }
+        }
+
         config.reset();
         project.reset();
         ui->tabProjects->removeTab(ui->tabProjects->currentIndex());
@@ -384,6 +390,7 @@ void cdegs_main::changeTab(){
 void cdegs_main::newConfig(){
     config.reset(new Configuration(AppUtils::getInstance().getDefaultConfig()));
     AppUtils::getInstance().setCurrentConfig(config);
+    config->setModified(true);
 
     if(ui->tabProjects->currentIndex() != -1){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
@@ -532,3 +539,20 @@ void cdegs_main::changeTabName(QWidget* widget, QString name){
     ui->tabProjects->setTabText(index, name);
 }
 
+void cdegs_main::closeEvent(QCloseEvent* event){
+        event->ignore();
+        if(QMessageBox::Yes == QMessageBox::question(this, "Close Confirmation?", "Are you sure you want to exit?", QMessageBox::Yes|QMessageBox::No)){
+            if(config->isModified()){
+                if(QMessageBox::Yes == QMessageBox::question(this, "Save configuration?", "Do you wish to save the changes to the current configuration before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                    saveConfig();
+                }
+            }
+
+            if(project->isModified()){
+                if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                    saveProject();
+                }
+            }
+            event->accept();
+        }
+};

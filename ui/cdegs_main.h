@@ -46,6 +46,7 @@
 #include <QtUiTools/QUiLoader>
 #include <iostream>
 #include <QFileInfo>
+#include <QCloseEvent>
 #include <memory>
 #include "configuration_widget.h"
 #include "project_tab_widget.h"
@@ -84,6 +85,7 @@ class cdegs_main : public QMainWindow
         void updateConfig();
         void updateTab();
         void changeTabName(QWidget* widget, QString name);
+        void closeEvent(QCloseEvent* event);
 
     public slots:
         void refresh();

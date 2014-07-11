@@ -115,6 +115,7 @@ class configuration_widget : public QWidget
 
         //COND CONNECTIONS
         void newCond();
+        void duplicateCond();
         void removeCond();
         void saveCond();
         void changeCondCbType(int index);
@@ -132,6 +133,7 @@ class configuration_widget : public QWidget
 
         //BUILD CONNECTIONS
         void newBuilding();
+        void duplicateBuilding();
         void removeBuilding();
         void saveBuilding();
         void changeBuildFaces(QString index);
@@ -152,12 +154,14 @@ class configuration_widget : public QWidget
         //LTYPE CONNECTIONS
         void changeLTypeName(QString text);
         void newLType();
+        void duplicateLType();
         void removeLType();
         void saveLType();
 
         //COATING CONNECTIONS
         void changeCoatName(QString text);
         void newCoat();
+        void duplicateCoat();
         void removeCoat();
         void saveCoat();
 
@@ -168,6 +172,7 @@ class configuration_widget : public QWidget
         void changeEnerMag(int i);
         void changeEnerAng(double i);
         void newEner();
+        void duplicateEner();
         void removeEner();
         void saveEner();
 
@@ -177,12 +182,14 @@ class configuration_widget : public QWidget
         void changeCTypePerm(double d);
         void changeCTypeRes(double d);
         void newCType();
+        void duplicateCType();
         void removeCType();
         void saveCType();
 
         //CBTYPE CONNECTIONS
         void changeCbTypeName(QString text);
         void newCbType();
+        void duplicateCbType();
         void removeCbType();
         void saveCbType();
 
@@ -199,6 +206,7 @@ class configuration_widget : public QWidget
         void changeProPrStepY(double d);
         void changeProPrStepZ(double d);
         void newPro();
+        void duplicatePro();
         void removePro();
         void savePro();
 
