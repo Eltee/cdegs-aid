@@ -101,7 +101,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>9</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_settings">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -252,17 +252,28 @@
      </widget>
      <widget class="QWidget" name="page_conductors">
       <layout class="QGridLayout" name="gridLayout_19">
-       <item row="6" column="4" colspan="8">
-        <widget class="QComboBox" name="comboBox_conductors"/>
+       <item row="6" column="4">
+        <widget class="QPushButton" name="pushButton_cond_save">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
        </item>
        <item row="6" column="0">
         <widget class="QPushButton" name="pushButton_cond_add">
          <property name="text">
-          <string>Add new..</string>
+          <string>Add new</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0" rowspan="5" colspan="12">
+       <item row="6" column="2">
+        <widget class="QPushButton" name="pushButton_cond_duplicate">
+         <property name="text">
+          <string>Duplicate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="5" colspan="13">
         <widget class="QCustomPlot" name="cond_plot" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -278,14 +289,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QPushButton" name="pushButton_cond_remove">
-         <property name="text">
-          <string>Remove</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="12">
+       <item row="7" column="0" colspan="13">
         <widget class="QGroupBox" name="groupBox_10">
          <property name="title">
           <string>Conductor Parameters</string>
@@ -579,17 +583,20 @@
          </layout>
         </widget>
        </item>
+       <item row="6" column="5" colspan="8">
+        <widget class="QComboBox" name="comboBox_conductors"/>
+       </item>
        <item row="6" column="3">
-        <widget class="QPushButton" name="pushButton_cond_save">
+        <widget class="QPushButton" name="pushButton_cond_remove">
          <property name="text">
-          <string>Save</string>
+          <string>Remove</string>
          </property>
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QPushButton" name="pushButton_cond_duplicate">
+        <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Duplicate</string>
+          <string>Add multiple..</string>
          </property>
         </widget>
        </item>
@@ -1689,21 +1696,223 @@
      </widget>
      <widget class="QWidget" name="page_profiles">
       <layout class="QGridLayout" name="gridLayout_16">
-       <item row="2" column="1">
-        <spacer name="verticalSpacer_13">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="0">
+        <widget class="QRadioButton" name="radioButton_profile_endPts">
+         <property name="text">
+          <string>Specify end point</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>196</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QComboBox" name="comboBox_profiles_chooser"/>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="groupBox_profile_ptB">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="title">
+          <string>Point B</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_27">
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptB_y"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptB_z"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptB_x"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_62">
+            <property name="text">
+             <string>X</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_63">
+            <property name="text">
+             <string>Y</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_64">
+            <property name="text">
+             <string>Z</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_25">
+         <property name="text">
+          <string>Distance between profiles (m)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QGroupBox" name="groupBox_profile_prStep">
+         <property name="title">
+          <string>Profile Step</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_18">
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_x">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_z">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_59">
+            <property name="text">
+             <string>dZ</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_y">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_57">
+            <property name="text">
+             <string>dX</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_58">
+            <property name="text">
+             <string>dY</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QGroupBox" name="groupBox_profile_ptStep">
+         <property name="title">
+          <string>Point Step</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_x">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_y">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_z">
+            <property name="minimum">
+             <double>-9999.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_56">
+            <property name="text">
+             <string>dZ</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_54">
+            <property name="text">
+             <string>dX</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_55">
+            <property name="text">
+             <string>dY</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_7">
@@ -1759,75 +1968,80 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QGroupBox" name="groupBox_9">
-         <property name="title">
-          <string/>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_28">
+         <property name="text">
+          <string>Number of Profiles</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_17">
-          <item row="2" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_y">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
-            </property>
-           </widget>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_profile_ptA">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="title">
+          <string>Point A</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_26">
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptA_y"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptA_x"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptA_z"/>
           </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_25">
+           <widget class="QLabel" name="label_26">
             <property name="text">
-             <string>Point Step</string>
+             <string>X</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_z">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_60">
+            <property name="text">
+             <string>Y</string>
             </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>0.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_point_step_x">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_61">
+            <property name="text">
+             <string>Z</string>
             </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QGroupBox" name="groupBox_8">
+       <item row="7" column="0">
+        <widget class="QGroupBox" name="groupBox_profile_prStart">
          <property name="title">
-          <string/>
+          <string>Profile Start</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Profile Start</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_start_y">
             <property name="minimum">
              <double>-9999.000000000000000</double>
@@ -1838,16 +2052,26 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_start_x">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
+           <widget class="QLabel" name="label_52">
+            <property name="text">
+             <string>Y</string>
             </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_53">
+            <property name="text">
+             <string>Z</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_start_z">
             <property name="minimum">
              <double>-9999.000000000000000</double>
@@ -1857,47 +2081,18 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QGroupBox" name="groupBox_6">
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_18">
-          <item row="3" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_z">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_26">
+           <widget class="QLabel" name="label_51">
             <property name="text">
-             <string>Profile Step</string>
+             <string>X</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_y">
-            <property name="minimum">
-             <double>-9999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_step_x">
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_start_x">
             <property name="minimum">
              <double>-9999.000000000000000</double>
             </property>
@@ -1909,40 +2104,24 @@
          </layout>
         </widget>
        </item>
-       <item row="6" column="1">
-        <spacer name="verticalSpacer_14">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>86</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_27">
-         <property name="text">
-          <string>Number of Points</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+       <item row="3" column="1" colspan="2">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_dist_pts">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_28">
-         <property name="text">
-          <string>Number of Profiles</string>
+       <item row="8" column="1" colspan="2">
+        <widget class="QSpinBox" name="spinBox_number_points">
+         <property name="minimum">
+          <number>-9999</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+         <property name="maximum">
+          <number>9999</number>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="2">
+       <item row="9" column="1" colspan="2">
         <widget class="QSpinBox" name="spinBox_number_profiles">
          <property name="minimum">
           <number>-9999</number>
@@ -1953,19 +2132,119 @@
         </widget>
        </item>
        <item row="4" column="1" colspan="2">
-        <widget class="QSpinBox" name="spinBox_number_points">
-         <property name="minimum">
-          <number>-9999</number>
-         </property>
-         <property name="maximum">
-          <number>9999</number>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_dist_pros">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="7" column="1" colspan="2">
+       <item row="5" column="0" colspan="3">
+        <widget class="Line" name="line">
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="lineWidth">
+          <number>3</number>
+         </property>
+         <property name="midLineWidth">
+          <number>0</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1" colspan="2">
         <widget class="QPushButton" name="pushButton_save_profile">
          <property name="text">
           <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Distance between points (m)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="text">
+          <string>Number of Points</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QComboBox" name="comboBox_profiles_chooser"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QGroupBox" name="groupBox_profile_ptC">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="title">
+          <string>Point C</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_28">
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptC_z"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptC_x"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_profile_ptC_y"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_65">
+            <property name="text">
+             <string>X</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_66">
+            <property name="text">
+             <string>Y</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_67">
+            <property name="text">
+             <string>Z</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QRadioButton" name="radioButton_profile_steps">
+         <property name="text">
+          <string>Specify step</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

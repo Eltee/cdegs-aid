@@ -23,7 +23,8 @@ SOURCES += \
     ui/configuration_widget.cpp \
     ui/project_tab_widget.cpp \
     ui/style_dialog.cpp \
-    ui/configuration_chooser_dialog.cpp
+    ui/configuration_chooser_dialog.cpp \
+    ui/multi_conductor_dialog.cpp
 
 HEADERS += \
     lib/qcustomplot.h \
@@ -48,7 +49,8 @@ HEADERS += \
     ui/project_tab_widget.h \
     classes/structs.h \
     ui/style_dialog.h \
-    ui/configuration_chooser_dialog.h
+    ui/configuration_chooser_dialog.h \
+    ui/multi_conductor_dialog.h
 
 OTHER_FILES +=
 
@@ -58,7 +60,8 @@ FORMS += \
     ui/configuration_widget.ui \
     ui/project_tab_widget.ui \
     ui/style_dialog.ui \
-    ui/configuration_chooser_dialog.ui
+    ui/configuration_chooser_dialog.ui \
+    ui/multi_conductor_dialog.ui
 
 RESOURCES += \
     ressources.qrc

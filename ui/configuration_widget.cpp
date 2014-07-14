@@ -443,6 +443,12 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->pushButton_save_profile, SIGNAL(clicked()),
                      this, SLOT(savePro()));
 
+    QObject::connect(ui->radioButton_profile_endPts, SIGNAL(clicked()),
+                     this, SLOT(refreshProfile()));
+
+    QObject::connect(ui->radioButton_profile_steps, SIGNAL(clicked()),
+                     this, SLOT(refreshProfile()));
+
     //COMPUTATION CONNECTIONS
 
     QObject::connect(ui->checkBox_comp_ELECTRIC, SIGNAL(stateChanged(int)),
@@ -761,6 +767,12 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->pushButton_save_profile, SIGNAL(clicked()),
                      this, SLOT(savePro()));
+
+    QObject::disconnect(ui->radioButton_profile_endPts, SIGNAL(clicked()),
+                     this, SLOT(refreshProfile()));
+
+    QObject::disconnect(ui->radioButton_profile_steps, SIGNAL(clicked()),
+                     this, SLOT(refreshProfile()));
 
     //COMPUTATION CONNECTIONS
 
@@ -1139,17 +1151,46 @@ void configuration_widget::refreshProfile(){
         ui->pushButton_new_profile->setEnabled(false);
         ui->pushButton_remove_profile->setEnabled(true);
         ui->pushButton_pro_duplicate->setEnabled(false);
-        ui->spinBox_number_points->setEnabled(true);
-        ui->spinBox_number_profiles->setEnabled(true);
-        ui->doubleSpinBox_point_step_x->setEnabled(true);
-        ui->doubleSpinBox_point_step_y->setEnabled(true);
-        ui->doubleSpinBox_point_step_z->setEnabled(true);
-        ui->doubleSpinBox_profile_start_x->setEnabled(true);
-        ui->doubleSpinBox_profile_start_y->setEnabled(true);
-        ui->doubleSpinBox_profile_start_z->setEnabled(true);
-        ui->doubleSpinBox_profile_step_x->setEnabled(true);
-        ui->doubleSpinBox_profile_step_y->setEnabled(true);
-        ui->doubleSpinBox_profile_step_z->setEnabled(true);
+        if(ui->radioButton_profile_endPts->isChecked()){
+            ui->doubleSpinBox_profile_dist_pros->setEnabled(true);
+            ui->doubleSpinBox_profile_dist_pts->setEnabled(true);
+            ui->groupBox_profile_ptA->setEnabled(true);
+            ui->groupBox_profile_ptB->setEnabled(true);
+            ui->groupBox_profile_ptC->setEnabled(true);
+
+            ui->spinBox_number_points->setEnabled(false);
+            ui->spinBox_number_profiles->setEnabled(false);
+            ui->groupBox_profile_prStart->setEnabled(false);
+            ui->groupBox_profile_prStep->setEnabled(false);
+            ui->groupBox_profile_ptStep->setEnabled(false);
+        }
+        else if(ui->radioButton_profile_steps->isChecked()){
+            ui->spinBox_number_points->setEnabled(true);
+            ui->spinBox_number_profiles->setEnabled(true);
+            ui->groupBox_profile_prStart->setEnabled(true);
+            ui->groupBox_profile_prStep->setEnabled(true);
+            ui->groupBox_profile_ptStep->setEnabled(true);
+
+            ui->doubleSpinBox_profile_dist_pros->setEnabled(false);
+            ui->doubleSpinBox_profile_dist_pts->setEnabled(false);
+            ui->groupBox_profile_ptA->setEnabled(false);
+            ui->groupBox_profile_ptB->setEnabled(false);
+            ui->groupBox_profile_ptC->setEnabled(false);
+        }
+        std::vector<coords> prPts;
+
+        prPts = pro->toCoords();
+
+        ui->doubleSpinBox_profile_ptA_x->setValue(prPts[0].x);
+        ui->doubleSpinBox_profile_ptA_y->setValue(prPts[0].y);
+        ui->doubleSpinBox_profile_ptA_z->setValue(prPts[0].z);
+        ui->doubleSpinBox_profile_ptB_x->setValue(prPts[1].x);
+        ui->doubleSpinBox_profile_ptB_y->setValue(prPts[1].y);
+        ui->doubleSpinBox_profile_ptB_z->setValue(prPts[1].z);
+        ui->doubleSpinBox_profile_ptC_x->setValue(prPts[2].x);
+        ui->doubleSpinBox_profile_ptC_y->setValue(prPts[2].y);
+        ui->doubleSpinBox_profile_ptC_z->setValue(prPts[2].z);
+
         ui->spinBox_number_points->setValue(pro->ptNum);
         ui->spinBox_number_profiles->setValue(pro->prNum);
         ui->doubleSpinBox_point_step_x->setValue(pro->ptStep.x);
@@ -1166,17 +1207,18 @@ void configuration_widget::refreshProfile(){
         ui->pushButton_new_profile->setEnabled(true);
         ui->pushButton_remove_profile->setDisabled(true);
         ui->pushButton_pro_duplicate->setEnabled(false);
-        ui->spinBox_number_points->setDisabled(true);
-        ui->spinBox_number_profiles->setDisabled(true);
-        ui->doubleSpinBox_point_step_x->setDisabled(true);
-        ui->doubleSpinBox_point_step_y->setDisabled(true);
-        ui->doubleSpinBox_point_step_z->setDisabled(true);
-        ui->doubleSpinBox_profile_start_x->setDisabled(true);
-        ui->doubleSpinBox_profile_start_y->setDisabled(true);
-        ui->doubleSpinBox_profile_start_z->setDisabled(true);
-        ui->doubleSpinBox_profile_step_x->setDisabled(true);
-        ui->doubleSpinBox_profile_step_y->setDisabled(true);
-        ui->doubleSpinBox_profile_step_z->setDisabled(true);
+
+        ui->spinBox_number_points->setEnabled(false);
+        ui->spinBox_number_profiles->setEnabled(false);
+        ui->groupBox_profile_prStart->setEnabled(false);
+        ui->groupBox_profile_prStep->setEnabled(false);
+        ui->groupBox_profile_ptStep->setEnabled(false);
+
+        ui->doubleSpinBox_profile_dist_pros->setEnabled(false);
+        ui->doubleSpinBox_profile_dist_pts->setEnabled(false);
+        ui->groupBox_profile_ptA->setEnabled(false);
+        ui->groupBox_profile_ptB->setEnabled(false);
+        ui->groupBox_profile_ptC->setEnabled(false);
     }
 }
 
@@ -1750,7 +1792,14 @@ void configuration_widget::newBuilding(){
 }
 
 void configuration_widget::duplicateBuilding(){
-
+    if(building){
+        std::shared_ptr<Building> build;
+        build.reset(new Building(building.get()));
+        build->setId(configuration->componentIdGenerator());
+        configuration->addBuilding(build);
+        configuration->setModified(true);
+        populateBuildings();
+    }
 }
 
 void configuration_widget::removeBuilding(){
@@ -1888,7 +1937,14 @@ void configuration_widget::newLType(){
 }
 
 void configuration_widget::duplicateLType(){
-
+    if(lType){
+        std::shared_ptr<LeadType> lt;
+        lt.reset(new LeadType(lType.get()));
+        lt->setId(configuration->componentIdGenerator());
+        configuration->addLeadType(lt);
+        configuration->setModified(true);
+        populateLTypes();
+    }
 }
 
 void configuration_widget::removeLType(){
@@ -1931,7 +1987,14 @@ void configuration_widget::newCoat(){
 }
 
 void configuration_widget::duplicateCoat(){
-
+    if(coat){
+        std::shared_ptr<Coating> co;
+        co.reset(new Coating(coat.get()));
+        co->setId(configuration->componentIdGenerator());
+        configuration->addCoating(co);
+        configuration->setModified(true);
+        populateCoatings();
+    }
 }
 
 void configuration_widget::removeCoat(){
@@ -2002,7 +2065,14 @@ void configuration_widget::newEner(){
 }
 
 void configuration_widget::duplicateEner(){
-
+    if(ener){
+        std::shared_ptr<Energization> en;
+        en.reset(new Energization(ener.get()));
+        en->setId(configuration->componentIdGenerator());
+        configuration->addEnergization(en);
+        configuration->setModified(true);
+        populateEnergizations();
+    }
 }
 
 void configuration_widget::removeEner(){
@@ -2066,7 +2136,14 @@ void configuration_widget::newCType(){
 }
 
 void configuration_widget::duplicateCType(){
-
+    if(cType){
+        std::shared_ptr<ConductorType> ct;
+        ct.reset(new ConductorType(cType.get()));
+        ct->setId(configuration->componentIdGenerator());
+        configuration->addConductorType(ct);
+        configuration->setModified(true);
+        populateCTypes();
+    }
 }
 
 void configuration_widget::removeCType(){
@@ -2109,7 +2186,14 @@ void configuration_widget::newCbType(){
 }
 
 void configuration_widget::duplicateCbType(){
-
+    if(cbType){
+        std::shared_ptr<CableType> cb;
+        cb.reset(new CableType(cbType.get()));
+        cb->setId(configuration->componentIdGenerator());
+        configuration->addCableType(cb);
+        configuration->setModified(true);
+        populateCbTypes();
+    }
 }
 
 void configuration_widget::removeCbType(){
@@ -2221,7 +2305,14 @@ void configuration_widget::newPro(){
 }
 
 void configuration_widget::duplicatePro(){
-
+    if(pro){
+        std::shared_ptr<profile> p;
+        p.reset(new profile(pro.get()));
+        p->id = configuration->componentIdGenerator();
+        configuration->addProfile(p);
+        configuration->setModified(true);
+        populateProfiles();
+    }
 }
 
 void configuration_widget::removePro(){
