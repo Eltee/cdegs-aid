@@ -353,7 +353,7 @@ void AppUtils::generateDefaultConfig(){
     node = conductorTypesNode.append_child("ConductorType");
     node.append_attribute("Id").set_value("4");
     node.append_attribute("Type").set_value("Default");
-    node.append_attribute("Name").set_value("Default Conductor");
+    node.append_attribute("Name").set_value("Default (Copper)");
     node.append_attribute("Resistivity").set_value("1.0");
     node.append_attribute("Permeability").set_value("1.0");
     node.append_attribute("Locked").set_value("1");
@@ -418,7 +418,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700");
+    node.append_attribute("Magnitude").set_value("190500");
     node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
@@ -427,7 +427,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("-120");
-    node.append_attribute("Magnitude").set_value("441700");
+    node.append_attribute("Magnitude").set_value("190500");
     node.append_attribute("Locked").set_value("0");
 
     node = energizationsNode.append_child("Energization");
@@ -436,25 +436,7 @@ void AppUtils::generateDefaultConfig(){
     node.append_attribute("Type").set_value("GPR-Potential");
     node.append_attribute("Frequency").set_value("AC");
     node.append_attribute("Angle").set_value("120");
-    node.append_attribute("Magnitude").set_value("441700");
-    node.append_attribute("Locked").set_value("0");
-
-    node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("14");
-    node.append_attribute("Identification").set_value("PoleA");
-    node.append_attribute("Type").set_value("GPR-Potential");
-    node.append_attribute("Frequency").set_value("DC");
-    node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700000");
-    node.append_attribute("Locked").set_value("0");
-
-    node = energizationsNode.append_child("Energization");
-    node.append_attribute("Id").set_value("15");
-    node.append_attribute("Identification").set_value("PoleB");
-    node.append_attribute("Type").set_value("GPR-Potential");
-    node.append_attribute("Frequency").set_value("DC");
-    node.append_attribute("Angle").set_value("0");
-    node.append_attribute("Magnitude").set_value("441700000");
+    node.append_attribute("Magnitude").set_value("190500");
     node.append_attribute("Locked").set_value("0");
 
     //Energizations end------------------------------------------------------------
@@ -909,7 +891,7 @@ std::string AppUtils::stringToUpper(std::string strToConvert){
 void AppUtils::exportConfiguration(const Configuration* config, const std::string fullPath){
     std::ofstream configFile;
     std::string tolerances = "";
-    int phaseAIter = 0, phaseBIter = 0, phaseCIter = 0, poleAIter = 0, poleBIter = 0, GNDIter = 0;
+    std::unordered_multimap<std::string, std::shared_ptr<Energization>> enerMap;
 
     configFile.open(fullPath);
     configFile << "HIFREQ\n";
@@ -936,30 +918,9 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
 
             configFile << "  ENERGIZATION, " << stringToUpper(config->getEnergizations().at(i)->getType()) << "," << dbl2str(round(realPart, 1), false, true) << "," << dbl2str(round(imagPart, 1), false, true) << ",,,,,," << config->getEnergizations().at(i)->getIdentification();
 
-            if(config->getEnergizations().at(i)->getIdentification() == "PhaseA"){
-                configFile << phaseAIter << "\n";
-                phaseAIter++;
-            }
-            else if(config->getEnergizations().at(i)->getIdentification() == "PhaseB"){
-                configFile << phaseBIter << "\n";
-                phaseBIter++;
-            }
-            else if(config->getEnergizations().at(i)->getIdentification() == "PhaseC"){
-                configFile << phaseCIter << "\n";
-                phaseCIter++;
-            }
-            else if(config->getEnergizations().at(i)->getIdentification() == "PoleA"){
-                configFile << poleAIter << "\n";
-                poleAIter++;
-            }
-            else if(config->getEnergizations().at(i)->getIdentification() == "PoleB"){
-                configFile << poleBIter << "\n";
-                poleBIter++;
-            }
-            else if(config->getEnergizations().at(i)->getIdentification() == "GND"){
-                configFile << GNDIter << "\n";
-                GNDIter++;
-            }
+            configFile << enerMap.count(config->getEnergizations().at(i)->getIdentification()) << "\n";
+
+            enerMap.emplace(config->getEnergizations().at(i)->getIdentification(), config->getEnergizations().at(i));
         }
 
     }

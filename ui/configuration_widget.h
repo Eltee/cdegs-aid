@@ -71,15 +71,15 @@ class configuration_widget : public QWidget
         ~configuration_widget();
         void initPlot();
         void populateFields();
-        void populateLTypes();
-        void populateCoatings();
-        void populateEnergizations();
-        void populateCTypes();
-        void populateCbTypes();
+        void populateLTypes(int action = 0);
+        void populateCoatings(int action = 0);
+        void populateEnergizations(int action = 0);
+        void populateCTypes(int action = 0);
+        void populateCbTypes(int action = 0);
         void populateComputations();
-        void populateProfiles();
-        void populateConductors();
-        void populateBuildings();
+        void populateProfiles(int action = 0);
+        void populateConductors(int action = 0);
+        void populateBuildings(int action = 0);
         void connectSlots();
         void disconnectSlots();
 
