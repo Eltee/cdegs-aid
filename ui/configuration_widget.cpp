@@ -233,6 +233,9 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
                      this, SLOT(refreshConductor()));
 
+    QObject::connect(ui->pushButton_cond_batchHeight, SIGNAL(clicked()),
+                     this, SLOT(batchChangeCondHeight()));
+
 
     //BUILD CONNECTIONS
     QObject::connect(ui->pushButton_add_building, SIGNAL(clicked()),
@@ -456,6 +459,15 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->radioButton_profile_steps, SIGNAL(clicked()),
                      this, SLOT(refreshProfile()));
 
+    QObject::connect(ui->pushButton_profile_genRight, SIGNAL(clicked()),
+                     this, SLOT(generateProRight()));
+
+    QObject::connect(ui->pushButton_profile_genLeft, SIGNAL(clicked()),
+                     this, SLOT(generateProLeft()));
+
+    QObject::connect(ui->pushButton_profile_genTwo, SIGNAL(clicked()),
+                     this, SLOT(generateProTwo()));
+
     //COMPUTATION CONNECTIONS
 
     QObject::connect(ui->checkBox_comp_ELECTRIC, SIGNAL(stateChanged(int)),
@@ -558,6 +570,9 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
                      this, SLOT(refreshConductor()));
+
+    QObject::disconnect(ui->pushButton_cond_batchHeight, SIGNAL(clicked()),
+                     this, SLOT(batchChangeCondHeight()));
 
     //BUILD CONNECTIONS
     QObject::disconnect(ui->pushButton_add_building, SIGNAL(clicked()),
@@ -780,6 +795,15 @@ void configuration_widget::disconnectSlots(){
 
     QObject::disconnect(ui->radioButton_profile_steps, SIGNAL(clicked()),
                      this, SLOT(refreshProfile()));
+
+    QObject::disconnect(ui->pushButton_profile_genRight, SIGNAL(clicked()),
+                     this, SLOT(generateProRight()));
+
+    QObject::disconnect(ui->pushButton_profile_genLeft, SIGNAL(clicked()),
+                     this, SLOT(generateProLeft()));
+
+    QObject::disconnect(ui->pushButton_profile_genTwo, SIGNAL(clicked()),
+                     this, SLOT(generateProTwo()));
 
     //COMPUTATION CONNECTIONS
 
@@ -1267,8 +1291,8 @@ void configuration_widget::refreshProfile(){
         ui->pushButton_remove_profile->setEnabled(true);
         ui->pushButton_pro_duplicate->setEnabled(false);
         if(ui->radioButton_profile_endPts->isChecked()){
-            ui->doubleSpinBox_profile_dist_pros->setEnabled(true);
-            ui->doubleSpinBox_profile_dist_pts->setEnabled(true);
+            ui->doubleSpinBox_profile_pts_prStep->setEnabled(true);
+            ui->doubleSpinBox_profile_pts_ptStep->setEnabled(true);
             ui->groupBox_profile_ptA->setEnabled(true);
             ui->groupBox_profile_ptB->setEnabled(true);
             ui->groupBox_profile_ptC->setEnabled(true);
@@ -1286,8 +1310,8 @@ void configuration_widget::refreshProfile(){
             ui->groupBox_profile_prStep->setEnabled(true);
             ui->groupBox_profile_ptStep->setEnabled(true);
 
-            ui->doubleSpinBox_profile_dist_pros->setEnabled(false);
-            ui->doubleSpinBox_profile_dist_pts->setEnabled(false);
+            ui->doubleSpinBox_profile_pts_prStep->setEnabled(false);
+            ui->doubleSpinBox_profile_pts_ptStep->setEnabled(false);
             ui->groupBox_profile_ptA->setEnabled(false);
             ui->groupBox_profile_ptB->setEnabled(false);
             ui->groupBox_profile_ptC->setEnabled(false);
@@ -1305,6 +1329,9 @@ void configuration_widget::refreshProfile(){
         ui->doubleSpinBox_profile_ptC_x->setValue(prPts[2].x);
         ui->doubleSpinBox_profile_ptC_y->setValue(prPts[2].y);
         ui->doubleSpinBox_profile_ptC_z->setValue(prPts[2].z);
+
+        ui->doubleSpinBox_profile_pts_ptStep->setValue(pro->ptStep.z);
+        ui->doubleSpinBox_profile_pts_prStep->setValue(pro->prStep.y);
 
         ui->spinBox_number_points->setValue(pro->ptNum);
         ui->spinBox_number_profiles->setValue(pro->prNum);
@@ -1329,8 +1356,8 @@ void configuration_widget::refreshProfile(){
         ui->groupBox_profile_prStep->setEnabled(false);
         ui->groupBox_profile_ptStep->setEnabled(false);
 
-        ui->doubleSpinBox_profile_dist_pros->setEnabled(false);
-        ui->doubleSpinBox_profile_dist_pts->setEnabled(false);
+        ui->doubleSpinBox_profile_pts_ptStep->setEnabled(false);
+        ui->doubleSpinBox_profile_pts_prStep->setEnabled(false);
         ui->groupBox_profile_ptA->setEnabled(false);
         ui->groupBox_profile_ptB->setEnabled(false);
         ui->groupBox_profile_ptC->setEnabled(false);
@@ -1922,6 +1949,20 @@ void configuration_widget::changeCondEndZ(double value){
     }
 }
 
+void configuration_widget::batchChangeCondHeight(){
+    double newHeight = QInputDialog::getDouble(this, "Change height by..", "Input height difference (-/+)", 0, -9999.0, 9999.0, 2);
+    for(std::shared_ptr<Conductor> cond : configuration->getConductors()){
+        coords start, end;
+        start = cond->getStartCoords();
+        end = cond->getEndCoords();
+        start.z += newHeight;
+        end.z += newHeight;
+        cond->setCoords(start, end);
+    }
+    configuration->setModified(true);
+    populateConductors(1);
+}
+
 //BUILD CONNECTIONS
 
 void configuration_widget::newBuilding(){
@@ -2479,9 +2520,32 @@ void configuration_widget::removePro(){
 
 void configuration_widget::savePro(){
     if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
-    configuration->removeProfile(pro);
-    configuration->addProfile(pro);
-    configuration->setModified(true);
+    if(ui->radioButton_profile_steps->isChecked()){
+        configuration->removeProfile(pro);
+        configuration->addProfile(pro);
+        configuration->setModified(true);
+    }
+    else if(ui->radioButton_profile_endPts->isChecked()){
+        coords ptA, ptB, ptC;
+        double prStep, ptStep;
+        ptA.x = ui->doubleSpinBox_profile_ptA_x->value();
+        ptA.y = ui->doubleSpinBox_profile_ptA_y->value();
+        ptA.z = ui->doubleSpinBox_profile_ptA_z->value();
+        ptB.x = ui->doubleSpinBox_profile_ptB_x->value();
+        ptB.y = ui->doubleSpinBox_profile_ptB_y->value();
+        ptB.z = ui->doubleSpinBox_profile_ptB_z->value();
+        ptC.x = ui->doubleSpinBox_profile_ptC_x->value();
+        ptC.y = ui->doubleSpinBox_profile_ptC_y->value();
+        ptC.z = ui->doubleSpinBox_profile_ptC_z->value();
+        prStep = ui->doubleSpinBox_profile_pts_prStep->value();
+        ptStep = ui->doubleSpinBox_profile_pts_ptStep->value();
+
+        pro->fromCoords(ptA, ptB, ptC, ptStep, prStep);
+
+        configuration->removeProfile(pro);
+        configuration->addProfile(pro);
+        configuration->setModified(true);
+    }
     populateProfiles(1);
 }
 
@@ -2515,4 +2579,55 @@ void configuration_widget::refreshConfSettings(){
     ui->lineEdit_settings_cTypes->setText(QString::number(configuration->getConductorTypes().size()));
     ui->lineEdit_settings_cbTypes->setText(QString::number(configuration->getCableTypes().size()));
     ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
+}
+
+void configuration_widget::generateProRight(){
+    int result = configuration->generateProfile(false, true);
+    populateProfiles(1);
+
+    switch(result){
+        case 0:
+            QMessageBox::critical(this, "Success", "Well down.");
+            break;
+        case 1:
+            QMessageBox::critical(this, "Failure", "No conductors.");
+            break;
+        default:
+            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            break;
+    }
+}
+
+void configuration_widget::generateProLeft(){
+    int result = configuration->generateProfile(false, false);
+    populateProfiles(1);
+
+    switch(result){
+        case 0:
+            QMessageBox::critical(this, "Success", "Well down.");
+            break;
+        case 1:
+            QMessageBox::critical(this, "Failure", "No conductors.");
+            break;
+        default:
+            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            break;
+    }
+}
+
+void configuration_widget::generateProTwo(){
+    int result = configuration->generateProfile(true, true);
+    populateProfiles(1);
+
+    switch(result){
+        case 0:
+            QMessageBox::critical(this, "Success", "Well down.");
+            break;
+        case 1:
+            QMessageBox::critical(this, "Failure", "No conductors.");
+            break;
+        default:
+            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            break;
+    }
 }

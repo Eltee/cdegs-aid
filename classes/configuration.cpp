@@ -1556,7 +1556,7 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
             if(cond->getStartCoords().y < leftY) leftY = cond->getStartCoords().y;
             if(cond->getStartCoords().y > rightY) rightY = cond->getStartCoords().y;
             if(cond->getStartCoords().z < bottomZ) bottomZ = cond->getStartCoords().z;
-            if(cond->getStartCoords().z > topZ) topZ = cond->getStartCoords().z;
+            if(cond->getStartCoords().z < topZ) topZ = cond->getStartCoords().z;
         }
 
         if(leftY == rightY) twoSided = true;
@@ -1571,13 +1571,13 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
             if(rightSided){
                 for(std::shared_ptr<Conductor> cond : m_buildingConductors){
                     if(cond->getStartCoords().y < buildingY) buildingY = cond->getStartCoords().y;
-                    if(cond->getStartCoords().z > buildingZ) buildingZ = cond->getStartCoords().z;
+                    if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
                 }
             }
             else{
                 for(std::shared_ptr<Conductor> cond : m_buildingConductors){
                     if(cond->getStartCoords().y > buildingY) buildingY = cond->getStartCoords().y;
-                    if(cond->getStartCoords().z > buildingZ) buildingZ = cond->getStartCoords().z;
+                    if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
                 }
             }
 
@@ -1593,7 +1593,7 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
 
         pro->ptStep.x = 0.0;
         pro->ptStep.y = 0.0;
-        pro->ptStep.z = 0.25;
+        pro->ptStep.z = -0.25;
 
         pro->prStep.x = 0.0;
         pro->prStep.y = 0.25;
@@ -1617,15 +1617,15 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
             pro->start.z = 0.0;
 
             if(building){ //If there is a building, top boundary..
-                if(topZ > buildingZ){
-                    pro->ptNum = ((topZ + 2.0) / pro->ptStep.z);
+                if(topZ < buildingZ){
+                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
                 }
                 else{
-                    pro->ptNum = ((buildingZ + 2.0) / pro->ptStep.z);
+                    pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z);
                 }
             }
             else{
-                pro->ptNum = ((topZ + 2.0) / pro->ptStep.z);
+                pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
             }
 
             if(building){ //If there is a building, right boundary..
@@ -1647,15 +1647,15 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
             pro->start.z = 0.0;
 
             if(building){ //If there is a building, top boundary..
-                if(topZ > buildingZ){
-                    pro->ptNum = ((topZ + 2.0) / pro->ptStep.z);
+                if(topZ < buildingZ){
+                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
                 }
                 else{
-                    pro->ptNum = ((buildingZ + 2.0) / pro->ptStep.z);
+                    pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z);
                 }
             }
             else{
-                pro->ptNum = ((topZ + 2.0) / pro->ptStep.z);
+                pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
             }
 
             if(rightSided){ //Profile on the right

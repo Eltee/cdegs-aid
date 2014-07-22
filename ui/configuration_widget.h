@@ -130,6 +130,7 @@ class configuration_widget : public QWidget
         void changeCondEndX(double value);
         void changeCondEndY(double value);
         void changeCondEndZ(double value);
+        void batchChangeCondHeight();
 
         //BUILD CONNECTIONS
         void newBuilding();
@@ -209,6 +210,9 @@ class configuration_widget : public QWidget
         void duplicatePro();
         void removePro();
         void savePro();
+        void generateProRight();
+        void generateProLeft();
+        void generateProTwo();
 
         //COMPUTATION CONNECTIONS
         void changeComputations(int i);

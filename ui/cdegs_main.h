@@ -47,6 +47,7 @@
 #include <iostream>
 #include <QFileInfo>
 #include <QCloseEvent>
+#include <QInputDialog>
 #include <memory>
 #include "configuration_widget.h"
 #include "project_tab_widget.h"
@@ -104,6 +105,7 @@ class cdegs_main : public QMainWindow
         void newConfig();
         void openConfig(std::shared_ptr<Configuration> config);
         void closeConfig();
+        void duplicateConfig();
         void exportConfig();
         void exportConfigAs();
         void openStyleDialog();

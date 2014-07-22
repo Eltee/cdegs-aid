@@ -163,6 +163,61 @@ struct profile{
         return points;
     }
 
+    void fromCoords(coords ptA, coords ptB, coords ptC, double stepsPt, double stepsPr){
+        double minX = 9999.0;
+        double minY = 9999.0;
+        double minZ = -9999.0;
+        double maxX = -9999.0;
+        double maxY = -9999.0;
+        double maxZ = 9999.0;
+
+        if(ptA.x < minX) minX = ptA.x;
+        if(ptB.x < minX) minX = ptB.x;
+        if(ptC.x < minX) minX = ptC.x;
+
+        if(ptA.y < minY) minY = ptA.y;
+        if(ptB.y < minY) minY = ptB.y;
+        if(ptC.y < minY) minY = ptC.y;
+
+        if(ptA.z > minZ) minZ = ptA.z;
+        if(ptB.z > minZ) minZ = ptB.z;
+        if(ptC.z > minZ) minZ = ptC.z;
+
+        if(ptA.x > maxX) maxX = ptA.x;
+        if(ptB.x > maxX) maxX = ptB.x;
+        if(ptC.x > maxX) maxX = ptC.x;
+
+        if(ptA.y > maxY) maxY = ptA.y;
+        if(ptB.y > maxY) maxY = ptB.y;
+        if(ptC.y > maxY) maxY = ptC.y;
+
+        if(ptA.z < maxZ) maxZ = ptA.z;
+        if(ptB.z < maxZ) maxZ = ptB.z;
+        if(ptC.z < maxZ) maxZ = ptC.z;
+
+        start.x = minX;
+        start.y = minY;
+        start.z = minZ;
+
+        if(maxX - minX > 0) ptStep.x = stepsPt;
+        if(maxZ - minZ < 0) ptStep.z = -stepsPt;
+        if(maxY - minY > 0) prStep.y = stepsPr;
+
+        if(ptStep.x != 0 && ptStep.z != 0){
+            if((maxX - minX) > std::abs(maxZ - minZ)){
+                ptNum = ((maxX - minX) / ptStep.x);
+            }
+            else if((maxX - minX) < std::abs(maxZ - minZ)){
+                ptNum = ((maxZ - minZ) / ptStep.z);
+            }
+        }
+
+        if(prStep.y != 0){
+            prNum = ((maxY - minY)  / prStep.y);
+        }
+
+    }
+
     void fromCoordsToStep(double const& ptA_x, double const& ptA_y, double const& ptA_z, double const& ptB_x, double const& ptB_y, double const& ptB_z, double const& ptC_x, double const& ptC_y, double const& ptC_z, int const& numPt, int const& numPr){
        //Valeur de la coordonnée de départ
         start.x = ptA_x;

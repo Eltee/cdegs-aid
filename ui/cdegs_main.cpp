@@ -114,6 +114,9 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionSave_All_Configs, SIGNAL(triggered()),
                      this, SLOT(saveAllConfigs()));
+
+    QObject::connect(ui->actionDuplicate_Config, SIGNAL(triggered()),
+                     this, SLOT(duplicateConfig()));
 }
 
 /*!
@@ -196,6 +199,7 @@ void cdegs_main::updateActions(){
         ui->actionSave_All_Configs->setEnabled(true);
         ui->actionExport_Config->setEnabled(true);
         ui->actionExport_Config_as->setEnabled(true);
+        ui->actionDuplicate_Config->setEnabled(true);
     }
     else{
         ui->actionClose_Config->setEnabled(false);
@@ -203,6 +207,7 @@ void cdegs_main::updateActions(){
         ui->actionSave_All_Configs->setEnabled(false);
         ui->actionExport_Config->setEnabled(false);
         ui->actionExport_Config_as->setEnabled(false);
+        ui->actionDuplicate_Config->setEnabled(false);
     }
 }
 
@@ -391,6 +396,8 @@ void cdegs_main::newConfig(){
     config.reset(new Configuration(AppUtils::getInstance().getDefaultConfig()));
     AppUtils::getInstance().setCurrentConfig(config);
     config->setModified(true);
+    QString name = QInputDialog::getText(this, "New config name", "Input new name", QLineEdit::Normal, QString::fromStdString(config->getIdentifier()));
+    config->setIdentifier(name.toStdString());
 
     if(ui->tabProjects->currentIndex() != -1){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
@@ -436,6 +443,21 @@ void cdegs_main::saveAllConfigs(){
         refresh();
     }
 }
+
+void cdegs_main::duplicateConfig(){
+    if(config){
+        std::shared_ptr<Configuration> configuration;
+        configuration.reset(new Configuration(config.get()));
+        configuration->setIdentifier(configuration->getIdentifier() + "(1)");
+        QString name = QInputDialog::getText(this, "New config name", "Input new name", QLineEdit::Normal, QString::fromStdString(configuration->getIdentifier()));
+        configuration->setIdentifier(name.toStdString());
+        configuration->setId(-1);
+        project->addConfiguration(configuration, true);
+        configuration->setModified(false);
+        openConfig(configuration);
+    }
+}
+
 
 /*!
  \brief
