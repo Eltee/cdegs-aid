@@ -77,7 +77,7 @@ class project_tab_widget : public QWidget
         void changeTabName(QWidget* widget, QString name);
         void modifyProject();
         void saveConfig();
-        void closeConfig();
+        void closeConfig(bool ignoreQuestions = false);
         void saveAllConfigs();
 
     public slots:

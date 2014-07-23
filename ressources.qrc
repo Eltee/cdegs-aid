@@ -12,5 +12,6 @@
         <file>res/mini-save-config.png</file>
         <file>res/mini-save-project.png</file>
         <file>res/mini-save-all-configs.png</file>
+        <file>res/mini-duplicate-config.png</file>
     </qresource>
 </RCC>

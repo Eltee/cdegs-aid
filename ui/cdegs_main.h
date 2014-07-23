@@ -108,6 +108,7 @@ class cdegs_main : public QMainWindow
         void duplicateConfig();
         void exportConfig();
         void exportConfigAs();
+        void deleteConfig();
         void openStyleDialog();
         void changeStyle(std::string style);
         void openConfigDialog();

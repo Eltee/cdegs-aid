@@ -169,16 +169,22 @@ void project_tab_widget::changeTab(){
     refresh();
 }
 
-void project_tab_widget::closeConfig(){
+void project_tab_widget::closeConfig(bool ignoreQuestions){
     if(ui->tabProject->currentIndex() > 0){
-        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
-            if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig()->isModified()){
-                if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
-                    saveConfig();
-                }
-            }
+        if(ignoreQuestions){
             dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig().reset();
             ui->tabProject->removeTab(ui->tabProject->currentIndex());
+        }
+        else{
+            if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+                if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig()->isModified()){
+                    if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
+                        saveConfig();
+                    }
+                }
+                dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig().reset();
+                ui->tabProject->removeTab(ui->tabProject->currentIndex());
+            }
         }
     }
 

@@ -166,6 +166,7 @@
     <addaction name="actionSave_Config"/>
     <addaction name="actionSave_All_Configs"/>
     <addaction name="actionDuplicate_Config"/>
+    <addaction name="actionDelete_Config"/>
     <addaction name="actionClose_Config"/>
    </widget>
    <widget class="QMenu" name="menuExport">
@@ -214,6 +215,8 @@
    <addaction name="actionOpen_Config"/>
    <addaction name="actionSave_Config"/>
    <addaction name="actionSave_All_Configs"/>
+   <addaction name="actionDuplicate_Config"/>
+   <addaction name="actionDelete_Config"/>
    <addaction name="actionClose_Config"/>
    <addaction name="separator"/>
    <addaction name="actionExport_Config"/>
@@ -382,8 +385,20 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/res/res/mini-duplicate-config.png</normaloff>:/res/res/mini-duplicate-config.png</iconset>
+   </property>
    <property name="text">
     <string>Duplicate Config</string>
+   </property>
+  </action>
+  <action name="actionDelete_Config">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Delete Config</string>
    </property>
   </action>
  </widget>

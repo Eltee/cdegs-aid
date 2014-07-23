@@ -117,6 +117,9 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionDuplicate_Config, SIGNAL(triggered()),
                      this, SLOT(duplicateConfig()));
+
+    QObject::connect(ui->actionDelete_Config, SIGNAL(triggered()),
+                     this, SLOT(deleteConfig()));
 }
 
 /*!
@@ -200,6 +203,7 @@ void cdegs_main::updateActions(){
         ui->actionExport_Config->setEnabled(true);
         ui->actionExport_Config_as->setEnabled(true);
         ui->actionDuplicate_Config->setEnabled(true);
+        ui->actionDelete_Config->setEnabled(true);
     }
     else{
         ui->actionClose_Config->setEnabled(false);
@@ -208,6 +212,7 @@ void cdegs_main::updateActions(){
         ui->actionExport_Config->setEnabled(false);
         ui->actionExport_Config_as->setEnabled(false);
         ui->actionDuplicate_Config->setEnabled(false);
+        ui->actionDelete_Config->setEnabled(false);
     }
 }
 
@@ -504,6 +509,18 @@ void cdegs_main::exportConfigAs(){
     }
 }
 
+void cdegs_main::deleteConfig(){
+    if(config && project){
+        if(QMessageBox::question(this, "Warning! Delete Configuration?", "Are you sure you wish to delete this configuration?") == QMessageBox::Yes){
+            project->removeConfiguration(config);
+            if(ui->tabProjects->currentIndex() != -1 && config){
+                dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->closeConfig(true);
+            }
+        }
+    }
+}
+
+
 /*!
  \brief
 
@@ -564,15 +581,19 @@ void cdegs_main::changeTabName(QWidget* widget, QString name){
 void cdegs_main::closeEvent(QCloseEvent* event){
         event->ignore();
         if(QMessageBox::Yes == QMessageBox::question(this, "Close Confirmation?", "Are you sure you want to exit?", QMessageBox::Yes|QMessageBox::No)){
-            if(config->isModified()){
-                if(QMessageBox::Yes == QMessageBox::question(this, "Save configuration?", "Do you wish to save the changes to the current configuration before quitting?", QMessageBox::Yes|QMessageBox::No)){
-                    saveConfig();
+            if(config){
+                if(config->isModified()){
+                    if(QMessageBox::Yes == QMessageBox::question(this, "Save configuration?", "Do you wish to save the changes to the current configuration before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                        saveConfig();
+                    }
                 }
             }
 
-            if(project->isModified()){
-                if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
-                    saveProject();
+            if(project){
+                if(project->isModified()){
+                    if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                        saveProject();
+                    }
                 }
             }
             event->accept();
