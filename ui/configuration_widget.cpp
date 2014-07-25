@@ -57,7 +57,7 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     initPlot();
     populateFields();
     ui->stackedWidget_config->setCurrentIndex(0);
-    connectSlots();
+    //connectSlots();
 }
 
 void configuration_widget::initPlot(){
@@ -182,16 +182,16 @@ void configuration_widget::connectSlots(){
                      this, SLOT(fetchBuilding(QString)));
 
     //COND CONNECTIONS
-    QObject::connect(ui->pushButton_cond_add, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cond_add, SIGNAL(released()),
                      this, SLOT(newCond()));
 
-    QObject::connect(ui->pushButton_cond_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cond_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCond()));
 
-    QObject::connect(ui->pushButton_cond_remove, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cond_remove, SIGNAL(released()),
                      this, SLOT(removeCond()));
 
-    QObject::connect(ui->pushButton_cond_save, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cond_save, SIGNAL(released()),
                      this, SLOT(saveCond()));
 
     QObject::connect(ui->comboBox_cond_cbType, SIGNAL(currentIndexChanged(int)),
@@ -230,24 +230,26 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCondRadius(double)));
 
-    QObject::connect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
+    QObject::connect(ui->checkBox_cond_advanced, SIGNAL(released()),
                      this, SLOT(refreshConductor()));
 
-    QObject::connect(ui->pushButton_cond_batchHeight, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cond_batchHeight, SIGNAL(released()),
                      this, SLOT(batchChangeCondHeight()));
 
+    QObject::connect(ui->pushButton_cond_addMultiple, SIGNAL(released()),
+                     this, SLOT(multiCondDialog()));
 
     //BUILD CONNECTIONS
-    QObject::connect(ui->pushButton_add_building, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_add_building, SIGNAL(released()),
                      this, SLOT(newBuilding()));
 
-    QObject::connect(ui->pushButton_build_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_build_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateBuilding()));
 
-    QObject::connect(ui->pushButton_remove_building, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_building, SIGNAL(released()),
                      this, SLOT(removeBuilding()));
 
-    QObject::connect(ui->pushButton_save_building, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_building, SIGNAL(released()),
                      this, SLOT(saveBuilding()));
 
     QObject::connect(ui->comboBox_building_sides, SIGNAL(currentIndexChanged(QString)),
@@ -286,10 +288,10 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->comboBox_building_lType, SIGNAL(currentIndexChanged(int)),
                      this, SLOT(changeBuildLType(int)));
 
-    QObject::connect(ui->pushButton_building_generate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_building_generate, SIGNAL(released()),
                      this, SLOT(generateBuildingConductors()));
 
-    QObject::connect(ui->pushButton_building_clear, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_building_clear, SIGNAL(released()),
                      this, SLOT(clearBuildingConductors()));
 
     //CONF CONNECTIONS
@@ -303,39 +305,39 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->comboBox_settings_frequency, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(changeConfFrequency(QString)));
 
-    QObject::connect(ui->pushButton_save_conf, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_conf, SIGNAL(released()),
                      this, SLOT(saveConfig()));
 
     //LTYPE CONNECTIONS
     QObject::connect(ui->lineEdit_lType_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeLTypeName(QString)));
 
-    QObject::connect(ui->pushButton_new_lType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_lType, SIGNAL(released()),
                      this, SLOT(newLType()));
 
-    QObject::connect(ui->pushButton_lType_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_lType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateLType()));
 
-    QObject::connect(ui->pushButton_remove_lType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_lType, SIGNAL(released()),
                      this, SLOT(removeLType()));
 
-    QObject::connect(ui->pushButton_save_lType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_lType, SIGNAL(released()),
                      this, SLOT(saveLType()));
 
     //COATING CONNECTIONS
     QObject::connect(ui->lineEdit_coating_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeCoatName(QString)));
 
-    QObject::connect(ui->pushButton_new_coating, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_coating, SIGNAL(released()),
                      this, SLOT(newCoat()));
 
-    QObject::connect(ui->pushButton_coat_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_coat_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCoat()));
 
-    QObject::connect(ui->pushButton_remove_coating, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_coating, SIGNAL(released()),
                      this, SLOT(removeCoat()));
 
-    QObject::connect(ui->pushButton_save_coating, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_coating, SIGNAL(released()),
                      this, SLOT(saveCoat()));
 
     //ENERG CONNECTIONS
@@ -354,16 +356,16 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->doubleSpinBox_energization_angle, SIGNAL(valueChanged(double)),
                      this, SLOT(changeEnerAng(double)));
 
-    QObject::connect(ui->pushButton_new_energization, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_energization, SIGNAL(released()),
                      this, SLOT(newEner()));
 
-    QObject::connect(ui->pushButton_ener_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_ener_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateEner()));
 
-    QObject::connect(ui->pushButton_remove_energization, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_energization, SIGNAL(released()),
                      this, SLOT(removeEner()));
 
-    QObject::connect(ui->pushButton_save_energization, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_energization, SIGNAL(released()),
                      this, SLOT(saveEner()));
 
     //CTYPE CONNECTIONS
@@ -379,32 +381,32 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->doubleSpinBox_cType_resistivity, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCTypeRes(double)));
 
-    QObject::connect(ui->pushButton_new_cType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_cType, SIGNAL(released()),
                      this, SLOT(newCType()));
 
-    QObject::connect(ui->pushButton_cType_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCType()));
 
-    QObject::connect(ui->pushButton_remove_cType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_cType, SIGNAL(released()),
                      this, SLOT(removeCType()));
 
-    QObject::connect(ui->pushButton_save_cType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_cType, SIGNAL(released()),
                      this, SLOT(saveCType()));
 
     //CBTYPE CONNECTIONS
     QObject::connect(ui->lineEdit_cbType_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeCbTypeName(QString)));
 
-    QObject::connect(ui->pushButton_new_cbType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_cbType, SIGNAL(released()),
                      this, SLOT(newCbType()));
 
-    QObject::connect(ui->pushButton_cbType_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_cbType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCbType()));
 
-    QObject::connect(ui->pushButton_remove_cbType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_cbType, SIGNAL(released()),
                      this, SLOT(removeCbType()));
 
-    QObject::connect(ui->pushButton_save_cbType, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_cbType, SIGNAL(released()),
                      this, SLOT(saveCbType()));
 
     //PROFILE CONNECTIONS
@@ -441,31 +443,31 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->doubleSpinBox_profile_step_z, SIGNAL(valueChanged(double)),
                      this, SLOT(changeProPrStepZ(double)));
 
-    QObject::connect(ui->pushButton_new_profile, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_new_profile, SIGNAL(released()),
                      this, SLOT(newPro()));
 
-    QObject::connect(ui->pushButton_pro_duplicate, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_pro_duplicate, SIGNAL(released()),
                      this, SLOT(duplicatePro()));
 
-    QObject::connect(ui->pushButton_remove_profile, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_remove_profile, SIGNAL(released()),
                      this, SLOT(removePro()));
 
-    QObject::connect(ui->pushButton_save_profile, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_save_profile, SIGNAL(released()),
                      this, SLOT(savePro()));
 
-    QObject::connect(ui->radioButton_profile_endPts, SIGNAL(clicked()),
+    QObject::connect(ui->radioButton_profile_endPts, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
 
-    QObject::connect(ui->radioButton_profile_steps, SIGNAL(clicked()),
+    QObject::connect(ui->radioButton_profile_steps, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
 
-    QObject::connect(ui->pushButton_profile_genRight, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_profile_genRight, SIGNAL(released()),
                      this, SLOT(generateProRight()));
 
-    QObject::connect(ui->pushButton_profile_genLeft, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_profile_genLeft, SIGNAL(released()),
                      this, SLOT(generateProLeft()));
 
-    QObject::connect(ui->pushButton_profile_genTwo, SIGNAL(clicked()),
+    QObject::connect(ui->pushButton_profile_genTwo, SIGNAL(released()),
                      this, SLOT(generateProTwo()));
 
     //COMPUTATION CONNECTIONS
@@ -520,16 +522,16 @@ void configuration_widget::disconnectSlots(){
                      this, SLOT(fetchBuilding(QString)));
 
     //COND CONNECTIONS
-    QObject::disconnect(ui->pushButton_cond_add, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cond_add, SIGNAL(released()),
                      this, SLOT(newCond()));
 
-    QObject::disconnect(ui->pushButton_cond_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cond_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCond()));
 
-    QObject::disconnect(ui->pushButton_cond_remove, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cond_remove, SIGNAL(released()),
                      this, SLOT(removeCond()));
 
-    QObject::disconnect(ui->pushButton_cond_save, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cond_save, SIGNAL(released()),
                      this, SLOT(saveCond()));
 
     QObject::disconnect(ui->comboBox_cond_cbType, SIGNAL(currentIndexChanged(int)),
@@ -568,23 +570,26 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_cond_radius, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCondRadius(double)));
 
-    QObject::disconnect(ui->checkBox_cond_advanced, SIGNAL(clicked()),
+    QObject::disconnect(ui->checkBox_cond_advanced, SIGNAL(released()),
                      this, SLOT(refreshConductor()));
 
-    QObject::disconnect(ui->pushButton_cond_batchHeight, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cond_batchHeight, SIGNAL(released()),
                      this, SLOT(batchChangeCondHeight()));
 
+    QObject::disconnect(ui->pushButton_cond_addMultiple, SIGNAL(released()),
+                     this, SLOT(multiCondDialog()));
+
     //BUILD CONNECTIONS
-    QObject::disconnect(ui->pushButton_add_building, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_add_building, SIGNAL(released()),
                      this, SLOT(newBuilding()));
 
-    QObject::disconnect(ui->pushButton_build_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_build_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateBuilding()));
 
-    QObject::disconnect(ui->pushButton_remove_building, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_building, SIGNAL(released()),
                      this, SLOT(removeBuilding()));
 
-    QObject::disconnect(ui->pushButton_save_building, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_building, SIGNAL(released()),
                      this, SLOT(saveBuilding()));
 
     QObject::disconnect(ui->comboBox_building_sides, SIGNAL(currentIndexChanged(QString)),
@@ -623,10 +628,10 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->comboBox_building_lType, SIGNAL(currentIndexChanged(int)),
                      this, SLOT(changeBuildLType(int)));
 
-    QObject::disconnect(ui->pushButton_building_generate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_building_generate, SIGNAL(released()),
                      this, SLOT(generateBuildingConductors()));
 
-    QObject::disconnect(ui->pushButton_building_clear, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_building_clear, SIGNAL(released()),
                      this, SLOT(clearBuildingConductors()));
 
     //CONF CONNECTIONS
@@ -640,39 +645,39 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->comboBox_settings_frequency, SIGNAL(currentIndexChanged(QString)),
                      this, SLOT(changeConfFrequency(QString)));
 
-    QObject::disconnect(ui->pushButton_save_conf, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_conf, SIGNAL(released()),
                      this, SLOT(saveConfig()));
 
     //LTYPE CONNECTIONS
     QObject::disconnect(ui->lineEdit_lType_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeLTypeName(QString)));
 
-    QObject::disconnect(ui->pushButton_new_lType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_lType, SIGNAL(released()),
                      this, SLOT(newLType()));
 
-    QObject::disconnect(ui->pushButton_lType_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_lType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateLType()));
 
-    QObject::disconnect(ui->pushButton_remove_lType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_lType, SIGNAL(released()),
                      this, SLOT(removeLType()));
 
-    QObject::disconnect(ui->pushButton_save_lType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_lType, SIGNAL(released()),
                      this, SLOT(saveLType()));
 
     //COATING CONNECTIONS
     QObject::disconnect(ui->lineEdit_coating_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeCoatName(QString)));
 
-    QObject::disconnect(ui->pushButton_new_coating, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_coating, SIGNAL(released()),
                      this, SLOT(newCoat()));
 
-    QObject::disconnect(ui->pushButton_coat_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_coat_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCoat()));
 
-    QObject::disconnect(ui->pushButton_remove_coating, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_coating, SIGNAL(released()),
                      this, SLOT(removeCoat()));
 
-    QObject::disconnect(ui->pushButton_save_coating, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_coating, SIGNAL(released()),
                      this, SLOT(saveCoat()));
 
     //ENERG CONNECTIONS
@@ -691,16 +696,16 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_energization_angle, SIGNAL(valueChanged(double)),
                      this, SLOT(changeEnerAng(double)));
 
-    QObject::disconnect(ui->pushButton_new_energization, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_energization, SIGNAL(released()),
                      this, SLOT(newEner()));
 
-    QObject::disconnect(ui->pushButton_ener_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_ener_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateEner()));
 
-    QObject::disconnect(ui->pushButton_remove_energization, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_energization, SIGNAL(released()),
                      this, SLOT(removeEner()));
 
-    QObject::disconnect(ui->pushButton_save_energization, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_energization, SIGNAL(released()),
                      this, SLOT(saveEner()));
 
     //CTYPE CONNECTIONS
@@ -716,32 +721,32 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_cType_resistivity, SIGNAL(valueChanged(double)),
                      this, SLOT(changeCTypeRes(double)));
 
-    QObject::disconnect(ui->pushButton_new_cType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_cType, SIGNAL(released()),
                      this, SLOT(newCType()));
 
-    QObject::disconnect(ui->pushButton_cType_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCType()));
 
-    QObject::disconnect(ui->pushButton_remove_cType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_cType, SIGNAL(released()),
                      this, SLOT(removeCType()));
 
-    QObject::disconnect(ui->pushButton_save_cType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_cType, SIGNAL(released()),
                      this, SLOT(saveCType()));
 
     //CBTYPE CONNECTIONS
     QObject::disconnect(ui->lineEdit_cbType_name, SIGNAL(textChanged(QString)),
                      this, SLOT(changeCbTypeName(QString)));
 
-    QObject::disconnect(ui->pushButton_new_cbType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_cbType, SIGNAL(released()),
                      this, SLOT(newCbType()));
 
-    QObject::disconnect(ui->pushButton_cbType_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_cbType_duplicate, SIGNAL(released()),
                      this, SLOT(duplicateCbType()));
 
-    QObject::disconnect(ui->pushButton_remove_cbType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_cbType, SIGNAL(released()),
                      this, SLOT(removeCbType()));
 
-    QObject::disconnect(ui->pushButton_save_cbType, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_cbType, SIGNAL(released()),
                      this, SLOT(saveCbType()));
 
     //PROFILE CONNECTIONS
@@ -778,31 +783,31 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_profile_step_z, SIGNAL(valueChanged(double)),
                      this, SLOT(changeProPrStepZ(double)));
 
-    QObject::disconnect(ui->pushButton_new_profile, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_new_profile, SIGNAL(released()),
                      this, SLOT(newPro()));
 
-    QObject::disconnect(ui->pushButton_pro_duplicate, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_pro_duplicate, SIGNAL(released()),
                      this, SLOT(duplicatePro()));
 
-    QObject::disconnect(ui->pushButton_remove_profile, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_remove_profile, SIGNAL(released()),
                      this, SLOT(removePro()));
 
-    QObject::disconnect(ui->pushButton_save_profile, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_save_profile, SIGNAL(released()),
                      this, SLOT(savePro()));
 
-    QObject::disconnect(ui->radioButton_profile_endPts, SIGNAL(clicked()),
+    QObject::disconnect(ui->radioButton_profile_endPts, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
 
-    QObject::disconnect(ui->radioButton_profile_steps, SIGNAL(clicked()),
+    QObject::disconnect(ui->radioButton_profile_steps, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
 
-    QObject::disconnect(ui->pushButton_profile_genRight, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_profile_genRight, SIGNAL(released()),
                      this, SLOT(generateProRight()));
 
-    QObject::disconnect(ui->pushButton_profile_genLeft, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_profile_genLeft, SIGNAL(released()),
                      this, SLOT(generateProLeft()));
 
-    QObject::disconnect(ui->pushButton_profile_genTwo, SIGNAL(clicked()),
+    QObject::disconnect(ui->pushButton_profile_genTwo, SIGNAL(released()),
                      this, SLOT(generateProTwo()));
 
     //COMPUTATION CONNECTIONS
@@ -1961,6 +1966,13 @@ void configuration_widget::batchChangeCondHeight(){
     }
     configuration->setModified(true);
     populateConductors(1);
+}
+
+void configuration_widget::multiCondDialog(){
+    if(configuration){
+        MultiConductorDialog* multiDiag = new MultiConductorDialog(this, configuration);
+        multiDiag->exec();
+    }
 }
 
 //BUILD CONNECTIONS

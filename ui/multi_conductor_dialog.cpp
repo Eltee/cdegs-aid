@@ -38,15 +38,124 @@
 #include "multi_conductor_dialog.h"
 #include "ui_multi_conductor_dialog.h"
 
-MultiConductorDialog::MultiConductorDialog(QWidget *parent) :
+MultiConductorDialog::MultiConductorDialog(QWidget *parent, std::shared_ptr<Configuration> config) :
     QDialog(parent),
     ui(new Ui::MultiConductorDialog)
 {
     ui->setupUi(this);
-    //m_config = config;
+    m_config = config;
+    connectSlots();
 }
 
 MultiConductorDialog::~MultiConductorDialog()
 {
     delete ui;
+}
+
+std::vector<std::shared_ptr<Conductor>> MultiConductorDialog::getConductors() const{
+    return m_conductors;
+}
+
+void MultiConductorDialog::connectSlots(){
+    QObject::connect(ui->pushButton_cancel, SIGNAL(released()),
+                     this, SLOT(close()));
+
+    QObject::connect(ui->pushButton_previous, SIGNAL(released()),
+                     this, SLOT(previous()));
+
+    QObject::connect(ui->pushButton_next, SIGNAL(released()),
+                     this, SLOT(next()));
+}
+
+void MultiConductorDialog::disconnectSlots(){
+    QObject::disconnect(ui->pushButton_cancel, SIGNAL(released()),
+                     this, SLOT(close()));
+
+    QObject::disconnect(ui->pushButton_previous, SIGNAL(released()),
+                     this, SLOT(previous()));
+
+    QObject::disconnect(ui->pushButton_next, SIGNAL(released()),
+                     this, SLOT(next()));
+}
+
+void MultiConductorDialog::refresh(){
+
+}
+
+void MultiConductorDialog::next(){
+    switch(ui->stackedWidget->currentIndex()){
+        case 0: //Shape and quantity
+            m_conductors.clear();
+            if(ui->radioButton_first_2cHoriz->isChecked()){
+                std::shared_ptr<Conductor> cond, cond2;
+                cond.reset(new Conductor());
+                cond2.reset(new Conductor());
+                m_conductors.push_back(cond);
+                m_conductors.push_back(cond2);
+                ui->stackedWidget->setCurrentIndex(1);
+                ui->pushButton_previous->setEnabled(true);
+            }
+            else if(ui->radioButton_first_2cVert->isChecked()){
+                std::shared_ptr<Conductor> cond, cond2;
+                cond.reset(new Conductor());
+                cond2.reset(new Conductor());
+                m_conductors.push_back(cond);
+                m_conductors.push_back(cond2);
+                ui->stackedWidget->setCurrentIndex(1);
+                ui->pushButton_previous->setEnabled(true);
+            }
+            else if(ui->radioButton_first_3c->isChecked()){
+                std::shared_ptr<Conductor> cond, cond2, cond3;
+                cond.reset(new Conductor());
+                cond2.reset(new Conductor());
+                cond3.reset(new Conductor());
+                m_conductors.push_back(cond);
+                m_conductors.push_back(cond2);
+                m_conductors.push_back(cond3);
+                ui->stackedWidget->setCurrentIndex(1);
+                ui->pushButton_previous->setEnabled(true);
+            }
+            else if(ui->radioButton_first_4c->isChecked()){
+                std::shared_ptr<Conductor> cond, cond2, cond3, cond4;
+                cond.reset(new Conductor());
+                cond2.reset(new Conductor());
+                cond3.reset(new Conductor());
+                cond4.reset(new Conductor());
+                m_conductors.push_back(cond);
+                m_conductors.push_back(cond2);
+                m_conductors.push_back(cond3);
+                m_conductors.push_back(cond4);
+                ui->stackedWidget->setCurrentIndex(1);
+                ui->pushButton_previous->setEnabled(true);
+            }
+            else{
+
+            }
+            break;
+        case 1: //Distance
+            break;
+        case 2: //Characteristics
+            break;
+        case 3: //Review and finish
+            break;
+        default:
+            break;
+    }
+}
+
+void MultiConductorDialog::previous(){
+    switch(ui->stackedWidget->currentIndex()){
+        case 0: //Shape and quantity
+            break;
+        case 1: //Distance
+            ui->stackedWidget->setCurrentIndex(0);
+            ui->pushButton_previous->setEnabled(false);
+            break;
+        case 2: //Characteristics
+            break;
+        case 3: //Review and finish
+            break;
+        default:
+            break;
+    }
 }

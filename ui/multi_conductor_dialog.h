@@ -53,8 +53,17 @@ class MultiConductorDialog : public QDialog
         Q_OBJECT
 
     public:
-        explicit MultiConductorDialog(QWidget *parent = 0);
+        explicit MultiConductorDialog(QWidget *parent = 0, std::shared_ptr<Configuration> config = NULL);
         ~MultiConductorDialog();
+        void refresh();
+        void connectSlots();
+        void disconnectSlots();
+        void initPlot();
+        std::vector<std::shared_ptr<Conductor>> getConductors() const;
+
+    private slots:
+        void next();
+        void previous();
 
     private:
         Ui::MultiConductorDialog *ui;

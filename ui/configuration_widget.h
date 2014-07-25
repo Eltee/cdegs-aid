@@ -45,6 +45,7 @@
 #include "classes/structs.h"
 #include "project_tab_widget.h"
 #include "classes/configuration.h"
+#include "multi_conductor_dialog.h"
 
 class project_tab_widget;
 class Configuration;
@@ -131,6 +132,7 @@ class configuration_widget : public QWidget
         void changeCondEndY(double value);
         void changeCondEndZ(double value);
         void batchChangeCondHeight();
+        void multiCondDialog();
 
         //BUILD CONNECTIONS
         void newBuilding();
@@ -231,6 +233,7 @@ class configuration_widget : public QWidget
         std::shared_ptr<profile> pro;
         std::shared_ptr<Conductor> conductor;
         std::shared_ptr<Building> building;
+        MultiConductorDialog* multiDiag;
 };
 
 #endif // CONFIGURATION_WIDGET_H
