@@ -85,6 +85,12 @@
         <height>400</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Verdana</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="tabShape">
        <enum>QTabWidget::Rounded</enum>
       </property>
@@ -142,10 +148,21 @@
      <x>0</x>
      <y>0</y>
      <width>574</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <widget class="QMenu" name="menuFile">
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -158,6 +175,11 @@
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuConfig">
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
     <property name="title">
      <string>Config</string>
     </property>
@@ -170,6 +192,11 @@
     <addaction name="actionClose_Config"/>
    </widget>
    <widget class="QMenu" name="menuExport">
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
     <property name="title">
      <string>Export</string>
     </property>
@@ -177,12 +204,22 @@
     <addaction name="actionExport_Config_as"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
     <property name="title">
      <string>Settings</string>
     </property>

@@ -59,6 +59,9 @@ class MultiConductorDialog : public QDialog
         void connectSlots();
         void disconnectSlots();
         void initPlot();
+        void populateCharacteristics();
+        void refreshPlot();
+        bool isComplete();
         std::vector<std::shared_ptr<Conductor>> getConductors() const;
 
     private slots:
@@ -69,6 +72,7 @@ class MultiConductorDialog : public QDialog
         Ui::MultiConductorDialog *ui;
         std::shared_ptr<Configuration> m_config;
         std::vector<std::shared_ptr<Conductor>> m_conductors;
+        bool complete;
 };
 
 #endif // MULTI_CONDUCTOR_DIALOG_H

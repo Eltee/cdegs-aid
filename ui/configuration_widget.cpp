@@ -1972,6 +1972,13 @@ void configuration_widget::multiCondDialog(){
     if(configuration){
         MultiConductorDialog* multiDiag = new MultiConductorDialog(this, configuration);
         multiDiag->exec();
+        if(multiDiag->isComplete()){
+            for(std::shared_ptr<Conductor> cond : multiDiag->getConductors()){
+                cond->setId(configuration->componentIdGenerator());
+                configuration->addConductor(cond);
+            }
+            populateConductors(1);
+        }
     }
 }
 
