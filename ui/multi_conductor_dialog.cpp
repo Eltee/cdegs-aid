@@ -84,7 +84,7 @@ void MultiConductorDialog::disconnectSlots(){
 
 void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->plotLayout()->insertRow(0);
-    QCPPlotTitle* title = new QCPPlotTitle(ui->qcustomplot_fourth_graph, "Position of Conductors");
+    QCPPlotTitle* title = new QCPPlotTitle(ui->qcustomplot_fourth_graph, tr("Position of Conductors"));
     title->setTextColor(Qt::white);
     title->setAntialiased(true);
     ui->qcustomplot_fourth_graph->plotLayout()->addElement(0, 0, title);
@@ -97,13 +97,13 @@ void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->graph(0)->setLineStyle(QCPGraph::lsLine);
     ui->qcustomplot_fourth_graph->graph(0)->setScatterStyle(QCPScatterStyle::ssNone);
     ui->qcustomplot_fourth_graph->graph(0)->setPen(QPen(QColor(141, 95, 0), 3));
-    ui->qcustomplot_fourth_graph->graph(0)->setName("Ground");
+    ui->qcustomplot_fourth_graph->graph(0)->setName(tr("Ground"));
     ui->qcustomplot_fourth_graph->graph(0)->setAntialiased(true);
 
     ui->qcustomplot_fourth_graph->graph(1)->setLineStyle(QCPGraph::lsNone);
     ui->qcustomplot_fourth_graph->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, QColor(0, 102, 255), 10));
     ui->qcustomplot_fourth_graph->graph(1)->setPen(QPen(QColor(120, 120, 120), 1));
-    ui->qcustomplot_fourth_graph->graph(1)->setName("Conductors");
+    ui->qcustomplot_fourth_graph->graph(1)->setName(tr("Conductors"));
     ui->qcustomplot_fourth_graph->graph(1)->setAntialiased(true);
 
     ui->qcustomplot_fourth_graph->xAxis->setBasePen(QPen(Qt::white, 1));
@@ -138,7 +138,7 @@ void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->axisRect()->setBackground(axisRectGradient);
     ui->qcustomplot_fourth_graph->axisRect()->setAntialiased(true);
 
-    ui->qcustomplot_fourth_graph->xAxis->setLabel("Y - Distance from Line Center (m)");
+    ui->qcustomplot_fourth_graph->xAxis->setLabel(tr("Y - Distance from Line Center (m)"));
     ui->qcustomplot_fourth_graph->xAxis->setLabelColor(Qt::white);
     ui->qcustomplot_fourth_graph->xAxis->setAntialiased(true);
     ui->qcustomplot_fourth_graph->xAxis->setTicks(true);
@@ -150,7 +150,7 @@ void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->xAxis->setSubTickCount(1);
     ui->qcustomplot_fourth_graph->xAxis->setSubTickLength(0,1);
 
-    ui->qcustomplot_fourth_graph->yAxis->setLabel("Z - Height (m)");
+    ui->qcustomplot_fourth_graph->yAxis->setLabel(tr("Z - Height (m)"));
     ui->qcustomplot_fourth_graph->yAxis->setLabelColor(Qt::white);
     ui->qcustomplot_fourth_graph->yAxis->setAntialiased(true);
     ui->qcustomplot_fourth_graph->yAxis->setTicks(true);
@@ -339,7 +339,7 @@ void MultiConductorDialog::next(){
                 ui->pushButton_previous->setEnabled(true);
             }
             else{
-                QMessageBox::critical(this, "Failure", "Invalid distance.");
+                QMessageBox::critical(this, tr("Failure"), tr("Invalid distance."));
             }
             break;
         case 2: //Characteristics
@@ -353,29 +353,29 @@ void MultiConductorDialog::next(){
             }
             refreshPlot();
             ui->stackedWidget->setCurrentIndex(3);
-            ui->pushButton_next->setText("Finish..");
+            ui->pushButton_next->setText(tr("Finish.."));
             ui->pushButton_previous->setEnabled(true);
             if(m_conductors.size() == 2){
-                ui->lineEdit_fourth_cond->setText("Conductor - (X): " + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
-                ui->lineEdit_fourth_cond2->setText("Conductor - (X): " + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
+                ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
+                ui->lineEdit_fourth_cond2->setText(tr("Conductor - (X): ") + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
             }
             else if(m_conductors.size() == 3){
-                ui->lineEdit_fourth_cond->setText("Conductor - (X): " + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
-                ui->lineEdit_fourth_cond2->setText("Conductor - (X): " + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
-                ui->lineEdit_fourth_cond3->setText("Conductor - (X): " + QString::number(m_conductors[2]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[2]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[2]->getStartCoords().z));
+                ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
+                ui->lineEdit_fourth_cond2->setText(tr("Conductor - (X): ") + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
+                ui->lineEdit_fourth_cond3->setText(tr("Conductor - (X): ") + QString::number(m_conductors[2]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[2]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[2]->getStartCoords().z));
             }
             else if(m_conductors.size() == 4){
-                ui->lineEdit_fourth_cond->setText("Conductor - (X): " + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
-                ui->lineEdit_fourth_cond2->setText("Conductor - (X): " + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
-                ui->lineEdit_fourth_cond3->setText("Conductor - (X): " + QString::number(m_conductors[2]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[2]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[2]->getStartCoords().z));
-                ui->lineEdit_fourth_cond4->setText("Conductor - (X): " + QString::number(m_conductors[3]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[3]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[3]->getStartCoords().z));
+                ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
+                ui->lineEdit_fourth_cond2->setText(tr("Conductor - (X): ") + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
+                ui->lineEdit_fourth_cond3->setText(tr("Conductor - (X): ") + QString::number(m_conductors[2]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[2]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[2]->getStartCoords().z));
+                ui->lineEdit_fourth_cond4->setText(tr("Conductor - (X): ") + QString::number(m_conductors[3]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[3]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[3]->getStartCoords().z));
             }
             break;
         case 3: //Review and finish
             close();
             complete = true;
             ui->stackedWidget->setCurrentIndex(0);
-            ui->pushButton_next->setText("Next");
+            ui->pushButton_next->setText(tr("Next"));
             ui->pushButton_previous->setEnabled(false);
             break;
         default:
@@ -396,7 +396,7 @@ void MultiConductorDialog::previous(){
             break;
         case 3: //Review and finish
             ui->stackedWidget->setCurrentIndex(2);
-            ui->pushButton_next->setText("Next");
+            ui->pushButton_next->setText(tr("Next"));
             break;
         default:
             break;

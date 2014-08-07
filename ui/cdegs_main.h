@@ -48,6 +48,7 @@
 #include <QFileInfo>
 #include <QCloseEvent>
 #include <QInputDialog>
+#include <QTranslator>
 #include <memory>
 #include "configuration_widget.h"
 #include "project_tab_widget.h"
@@ -77,7 +78,7 @@ class cdegs_main : public QMainWindow
         Q_OBJECT
 
     public:
-        explicit cdegs_main(QWidget *parent = 0);
+        explicit cdegs_main(QWidget *parent = 0, QTranslator* translator = 0);
         ~cdegs_main();
         void connectSlots();
         void updateTitle();
@@ -113,6 +114,8 @@ class cdegs_main : public QMainWindow
         void changeStyle(std::string style);
         void openConfigDialog();
         void about();
+        void langEng();
+        void langFr();
 
     signals:
         void saveOccurred();
@@ -121,6 +124,7 @@ class cdegs_main : public QMainWindow
         Ui::cdegs_main *ui;
         std::shared_ptr<Project> project;
         std::shared_ptr<Configuration> config;
+        QTranslator* m_translator;
 };
 
 #endif // CDEGS_MAIN_H

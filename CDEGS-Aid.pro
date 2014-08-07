@@ -63,6 +63,10 @@ FORMS += \
     ui/configuration_chooser_dialog.ui \
     ui/multi_conductor_dialog.ui
 
+TRANSLATIONS += \
+    tr/cdegs_aid_en.ts \
+    tr/cdegs_aid_fr.ts
+
 RESOURCES += \
     ressources.qrc
 

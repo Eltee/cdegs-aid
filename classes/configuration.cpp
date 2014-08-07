@@ -1674,14 +1674,17 @@ int Configuration::generateProfile(bool twoSided, bool rightSided){
             else{ //Profile on the left
                 if(building){ //If there is a building, left boundary..
                     if(leftY < buildingY){
-                        pro->prNum = ((leftY - 2.0) / pro->prStep.y);
+                        pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y);
+                        pro->prStep.y = -0.25;
                     }
                     else{
-                        pro->prNum = ((buildingY - 2.0) / pro->prStep.y);
+                        pro->prNum = std::abs((buildingY - 2.0) / pro->prStep.y);
+                        pro->prStep.y = -0.25;
                     }
                 }
                 else{
-                    pro->prNum = ((leftY - 2.0) / pro->prStep.y);
+                    pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y);
+                    pro->prStep.y = -0.25;
                 }
             }
         }

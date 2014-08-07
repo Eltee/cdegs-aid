@@ -62,7 +62,7 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
 
 void configuration_widget::initPlot(){
     ui->cond_plot->plotLayout()->insertRow(0);
-    QCPPlotTitle* title = new QCPPlotTitle(ui->cond_plot, "Position of Conductors");
+    QCPPlotTitle* title = new QCPPlotTitle(ui->cond_plot, tr("Position of Conductors"));
     title->setTextColor(Qt::white);
     title->setAntialiased(true);
     ui->cond_plot->plotLayout()->addElement(0, 0, title);
@@ -123,7 +123,7 @@ void configuration_widget::initPlot(){
     ui->cond_plot->axisRect()->setBackground(axisRectGradient);
     ui->cond_plot->axisRect()->setAntialiased(true);
 
-    ui->cond_plot->xAxis->setLabel("Y - Distance from Line Center (m)");
+    ui->cond_plot->xAxis->setLabel(tr("Y - Distance from Line Center (m)"));
     ui->cond_plot->xAxis->setLabelColor(Qt::white);
     ui->cond_plot->xAxis->setAntialiased(true);
     ui->cond_plot->xAxis->setTicks(true);
@@ -135,7 +135,7 @@ void configuration_widget::initPlot(){
     ui->cond_plot->xAxis->setSubTickCount(1);
     ui->cond_plot->xAxis->setSubTickLength(0,1);
 
-    ui->cond_plot->yAxis->setLabel("Z - Height (m)");
+    ui->cond_plot->yAxis->setLabel(tr("Z - Height (m)"));
     ui->cond_plot->yAxis->setLabelColor(Qt::white);
     ui->cond_plot->yAxis->setAntialiased(true);
     ui->cond_plot->yAxis->setTicks(true);
@@ -1638,10 +1638,10 @@ void configuration_widget::refreshBuilding(){
         ui->pushButton_building_clear->setEnabled(true);
 
         if(!configuration->getBuildingConductors().empty()){
-            ui->lineEdit_building_status->setText("Building in config: Yes");
+            ui->lineEdit_building_status->setText(tr("Building in config: Yes"));
         }
         else{
-            ui->lineEdit_building_status->setText("Building in config: No");
+            ui->lineEdit_building_status->setText(tr("Building in config: No"));
         }
 
         ui->spinBox_building_distance->setValue(building->getDistance());
@@ -1955,7 +1955,7 @@ void configuration_widget::changeCondEndZ(double value){
 }
 
 void configuration_widget::batchChangeCondHeight(){
-    double newHeight = QInputDialog::getDouble(this, "Change height by..", "Input height difference (-/+)", 0, -9999.0, 9999.0, 2);
+    double newHeight = QInputDialog::getDouble(this, tr("Change height by.."), tr("Input height difference (-/+)"), 0, -9999.0, 9999.0, 2);
     for(std::shared_ptr<Conductor> cond : configuration->getConductors()){
         coords start, end;
         start = cond->getStartCoords();
@@ -2000,7 +2000,7 @@ void configuration_widget::newBuilding(){
         populateBuildings(1);
     }
     else{
-        QMessageBox::critical(this, "Failure", "There are missing default components in the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("There are missing default components in the configuration."));
     }
 }
 
@@ -2165,7 +2165,7 @@ void configuration_widget::duplicateLType(){
 void configuration_widget::removeLType(){
     int result = configuration->removeLeadType(lType);
     if(result == 1){
-        QMessageBox::critical(this, "Failure", "This LeadType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("This LeadType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration."));
     }
     else{
         configuration->setModified(true);
@@ -2215,7 +2215,7 @@ void configuration_widget::duplicateCoat(){
 void configuration_widget::removeCoat(){
     int result = configuration->removeCoating(coat);
     if(result == 1){
-        QMessageBox::critical(this, "Failure", "This Coating is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("This Coating is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration."));
     }
     else{
         configuration->setModified(true);
@@ -2293,7 +2293,7 @@ void configuration_widget::duplicateEner(){
 void configuration_widget::removeEner(){
     int result = configuration->removeEnergization(ener);
     if(result == 1){
-        QMessageBox::critical(this, "Failure", "This Energization is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("This Energization is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration."));
     }
     else{
         configuration->setModified(true);
@@ -2364,7 +2364,7 @@ void configuration_widget::duplicateCType(){
 void configuration_widget::removeCType(){
     int result = configuration->removeConductorType(cType);
     if(result == 1){
-        QMessageBox::critical(this, "Failure", "This ConductorType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("This ConductorType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration."));
     }
     else{
         configuration->setModified(true);
@@ -2414,7 +2414,7 @@ void configuration_widget::duplicateCbType(){
 void configuration_widget::removeCbType(){
     int result = configuration->removeCableType(cbType);
     if(result == 1){
-        QMessageBox::critical(this, "Failure", "This CableType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.");
+        QMessageBox::critical(this, tr("Failure"), tr("This CableType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration."));
     }
     else{
         configuration->setModified(true);
@@ -2602,51 +2602,69 @@ void configuration_widget::refreshConfSettings(){
 
 void configuration_widget::generateProRight(){
     int result = configuration->generateProfile(false, true);
-    populateProfiles(1);
+    populateProfiles(0);
 
     switch(result){
         case 0:
-            QMessageBox::critical(this, "Success", "Well down.");
+            QMessageBox::about(this, tr("Success"), tr("Profile generated."));
             break;
         case 1:
-            QMessageBox::critical(this, "Failure", "No conductors.");
+            QMessageBox::critical(this, tr("Failure"), tr("No conductors."));
+            break;
+        case 2:
+            QMessageBox::critical(this, tr("Failure"), tr("Invalid building placement."));
+            break;
+        case 3:
+            QMessageBox::critical(this, tr("Failure"), tr("Conductors too close to building."));
             break;
         default:
-            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            QMessageBox::critical(this, tr("Failure"), tr("Something went wrong."));
             break;
     }
 }
 
 void configuration_widget::generateProLeft(){
     int result = configuration->generateProfile(false, false);
-    populateProfiles(1);
+    populateProfiles(0);
 
     switch(result){
         case 0:
-            QMessageBox::critical(this, "Success", "Well down.");
+            QMessageBox::about(this, tr("Success"), tr("Profile generated."));
             break;
         case 1:
-            QMessageBox::critical(this, "Failure", "No conductors.");
+            QMessageBox::critical(this, tr("Failure"), tr("No conductors."));
+            break;
+        case 2:
+            QMessageBox::critical(this, tr("Failure"), tr("Invalid building placement."));
+            break;
+        case 3:
+            QMessageBox::critical(this, tr("Failure"), tr("Conductors too close to building."));
             break;
         default:
-            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            QMessageBox::critical(this, tr("Failure"), tr("Something went wrong."));
             break;
     }
 }
 
 void configuration_widget::generateProTwo(){
     int result = configuration->generateProfile(true, true);
-    populateProfiles(1);
+    populateProfiles(0);
 
     switch(result){
         case 0:
-            QMessageBox::critical(this, "Success", "Well down.");
+            QMessageBox::about(this, tr("Success"), tr("Profile generated."));
             break;
         case 1:
-            QMessageBox::critical(this, "Failure", "No conductors.");
+            QMessageBox::critical(this, tr("Failure"), tr("No conductors."));
+            break;
+        case 2:
+            QMessageBox::critical(this, tr("Failure"), tr("Invalid building placement."));
+            break;
+        case 3:
+            QMessageBox::critical(this, tr("Failure"), tr("Conductors too close to building."));
             break;
         default:
-            QMessageBox::critical(this, "Failure", "Something went wrong.");
+            QMessageBox::critical(this, tr("Failure"), tr("Something went wrong."));
             break;
     }
 }

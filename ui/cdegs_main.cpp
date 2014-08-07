@@ -42,9 +42,10 @@
  \fn cdegs_main::cdegs_main
  \param parent
 */
-cdegs_main::cdegs_main(QWidget *parent) :
+cdegs_main::cdegs_main(QWidget *parent, QTranslator* translator) :
     QMainWindow(parent),
     ui(new Ui::cdegs_main){
+    m_translator = translator;
     ui->setupUi(this);
 
     connectSlots();
@@ -120,6 +121,12 @@ void cdegs_main::connectSlots(){
 
     QObject::connect(ui->actionDelete_Config, SIGNAL(triggered()),
                      this, SLOT(deleteConfig()));
+
+    QObject::connect(ui->actionEnglish, SIGNAL(triggered()),
+                     this, SLOT(langEng()));
+
+    QObject::connect(ui->actionFran_aos, SIGNAL(triggered()),
+                     this, SLOT(langFr()));
 }
 
 /*!
@@ -266,7 +273,7 @@ void cdegs_main::newProject(){
  \fn cdegs_main::openProject
 */
 void cdegs_main::openProject(){
-    QString filePath = QFileDialog::getOpenFileName(this, "Choose Project to open..", "", "CDEGS-Aid Project File (*.cdp)");
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Choose Project to open.."), "", tr("CDEGS-Aid Project File (*.cdp)"));
 
     if(!filePath.isNull()){
         bool alreadyPresent = false;
@@ -316,7 +323,7 @@ void cdegs_main::saveProject(){
 void cdegs_main::saveProjectAs(){
     if(project){
         if(config) saveConfig();
-        QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS-Aid Project File (*.cdp)");
+        QString filePath = QFileDialog::getSaveFileName(this, tr("Choose file to save.."), "", tr("CDEGS-Aid Project File (*.cdp)"));
         if(!filePath.isNull()){
             QDir d = QFileInfo(filePath).absoluteDir();
             project->setAbsPath(d.absolutePath().toStdString()).setRelPath(d.path().toStdString());
@@ -336,9 +343,9 @@ void cdegs_main::saveProjectAs(){
  \fn cdegs_main::closeProject
 */
 void cdegs_main::closeProject(){
-    if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+    if(QMessageBox::question(this, tr("Warning! Close Project?"), tr("Closing your project will cause all unsaved changes to be lost.")) == QMessageBox::Yes){
         if(project->isModified()){
-            if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
+            if(QMessageBox::Yes == QMessageBox::question(this, tr("Save project?"), tr("Do you wish to save the changes to the current project before quitting?"), QMessageBox::Yes|QMessageBox::No)){
                 saveProject();
             }
         }
@@ -358,7 +365,7 @@ void cdegs_main::closeProject(){
  \param index
 */
 void cdegs_main::closeProject(int index){
-    if(QMessageBox::question(this, "Warning! Close Project?", "Closing your project will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+    if(QMessageBox::question(this, tr("Warning! Close Project?"), tr("Closing your project will cause all unsaved changes to be lost.")) == QMessageBox::Yes){
         dynamic_cast<project_tab_widget*>(ui->tabProjects->widget(index))->getProject().reset();
         ui->tabProjects->removeTab(index);
     }
@@ -401,7 +408,7 @@ void cdegs_main::newConfig(){
     config.reset(new Configuration(AppUtils::getInstance().getDefaultConfig()));
     AppUtils::getInstance().setCurrentConfig(config);
     config->setModified(true);
-    QString name = QInputDialog::getText(this, "New config name", "Input new name", QLineEdit::Normal, QString::fromStdString(config->getIdentifier()));
+    QString name = QInputDialog::getText(this, tr("New config name"), tr("Input new name"), QLineEdit::Normal, QString::fromStdString(config->getIdentifier()));
     config->setIdentifier(name.toStdString());
 
     if(ui->tabProjects->currentIndex() != -1){
@@ -454,7 +461,7 @@ void cdegs_main::duplicateConfig(){
         std::shared_ptr<Configuration> configuration;
         configuration.reset(new Configuration(config.get()));
         configuration->setIdentifier(configuration->getIdentifier() + "(1)");
-        QString name = QInputDialog::getText(this, "New config name", "Input new name", QLineEdit::Normal, QString::fromStdString(configuration->getIdentifier()));
+        QString name = QInputDialog::getText(this, tr("New config name"), tr("Input new name"), QLineEdit::Normal, QString::fromStdString(configuration->getIdentifier()));
         configuration->setIdentifier(name.toStdString());
         configuration->setId(-1);
         project->addConfiguration(configuration, true);
@@ -483,10 +490,10 @@ void cdegs_main::closeConfig(){
 void cdegs_main::exportConfig(){
     if(config->validateConfig()){
         AppUtils::getInstance().exportConfiguration(config.get(), project->getAbsPath() + "/hi_" + config->getIdentifier() + ".f05");
-        QMessageBox::information(this, "Success", "Configuration has been exported.");
+        QMessageBox::information(this, tr("Success"), tr("Configuration has been exported."));
     }
     else{
-        QMessageBox::critical(this, "Error", "Configuration is invalid and cannot be exported.");
+        QMessageBox::critical(this, tr("Error"), tr("Configuration is invalid and cannot be exported."));
     }
 }
 
@@ -497,21 +504,21 @@ void cdegs_main::exportConfig(){
 */
 void cdegs_main::exportConfigAs(){
     if(config->validateConfig()){
-        QString filePath = QFileDialog::getSaveFileName(this, "Choose file to save..", "", "CDEGS Hi-Freq SESCAD Configuration File (*.f05)");
+        QString filePath = QFileDialog::getSaveFileName(this, tr("Choose file to save.."), "", tr("CDEGS Hi-Freq SESCAD Configuration File (*.f05)"));
         if(!filePath.isNull()){
             if(!filePath.right(filePath.length() - filePath.lastIndexOf("/")).contains("hi_")) filePath.insert(filePath.lastIndexOf("/")+1, "hi_");
             AppUtils::getInstance().exportConfiguration(config.get(), filePath.toStdString());
-            QMessageBox::information(this, "Success", "Configuration has been exported.");
+            QMessageBox::information(this, tr("Success"), tr("Configuration has been exported."));
         }
     }
     else{
-        QMessageBox::critical(this, "Error", "Configuration is invalid and cannot be exported.");
+        QMessageBox::critical(this, tr("Error"), tr("Configuration is invalid and cannot be exported."));
     }
 }
 
 void cdegs_main::deleteConfig(){
     if(config && project){
-        if(QMessageBox::question(this, "Warning! Delete Configuration?", "Are you sure you wish to delete this configuration?") == QMessageBox::Yes){
+        if(QMessageBox::question(this, tr("Warning! Delete Configuration?"), tr("Are you sure you wish to delete this configuration?")) == QMessageBox::Yes){
             project->removeConfiguration(config);
             if(ui->tabProjects->currentIndex() != -1 && config){
                 dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->closeConfig(true);
@@ -527,7 +534,7 @@ void cdegs_main::deleteConfig(){
  \fn cdegs_main::about
 */
 void cdegs_main::about(){
-    QMessageBox::about(this, "CDEGS Aid", "CDEGS-Aid est un logiciel d'aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d'affichage et d'analyse de résultat de simulations CDEGS-HiFreq.\n\n(c) Renaud Bigras 2014");
+    QMessageBox::about(this, tr("CDEGS Aid"), tr("CDEGS-Aid est un logiciel d'aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d'affichage et d'analyse de résultat de simulations CDEGS-HiFreq.\n\n(c) Renaud Bigras 2014"));
 }
 
 /*!
@@ -580,10 +587,10 @@ void cdegs_main::changeTabName(QWidget* widget, QString name){
 
 void cdegs_main::closeEvent(QCloseEvent* event){
         event->ignore();
-        if(QMessageBox::Yes == QMessageBox::question(this, "Close Confirmation?", "Are you sure you want to exit?", QMessageBox::Yes|QMessageBox::No)){
+        if(QMessageBox::Yes == QMessageBox::question(this, tr("Close Confirmation?"), tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No)){
             if(config){
                 if(config->isModified()){
-                    if(QMessageBox::Yes == QMessageBox::question(this, "Save configuration?", "Do you wish to save the changes to the current configuration before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                    if(QMessageBox::Yes == QMessageBox::question(this, tr("Save configuration?"), tr("Do you wish to save the changes to the current configuration before quitting?"), QMessageBox::Yes|QMessageBox::No)){
                         saveConfig();
                     }
                 }
@@ -591,7 +598,7 @@ void cdegs_main::closeEvent(QCloseEvent* event){
 
             if(project){
                 if(project->isModified()){
-                    if(QMessageBox::Yes == QMessageBox::question(this, "Save project?", "Do you wish to save the changes to the current project before quitting?", QMessageBox::Yes|QMessageBox::No)){
+                    if(QMessageBox::Yes == QMessageBox::question(this, tr("Save project?"), tr("Do you wish to save the changes to the current project before quitting?"), QMessageBox::Yes|QMessageBox::No)){
                         saveProject();
                     }
                 }
@@ -599,3 +606,15 @@ void cdegs_main::closeEvent(QCloseEvent* event){
             event->accept();
         }
 };
+
+void cdegs_main::langEng(){
+    m_translator->load("cdegs_aid_en");
+    ui->actionFran_aos->setEnabled(true);
+    ui->actionEnglish->setEnabled(false);
+}
+
+void cdegs_main::langFr(){
+    m_translator->load("cdegs_aid_fr");
+    ui->actionFran_aos->setEnabled(false);
+    ui->actionEnglish->setEnabled(true);
+}

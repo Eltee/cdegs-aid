@@ -84,7 +84,7 @@ void configuration_chooser_dialog::buttonOk(){
         emit returnConfig(m_config);
     }
     catch(std::out_of_range e){
-        QMessageBox::warning(this, "Warning", "No configuration was selected.");
+        QMessageBox::warning(this, tr("Warning"), tr("No configuration was selected."));
     }
 
     this->close();

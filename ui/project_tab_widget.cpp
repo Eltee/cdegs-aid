@@ -56,7 +56,7 @@ project_tab_widget::project_tab_widget(QWidget *parent, cdegs_main* dp, std::sha
     project = p;
     connectSlots();
     defParent = dp;
-    project_widget* tab = new project_widget(this, this, project, projectOrig, "Project Settings");
+    project_widget* tab = new project_widget(this, this, project, projectOrig, tr("Project Settings"));
 
     QObject::connect(defParent, SIGNAL(saveOccurred()),
                      tab, SLOT(refresh()));
@@ -176,9 +176,9 @@ void project_tab_widget::closeConfig(bool ignoreQuestions){
             ui->tabProject->removeTab(ui->tabProject->currentIndex());
         }
         else{
-            if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+            if(QMessageBox::question(this, tr("Warning! Close Configuration?"), tr("Closing your configuration will cause all unsaved changes to be lost.")) == QMessageBox::Yes){
                 if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(ui->tabProject->currentIndex()))->getConfig()->isModified()){
-                    if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
+                    if(QMessageBox::question(this, tr("Save changes?"), tr("Save configuration before closing?")) == QMessageBox::Yes){
                         saveConfig();
                     }
                 }
@@ -200,9 +200,9 @@ void project_tab_widget::closeConfig(bool ignoreQuestions){
 void project_tab_widget::closeConfig(int index){
 
     if(index > 0){
-        if(QMessageBox::question(this, "Warning! Close Configuration?", "Closing your configuration will cause all unsaved changes to be lost.") == QMessageBox::Yes){
+        if(QMessageBox::question(this, tr("Warning! Close Configuration?"), tr("Closing your configuration will cause all unsaved changes to be lost.")) == QMessageBox::Yes){
             if(dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig()->isModified()){
-                if(QMessageBox::question(this, "Save changes?", "Save configuration before closing?") == QMessageBox::Yes){
+                if(QMessageBox::question(this, tr("Save changes?"), tr("Save configuration before closing?")) == QMessageBox::Yes){
                     std::shared_ptr<Configuration> config = dynamic_cast<configuration_widget*>(ui->tabProject->widget(index))->getConfig();
 
                     if(project->getConfigurations().count(config->getId()) > 0){
