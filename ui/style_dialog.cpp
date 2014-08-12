@@ -38,6 +38,12 @@
 #include "style_dialog.h"
 #include "ui_style_dialog.h"
 
+/*!
+ \brief
+
+ \fn style_dialog::style_dialog
+ \param parent
+*/
 style_dialog::style_dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::style_dialog)
@@ -49,6 +55,11 @@ style_dialog::style_dialog(QWidget *parent) :
     connectSlots();
 }
 
+/*!
+ \brief
+
+ \fn style_dialog::populateModel
+*/
 void style_dialog::populateModel(){
     QStringList stringList;
 
@@ -59,6 +70,11 @@ void style_dialog::populateModel(){
     m_model->setStringList(stringList);
 }
 
+/*!
+ \brief
+
+ \fn style_dialog::connectSlots
+*/
 void style_dialog::connectSlots(){
     QObject::connect(ui->pushButton_ok, SIGNAL(clicked()),
                      this, SLOT(buttonOk()));
@@ -70,6 +86,11 @@ void style_dialog::connectSlots(){
                      this, SLOT(selectStyle(QModelIndex)));
 }
 
+/*!
+ \brief
+
+ \fn style_dialog::buttonOk
+*/
 void style_dialog::buttonOk(){
     m_style = m_model->data(ui->listView_style->currentIndex(), Qt::DisplayRole).toString().toStdString();
 
@@ -78,6 +99,12 @@ void style_dialog::buttonOk(){
     this->close();
 }
 
+/*!
+ \brief
+
+ \fn style_dialog::selectStyle
+ \param index
+*/
 void style_dialog::selectStyle(QModelIndex index){
     m_style = m_model->data(index, Qt::DisplayRole).toString().toStdString();
 
@@ -86,6 +113,11 @@ void style_dialog::selectStyle(QModelIndex index){
     this->close();
 }
 
+/*!
+ \brief
+
+ \fn style_dialog::~style_dialog
+*/
 style_dialog::~style_dialog()
 {
     delete ui;

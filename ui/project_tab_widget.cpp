@@ -225,19 +225,41 @@ void project_tab_widget::closeConfig(int index){
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::changeTabName
+ \param widget
+ \param name
+*/
 void project_tab_widget::changeTabName(QWidget* widget, QString name){
     int index = ui->tabProject->indexOf(widget);
     ui->tabProject->setTabText(index, name);
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::modifyProject
+*/
 void project_tab_widget::modifyProject(){
     project->setModified(true);
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::saveConfig
+*/
 void project_tab_widget::saveConfig(){
     defParent->saveConfig();
 }
 
+/*!
+ \brief
+
+ \fn project_tab_widget::saveAllConfigs
+*/
 void project_tab_widget::saveAllConfigs(){
     std::shared_ptr<Configuration> config;
 

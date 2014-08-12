@@ -60,6 +60,11 @@ configuration_widget::configuration_widget(QWidget *parent, project_tab_widget* 
     //connectSlots();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::initPlot
+*/
 void configuration_widget::initPlot(){
     ui->cond_plot->plotLayout()->insertRow(0);
     QCPPlotTitle* title = new QCPPlotTitle(ui->cond_plot, tr("Position of Conductors"));
@@ -151,6 +156,11 @@ void configuration_widget::initPlot(){
     ui->cond_plot->rescaleAxes();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::connectSlots
+*/
 void configuration_widget::connectSlots(){
     QObject::connect(ui->comboBox_page, SIGNAL(currentIndexChanged(int)),
                      ui->stackedWidget_config, SLOT(setCurrentIndex(int)));
@@ -491,6 +501,11 @@ void configuration_widget::connectSlots(){
                      this, SLOT(changeComputations(int)));
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::disconnectSlots
+*/
 void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->comboBox_page, SIGNAL(currentIndexChanged(int)),
                      ui->stackedWidget_config, SLOT(setCurrentIndex(int)));
@@ -841,6 +856,12 @@ std::shared_ptr<Configuration> configuration_widget::getConfig(){
     return configuration;
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::getName
+ \return const QString
+*/
 QString const& configuration_widget::getName() const{
     return m_name;
 }
@@ -895,6 +916,11 @@ void configuration_widget::refresh(){
 
 //COMBOBOX CONNECTIONS
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateFields
+*/
 void configuration_widget::populateFields(){
     populateLTypes();
     populateCoatings();
@@ -907,6 +933,12 @@ void configuration_widget::populateFields(){
     populateBuildings();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateLTypes
+ \param action
+*/
 void configuration_widget::populateLTypes(int action){
     int currentIndex = ui->comboBox_lTypes_chooser->currentIndex();
     QString currentText = ui->comboBox_lTypes_chooser->currentText();
@@ -934,6 +966,12 @@ void configuration_widget::populateLTypes(int action){
     fetchLType(ui->comboBox_lTypes_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchLType
+ \param id
+*/
 void configuration_widget::fetchLType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -947,6 +985,12 @@ void configuration_widget::fetchLType(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateCoatings
+ \param action
+*/
 void configuration_widget::populateCoatings(int action){
     int currentIndex = ui->comboBox_coatings_chooser->currentIndex();
     QString currentText = ui->comboBox_coatings_chooser->currentText();
@@ -974,6 +1018,12 @@ void configuration_widget::populateCoatings(int action){
     fetchCoating(ui->comboBox_coatings_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchCoating
+ \param id
+*/
 void configuration_widget::fetchCoating(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -987,6 +1037,12 @@ void configuration_widget::fetchCoating(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateEnergizations
+ \param action
+*/
 void configuration_widget::populateEnergizations(int action){
     int currentIndex = ui->comboBox_energizations_chooser->currentIndex();
     QString currentText = ui->comboBox_energizations_chooser->currentText();
@@ -1014,6 +1070,12 @@ void configuration_widget::populateEnergizations(int action){
     fetchEnergization(ui->comboBox_energizations_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchEnergization
+ \param id
+*/
 void configuration_widget::fetchEnergization(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1027,6 +1089,12 @@ void configuration_widget::fetchEnergization(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateCTypes
+ \param action
+*/
 void configuration_widget::populateCTypes(int action){
     int currentIndex = ui->comboBox_cTypes_chooser->currentIndex();
     QString currentText = ui->comboBox_cTypes_chooser->currentText();
@@ -1054,6 +1122,12 @@ void configuration_widget::populateCTypes(int action){
     fetchCType(ui->comboBox_cTypes_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchCType
+ \param id
+*/
 void configuration_widget::fetchCType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1067,6 +1141,12 @@ void configuration_widget::fetchCType(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateCbTypes
+ \param action
+*/
 void configuration_widget::populateCbTypes(int action){
     int currentIndex = ui->comboBox_cbTypes_chooser->currentIndex();
     QString currentText = ui->comboBox_cbTypes_chooser->currentText();
@@ -1094,6 +1174,12 @@ void configuration_widget::populateCbTypes(int action){
     fetchCbType(ui->comboBox_cbTypes_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchCbType
+ \param id
+*/
 void configuration_widget::fetchCbType(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1107,6 +1193,11 @@ void configuration_widget::fetchCbType(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateComputations
+*/
 void configuration_widget::populateComputations(){
     ui->checkBox_comp_GPR->setChecked(configuration->getComputations().GPR);
     ui->checkBox_comp_POTENTIAL_SCALAR->setChecked(configuration->getComputations().POTENTIAL_SCALAR);
@@ -1116,6 +1207,12 @@ void configuration_widget::populateComputations(){
     ui->checkBox_comp_VECTOR_POTENTIAL->setChecked(configuration->getComputations().VECTOR_POTENTIAL);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateProfiles
+ \param action
+*/
 void configuration_widget::populateProfiles(int action){
     int currentIndex = ui->comboBox_profiles_chooser->currentIndex();
     QString currentText = ui->comboBox_profiles_chooser->currentText();
@@ -1144,6 +1241,12 @@ void configuration_widget::populateProfiles(int action){
     fetchProfile(ui->comboBox_profiles_chooser->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchProfile
+ \param id
+*/
 void configuration_widget::fetchProfile(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1157,6 +1260,11 @@ void configuration_widget::fetchProfile(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshLType
+*/
 void configuration_widget::refreshLType(){
     if(lType){
         ui->lineEdit_lType_name->setText(QString::fromStdString(lType->getName()));
@@ -1178,6 +1286,11 @@ void configuration_widget::refreshLType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshCoating
+*/
 void configuration_widget::refreshCoating(){
     if(coat){
         ui->lineEdit_coating_name->setText(QString::fromStdString(coat->getName()));
@@ -1199,6 +1312,11 @@ void configuration_widget::refreshCoating(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshEnergization
+*/
 void configuration_widget::refreshEnergization(){
     if(ener){
         ui->comboBox_energizations_frequency->setCurrentText(QString::fromStdString(ener->getFrequency()));
@@ -1236,6 +1354,11 @@ void configuration_widget::refreshEnergization(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshCType
+*/
 void configuration_widget::refreshCType(){
     if(cType){
         ui->lineEdit_cType_name->setText(QString::fromStdString(cType->getName()));
@@ -1269,6 +1392,11 @@ void configuration_widget::refreshCType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshCbType
+*/
 void configuration_widget::refreshCbType(){
     if(cbType){
         ui->lineEdit_cbType_name->setText(QString::fromStdString(cbType->getName()));
@@ -1290,6 +1418,11 @@ void configuration_widget::refreshCbType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshProfile
+*/
 void configuration_widget::refreshProfile(){
     if(pro){
         ui->pushButton_new_profile->setEnabled(false);
@@ -1369,6 +1502,12 @@ void configuration_widget::refreshProfile(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateConductors
+ \param action
+*/
 void configuration_widget::populateConductors(int action){
     int currentIndex = ui->comboBox_conductors->currentIndex();
     QString currentText = ui->comboBox_conductors->currentText();
@@ -1431,6 +1570,12 @@ void configuration_widget::populateConductors(int action){
     fetchConductor(ui->comboBox_conductors->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchConductor
+ \param id
+*/
 void configuration_widget::fetchConductor(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1444,6 +1589,11 @@ void configuration_widget::fetchConductor(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshConductor
+*/
 void configuration_widget::refreshConductor(){
     if(conductor){
         ui->pushButton_cond_remove->setEnabled(true);
@@ -1546,6 +1696,12 @@ void configuration_widget::refreshConductor(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::populateBuildings
+ \param action
+*/
 void configuration_widget::populateBuildings(int action){
     int currentIndex = ui->comboBox_buildings->currentIndex();
     QString currentText = ui->comboBox_buildings->currentText();
@@ -1603,6 +1759,12 @@ void configuration_widget::populateBuildings(int action){
     fetchBuilding(ui->comboBox_buildings->currentText());
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::fetchBuilding
+ \param id
+*/
 void configuration_widget::fetchBuilding(QString id){
     if(!id.isEmpty()){
         id.truncate(id.indexOf(" "));
@@ -1616,6 +1778,11 @@ void configuration_widget::fetchBuilding(QString id){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshBuilding
+*/
 void configuration_widget::refreshBuilding(){
     if(building){
         ui->comboBox_building_cbType->setEnabled(false);
@@ -1727,6 +1894,11 @@ void configuration_widget::refreshBuilding(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshPlot
+*/
 void configuration_widget::refreshPlot(){
     QVector<double> keys, values, keySelected, valueSelected, groundKeys, groundValues;
     int lowX = -4;
@@ -1759,29 +1931,57 @@ void configuration_widget::refreshPlot(){
 }
 
 //CONF CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeConfIdentifier
+ \param ident
+*/
 void configuration_widget::changeConfIdentifier(QString ident){
     configuration->setIdentifier(ident.toStdString());
     configuration->setModified(true);
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeConfUnits
+ \param units
+*/
 void configuration_widget::changeConfUnits(QString units){
     configuration->setUnits(units.toStdString());
     configuration->setModified(true);
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeConfFrequency
+ \param frequency
+*/
 void configuration_widget::changeConfFrequency(QString frequency){
     configuration->setFrequency(frequency.toStdString());
     configuration->setModified(true);
     refresh();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveConfig
+*/
 void configuration_widget::saveConfig(){
     defParent->saveConfig();
 }
 
 //COND CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::newCond
+*/
 void configuration_widget::newCond(){
     conductor.reset(new Conductor());
     if(conductor->getId() < 0){
@@ -1792,6 +1992,11 @@ void configuration_widget::newCond(){
     populateConductors(1);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateCond
+*/
 void configuration_widget::duplicateCond(){
     if(conductor){
         std::shared_ptr<Conductor> cond;
@@ -1803,6 +2008,11 @@ void configuration_widget::duplicateCond(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeCond
+*/
 void configuration_widget::removeCond(){
     configuration->removeConductor(conductor);
     configuration->setModified(true);
@@ -1810,6 +2020,11 @@ void configuration_widget::removeCond(){
     populateConductors(2);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveCond
+*/
 void configuration_widget::saveCond(){
     int result = configuration->replaceConductor(conductor);
     if(result == 1){
@@ -1820,6 +2035,12 @@ void configuration_widget::saveCond(){
     populateConductors(1);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondCbType
+ \param index
+*/
 void configuration_widget::changeCondCbType(int index){
     if(conductor && index > 0){
         conductor->setCableType(configuration->getCableTypes().at(index-1));
@@ -1828,6 +2049,12 @@ void configuration_widget::changeCondCbType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondCoat
+ \param index
+*/
 void configuration_widget::changeCondCoat(int index){
     if(conductor && index > 0){
         conductor->setCoating(configuration->getCoatings().at(index-1));
@@ -1836,6 +2063,12 @@ void configuration_widget::changeCondCoat(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondCType
+ \param index
+*/
 void configuration_widget::changeCondCType(int index){
     if(conductor && index > 0){
         conductor->setConductorType(configuration->getConductorTypes().at(index-1));
@@ -1844,6 +2077,12 @@ void configuration_widget::changeCondCType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondEner
+ \param index
+*/
 void configuration_widget::changeCondEner(int index){
     if(conductor && index > 0){
         conductor->setEnergization(configuration->getEnergizations().at(index-1));
@@ -1852,6 +2091,12 @@ void configuration_widget::changeCondEner(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondLType
+ \param index
+*/
 void configuration_widget::changeCondLType(int index){
     if(conductor && index > 0){
         conductor->setLeadType(configuration->getLeadTypes().at(index-1));
@@ -1860,6 +2105,12 @@ void configuration_widget::changeCondLType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondRadius
+ \param value
+*/
 void configuration_widget::changeCondRadius(double value){
     if(conductor){
         conductor->setRadius(value);
@@ -1867,6 +2118,12 @@ void configuration_widget::changeCondRadius(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondStartX
+ \param value
+*/
 void configuration_widget::changeCondStartX(double value){
     if(conductor){
         coords start;
@@ -1886,6 +2143,12 @@ void configuration_widget::changeCondStartX(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondStartY
+ \param value
+*/
 void configuration_widget::changeCondStartY(double value){
     if(conductor){
         coords start;
@@ -1905,6 +2168,12 @@ void configuration_widget::changeCondStartY(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondStartZ
+ \param value
+*/
 void configuration_widget::changeCondStartZ(double value){
     if(conductor){
         coords start;
@@ -1924,6 +2193,12 @@ void configuration_widget::changeCondStartZ(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondEndX
+ \param value
+*/
 void configuration_widget::changeCondEndX(double value){
     if(conductor){
         coords end;
@@ -1934,6 +2209,12 @@ void configuration_widget::changeCondEndX(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondEndY
+ \param value
+*/
 void configuration_widget::changeCondEndY(double value){
     if(conductor){
         coords end;
@@ -1944,6 +2225,12 @@ void configuration_widget::changeCondEndY(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCondEndZ
+ \param value
+*/
 void configuration_widget::changeCondEndZ(double value){
     if(conductor){
         coords end;
@@ -1954,6 +2241,11 @@ void configuration_widget::changeCondEndZ(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::batchChangeCondHeight
+*/
 void configuration_widget::batchChangeCondHeight(){
     double newHeight = QInputDialog::getDouble(this, tr("Change height by.."), tr("Input height difference (-/+)"), 0, -9999.0, 9999.0, 2);
     for(std::shared_ptr<Conductor> cond : configuration->getConductors()){
@@ -1968,6 +2260,11 @@ void configuration_widget::batchChangeCondHeight(){
     populateConductors(1);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::multiCondDialog
+*/
 void configuration_widget::multiCondDialog(){
     if(configuration){
         MultiConductorDialog* multiDiag = new MultiConductorDialog(this, configuration);
@@ -1984,6 +2281,11 @@ void configuration_widget::multiCondDialog(){
 
 //BUILD CONNECTIONS
 
+/*!
+ \brief
+
+ \fn configuration_widget::newBuilding
+*/
 void configuration_widget::newBuilding(){
     if(!configuration->getLeadTypes().empty() && !configuration->getCoatings().empty() && !configuration->getEnergizations().empty() && !configuration->getConductorTypes().empty() && !configuration->getCableTypes().empty()){
         building.reset(new Building());
@@ -2004,6 +2306,11 @@ void configuration_widget::newBuilding(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateBuilding
+*/
 void configuration_widget::duplicateBuilding(){
     if(building){
         std::shared_ptr<Building> build;
@@ -2015,6 +2322,11 @@ void configuration_widget::duplicateBuilding(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeBuilding
+*/
 void configuration_widget::removeBuilding(){
     configuration->removeBuilding(building);
     configuration->setModified(true);
@@ -2022,6 +2334,11 @@ void configuration_widget::removeBuilding(){
     populateBuildings(2);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveBuilding
+*/
 void configuration_widget::saveBuilding(){
     int result = configuration->replaceBuilding(building);
     if(result == 1){
@@ -2032,6 +2349,12 @@ void configuration_widget::saveBuilding(){
     populateBuildings(1);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildFaces
+ \param index
+*/
 void configuration_widget::changeBuildFaces(QString index){
     if(building){
         int faces = index.toInt();
@@ -2040,6 +2363,12 @@ void configuration_widget::changeBuildFaces(QString index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildHeight
+ \param value
+*/
 void configuration_widget::changeBuildHeight(int value){
     if(building){
         building->setHeight(value);
@@ -2047,6 +2376,12 @@ void configuration_widget::changeBuildHeight(int value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildStep
+ \param index
+*/
 void configuration_widget::changeBuildStep(QString index){
     if(building){
         index.truncate(index.indexOf(" "));
@@ -2057,6 +2392,12 @@ void configuration_widget::changeBuildStep(QString index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildDistance
+ \param value
+*/
 void configuration_widget::changeBuildDistance(int value){
     if(building){
         building->setDistance(value);
@@ -2064,6 +2405,12 @@ void configuration_widget::changeBuildDistance(int value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildLength
+ \param value
+*/
 void configuration_widget::changeBuildLength(int value){
     if(building){
         building->setLength(value);
@@ -2071,6 +2418,12 @@ void configuration_widget::changeBuildLength(int value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildWidth
+ \param value
+*/
 void configuration_widget::changeBuildWidth(int value){
     if(building){
         building->setWidth(value);
@@ -2078,6 +2431,12 @@ void configuration_widget::changeBuildWidth(int value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildRadius
+ \param value
+*/
 void configuration_widget::changeBuildRadius(double value){
     if(building){
         building->setRadius(value);
@@ -2085,6 +2444,12 @@ void configuration_widget::changeBuildRadius(double value){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildCbType
+ \param index
+*/
 void configuration_widget::changeBuildCbType(int index){
     if(building && index >= 0){
         building->setCableType(configuration->getCableTypes().at(index));
@@ -2092,6 +2457,12 @@ void configuration_widget::changeBuildCbType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildCoat
+ \param index
+*/
 void configuration_widget::changeBuildCoat(int index){
     if(building && index >= 0){
         building->setCoating(configuration->getCoatings().at(index));
@@ -2099,6 +2470,12 @@ void configuration_widget::changeBuildCoat(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildCType
+ \param index
+*/
 void configuration_widget::changeBuildCType(int index){
     if(building && index >= 0){
         building->setConductorType(configuration->getConductorTypes().at(index));
@@ -2106,6 +2483,12 @@ void configuration_widget::changeBuildCType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildEner
+ \param index
+*/
 void configuration_widget::changeBuildEner(int index){
     if(building && index >= 0){
         building->setEnergization(configuration->getEnergizations().at(index));
@@ -2113,6 +2496,12 @@ void configuration_widget::changeBuildEner(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeBuildLType
+ \param index
+*/
 void configuration_widget::changeBuildLType(int index){
     if(building && index >= 0){
         building->setLeadType(configuration->getLeadTypes().at(index));
@@ -2120,6 +2509,11 @@ void configuration_widget::changeBuildLType(int index){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::generateBuildingConductors
+*/
 void configuration_widget::generateBuildingConductors(){
     if(building){
         configuration->updateBuildingConductors(building);
@@ -2127,6 +2521,11 @@ void configuration_widget::generateBuildingConductors(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::clearBuildingConductors
+*/
 void configuration_widget::clearBuildingConductors(){
     if(building){
         configuration->clearBuildingConductors();
@@ -2135,6 +2534,12 @@ void configuration_widget::clearBuildingConductors(){
 }
 
 //LTYPE CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeLTypeName
+ \param text
+*/
 void configuration_widget::changeLTypeName(QString text){
     if(lType){
         lType->setName(text.toStdString());
@@ -2142,6 +2547,11 @@ void configuration_widget::changeLTypeName(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newLType
+*/
 void configuration_widget::newLType(){
     lType.reset(new LeadType());
     if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
@@ -2151,6 +2561,11 @@ void configuration_widget::newLType(){
     populateConductors();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateLType
+*/
 void configuration_widget::duplicateLType(){
     if(lType){
         std::shared_ptr<LeadType> lt;
@@ -2162,6 +2577,11 @@ void configuration_widget::duplicateLType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeLType
+*/
 void configuration_widget::removeLType(){
     int result = configuration->removeLeadType(lType);
     if(result == 1){
@@ -2174,6 +2594,11 @@ void configuration_widget::removeLType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveLType
+*/
 void configuration_widget::saveLType(){
     int result = configuration->replaceLeadType(lType);
     if(result == 1){
@@ -2185,6 +2610,12 @@ void configuration_widget::saveLType(){
 }
 
 //COATING CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeCoatName
+ \param text
+*/
 void configuration_widget::changeCoatName(QString text){
     if(coat){
         coat->setName(text.toStdString());
@@ -2192,6 +2623,11 @@ void configuration_widget::changeCoatName(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newCoat
+*/
 void configuration_widget::newCoat(){
     coat.reset(new Coating());
     if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
@@ -2201,6 +2637,11 @@ void configuration_widget::newCoat(){
     populateConductors();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateCoat
+*/
 void configuration_widget::duplicateCoat(){
     if(coat){
         std::shared_ptr<Coating> co;
@@ -2212,6 +2653,11 @@ void configuration_widget::duplicateCoat(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeCoat
+*/
 void configuration_widget::removeCoat(){
     int result = configuration->removeCoating(coat);
     if(result == 1){
@@ -2224,6 +2670,11 @@ void configuration_widget::removeCoat(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveCoat
+*/
 void configuration_widget::saveCoat(){
     int result = configuration->replaceCoating(coat);
     if(result == 1){
@@ -2235,6 +2686,12 @@ void configuration_widget::saveCoat(){
 }
 
 //ENERG CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeEnerFreq
+ \param text
+*/
 void configuration_widget::changeEnerFreq(QString text){
     if(ener){
         ener->setFrequency(text.toStdString());
@@ -2242,6 +2699,12 @@ void configuration_widget::changeEnerFreq(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeEnerIdent
+ \param text
+*/
 void configuration_widget::changeEnerIdent(QString text){
     if(ener){
         ener->setIdentification(text.toStdString());
@@ -2249,6 +2712,12 @@ void configuration_widget::changeEnerIdent(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeEnerType
+ \param text
+*/
 void configuration_widget::changeEnerType(QString text){
     if(ener){
         ener->setType(text.toStdString());
@@ -2256,6 +2725,12 @@ void configuration_widget::changeEnerType(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeEnerMag
+ \param i
+*/
 void configuration_widget::changeEnerMag(int i){
     if(ener){
         ener->setMagnitude(i);
@@ -2263,6 +2738,12 @@ void configuration_widget::changeEnerMag(int i){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeEnerAng
+ \param d
+*/
 void configuration_widget::changeEnerAng(double d){
     if(ener){
         ener->setAngle(d);
@@ -2270,6 +2751,11 @@ void configuration_widget::changeEnerAng(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newEner
+*/
 void configuration_widget::newEner(){
     ener.reset(new Energization());
     if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
@@ -2279,6 +2765,11 @@ void configuration_widget::newEner(){
     populateConductors();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateEner
+*/
 void configuration_widget::duplicateEner(){
     if(ener){
         std::shared_ptr<Energization> en;
@@ -2290,6 +2781,11 @@ void configuration_widget::duplicateEner(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeEner
+*/
 void configuration_widget::removeEner(){
     int result = configuration->removeEnergization(ener);
     if(result == 1){
@@ -2302,6 +2798,11 @@ void configuration_widget::removeEner(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveEner
+*/
 void configuration_widget::saveEner(){
     int result = configuration->replaceEnergization(ener);
     if(result == 1){
@@ -2313,6 +2814,12 @@ void configuration_widget::saveEner(){
 }
 
 //CTYPE CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeCTypeName
+ \param text
+*/
 void configuration_widget::changeCTypeName(QString text){
     if(cType){
         cType->setName(text.toStdString());
@@ -2320,6 +2827,12 @@ void configuration_widget::changeCTypeName(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCTypeType
+ \param text
+*/
 void configuration_widget::changeCTypeType(QString text){
     if(cType){
         cType->setType(text.toStdString());
@@ -2327,6 +2840,12 @@ void configuration_widget::changeCTypeType(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCTypePerm
+ \param d
+*/
 void configuration_widget::changeCTypePerm(double d){
     if(cType){
         cType->setPermeability(d);
@@ -2334,6 +2853,12 @@ void configuration_widget::changeCTypePerm(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeCTypeRes
+ \param d
+*/
 void configuration_widget::changeCTypeRes(double d){
     if(cType){
         cType->setResistivity(d);
@@ -2341,6 +2866,11 @@ void configuration_widget::changeCTypeRes(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newCType
+*/
 void configuration_widget::newCType(){
     cType.reset(new ConductorType());
     if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
@@ -2350,6 +2880,11 @@ void configuration_widget::newCType(){
     populateConductors();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateCType
+*/
 void configuration_widget::duplicateCType(){
     if(cType){
         std::shared_ptr<ConductorType> ct;
@@ -2361,6 +2896,11 @@ void configuration_widget::duplicateCType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeCType
+*/
 void configuration_widget::removeCType(){
     int result = configuration->removeConductorType(cType);
     if(result == 1){
@@ -2373,6 +2913,11 @@ void configuration_widget::removeCType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveCType
+*/
 void configuration_widget::saveCType(){
     int result = configuration->replaceConductorType(cType);
     if(result == 1){
@@ -2384,6 +2929,12 @@ void configuration_widget::saveCType(){
 }
 
 //CBTYPE CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeCbTypeName
+ \param text
+*/
 void configuration_widget::changeCbTypeName(QString text){
     if(cbType){
         cbType->setName(text.toStdString());
@@ -2391,6 +2942,11 @@ void configuration_widget::changeCbTypeName(QString text){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newCbType
+*/
 void configuration_widget::newCbType(){
     cbType.reset(new CableType());
     if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
@@ -2400,6 +2956,11 @@ void configuration_widget::newCbType(){
     populateConductors();
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicateCbType
+*/
 void configuration_widget::duplicateCbType(){
     if(cbType){
         std::shared_ptr<CableType> cb;
@@ -2411,6 +2972,11 @@ void configuration_widget::duplicateCbType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removeCbType
+*/
 void configuration_widget::removeCbType(){
     int result = configuration->removeCableType(cbType);
     if(result == 1){
@@ -2423,6 +2989,11 @@ void configuration_widget::removeCbType(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::saveCbType
+*/
 void configuration_widget::saveCbType(){
     int result = configuration->replaceCableType(cbType);
     if(result == 1){
@@ -2434,6 +3005,12 @@ void configuration_widget::saveCbType(){
 }
 
 //PROFILE CONNECTIONS
+/*!
+ \brief
+
+ \fn configuration_widget::changeProNumPt
+ \param i
+*/
 void configuration_widget::changeProNumPt(int i){
     if(pro){
         pro->ptNum = i;
@@ -2441,6 +3018,12 @@ void configuration_widget::changeProNumPt(int i){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProNumPr
+ \param i
+*/
 void configuration_widget::changeProNumPr(int i){
     if(pro){
         pro->prNum = i;
@@ -2448,6 +3031,12 @@ void configuration_widget::changeProNumPr(int i){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPtStepX
+ \param d
+*/
 void configuration_widget::changeProPtStepX(double d){
     if(pro){
         pro->ptStep.x = d;
@@ -2455,6 +3044,12 @@ void configuration_widget::changeProPtStepX(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPtStepY
+ \param d
+*/
 void configuration_widget::changeProPtStepY(double d){
     if(pro){
         pro->ptStep.y = d;
@@ -2462,6 +3057,12 @@ void configuration_widget::changeProPtStepY(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPtStepZ
+ \param d
+*/
 void configuration_widget::changeProPtStepZ(double d){
     if(pro){
         pro->ptStep.z = d;
@@ -2469,6 +3070,12 @@ void configuration_widget::changeProPtStepZ(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProStartX
+ \param d
+*/
 void configuration_widget::changeProStartX(double d){
     if(pro){
         pro->start.x = d;
@@ -2476,6 +3083,12 @@ void configuration_widget::changeProStartX(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProStartY
+ \param d
+*/
 void configuration_widget::changeProStartY(double d){
     if(pro){
         pro->start.y = d;
@@ -2483,6 +3096,12 @@ void configuration_widget::changeProStartY(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProStartZ
+ \param d
+*/
 void configuration_widget::changeProStartZ(double d){
     if(pro){
         pro->start.z = d;
@@ -2490,6 +3109,12 @@ void configuration_widget::changeProStartZ(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPrStepX
+ \param d
+*/
 void configuration_widget::changeProPrStepX(double d){
     if(pro){
         pro->prStep.x = d;
@@ -2497,6 +3122,12 @@ void configuration_widget::changeProPrStepX(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPrStepY
+ \param d
+*/
 void configuration_widget::changeProPrStepY(double d){
     if(pro){
         pro->prStep.y = d;
@@ -2504,6 +3135,12 @@ void configuration_widget::changeProPrStepY(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::changeProPrStepZ
+ \param d
+*/
 void configuration_widget::changeProPrStepZ(double d){
     if(pro){
         pro->prStep.z = d;
@@ -2511,6 +3148,11 @@ void configuration_widget::changeProPrStepZ(double d){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::newPro
+*/
 void configuration_widget::newPro(){
     pro.reset(new profile());
     if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
@@ -2519,6 +3161,11 @@ void configuration_widget::newPro(){
     populateProfiles(1);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::duplicatePro
+*/
 void configuration_widget::duplicatePro(){
     if(pro){
         std::shared_ptr<profile> p;
@@ -2530,6 +3177,11 @@ void configuration_widget::duplicatePro(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::removePro
+*/
 void configuration_widget::removePro(){
     configuration->removeProfile(pro);
     configuration->setModified(true);
@@ -2537,6 +3189,11 @@ void configuration_widget::removePro(){
     populateProfiles(2);
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::savePro
+*/
 void configuration_widget::savePro(){
     if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
     if(ui->radioButton_profile_steps->isChecked()){
@@ -2569,6 +3226,12 @@ void configuration_widget::savePro(){
 }
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+/*!
+ \brief
+
+ \fn configuration_widget::changeComputations
+ \param i
+*/
 void configuration_widget::changeComputations(int i){
     if(configuration){
         configuration->setComputations().ELECTRIC = ui->checkBox_comp_ELECTRIC->isChecked();
@@ -2583,6 +3246,11 @@ void configuration_widget::changeComputations(int i){
 }
 #pragma GCC diagnostic pop
 
+/*!
+ \brief
+
+ \fn configuration_widget::refreshConfSettings
+*/
 void configuration_widget::refreshConfSettings(){
     ui->lineEdit_settings_identifier->setText(QString::fromStdString(configuration->getIdentifier()));
 
@@ -2600,6 +3268,11 @@ void configuration_widget::refreshConfSettings(){
     ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::generateProRight
+*/
 void configuration_widget::generateProRight(){
     int result = configuration->generateProfile(false, true);
     populateProfiles(0);
@@ -2623,6 +3296,11 @@ void configuration_widget::generateProRight(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::generateProLeft
+*/
 void configuration_widget::generateProLeft(){
     int result = configuration->generateProfile(false, false);
     populateProfiles(0);
@@ -2646,6 +3324,11 @@ void configuration_widget::generateProLeft(){
     }
 }
 
+/*!
+ \brief
+
+ \fn configuration_widget::generateProTwo
+*/
 void configuration_widget::generateProTwo(){
     int result = configuration->generateProfile(true, true);
     populateProfiles(0);

@@ -59,7 +59,6 @@ int main(int argc, char* argv[])
     app.installTranslator(&translator);
 
     AppUtils::getInstance().setDefaultConfig();
-    AppUtils::getInstance().loadStylesheets();
 
     cdegs_main* mainWin = new cdegs_main(0, &translator);
     mainWin->show();

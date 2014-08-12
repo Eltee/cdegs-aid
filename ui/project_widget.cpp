@@ -53,10 +53,10 @@ project_widget::project_widget(QWidget *parent, project_tab_widget* dp, std::sha
     project = p;
     projectOrig = p2;
     ui->setupUi(this);
+    ui->textEdit_pDesc->setHtml(project->getMetadata().description.toHtml());
     m_name = name;
     defParent = dp;
     refresh();
-    connectSlots();
 }
 
 /*!
@@ -102,6 +102,11 @@ void project_widget::connectSlots(){
                      this, SLOT(changeDescription()));
 }
 
+/*!
+ \brief
+
+ \fn project_widget::disconnectSlots
+*/
 void project_widget::disconnectSlots(){
     QObject::disconnect(ui->dateEdit_pDate, SIGNAL(dateChanged(QDate)),
                      this, SLOT(changeDate(QDate)));
@@ -130,7 +135,6 @@ void project_widget::refresh(){
         ui->lineEdit_pName->setText(QString::fromStdString(project->getMetadata().name));
         ui->lineEdit_pPath->setText(QString::fromStdString(filePath));
         ui->dateEdit_pDate->setDate(project->getMetadata().date);
-        ui->textEdit_pDesc->setDocument(project->getMetadata().description.clone());
         if(project->isModified()){
             QString newName = m_name;
             newName.append("*");
@@ -144,6 +148,12 @@ void project_widget::refresh(){
     defParent->refresh();
 }
 
+/*!
+ \brief
+
+ \fn project_widget::changeDate
+ \param date
+*/
 void project_widget::changeDate(QDate date){
     if(project){
         project->setMetaDate(date);
@@ -152,6 +162,12 @@ void project_widget::changeDate(QDate date){
     }
 }
 
+/*!
+ \brief
+
+ \fn project_widget::changeName
+ \param name
+*/
 void project_widget::changeName(QString name){
     if(project){
         project->setMetaName(name.toStdString());
@@ -160,6 +176,12 @@ void project_widget::changeName(QString name){
     }
 }
 
+/*!
+ \brief
+
+ \fn project_widget::changeAuthor
+ \param author
+*/
 void project_widget::changeAuthor(QString author){
     if(project){
         project->setMetaAuthor(author.toStdString());
@@ -168,9 +190,14 @@ void project_widget::changeAuthor(QString author){
     }
 }
 
+/*!
+ \brief
+
+ \fn project_widget::changeDescription
+*/
 void project_widget::changeDescription(){
     if(project){
-        project->setMetaDescription(ui->textEdit_pDesc->document()->toPlainText().toStdString());
+        project->setMetaDescription(ui->textEdit_pDesc->toHtml());
         project->setModified(true);
         refresh();
     }

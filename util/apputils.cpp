@@ -1121,9 +1121,8 @@ void AppUtils::append_dbl2str(std::string s, const double d) {
 std::string AppUtils::uniqueIdGenerator(){
     std::string result = "failure";
 
-    result = "P";
-    append_dbl2str(result, m_projectId+1);
     m_projectId += 1;
+    result = "P" + std::to_string(m_projectId);
 
     return result;
 }

@@ -48,6 +48,11 @@ namespace Ui {
     class MultiConductorDialog;
 }
 
+/*!
+ \brief
+
+ \class MultiConductorDialog multi_conductor_dialog.h "ui/multi_conductor_dialog.h"
+*/
 class MultiConductorDialog : public QDialog
 {
         Q_OBJECT

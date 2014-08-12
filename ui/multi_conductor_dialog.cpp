@@ -38,6 +38,13 @@
 #include "multi_conductor_dialog.h"
 #include "ui_multi_conductor_dialog.h"
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::MultiConductorDialog
+ \param parent
+ \param config
+*/
 MultiConductorDialog::MultiConductorDialog(QWidget *parent, std::shared_ptr<Configuration> config) :
     QDialog(parent),
     ui(new Ui::MultiConductorDialog)
@@ -51,15 +58,31 @@ MultiConductorDialog::MultiConductorDialog(QWidget *parent, std::shared_ptr<Conf
     complete = false;
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::~MultiConductorDialog
+*/
 MultiConductorDialog::~MultiConductorDialog()
 {
     delete ui;
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::getConductors
+ \return std::vector<std::shared_ptr<Conductor> >
+*/
 std::vector<std::shared_ptr<Conductor>> MultiConductorDialog::getConductors() const{
     return m_conductors;
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::connectSlots
+*/
 void MultiConductorDialog::connectSlots(){
     QObject::connect(ui->pushButton_cancel, SIGNAL(released()),
                      this, SLOT(close()));
@@ -71,6 +94,11 @@ void MultiConductorDialog::connectSlots(){
                      this, SLOT(next()));
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::disconnectSlots
+*/
 void MultiConductorDialog::disconnectSlots(){
     QObject::disconnect(ui->pushButton_cancel, SIGNAL(released()),
                      this, SLOT(close()));
@@ -82,6 +110,11 @@ void MultiConductorDialog::disconnectSlots(){
                      this, SLOT(next()));
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::initPlot
+*/
 void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->plotLayout()->insertRow(0);
     QCPPlotTitle* title = new QCPPlotTitle(ui->qcustomplot_fourth_graph, tr("Position of Conductors"));
@@ -166,6 +199,11 @@ void MultiConductorDialog::initPlot(){
     ui->qcustomplot_fourth_graph->rescaleAxes();
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::refreshPlot
+*/
 void MultiConductorDialog::refreshPlot(){
     QVector<double> keys, values, groundKeys, groundValues;
     int lowX = -4;
@@ -192,6 +230,11 @@ void MultiConductorDialog::refreshPlot(){
     ui->qcustomplot_fourth_graph->replot();
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::populateCharacteristics
+*/
 void MultiConductorDialog::populateCharacteristics(){
     ui->comboBox_third_lType->clear();
     for(unsigned int i = 0; i < m_config->getLeadTypes().size(); i++){
@@ -224,10 +267,20 @@ void MultiConductorDialog::populateCharacteristics(){
     }
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::refresh
+*/
 void MultiConductorDialog::refresh(){
 
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::next
+*/
 void MultiConductorDialog::next(){
     switch(ui->stackedWidget->currentIndex()){
         case 0: //Shape and quantity
@@ -383,6 +436,11 @@ void MultiConductorDialog::next(){
     }
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::previous
+*/
 void MultiConductorDialog::previous(){
     switch(ui->stackedWidget->currentIndex()){
         case 0: //Shape and quantity
@@ -403,6 +461,12 @@ void MultiConductorDialog::previous(){
     }
 }
 
+/*!
+ \brief
+
+ \fn MultiConductorDialog::isComplete
+ \return bool
+*/
 bool MultiConductorDialog::isComplete(){
     return complete;
 }

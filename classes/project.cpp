@@ -405,8 +405,8 @@ Project& Project::setMetaAuthor(std::string const author){
  \param description
  \return Project
 */
-Project& Project::setMetaDescription(std::string const description){
-    m_metadata.description.setPlainText(QString::fromStdString(description));
+Project& Project::setMetaDescription(QString const description){
+    m_metadata.description.setHtml(description);
     return *this;
 }
 

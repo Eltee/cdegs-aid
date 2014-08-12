@@ -78,7 +78,7 @@ class Project
         Project& setLastConfig(std::shared_ptr<Configuration> lastConfig);
         Project& setMetaName(std::string const name);
         Project& setMetaAuthor(std::string const author);
-        Project& setMetaDescription(std::string const description);
+        Project& setMetaDescription(const QString description);
         Project& setMetaDate(std::string const date);
         Project& setMetaDate(QDate const date);
         Project& setProjSet1(std::string const set1);

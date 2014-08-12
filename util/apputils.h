@@ -129,7 +129,7 @@ class AppUtils
         AppUtils() {}
         AppUtils(AppUtils const&);
         void operator=(AppUtils const&);
-        double m_projectId=0;
+        int m_projectId=0;
         std::shared_ptr<Configuration> m_currentConfig;
         Configuration* m_defaultConfig;
         std::unordered_map<std::string, QString> m_styleSheets;

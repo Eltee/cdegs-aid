@@ -47,6 +47,11 @@ namespace Ui {
     class style_dialog;
 }
 
+/*!
+ \brief
+
+ \class style_dialog style_dialog.h "ui/style_dialog.h"
+*/
 class style_dialog : public QDialog
 {
         Q_OBJECT
