@@ -80,7 +80,8 @@ class Configuration
         double componentIdGenerator();
         void updateBuildingConductors(std::shared_ptr<Building> build);
         void clearBuildingConductors();
-        int generateProfile(bool twoSided = false, bool rightSided = true);
+        int generateProfile(bool twoSided = false, bool rightSided = true, double step = 0.25, bool surface = true, double height = -1);
+        void clearProfiles();
     //Setters start-----------------------------------------------------
         Configuration& setIdentifier(std::string const identifier);
         Configuration& setUnits(std::string const units);

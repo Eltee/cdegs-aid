@@ -116,6 +116,7 @@ struct profile{
         prStep.x = 0;
         prStep.y = 0;
         prStep.z = 0;
+        surface = true;
     }
 
     profile(profile const* pro){
@@ -131,6 +132,7 @@ struct profile{
         prStep.x = pro->prStep.x;
         prStep.y = pro->prStep.y;
         prStep.z = pro->prStep.z;
+        surface = pro->surface;
     }
 
     double id = -1;
@@ -139,6 +141,8 @@ struct profile{
 
     int ptNum = 0.0;
     int prNum = 0.0;
+
+    bool surface = true;
 
     bool compare(profile const* pro){
         if(id == pro->id) return true;

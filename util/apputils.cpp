@@ -208,7 +208,8 @@ std::string AppUtils::getPath(const QString filename){
  \fn AppUtils::setDefaultConfig
 */
 void AppUtils::setDefaultConfig(){
-    if(0 == access(getPath("default_values.cdp").c_str(), 0)){ //Exists
+    std::string path = "default_values.cdd";
+    if(0 == access(path.c_str(), 0)){ //Exists
         loadDefaultConfig();
     }
     else{ //Does not exist
@@ -227,8 +228,8 @@ void AppUtils::loadDefaultConfig(){
 
     pugi::xml_document doc;
 
-    QString filename = "default_values.cdp";
-    if (!doc.load_file(QString::fromStdString(getPath(filename)).toStdWString().c_str())){
+    std::string filename = "default_values.cdd";
+    if (!doc.load_file(filename.c_str())){
         std::cout << "Failure" << std::endl;
     }
 
@@ -510,11 +511,37 @@ void AppUtils::generateDefaultConfig(){
 
     //Computations end-----------------------------------------------------------------
 
-    node = configNode.append_child("Profiles");
+    pugi::xml_node profilesNode = configNode.append_child("Profiles");
+    pugi::xml_node profileNode = profilesNode.append_child("Profile");
+    profileNode.append_attribute("Id").set_value("-1");
 
-    QString filename = "default_values.cdp";
+    node = profileNode.append_child("ProfileStart");
+    node.append_attribute("X").set_value("0");
+    node.append_attribute("Y").set_value("0");
+    node.append_attribute("Z").set_value("0");
 
-    doc.save_file(QString::fromStdString(getPath(filename)).toStdWString().c_str());
+    node = profileNode.append_child("PointStep");
+    node.append_attribute("Dx").set_value("0");
+    node.append_attribute("Dy").set_value("0");
+    node.append_attribute("Dz").set_value("0");
+
+    node = profileNode.append_child("ProfileStep");
+    node.append_attribute("Dx").set_value("0");
+    node.append_attribute("Dy").set_value("0");
+    node.append_attribute("Dz").set_value("0");
+
+    node = profileNode.append_child("NumberPoints");
+    node.append_attribute("Value").set_value("0");
+
+    node = profileNode.append_child("NumberProfiles");
+    node.append_attribute("Value").set_value("0");
+
+    node = profileNode.append_child("Surface");
+    node.append_attribute("Value").set_value("False");
+
+    QString filename = "default_values.cdd";
+
+    doc.save_file(filename.toStdWString().c_str());
 }
 
 /*!
@@ -536,6 +563,7 @@ Configuration const* AppUtils::getDefaultConfig() const{
 */
 Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
     Configuration* config = new Configuration();
+    config->clearProfiles();
 
     config->setId(configNode.first_attribute().as_int());
 
@@ -710,6 +738,7 @@ Configuration* AppUtils::loadConfig(pugi::xml_node configNode) const{
         p->prStep.z = it->child("ProfileStep").attribute("Dz").as_double();
         p->ptNum = it->child("NumberPoints").attribute("Value").as_int();
         p->prNum = it->child("NumberProfiles").attribute("Value").as_int();
+        p->surface = it->child("Surface").attribute("Value").as_bool();
         std::shared_ptr<profile> ptr(p);
         config->addProfile(ptr);
     }
@@ -964,7 +993,9 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     }
 
     for(unsigned int i=0; i<config->getConductors().size(); i++){
-        configFile << "      CONDUCTOR, " << std::to_string(config->getConductors().at(i)->getLeadType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getConductorType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getCoating()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getEnergization()->getTempId()) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getRadius(), true, true) << "," << std::to_string(config->getConductors().at(i)->getSubDivision()) << ",0\n";
+        if(config->getConductors().at(i)->getStartCoords().z != 0){
+            configFile << "      CONDUCTOR, " << std::to_string(config->getConductors().at(i)->getLeadType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getConductorType()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getCoating()->getTempId()) << ", " << std::to_string(config->getConductors().at(i)->getEnergization()->getTempId()) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getStartCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().x, true, false) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().y, true, true) << "," << dbl2str(config->getConductors().at(i)->getEndCoords().z, true, true) << "," << dbl2str(config->getConductors().at(i)->getRadius(), true, true) << "," << std::to_string(config->getConductors().at(i)->getSubDivision()) << ",0\n";
+        }
     }
 
     configFile << "\n";
@@ -1023,19 +1054,31 @@ void AppUtils::exportConfiguration(const Configuration* config, const std::strin
     configFile << "  OBSERVATION\n";
 
     for(unsigned int i=0; i<config->getProfiles().size(); i++){
-        configFile << "    PROFILE, " << std::to_string(config->getProfiles().at(i)->ptNum)
-                   << "," << dbl2str(config->getProfiles().at(i)->start.x)
-                   << "," << dbl2str(config->getProfiles().at(i)->start.y)
-                   << "," << dbl2str(config->getProfiles().at(i)->start.z)
-                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.x)
-                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.y)
-                   << "," << dbl2str(config->getProfiles().at(i)->ptStep.z)
-                   << ",0\n";
-        configFile << "      SURFACE," << std::to_string(config->getProfiles().at(i)->prNum)
-                   << "," << dbl2str(config->getProfiles().at(i)->prStep.x)
-                   << "," << dbl2str(config->getProfiles().at(i)->prStep.y)
-                   << "," << dbl2str(config->getProfiles().at(i)->prStep.z)
-                   << ",0\n";
+        if(config->getProfiles().at(i)->surface){
+            configFile << "    PROFILE, " << std::to_string(config->getProfiles().at(i)->ptNum)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.x)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.y)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.z)
+                       << "," << dbl2str(config->getProfiles().at(i)->ptStep.x)
+                       << "," << dbl2str(config->getProfiles().at(i)->ptStep.y)
+                       << "," << dbl2str(config->getProfiles().at(i)->ptStep.z)
+                       << ",0\n";
+            configFile << "      SURFACE," << std::to_string(config->getProfiles().at(i)->prNum)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.x)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.y)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.z)
+                       << ",0\n";
+        }
+        else{
+            configFile << "    PROFILE, " << std::to_string(config->getProfiles().at(i)->prNum)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.x)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.y)
+                       << "," << dbl2str(config->getProfiles().at(i)->start.z)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.x)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.y)
+                       << "," << dbl2str(config->getProfiles().at(i)->prStep.z)
+                       << ",0\n";
+        }
     }
 
     configFile << "  FREQUENCY,60.,\n";
@@ -1680,6 +1723,9 @@ void AppUtils::saveConfiguration(const Configuration* config, pugi::xml_node &pa
 
         node = profileNode.append_child("NumberProfiles");
         node.append_attribute("Value").set_value(dbl2str(config->getProfiles().at(i)->prNum).c_str());
+
+        node = profileNode.append_child("Surface");
+        node.append_attribute("Value").set_value(BoolToString(config->getProfiles().at(i)->surface));
     }
 
     //Profiles end-----------------------------------------------------------------

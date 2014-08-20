@@ -293,26 +293,7 @@ void MultiConductorDialog::next(){
                 m_conductors.push_back(cond2);
                 ui->stackedWidget->setCurrentIndex(1);
                 ui->pushButton_previous->setEnabled(true);
-            }
-            else if(ui->radioButton_first_2cVert->isChecked()){
-                std::shared_ptr<Conductor> cond, cond2;
-                cond.reset(new Conductor());
-                cond2.reset(new Conductor());
-                m_conductors.push_back(cond);
-                m_conductors.push_back(cond2);
-                ui->stackedWidget->setCurrentIndex(1);
-                ui->pushButton_previous->setEnabled(true);
-            }
-            else if(ui->radioButton_first_3c->isChecked()){
-                std::shared_ptr<Conductor> cond, cond2, cond3;
-                cond.reset(new Conductor());
-                cond2.reset(new Conductor());
-                cond3.reset(new Conductor());
-                m_conductors.push_back(cond);
-                m_conductors.push_back(cond2);
-                m_conductors.push_back(cond3);
-                ui->stackedWidget->setCurrentIndex(1);
-                ui->pushButton_previous->setEnabled(true);
+                ui->doubleSpinBox_second_distance->setValue(0.4064);
             }
             else if(ui->radioButton_first_4c->isChecked()){
                 std::shared_ptr<Conductor> cond, cond2, cond3, cond4;
@@ -326,6 +307,7 @@ void MultiConductorDialog::next(){
                 m_conductors.push_back(cond4);
                 ui->stackedWidget->setCurrentIndex(1);
                 ui->pushButton_previous->setEnabled(true);
+                ui->doubleSpinBox_second_distance->setValue(0.4572);
             }
             break;
         case 1: //Distance
@@ -349,27 +331,6 @@ void MultiConductorDialog::next(){
                     start.y = start.y + (ui->doubleSpinBox_second_distance->value());
                     end.y = start.y;
                     m_conductors[1]->setCoords(start, end);
-                }
-                else if(ui->radioButton_first_2cVert->isChecked()){
-                    start.z = start.z - (ui->doubleSpinBox_second_distance->value() / 2);
-                    end.z = start.z;
-                    m_conductors[0]->setCoords(start, end);
-                    start.z = start.z + (ui->doubleSpinBox_second_distance->value());
-                    end.z = start.z;
-                    m_conductors[1]->setCoords(start, end);
-                }
-                else if(ui->radioButton_first_3c->isChecked()){
-                    start.z = start.z - (ui->doubleSpinBox_second_distance->value() / 2);
-                    end.z = start.z;
-                    m_conductors[0]->setCoords(start, end);
-                    start.z = start.z + (ui->doubleSpinBox_second_distance->value());
-                    end.z = start.z;
-                    start.y = start.y - (ui->doubleSpinBox_second_distance->value() / 2);
-                    end.y = start.y;
-                    m_conductors[1]->setCoords(start, end);
-                    start.y = start.y + (ui->doubleSpinBox_second_distance->value());
-                    end.y = start.y;
-                    m_conductors[2]->setCoords(start, end);
                 }
                 else if(ui->radioButton_first_4c->isChecked()){
                     start.y = start.y - (ui->doubleSpinBox_second_distance->value() / 2);
@@ -411,11 +372,6 @@ void MultiConductorDialog::next(){
             if(m_conductors.size() == 2){
                 ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
                 ui->lineEdit_fourth_cond2->setText(tr("Conductor - (X): ") + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
-            }
-            else if(m_conductors.size() == 3){
-                ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));
-                ui->lineEdit_fourth_cond2->setText(tr("Conductor - (X): ") + QString::number(m_conductors[1]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[1]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[1]->getStartCoords().z));
-                ui->lineEdit_fourth_cond3->setText(tr("Conductor - (X): ") + QString::number(m_conductors[2]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[2]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[2]->getStartCoords().z));
             }
             else if(m_conductors.size() == 4){
                 ui->lineEdit_fourth_cond->setText(tr("Conductor - (X): ") + QString::number(m_conductors[0]->getStartCoords().x) + " (Y): " + QString::number(m_conductors[0]->getStartCoords().y) + " (Z): " + QString::number(m_conductors[0]->getStartCoords().z));

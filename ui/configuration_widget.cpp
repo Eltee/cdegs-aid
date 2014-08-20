@@ -163,7 +163,7 @@ void configuration_widget::initPlot(){
 */
 void configuration_widget::connectSlots(){
     QObject::connect(ui->comboBox_page, SIGNAL(currentIndexChanged(int)),
-                     ui->stackedWidget_config, SLOT(setCurrentIndex(int)));
+                     this, SLOT(fetchPage(int)));
 
 
     //COMBOBOX CONNECTIONS
@@ -453,17 +453,17 @@ void configuration_widget::connectSlots(){
     QObject::connect(ui->doubleSpinBox_profile_step_z, SIGNAL(valueChanged(double)),
                      this, SLOT(changeProPrStepZ(double)));
 
-    QObject::connect(ui->pushButton_new_profile, SIGNAL(released()),
-                     this, SLOT(newPro()));
-
-    QObject::connect(ui->pushButton_pro_duplicate, SIGNAL(released()),
-                     this, SLOT(duplicatePro()));
-
-    QObject::connect(ui->pushButton_remove_profile, SIGNAL(released()),
-                     this, SLOT(removePro()));
+    QObject::connect(ui->pushButton_reset_profile, SIGNAL(released()),
+                     this, SLOT(resetPro()));
 
     QObject::connect(ui->pushButton_save_profile, SIGNAL(released()),
                      this, SLOT(savePro()));
+
+    QObject::connect(ui->radioButton_pro_surface, SIGNAL(clicked()),
+                     this, SLOT(changeProSetup()));
+
+    QObject::connect(ui->radioButton_pro_line, SIGNAL(clicked()),
+                     this, SLOT(changeProSetup()));
 
     QObject::connect(ui->radioButton_profile_endPts, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
@@ -798,17 +798,17 @@ void configuration_widget::disconnectSlots(){
     QObject::disconnect(ui->doubleSpinBox_profile_step_z, SIGNAL(valueChanged(double)),
                      this, SLOT(changeProPrStepZ(double)));
 
-    QObject::disconnect(ui->pushButton_new_profile, SIGNAL(released()),
-                     this, SLOT(newPro()));
-
-    QObject::disconnect(ui->pushButton_pro_duplicate, SIGNAL(released()),
-                     this, SLOT(duplicatePro()));
-
-    QObject::disconnect(ui->pushButton_remove_profile, SIGNAL(released()),
-                     this, SLOT(removePro()));
+    QObject::disconnect(ui->pushButton_reset_profile, SIGNAL(released()),
+                     this, SLOT(resetPro()));
 
     QObject::disconnect(ui->pushButton_save_profile, SIGNAL(released()),
                      this, SLOT(savePro()));
+
+    QObject::disconnect(ui->radioButton_pro_surface, SIGNAL(clicked()),
+                     this, SLOT(changeProSetup()));
+
+    QObject::disconnect(ui->radioButton_pro_line, SIGNAL(clicked()),
+                     this, SLOT(changeProSetup()));
 
     QObject::disconnect(ui->radioButton_profile_endPts, SIGNAL(released()),
                      this, SLOT(refreshProfile()));
@@ -1425,9 +1425,7 @@ void configuration_widget::refreshCbType(){
 */
 void configuration_widget::refreshProfile(){
     if(pro){
-        ui->pushButton_new_profile->setEnabled(false);
-        ui->pushButton_remove_profile->setEnabled(true);
-        ui->pushButton_pro_duplicate->setEnabled(false);
+        ui->pushButton_reset_profile->setEnabled(true);
         if(ui->radioButton_profile_endPts->isChecked()){
             ui->doubleSpinBox_profile_pts_prStep->setEnabled(true);
             ui->doubleSpinBox_profile_pts_ptStep->setEnabled(true);
@@ -1435,18 +1433,18 @@ void configuration_widget::refreshProfile(){
             ui->groupBox_profile_ptB->setEnabled(true);
             ui->groupBox_profile_ptC->setEnabled(true);
 
-            ui->spinBox_number_points->setEnabled(false);
+            //ui->spinBox_number_points->setEnabled(false);
             ui->spinBox_number_profiles->setEnabled(false);
             ui->groupBox_profile_prStart->setEnabled(false);
             ui->groupBox_profile_prStep->setEnabled(false);
-            ui->groupBox_profile_ptStep->setEnabled(false);
+            //ui->groupBox_profile_ptStep->setEnabled(false);
         }
         else if(ui->radioButton_profile_steps->isChecked()){
-            ui->spinBox_number_points->setEnabled(true);
+            //ui->spinBox_number_points->setEnabled(true);
             ui->spinBox_number_profiles->setEnabled(true);
             ui->groupBox_profile_prStart->setEnabled(true);
             ui->groupBox_profile_prStep->setEnabled(true);
-            ui->groupBox_profile_ptStep->setEnabled(true);
+            //ui->groupBox_profile_ptStep->setEnabled(true);
 
             ui->doubleSpinBox_profile_pts_prStep->setEnabled(false);
             ui->doubleSpinBox_profile_pts_ptStep->setEnabled(false);
@@ -1457,6 +1455,25 @@ void configuration_widget::refreshProfile(){
         std::vector<coords> prPts;
 
         prPts = pro->toCoords();
+
+        if(pro->surface){
+            ui->radioButton_pro_surface->setChecked(true);
+            ui->radioButton_pro_line->setChecked(false);
+            ui->pushButton_profile_genLeft->setText(tr("Generate profile as surface (left-sided)"));
+            ui->pushButton_profile_genRight->setText(tr("Generate profile as surface (right-sided)"));
+            ui->pushButton_profile_genTwo->setText(tr("Generate profile as surface (two-sided)"));
+            ui->groupBox_profile_ptStep->setEnabled(true);
+            ui->spinBox_number_points->setEnabled(true);
+        }
+        else{
+            ui->radioButton_pro_surface->setChecked(false);
+            ui->radioButton_pro_line->setChecked(true);
+            ui->pushButton_profile_genLeft->setText(tr("Generate profile as line (left-sided)"));
+            ui->pushButton_profile_genRight->setText(tr("Generate profile as line (right-sided)"));
+            ui->pushButton_profile_genTwo->setText(tr("Generate profile as line (two-sided)"));
+            ui->groupBox_profile_ptStep->setEnabled(false);
+            ui->spinBox_number_points->setEnabled(false);
+        }
 
         ui->doubleSpinBox_profile_ptA_x->setValue(prPts[0].x);
         ui->doubleSpinBox_profile_ptA_y->setValue(prPts[0].y);
@@ -1484,9 +1501,7 @@ void configuration_widget::refreshProfile(){
         ui->doubleSpinBox_profile_step_z->setValue(pro->prStep.z);
     }
     else{
-        ui->pushButton_new_profile->setEnabled(true);
-        ui->pushButton_remove_profile->setDisabled(true);
-        ui->pushButton_pro_duplicate->setEnabled(false);
+        ui->pushButton_reset_profile->setEnabled(false);
 
         ui->spinBox_number_points->setEnabled(false);
         ui->spinBox_number_profiles->setEnabled(false);
@@ -1797,7 +1812,7 @@ void configuration_widget::refreshBuilding(){
         ui->spinBox_building_distance->setEnabled(true);
         ui->spinBox_building_length->setEnabled(true);
         ui->spinBox_building_width->setEnabled(true);
-        ui->pushButton_add_building->setEnabled(false);
+        ui->pushButton_add_building->setEnabled(true);
         ui->pushButton_build_duplicate->setEnabled(true);
         ui->pushButton_remove_building->setEnabled(true);
         ui->pushButton_save_building->setEnabled(true);
@@ -1989,7 +2004,7 @@ void configuration_widget::newCond(){
     }
     configuration->addConductor(conductor);
     configuration->setModified(true);
-    populateConductors(1);
+    populateConductors();
 }
 
 /*!
@@ -2299,7 +2314,7 @@ void configuration_widget::newBuilding(){
             building->setId(configuration->componentIdGenerator());
         }
         configuration->addBuilding(building);
-        populateBuildings(1);
+        populateBuildings();
     }
     else{
         QMessageBox::critical(this, tr("Failure"), tr("There are missing default components in the configuration."));
@@ -2517,6 +2532,8 @@ void configuration_widget::changeBuildLType(int index){
 void configuration_widget::generateBuildingConductors(){
     if(building){
         configuration->updateBuildingConductors(building);
+        QMessageBox::about(this, tr("Success"), tr("Building conductors generated in configuration. You might want to update your profile."));
+        populateBuildings(1);
         configuration->setModified(true);
     }
 }
@@ -2529,6 +2546,8 @@ void configuration_widget::generateBuildingConductors(){
 void configuration_widget::clearBuildingConductors(){
     if(building){
         configuration->clearBuildingConductors();
+        QMessageBox::about(this, tr("Success"), tr("Building conductors removed from configuration. You might want to update your profile."));
+        populateBuildings(1);
         configuration->setModified(true);
     }
 }
@@ -2557,7 +2576,7 @@ void configuration_widget::newLType(){
     if(lType->getId() < 0) lType->setId(configuration->componentIdGenerator());
     configuration->addLeadType(lType);
     configuration->setModified(true);
-    populateLTypes(1);
+    populateLTypes();
     populateConductors();
 }
 
@@ -2633,7 +2652,7 @@ void configuration_widget::newCoat(){
     if(coat->getId() < 0) coat->setId(configuration->componentIdGenerator());
     configuration->addCoating(coat);
     configuration->setModified(true);
-    populateCoatings(1);
+    populateCoatings();
     populateConductors();
 }
 
@@ -2761,7 +2780,7 @@ void configuration_widget::newEner(){
     if(ener->getId() < 0) ener->setId(configuration->componentIdGenerator());
     configuration->addEnergization(ener);
     configuration->setModified(true);
-    populateEnergizations(1);
+    populateEnergizations();
     populateConductors();
 }
 
@@ -2876,7 +2895,7 @@ void configuration_widget::newCType(){
     if(cType->getId() < 0) cType->setId(configuration->componentIdGenerator());
     configuration->addConductorType(cType);
     configuration->setModified(true);
-    populateCTypes(1);
+    populateCTypes();
     populateConductors();
 }
 
@@ -2952,7 +2971,7 @@ void configuration_widget::newCbType(){
     if(cbType->getId() < 0) cbType->setId(configuration->componentIdGenerator());
     configuration->addCableType(cbType);
     configuration->setModified(true);
-    populateCbTypes(1);
+    populateCbTypes();
     populateConductors();
 }
 
@@ -3151,42 +3170,37 @@ void configuration_widget::changeProPrStepZ(double d){
 /*!
  \brief
 
- \fn configuration_widget::newPro
-*/
-void configuration_widget::newPro(){
-    pro.reset(new profile());
-    if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
-    configuration->addProfile(pro);
-    configuration->setModified(true);
-    populateProfiles(1);
-}
-
-/*!
- \brief
-
- \fn configuration_widget::duplicatePro
-*/
-void configuration_widget::duplicatePro(){
-    if(pro){
-        std::shared_ptr<profile> p;
-        p.reset(new profile(pro.get()));
-        p->id = configuration->componentIdGenerator();
-        configuration->addProfile(p);
-        configuration->setModified(true);
-        populateProfiles(1);
-    }
-}
-
-/*!
- \brief
-
  \fn configuration_widget::removePro
 */
-void configuration_widget::removePro(){
-    configuration->removeProfile(pro);
+void configuration_widget::resetPro(){
     configuration->setModified(true);
-    pro.reset();
-    populateProfiles(2);
+    pro.reset(new profile());
+    if(pro->id < 0) pro->id = configuration->componentIdGenerator();
+    configuration->replaceProfile(pro);
+    populateProfiles();
+}
+
+void configuration_widget::changeProSetup(){
+    if(ui->radioButton_pro_surface->isChecked()){
+        if(!pro->surface){
+            pro->surface = true;
+            ui->pushButton_profile_genLeft->setText(tr("Generate profile as surface (left-sided)"));
+            ui->pushButton_profile_genRight->setText(tr("Generate profile as surface (right-sided)"));
+            ui->pushButton_profile_genTwo->setText(tr("Generate profile as surface (two-sided)"));
+            ui->groupBox_profile_ptStep->setEnabled(true);
+            ui->spinBox_number_points->setEnabled(true);
+        }
+    }
+    else if(ui->radioButton_pro_line->isChecked()){
+        if(pro->surface){
+            pro->surface = false;
+            ui->pushButton_profile_genLeft->setText(tr("Generate profile as line (left-sided)"));
+            ui->pushButton_profile_genRight->setText(tr("Generate profile as line (right-sided)"));
+            ui->pushButton_profile_genTwo->setText(tr("Generate profile as line (two-sided)"));
+            ui->groupBox_profile_ptStep->setEnabled(false);
+            ui->spinBox_number_points->setEnabled(false);
+        }
+    }
 }
 
 /*!
@@ -3195,10 +3209,11 @@ void configuration_widget::removePro(){
  \fn configuration_widget::savePro
 */
 void configuration_widget::savePro(){
-    if(pro->id < 0) cbType->setId(configuration->componentIdGenerator());
+    if(pro->id < 0) pro->id = configuration->componentIdGenerator();
     if(ui->radioButton_profile_steps->isChecked()){
-        configuration->removeProfile(pro);
-        configuration->addProfile(pro);
+        //configuration->removeProfile(pro);
+        //configuration->addProfile(pro);
+        configuration->replaceProfile(pro);
         configuration->setModified(true);
     }
     else if(ui->radioButton_profile_endPts->isChecked()){
@@ -3259,13 +3274,6 @@ void configuration_widget::refreshConfSettings(){
 
     if(configuration->getFrequency() == "AC") ui->comboBox_settings_frequency->setCurrentIndex(0);
     else ui->comboBox_settings_frequency->setCurrentIndex(1);
-
-    ui->lineEdit_settings_lTypes->setText(QString::number(configuration->getLeadTypes().size()));
-    ui->lineEdit_settings_coatings->setText(QString::number(configuration->getCoatings().size()));
-    ui->lineEdit_settings_energizations->setText(QString::number(configuration->getEnergizations().size()));
-    ui->lineEdit_settings_cTypes->setText(QString::number(configuration->getConductorTypes().size()));
-    ui->lineEdit_settings_cbTypes->setText(QString::number(configuration->getCableTypes().size()));
-    ui->lineEdit_settings_profiles->setText(QString::number(configuration->getProfiles().size()));
 }
 
 /*!
@@ -3274,7 +3282,12 @@ void configuration_widget::refreshConfSettings(){
  \fn configuration_widget::generateProRight
 */
 void configuration_widget::generateProRight(){
-    int result = configuration->generateProfile(false, true);
+    double step = QInputDialog::getDouble(this, tr("Input profile step value"), tr("Input the step value for the generated profile."), 0.25, -50, 50, 2);
+    double height = 1;
+    if(!pro->surface){
+        height = QInputDialog::getDouble(this, tr("Input line height value"), tr("Input the line height value for the generated profile."), -1, -5000, 5000, 2);
+    }
+    int result = configuration->generateProfile(false, true, step, pro->surface, height);
     populateProfiles(0);
 
     switch(result){
@@ -3302,7 +3315,12 @@ void configuration_widget::generateProRight(){
  \fn configuration_widget::generateProLeft
 */
 void configuration_widget::generateProLeft(){
-    int result = configuration->generateProfile(false, false);
+    double step = QInputDialog::getDouble(this, tr("Input profile step value"), tr("Input the step value for the generated profile."), 0.25, -50, 50, 2);
+    double height = 1;
+    if(!pro->surface){
+        height = QInputDialog::getDouble(this, tr("Input line height value"), tr("Input the line height value for the generated profile."), -1, -5000, 5000, 2);
+    }
+    int result = configuration->generateProfile(false, false, step, pro->surface, height);
     populateProfiles(0);
 
     switch(result){
@@ -3330,7 +3348,12 @@ void configuration_widget::generateProLeft(){
  \fn configuration_widget::generateProTwo
 */
 void configuration_widget::generateProTwo(){
-    int result = configuration->generateProfile(true, true);
+    double step = QInputDialog::getDouble(this, tr("Input profile step value"), tr("Input the step value for the generated profile."), 0.25, -50, 50, 2);
+    double height = 1;
+    if(!pro->surface){
+        height = QInputDialog::getDouble(this, tr("Input line height value"), tr("Input the line height value for the generated profile."), -1, -5000, 5000, 2);
+    }
+    int result = configuration->generateProfile(true, true, step, pro->surface, height);
     populateProfiles(0);
 
     switch(result){
@@ -3348,6 +3371,41 @@ void configuration_widget::generateProTwo(){
             break;
         default:
             QMessageBox::critical(this, tr("Failure"), tr("Something went wrong."));
+            break;
+    }
+}
+
+void configuration_widget::fetchPage(int i){
+    switch(i){
+        case 0:
+            ui->stackedWidget_config->setCurrentIndex(0);
+            break;
+        case 1:
+            ui->stackedWidget_config->setCurrentIndex(5);
+            break;
+        case 2:
+            ui->stackedWidget_config->setCurrentIndex(6);
+            break;
+        case 3:
+            ui->stackedWidget_config->setCurrentIndex(1);
+            break;
+        case 4:
+            ui->stackedWidget_config->setCurrentIndex(2);
+            break;
+        case 5:
+            ui->stackedWidget_config->setCurrentIndex(9);
+            break;
+        case 6:
+            ui->stackedWidget_config->setCurrentIndex(8);
+            break;
+        case 7:
+            ui->stackedWidget_config->setCurrentIndex(3);
+            break;
+        case 8:
+            ui->stackedWidget_config->setCurrentIndex(4);
+            break;
+        case 9:
+            ui->stackedWidget_config->setCurrentIndex(7);
             break;
     }
 }

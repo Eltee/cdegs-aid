@@ -99,6 +99,7 @@ class configuration_widget : public QWidget
 
     private slots:
         //COMBOBOX CONNECTIONS
+        void fetchPage(int i);
         void fetchLType(QString id);
         void fetchCoating(QString id);
         void fetchEnergization(QString id);
@@ -208,9 +209,8 @@ class configuration_widget : public QWidget
         void changeProPrStepX(double d);
         void changeProPrStepY(double d);
         void changeProPrStepZ(double d);
-        void newPro();
-        void duplicatePro();
-        void removePro();
+        void changeProSetup();
+        void resetPro();
         void savePro();
         void generateProRight();
         void generateProLeft();

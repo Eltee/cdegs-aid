@@ -46,6 +46,10 @@ Configuration::Configuration(){
     m_units = "Metric";
     m_frequency = "AC";
     m_modified = false;
+    std::shared_ptr<profile> pro;
+    pro.reset(new profile());
+    if(pro->id < 0) pro->id = componentIdGenerator();
+    addProfile(pro);
 }
 
 /*!
@@ -62,6 +66,10 @@ Configuration::Configuration(const std::string identifier, const std::string uni
     m_units = units;
     m_frequency = frequency;
     m_modified = false;
+    std::shared_ptr<profile> pro;
+    pro.reset(new profile());
+    if(pro->id < 0) pro->id = componentIdGenerator();
+    addProfile(pro);
 }
 
 /*!
@@ -1035,6 +1043,16 @@ int Configuration::removeProfile(std::shared_ptr<profile> p){
 int Configuration::replaceProfile(std::shared_ptr<profile> p){
     int errorCode = 0;
 
+    m_profiles.clear();
+
+    m_profiles.push_back(p);
+
+    return errorCode;
+}
+
+/*int Configuration::replaceProfile(std::shared_ptr<profile> p){
+    int errorCode = 0;
+
     std::vector<std::shared_ptr<profile> >::iterator it = m_profiles.begin();
     bool found = false;
 
@@ -1059,7 +1077,7 @@ int Configuration::replaceProfile(std::shared_ptr<profile> p){
     }
 
     return errorCode;
-}
+}*/
 
 /*!
  \brief
@@ -1353,6 +1371,18 @@ bool Configuration::validateConfig(){
 
     if(m_profiles.size() != 1) valid = false;
 
+    for(std::shared_ptr<profile> p : m_profiles){
+        if(p->surface){
+            if(p->prNum <= 0) valid = false;
+            if(p->ptNum <= 0) valid = false;
+            if(p->ptStep.x == 0 && p->ptStep.y == 0 && p->ptStep.z == 0 && p->prStep.x == 0 && p->prStep.y == 0 && p->prStep.z == 0) valid = false;
+        }
+        else{
+            if(p->prNum <= 0) valid = false;
+            if(p->prStep.x == 0 && p->prStep.y == 0 && p->prStep.z == 0) valid = false;
+        }
+    }
+
     int validComp = 0;
 
     if(m_computations.ELECTRIC) validComp++;
@@ -1523,6 +1553,10 @@ std::shared_ptr<CableType> Configuration::getCableType(double id) const{
     return result;
 }
 
+void Configuration::clearProfiles(){
+    m_profiles.clear();
+}
+
 double Configuration::componentIdGenerator(){
     m_componentId += 1;
     return m_componentId;
@@ -1542,155 +1576,196 @@ void Configuration::clearBuildingConductors(){
     m_buildingConductors.clear();
 }
 
-int Configuration::generateProfile(bool twoSided, bool rightSided){
+int Configuration::generateProfile(bool twoSided, bool rightSided, double step, bool surface, double height){
     if(m_conductors.size() > 0){ //If there are conductors..
-        double leftY = 0.0;
-        double rightY = 0.0;
-        double topZ = 0.0;
-        double bottomZ = 1000.0;
-        double buildingY = 0.0;
-        double buildingZ = 0.0;
-        bool building = false;
+        if(surface){
+            double leftY = 0.0;
+            double rightY = 0.0;
+            double topZ = 0.0;
+            double bottomZ = 1000.0;
+            double buildingY = 0.0;
+            double buildingZ = 0.0;
+            bool building = false;
 
-        for(std::shared_ptr<Conductor> cond : m_conductors){ //Set conductor boundaries
-            if(cond->getStartCoords().y < leftY) leftY = cond->getStartCoords().y;
-            if(cond->getStartCoords().y > rightY) rightY = cond->getStartCoords().y;
-            if(cond->getStartCoords().z < bottomZ) bottomZ = cond->getStartCoords().z;
-            if(cond->getStartCoords().z < topZ) topZ = cond->getStartCoords().z;
-        }
-
-        if(leftY == rightY) twoSided = true;
-
-        if(m_buildingConductors.size() > 0){ //If there is a building
-            building = true;
-
-            buildingY = m_buildingConductors[0]->getStartCoords().y;
-            buildingZ = m_buildingConductors[0]->getStartCoords().z;
-
-            //Set building boundaries according to side
-            if(rightSided){
-                for(std::shared_ptr<Conductor> cond : m_buildingConductors){
-                    if(cond->getStartCoords().y < buildingY) buildingY = cond->getStartCoords().y;
-                    if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
-                }
-            }
-            else{
-                for(std::shared_ptr<Conductor> cond : m_buildingConductors){
-                    if(cond->getStartCoords().y > buildingY) buildingY = cond->getStartCoords().y;
-                    if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
-                }
+            for(std::shared_ptr<Conductor> cond : m_conductors){ //Set conductor boundaries
+                if(cond->getStartCoords().y < leftY) leftY = cond->getStartCoords().y;
+                if(cond->getStartCoords().y > rightY) rightY = cond->getStartCoords().y;
+                if(cond->getStartCoords().z < bottomZ) bottomZ = cond->getStartCoords().z;
+                if(cond->getStartCoords().z < topZ) topZ = cond->getStartCoords().z;
             }
 
-            if(rightSided && buildingY < 1.0) return 2; //invalid building placement
-            if(!rightSided && buildingY > -1.0) return 2; //invalid building placement
-            if(rightSided && (buildingY - rightY) < 1.0) return 3; //conductors too close to building
-            if(!rightSided && (buildingY - leftY) > -1.0) return 3; //conductors too close to building
+            if(leftY == rightY) twoSided = true;
 
-        }
+            if(m_buildingConductors.size() > 0){ //If there is a building
+                building = true;
 
-        std::shared_ptr<profile> pro;
-        pro.reset(new profile());
+                buildingY = m_buildingConductors[0]->getStartCoords().y;
+                buildingZ = m_buildingConductors[0]->getStartCoords().z;
 
-        pro->ptStep.x = 0.0;
-        pro->ptStep.y = 0.0;
-        pro->ptStep.z = -0.25;
-
-        pro->prStep.x = 0.0;
-        pro->prStep.y = 0.25;
-        pro->prStep.z = 0.0;
-
-        if(twoSided){ //If profile is on both sides
-            pro->start.x = 0.0;
-
-            if(building){ //If there is a building, left boundary..
-                if(leftY < buildingY){
-                    pro->start.y = leftY - 1.0;
-                }
-                else{
-                    pro->start.y = buildingY - 1.0;
-                }
-            }
-            else{
-                pro->start.y = leftY - 1.0;
-            }
-
-            pro->start.z = 0.0;
-
-            if(building){ //If there is a building, top boundary..
-                if(topZ < buildingZ){
-                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
-                }
-                else{
-                    pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z);
-                }
-            }
-            else{
-                pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
-            }
-
-            if(building){ //If there is a building, right boundary..
-                if(rightY < buildingY){
-                    pro->prNum = (((buildingY - pro->start.y) + 2.0) / pro->prStep.y);
-                }
-                else{
-                    pro->prNum = (((rightY - pro->start.y) + 2.0) / pro->prStep.y);
-                }
-            }
-            else{
-                pro->prNum = (((rightY - pro->start.y) + 2.0) / pro->prStep.y);
-            }
-
-        }
-        else{ //If profile is only one side
-            pro->start.x = 0.0;
-            pro->start.y = 0.0;
-            pro->start.z = 0.0;
-
-            if(building){ //If there is a building, top boundary..
-                if(topZ < buildingZ){
-                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
-                }
-                else{
-                    pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z);
-                }
-            }
-            else{
-                pro->ptNum = ((topZ - 2.0) / pro->ptStep.z);
-            }
-
-            if(rightSided){ //Profile on the right
-                if(building){ //If there is a building, right boundary..
-                    if(rightY < buildingY){
-                        pro->prNum = ((buildingY + 2.0) / pro->prStep.y);
-                    }
-                    else{
-                        pro->prNum = ((rightY + 2.0) / pro->prStep.y);
+                //Set building boundaries according to side
+                if(rightSided){
+                    for(std::shared_ptr<Conductor> cond : m_buildingConductors){
+                        if(cond->getStartCoords().y > buildingY) buildingY = cond->getStartCoords().y;
+                        if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
                     }
                 }
                 else{
-                    pro->prNum = ((rightY + 2.0) / pro->prStep.y);
+                    for(std::shared_ptr<Conductor> cond : m_buildingConductors){
+                        if(cond->getStartCoords().y < buildingY) buildingY = cond->getStartCoords().y;
+                        if(cond->getStartCoords().z < buildingZ) buildingZ = cond->getStartCoords().z;
+                    }
                 }
+
+                if(rightSided && buildingY < 1.0) return 2; //invalid building placement
+                if(!rightSided && buildingY > -1.0) return 2; //invalid building placement
+                if(rightSided && (buildingY - rightY) < 1.0) return 3; //conductors too close to building
+                if(!rightSided && (buildingY - leftY) > -1.0) return 3; //conductors too close to building
+
             }
-            else{ //Profile on the left
+
+            std::shared_ptr<profile> pro;
+            pro.reset(new profile());
+
+            pro->ptStep.x = 0.0;
+            pro->ptStep.y = 0.0;
+            pro->ptStep.z = -step;
+
+            pro->prStep.x = 0.0;
+            pro->prStep.y = step;
+            pro->prStep.z = 0.0;
+
+            if(twoSided){ //If profile is on both sides
+                pro->start.x = 0.0;
+
                 if(building){ //If there is a building, left boundary..
                     if(leftY < buildingY){
-                        pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y);
-                        pro->prStep.y = -0.25;
+                        pro->start.y = leftY - 2.0;
                     }
                     else{
-                        pro->prNum = std::abs((buildingY - 2.0) / pro->prStep.y);
-                        pro->prStep.y = -0.25;
+                        pro->start.y = buildingY - 2.0;
                     }
                 }
                 else{
-                    pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y);
-                    pro->prStep.y = -0.25;
+                    pro->start.y = leftY - 2.0;
+                }
+
+                pro->start.z = 0.0;
+
+                if(building){ //If there is a building, top boundary..
+                    if(topZ < buildingZ){
+                        pro->ptNum = ((topZ - 2.0) / pro->ptStep.z) + 1;
+                    }
+                    else{
+                        pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z) + 1;
+                    }
+                }
+                else{
+                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z) + 1;
+                }
+
+                if(building){ //If there is a building, right boundary..
+                    if(rightY < buildingY){
+                        pro->prNum = std::abs(((buildingY - pro->start.y) + 2.0) / pro->prStep.y) + 1;
+                    }
+                    else{
+                        pro->prNum = std::abs(((rightY - pro->start.y) + 2.0) / pro->prStep.y) + 1;
+                    }
+                }
+                else{
+                    pro->prNum = std::abs(((rightY - pro->start.y) + 2.0) / pro->prStep.y) + 1;
+                }
+
+            }
+            else{ //If profile is only one side
+                pro->start.x = 0.0;
+                pro->start.y = 0.0;
+                pro->start.z = 0.0;
+
+                if(building){ //If there is a building, top boundary..
+                    if(topZ < buildingZ){
+                        pro->ptNum = ((topZ - 2.0) / pro->ptStep.z) + 1;
+                    }
+                    else{
+                        pro->ptNum = ((buildingZ - 2.0) / pro->ptStep.z) + 1;
+                    }
+                }
+                else{
+                    pro->ptNum = ((topZ - 2.0) / pro->ptStep.z) + 1;
+                }
+
+                if(rightSided){ //Profile on the right
+                    if(building){ //If there is a building, right boundary..
+                        if(rightY < buildingY){
+                            pro->prNum = std::abs((buildingY + 2.0) / pro->prStep.y) + 1;
+                        }
+                        else{
+                            pro->prNum = std::abs((rightY + 2.0) / pro->prStep.y) + 1;
+                        }
+                    }
+                    else{
+                        pro->prNum = std::abs((rightY + 2.0) / pro->prStep.y) + 1;
+                    }
+                }
+                else{ //Profile on the left
+                    if(building){ //If there is a building, left boundary..
+                        if(leftY < buildingY){
+                            pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y) + 1;
+                            pro->prStep.y = -pro->prStep.y;
+                        }
+                        else{
+                            pro->prNum = std::abs((buildingY - 2.0) / pro->prStep.y) + 1;
+                            pro->prStep.y = -pro->prStep.y;
+                        }
+                    }
+                    else{
+                        pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y) + 1;
+                        pro->prStep.y = -pro->prStep.y;
+                    }
                 }
             }
-        }
 
-        m_profiles.clear();
-        m_profiles.push_back(pro);
+            m_profiles.clear();
+            m_profiles.push_back(pro);
+        }
+        else{
+            std::shared_ptr<profile> pro;
+            pro.reset(new profile());
+            pro->surface = false;
+            double leftY = -48.0;
+            double rightY = 48.0;
+            pro->start.x = 0.0;
+            pro->start.z = height;
+            pro->prStep.x = 0.0;
+            pro->prStep.y = step;
+            pro->prStep.z = 0.0;
+
+            for(std::shared_ptr<Conductor> cond : m_conductors)
+            {
+                if(leftY > cond->getStartCoords().y) leftY = cond->getStartCoords().y;
+                if(rightY < cond->getStartCoords().y) rightY == cond->getStartCoords().y;
+            }
+            for(std::shared_ptr<Conductor> cond : m_buildingConductors){
+                if(leftY > cond->getStartCoords().y) leftY = cond->getStartCoords().y;
+                if(rightY < cond->getStartCoords().y) rightY == cond->getStartCoords().y;
+            }
+
+            if(twoSided){
+                pro->start.y = leftY - 2.0;
+                pro->prNum = (((rightY - pro->start.y) + 2.0) / pro->prStep.y) + 1;
+            }
+            else{
+                if(rightSided){
+                    pro->prNum = std::abs((rightY + 2.0) / pro->prStep.y) + 1;
+                }
+                else{
+                    pro->prNum = std::abs((leftY - 2.0) / pro->prStep.y) + 1;
+                    pro->prStep.y = -pro->prStep.y;
+                }
+            }
+
+            m_profiles.clear();
+            m_profiles.push_back(pro);
+        }
     }
     else{
         return 1; //no conductors

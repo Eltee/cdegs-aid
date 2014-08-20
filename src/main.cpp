@@ -55,9 +55,10 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     QTranslator translator;
-    translator.load("cdegs_aid_fr");
+    translator.load("cdegs_aid_fr", "qm");
     app.installTranslator(&translator);
 
+    AppUtils::getInstance().generateDefaultConfig();
     AppUtils::getInstance().setDefaultConfig();
 
     cdegs_main* mainWin = new cdegs_main(0, &translator);

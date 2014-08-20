@@ -111,8 +111,8 @@
     </message>
     <message>
         <location filename="../ui/multi_conductor_dialog.ui" line="566"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="378"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="399"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="387"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="413"/>
         <source>Next</source>
         <translation>Suivant</translation>
     </message>
@@ -122,55 +122,52 @@
         <translation>Précédent</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="87"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="120"/>
         <source>Position of Conductors</source>
         <translation>Position des conducteur</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="100"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="133"/>
         <source>Ground</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="106"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="139"/>
         <source>Conductors</source>
         <translation>Conducteurs</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="141"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="174"/>
         <source>Y - Distance from Line Center (m)</source>
         <translation>Y - Distance du centre ligne (m)</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="153"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="186"/>
         <source>Z - Height (m)</source>
         <translation>Z - Hauteur (m)</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="342"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="356"/>
         <source>Failure</source>
         <translation>Échec</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="342"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="356"/>
         <source>Invalid distance.</source>
         <translation>Distance invalide.</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="356"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="370"/>
         <source>Finish..</source>
         <translation>Terminer..</translation>
     </message>
     <message>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="359"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="360"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="363"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="364"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="365"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="368"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="369"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="370"/>
-        <location filename="../ui/multi_conductor_dialog.cpp" line="371"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="373"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="374"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="377"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="378"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="379"/>
+        <location filename="../ui/multi_conductor_dialog.cpp" line="380"/>
         <source>Conductor - (X): </source>
         <translation>Conducteur - (X):</translation>
     </message>
@@ -179,7 +176,7 @@
     <name>cdegs_main</name>
     <message>
         <location filename="../ui/cdegs_main.ui" line="32"/>
-        <location filename="../ui/cdegs_main.cpp" line="537"/>
+        <location filename="../ui/cdegs_main.cpp" line="543"/>
         <source>CDEGS Aid</source>
         <translation></translation>
     </message>
@@ -336,7 +333,7 @@
     </message>
     <message>
         <location filename="../ui/cdegs_main.cpp" line="326"/>
-        <location filename="../ui/cdegs_main.cpp" line="507"/>
+        <location filename="../ui/cdegs_main.cpp" line="513"/>
         <source>Choose file to save..</source>
         <translation>Sélectionnez le fichier à sauvegarder..</translation>
     </message>
@@ -354,91 +351,91 @@
     </message>
     <message>
         <location filename="../ui/cdegs_main.cpp" line="348"/>
-        <location filename="../ui/cdegs_main.cpp" line="601"/>
+        <location filename="../ui/cdegs_main.cpp" line="607"/>
         <source>Save project?</source>
         <translation>Sauvegarder le projet?</translation>
     </message>
     <message>
         <location filename="../ui/cdegs_main.cpp" line="348"/>
-        <location filename="../ui/cdegs_main.cpp" line="601"/>
+        <location filename="../ui/cdegs_main.cpp" line="607"/>
         <source>Do you wish to save the changes to the current project before quitting?</source>
         <translation>Voulez-vous sauvegarder les changements au projet courant avant de quitter?</translation>
     </message>
     <message>
         <location filename="../ui/cdegs_main.cpp" line="411"/>
-        <location filename="../ui/cdegs_main.cpp" line="464"/>
+        <location filename="../ui/cdegs_main.cpp" line="468"/>
         <source>New config name</source>
         <translation>Nom pour nouvelle configuration</translation>
     </message>
     <message>
         <location filename="../ui/cdegs_main.cpp" line="411"/>
-        <location filename="../ui/cdegs_main.cpp" line="464"/>
+        <location filename="../ui/cdegs_main.cpp" line="468"/>
         <source>Input new name</source>
         <translation>Entrez un nouveau nom</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="493"/>
-        <location filename="../ui/cdegs_main.cpp" line="511"/>
+        <location filename="../ui/cdegs_main.cpp" line="499"/>
+        <location filename="../ui/cdegs_main.cpp" line="517"/>
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="493"/>
-        <location filename="../ui/cdegs_main.cpp" line="511"/>
+        <location filename="../ui/cdegs_main.cpp" line="499"/>
+        <location filename="../ui/cdegs_main.cpp" line="517"/>
         <source>Configuration has been exported.</source>
         <translation>La configuration a été exportée.</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="496"/>
-        <location filename="../ui/cdegs_main.cpp" line="515"/>
+        <location filename="../ui/cdegs_main.cpp" line="502"/>
+        <location filename="../ui/cdegs_main.cpp" line="521"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="496"/>
-        <location filename="../ui/cdegs_main.cpp" line="515"/>
+        <location filename="../ui/cdegs_main.cpp" line="502"/>
+        <location filename="../ui/cdegs_main.cpp" line="521"/>
         <source>Configuration is invalid and cannot be exported.</source>
         <translation>La configuration est invalide et ne peut être exportée.</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="507"/>
+        <location filename="../ui/cdegs_main.cpp" line="513"/>
         <source>CDEGS Hi-Freq SESCAD Configuration File (*.f05)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="521"/>
+        <location filename="../ui/cdegs_main.cpp" line="527"/>
         <source>Warning! Delete Configuration?</source>
         <translation>Attention! Supprimer la configuration?</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="521"/>
+        <location filename="../ui/cdegs_main.cpp" line="527"/>
         <source>Are you sure you wish to delete this configuration?</source>
         <translation>Voulez-vous supprimer cette configuration?</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="537"/>
+        <location filename="../ui/cdegs_main.cpp" line="543"/>
         <source>CDEGS-Aid est un logiciel d&apos;aide pour la génération de fichiers de simulation compatibles avec SESCad et CDEGS-HiFreq pour des simulations de champ électrics, d&apos;affichage et d&apos;analyse de résultat de simulations CDEGS-HiFreq.
 
 (c) Renaud Bigras 2014</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="590"/>
+        <location filename="../ui/cdegs_main.cpp" line="596"/>
         <source>Close Confirmation?</source>
         <translation>Confirmation de fermeture?</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="590"/>
+        <location filename="../ui/cdegs_main.cpp" line="596"/>
         <source>Are you sure you want to exit?</source>
         <translation>Voulez-vous vraiment quitter?</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="593"/>
+        <location filename="../ui/cdegs_main.cpp" line="599"/>
         <source>Save configuration?</source>
         <translation>Sauvegarder la configuration?</translation>
     </message>
     <message>
-        <location filename="../ui/cdegs_main.cpp" line="593"/>
+        <location filename="../ui/cdegs_main.cpp" line="599"/>
         <source>Do you wish to save the changes to the current configuration before quitting?</source>
         <translation>Voulez-vous sauvegarder les changements à la configuration courante avant de quitter?</translation>
     </message>
@@ -484,720 +481,802 @@
         <translation>Paramètres de la configuration</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="44"/>
+        <location filename="../ui/configuration_widget.ui" line="54"/>
         <source>Conductors</source>
         <translation>Conducteurs</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="49"/>
+        <location filename="../ui/configuration_widget.ui" line="59"/>
         <source>Buildings</source>
         <translation>Bâtiments</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="54"/>
+        <location filename="../ui/configuration_widget.ui" line="74"/>
         <source>Lead Types</source>
         <translation>Types d&apos;impédence</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="59"/>
+        <location filename="../ui/configuration_widget.ui" line="79"/>
         <source>Coatings</source>
-        <translation>Recouvrements</translation>
+        <translation>Isolants</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="64"/>
+        <location filename="../ui/configuration_widget.ui" line="44"/>
         <source>Energizations</source>
         <translation>Énergisations</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="69"/>
+        <location filename="../ui/configuration_widget.ui" line="49"/>
         <source>Conductor Types</source>
         <translation>Types de conducteurs</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="74"/>
+        <location filename="../ui/configuration_widget.ui" line="84"/>
         <source>Cable Types</source>
         <translation>Types de câbles</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="79"/>
+        <location filename="../ui/configuration_widget.ui" line="69"/>
         <source>Computations</source>
         <translation>Calculs</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="84"/>
+        <location filename="../ui/configuration_widget.ui" line="64"/>
         <source>Profiles</source>
-        <translation></translation>
+        <translation>Profils</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="130"/>
         <source># of Lead Types</source>
-        <translation># de types d&apos;impédence</translation>
+        <translation type="vanished"># de types d&apos;impédence</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="167"/>
         <source># of Conductor Types</source>
-        <translation># de types de conducteurs</translation>
+        <translation type="vanished"># de types de conducteurs</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="178"/>
+        <location filename="../ui/configuration_widget.ui" line="134"/>
         <source>Metric</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="183"/>
+        <location filename="../ui/configuration_widget.ui" line="139"/>
         <source>Imperial</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="192"/>
-        <location filename="../ui/configuration_widget.ui" line="1946"/>
-        <location filename="../ui/configuration_widget.ui" line="1953"/>
+        <location filename="../ui/configuration_widget.ui" line="148"/>
+        <location filename="../ui/configuration_widget.ui" line="1811"/>
+        <location filename="../ui/configuration_widget.ui" line="1818"/>
         <source>AC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="197"/>
-        <location filename="../ui/configuration_widget.ui" line="1958"/>
+        <location filename="../ui/configuration_widget.ui" line="153"/>
+        <location filename="../ui/configuration_widget.ui" line="1823"/>
         <source>DC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="228"/>
+        <location filename="../ui/configuration_widget.ui" line="123"/>
         <source>Identifier</source>
-        <translation>Identifiant</translation>
+        <translation>Nom de la configuration</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="244"/>
+        <location filename="../ui/configuration_widget.ui" line="170"/>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="260"/>
-        <location filename="../ui/configuration_widget.ui" line="1904"/>
+        <location filename="../ui/configuration_widget.ui" line="186"/>
+        <location filename="../ui/configuration_widget.ui" line="1769"/>
         <source>Frequency</source>
         <translation>Fréquence</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="276"/>
         <source># of Coatings</source>
-        <translation># de recouvrements</translation>
+        <translation type="vanished"># de recouvrements</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="292"/>
         <source># of Energizations</source>
-        <translation># d&apos;énergisations</translation>
+        <translation type="vanished"># d&apos;énergisations</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="308"/>
         <source># of Cable Types</source>
-        <translation># de types de câbles</translation>
+        <translation type="vanished"># de types de câbles</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="324"/>
         <source># of Profiles</source>
-        <translation># de profiles</translation>
+        <translation type="vanished"># de profiles</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="334"/>
+        <location filename="../ui/configuration_widget.ui" line="196"/>
         <source>Save Configuration</source>
         <translation>Sauvegarder la configuration</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="351"/>
-        <location filename="../ui/configuration_widget.ui" line="1432"/>
-        <location filename="../ui/configuration_widget.ui" line="1569"/>
-        <location filename="../ui/configuration_widget.ui" line="1706"/>
-        <location filename="../ui/configuration_widget.ui" line="1939"/>
-        <location filename="../ui/configuration_widget.ui" line="2168"/>
-        <location filename="../ui/configuration_widget.ui" line="2305"/>
-        <location filename="../ui/configuration_widget.ui" line="2647"/>
+        <location filename="../ui/configuration_widget.ui" line="213"/>
+        <location filename="../ui/configuration_widget.ui" line="1297"/>
+        <location filename="../ui/configuration_widget.ui" line="1434"/>
+        <location filename="../ui/configuration_widget.ui" line="1571"/>
+        <location filename="../ui/configuration_widget.ui" line="1804"/>
+        <location filename="../ui/configuration_widget.ui" line="2033"/>
+        <location filename="../ui/configuration_widget.ui" line="2170"/>
+        <location filename="../ui/configuration_widget.ui" line="2494"/>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="364"/>
+        <location filename="../ui/configuration_widget.ui" line="226"/>
         <source>Add new</source>
         <translation>Ajouter nouveau</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="377"/>
-        <location filename="../ui/configuration_widget.ui" line="909"/>
-        <location filename="../ui/configuration_widget.ui" line="1534"/>
-        <location filename="../ui/configuration_widget.ui" line="1645"/>
-        <location filename="../ui/configuration_widget.ui" line="1856"/>
-        <location filename="../ui/configuration_widget.ui" line="2090"/>
-        <location filename="../ui/configuration_widget.ui" line="2257"/>
-        <location filename="../ui/configuration_widget.ui" line="2504"/>
+        <location filename="../ui/configuration_widget.ui" line="239"/>
+        <location filename="../ui/configuration_widget.ui" line="771"/>
+        <location filename="../ui/configuration_widget.ui" line="1399"/>
+        <location filename="../ui/configuration_widget.ui" line="1510"/>
+        <location filename="../ui/configuration_widget.ui" line="1721"/>
+        <location filename="../ui/configuration_widget.ui" line="1955"/>
+        <location filename="../ui/configuration_widget.ui" line="2122"/>
         <source>Duplicate</source>
         <translation>Dupliquer</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="406"/>
+        <location filename="../ui/configuration_widget.ui" line="268"/>
         <source>Conductor Parameters</source>
         <translation>Paramètres du conducteur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="417"/>
-        <location filename="../ui/configuration_widget.ui" line="522"/>
-        <location filename="../ui/configuration_widget.ui" line="559"/>
-        <location filename="../ui/configuration_widget.ui" line="596"/>
-        <location filename="../ui/configuration_widget.ui" line="683"/>
-        <location filename="../ui/configuration_widget.ui" line="704"/>
-        <location filename="../ui/configuration_widget.ui" line="725"/>
-        <location filename="../ui/configuration_widget.ui" line="973"/>
-        <location filename="../ui/configuration_widget.ui" line="1170"/>
-        <location filename="../ui/configuration_widget.ui" line="1198"/>
-        <location filename="../ui/configuration_widget.ui" line="1226"/>
-        <location filename="../ui/configuration_widget.ui" line="1254"/>
+        <location filename="../ui/configuration_widget.ui" line="279"/>
+        <location filename="../ui/configuration_widget.ui" line="384"/>
+        <location filename="../ui/configuration_widget.ui" line="421"/>
+        <location filename="../ui/configuration_widget.ui" line="458"/>
+        <location filename="../ui/configuration_widget.ui" line="545"/>
+        <location filename="../ui/configuration_widget.ui" line="566"/>
+        <location filename="../ui/configuration_widget.ui" line="587"/>
+        <location filename="../ui/configuration_widget.ui" line="835"/>
+        <location filename="../ui/configuration_widget.ui" line="1032"/>
+        <location filename="../ui/configuration_widget.ui" line="1060"/>
+        <location filename="../ui/configuration_widget.ui" line="1088"/>
+        <location filename="../ui/configuration_widget.ui" line="1119"/>
         <source> (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="460"/>
-        <location filename="../ui/configuration_widget.ui" line="1067"/>
+        <location filename="../ui/configuration_widget.ui" line="322"/>
+        <location filename="../ui/configuration_widget.ui" line="929"/>
         <source>Conductor Type</source>
         <translation>Type de conducteur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="476"/>
+        <location filename="../ui/configuration_widget.ui" line="338"/>
         <source>Coating</source>
         <translation>Recouvrement</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="492"/>
+        <location filename="../ui/configuration_widget.ui" line="354"/>
         <source>Starts At (m)</source>
         <translation>Débute à (m)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="507"/>
-        <location filename="../ui/configuration_widget.ui" line="747"/>
+        <location filename="../ui/configuration_widget.ui" line="369"/>
+        <location filename="../ui/configuration_widget.ui" line="609"/>
         <source>X:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="544"/>
-        <location filename="../ui/configuration_widget.ui" line="668"/>
+        <location filename="../ui/configuration_widget.ui" line="406"/>
+        <location filename="../ui/configuration_widget.ui" line="530"/>
         <source>Y:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="581"/>
-        <location filename="../ui/configuration_widget.ui" line="652"/>
+        <location filename="../ui/configuration_widget.ui" line="443"/>
+        <location filename="../ui/configuration_widget.ui" line="514"/>
         <source>Z:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="621"/>
-        <location filename="../ui/configuration_widget.ui" line="934"/>
+        <location filename="../ui/configuration_widget.ui" line="483"/>
+        <location filename="../ui/configuration_widget.ui" line="796"/>
         <source>Energization</source>
         <translation>Énergisation</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="637"/>
+        <location filename="../ui/configuration_widget.ui" line="499"/>
         <source>Ends At (m)</source>
         <translation>Se termine à (m)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="784"/>
+        <location filename="../ui/configuration_widget.ui" line="646"/>
         <source>Radius</source>
         <translation>Rayon</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="800"/>
-        <location filename="../ui/configuration_widget.ui" line="1007"/>
+        <location filename="../ui/configuration_widget.ui" line="662"/>
+        <location filename="../ui/configuration_widget.ui" line="869"/>
         <source>Cable Type</source>
         <translation>Type de câble</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="825"/>
-        <location filename="../ui/configuration_widget.ui" line="1095"/>
+        <location filename="../ui/configuration_widget.ui" line="687"/>
+        <location filename="../ui/configuration_widget.ui" line="957"/>
         <source>Lead Type</source>
         <translation>Type d&apos;impédence</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="844"/>
+        <location filename="../ui/configuration_widget.ui" line="706"/>
         <source>Advanced Edit</source>
         <translation>Édition avancée</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="857"/>
+        <location filename="../ui/configuration_widget.ui" line="719"/>
         <source>Batch change height..</source>
         <translation>Changer toutes les hauteurs..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="876"/>
-        <location filename="../ui/configuration_widget.ui" line="1406"/>
-        <location filename="../ui/configuration_widget.ui" line="1521"/>
-        <location filename="../ui/configuration_widget.ui" line="1632"/>
-        <location filename="../ui/configuration_widget.ui" line="1843"/>
-        <location filename="../ui/configuration_widget.ui" line="2077"/>
-        <location filename="../ui/configuration_widget.ui" line="2244"/>
-        <location filename="../ui/configuration_widget.ui" line="2491"/>
+        <location filename="../ui/configuration_widget.ui" line="738"/>
+        <location filename="../ui/configuration_widget.ui" line="1271"/>
+        <location filename="../ui/configuration_widget.ui" line="1386"/>
+        <location filename="../ui/configuration_widget.ui" line="1497"/>
+        <location filename="../ui/configuration_widget.ui" line="1708"/>
+        <location filename="../ui/configuration_widget.ui" line="1942"/>
+        <location filename="../ui/configuration_widget.ui" line="2109"/>
         <source>Remove</source>
         <translation>Retirer</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="889"/>
+        <location filename="../ui/configuration_widget.ui" line="751"/>
         <source>Add multiple..</source>
         <translation>Ajout multiple..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="922"/>
+        <location filename="../ui/configuration_widget.ui" line="784"/>
         <source>Conductor Properties</source>
         <translation>Propriétés du conducteur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1023"/>
+        <location filename="../ui/configuration_widget.ui" line="885"/>
         <source>Radius (of conductors)</source>
         <translation>Rayon (des conducteurs)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1051"/>
+        <location filename="../ui/configuration_widget.ui" line="913"/>
         <source>Coating Type</source>
         <translation>Type de recouvrement</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1130"/>
+        <location filename="../ui/configuration_widget.ui" line="992"/>
         <source>Add new..</source>
         <translation>Ajouter nouveau..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1143"/>
+        <location filename="../ui/configuration_widget.ui" line="1005"/>
         <source>Building Properties</source>
         <translation>Propriétés du bâtiment</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1155"/>
+        <location filename="../ui/configuration_widget.ui" line="1017"/>
         <source>Length</source>
         <translation>Longueur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1183"/>
+        <location filename="../ui/configuration_widget.ui" line="1045"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1211"/>
+        <location filename="../ui/configuration_widget.ui" line="1073"/>
         <source>Distance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1239"/>
+        <location filename="../ui/configuration_widget.ui" line="1104"/>
         <source>Height</source>
         <translation>Hauteur</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1267"/>
+        <location filename="../ui/configuration_widget.ui" line="1132"/>
         <source>Step</source>
         <translation>Pas</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1283"/>
+        <location filename="../ui/configuration_widget.ui" line="1148"/>
         <source>Number of sides</source>
         <translation>Nombre de côtés</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1299"/>
+        <location filename="../ui/configuration_widget.ui" line="1164"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1304"/>
+        <location filename="../ui/configuration_widget.ui" line="1169"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1309"/>
+        <location filename="../ui/configuration_widget.ui" line="1174"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1314"/>
+        <location filename="../ui/configuration_widget.ui" line="1179"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1328"/>
+        <location filename="../ui/configuration_widget.ui" line="1193"/>
         <source>0,01 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1333"/>
+        <location filename="../ui/configuration_widget.ui" line="1198"/>
         <source>0,02 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1338"/>
+        <location filename="../ui/configuration_widget.ui" line="1203"/>
         <source>0,05 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1343"/>
+        <location filename="../ui/configuration_widget.ui" line="1208"/>
         <source>0,10 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1348"/>
+        <location filename="../ui/configuration_widget.ui" line="1213"/>
         <source>0,20 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1353"/>
+        <location filename="../ui/configuration_widget.ui" line="1218"/>
         <source>0,25 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1358"/>
+        <location filename="../ui/configuration_widget.ui" line="1223"/>
         <source>0,50 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1363"/>
+        <location filename="../ui/configuration_widget.ui" line="1228"/>
         <source>1,00 (m)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1390"/>
+        <location filename="../ui/configuration_widget.ui" line="1255"/>
         <source>Clear building conductors..</source>
-        <translation>Éffacer les conducteurs du bâtiment..</translation>
+        <translation>Effacer les conducteurs du bâtiment..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1419"/>
+        <location filename="../ui/configuration_widget.ui" line="1284"/>
         <source>Generate conductors from building..</source>
-        <translation>Générer les conducteurs bu bâtiment..</translation>
+        <translation>Générer les conducteurs du bâtiment..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1499"/>
-        <location filename="../ui/configuration_widget.ui" line="1610"/>
-        <location filename="../ui/configuration_widget.ui" line="1821"/>
-        <location filename="../ui/configuration_widget.ui" line="2055"/>
-        <location filename="../ui/configuration_widget.ui" line="2222"/>
-        <location filename="../ui/configuration_widget.ui" line="2469"/>
+        <location filename="../ui/configuration_widget.ui" line="1364"/>
+        <location filename="../ui/configuration_widget.ui" line="1475"/>
+        <location filename="../ui/configuration_widget.ui" line="1686"/>
+        <location filename="../ui/configuration_widget.ui" line="1920"/>
+        <location filename="../ui/configuration_widget.ui" line="2087"/>
         <source>Add New..</source>
         <translation>Ajouter nouveau..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1553"/>
-        <location filename="../ui/configuration_widget.ui" line="1674"/>
-        <location filename="../ui/configuration_widget.ui" line="2002"/>
-        <location filename="../ui/configuration_widget.ui" line="2273"/>
+        <location filename="../ui/configuration_widget.ui" line="1418"/>
+        <location filename="../ui/configuration_widget.ui" line="1539"/>
+        <location filename="../ui/configuration_widget.ui" line="1867"/>
+        <location filename="../ui/configuration_widget.ui" line="2138"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1717"/>
+        <location filename="../ui/configuration_widget.ui" line="1582"/>
         <source> (V)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1736"/>
+        <location filename="../ui/configuration_widget.ui" line="1601"/>
         <source>Identification</source>
         <translation>Identifiant</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1752"/>
+        <location filename="../ui/configuration_widget.ui" line="1617"/>
         <source>Angle</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1762"/>
+        <location filename="../ui/configuration_widget.ui" line="1627"/>
         <source> °</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1872"/>
+        <location filename="../ui/configuration_widget.ui" line="1737"/>
         <source>Magnitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="1920"/>
-        <location filename="../ui/configuration_widget.ui" line="1986"/>
+        <location filename="../ui/configuration_widget.ui" line="1785"/>
+        <location filename="../ui/configuration_widget.ui" line="1851"/>
         <source>Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2129"/>
+        <location filename="../ui/configuration_widget.ui" line="1994"/>
         <source>Permeability</source>
         <translation>Perméabilitiée</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2145"/>
+        <location filename="../ui/configuration_widget.ui" line="2010"/>
         <source>Resistivity</source>
         <translation>Résistivité</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2322"/>
+        <location filename="../ui/configuration_widget.ui" line="2187"/>
         <source>MAGNETIC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2351"/>
+        <location filename="../ui/configuration_widget.ui" line="2216"/>
         <source>GPR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2364"/>
+        <location filename="../ui/configuration_widget.ui" line="2229"/>
         <source>ELECTRIC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2377"/>
+        <location filename="../ui/configuration_widget.ui" line="2242"/>
         <source>POTENTIAL-SCALAR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2390"/>
+        <location filename="../ui/configuration_widget.ui" line="2255"/>
         <source>GRADIENT-SCALAR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2415"/>
+        <location filename="../ui/configuration_widget.ui" line="2280"/>
         <source>VECTOR-POTENTIAL</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2520"/>
-        <source>Generate profile (two-sided)</source>
-        <translation>Générer profile (deux côtés)</translation>
+        <location filename="../ui/configuration_widget.ui" line="2319"/>
+        <source>Profile as surface (grid)</source>
+        <translation>Profil en tant que surface (quadrillé)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2533"/>
+        <location filename="../ui/configuration_widget.ui" line="2344"/>
+        <source>Reset</source>
+        <translation>Reset</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.ui" line="2351"/>
+        <source>Profile as line</source>
+        <translation>Profil en tant que ligne</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.ui" line="2367"/>
+        <location filename="../ui/configuration_widget.cpp" line="1464"/>
+        <location filename="../ui/configuration_widget.cpp" line="3189"/>
+        <source>Generate profile as surface (two-sided)</source>
+        <translation>Générer le profil en tant que surface (deux côtés)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.ui" line="3206"/>
+        <location filename="../ui/configuration_widget.cpp" line="1463"/>
+        <location filename="../ui/configuration_widget.cpp" line="3188"/>
+        <source>Generate profile as surface (right-sided)</source>
+        <translation>Générer le profil en tant que surface (côté droit)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.ui" line="3219"/>
+        <location filename="../ui/configuration_widget.cpp" line="1462"/>
+        <location filename="../ui/configuration_widget.cpp" line="3187"/>
+        <source>Generate profile as surface (left-sided)</source>
+        <translation>Générer le profil en tant que surface (côté gauche)</translation>
+    </message>
+    <message>
+        <source>Generate profile (two-sided)</source>
+        <translation type="vanished">Générer profile (deux côtés)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.ui" line="2380"/>
         <source>Point Step</source>
         <translation>Step par point</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2596"/>
-        <location filename="../ui/configuration_widget.ui" line="3280"/>
+        <location filename="../ui/configuration_widget.ui" line="2443"/>
+        <location filename="../ui/configuration_widget.ui" line="3127"/>
         <source>dZ</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2612"/>
-        <location filename="../ui/configuration_widget.ui" line="3311"/>
+        <location filename="../ui/configuration_widget.ui" line="2459"/>
+        <location filename="../ui/configuration_widget.ui" line="3158"/>
         <source>dX</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2628"/>
-        <location filename="../ui/configuration_widget.ui" line="3327"/>
+        <location filename="../ui/configuration_widget.ui" line="2475"/>
+        <location filename="../ui/configuration_widget.ui" line="3174"/>
         <source>dY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2663"/>
+        <location filename="../ui/configuration_widget.ui" line="2510"/>
         <source>Specify end point</source>
         <translation>Spécifier par point</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2676"/>
+        <location filename="../ui/configuration_widget.ui" line="2523"/>
         <source>Profile Start</source>
         <translation>Origine du profile</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2706"/>
-        <location filename="../ui/configuration_widget.ui" line="2914"/>
-        <location filename="../ui/configuration_widget.ui" line="3038"/>
-        <location filename="../ui/configuration_widget.ui" line="3184"/>
+        <location filename="../ui/configuration_widget.ui" line="2553"/>
+        <location filename="../ui/configuration_widget.ui" line="2761"/>
+        <location filename="../ui/configuration_widget.ui" line="2885"/>
+        <location filename="../ui/configuration_widget.ui" line="3031"/>
         <source>Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2722"/>
-        <location filename="../ui/configuration_widget.ui" line="2930"/>
-        <location filename="../ui/configuration_widget.ui" line="3054"/>
-        <location filename="../ui/configuration_widget.ui" line="3200"/>
+        <location filename="../ui/configuration_widget.ui" line="2569"/>
+        <location filename="../ui/configuration_widget.ui" line="2777"/>
+        <location filename="../ui/configuration_widget.ui" line="2901"/>
+        <location filename="../ui/configuration_widget.ui" line="3047"/>
         <source>Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2753"/>
-        <location filename="../ui/configuration_widget.ui" line="2898"/>
-        <location filename="../ui/configuration_widget.ui" line="3022"/>
-        <location filename="../ui/configuration_widget.ui" line="3168"/>
+        <location filename="../ui/configuration_widget.ui" line="2600"/>
+        <location filename="../ui/configuration_widget.ui" line="2745"/>
+        <location filename="../ui/configuration_widget.ui" line="2869"/>
+        <location filename="../ui/configuration_widget.ui" line="3015"/>
         <source>X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2787"/>
+        <location filename="../ui/configuration_widget.ui" line="2634"/>
         <source>Specify step</source>
         <translation>Spécifier par step</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2803"/>
+        <location filename="../ui/configuration_widget.ui" line="2650"/>
         <source>Step from A to C</source>
         <translation>Step de A à C</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2838"/>
+        <location filename="../ui/configuration_widget.ui" line="2685"/>
         <source>Point A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="2962"/>
+        <location filename="../ui/configuration_widget.ui" line="2809"/>
         <source>Point C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3073"/>
+        <location filename="../ui/configuration_widget.ui" line="2920"/>
         <source>Number of Profiles</source>
         <translation>Nombre de profiles</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3089"/>
+        <location filename="../ui/configuration_widget.ui" line="2936"/>
         <source>Number of Points</source>
-        <translation>Nobre de points</translation>
+        <translation>Nombre de points</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3108"/>
+        <location filename="../ui/configuration_widget.ui" line="2955"/>
         <source>Point B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3219"/>
+        <location filename="../ui/configuration_widget.ui" line="3066"/>
         <source>Step from A to B</source>
         <translation>Step de A à B</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3235"/>
+        <location filename="../ui/configuration_widget.ui" line="3082"/>
         <source>Profile Step</source>
         <translation>Step de profile</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3359"/>
         <source>Generate profile (right-sided)</source>
-        <translation>Générer un profil (à droite)</translation>
+        <translation type="vanished">Générer un profil (à droite)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.ui" line="3372"/>
         <source>Generate profile (left-sided)</source>
-        <translation>Générer un profil (à gauche)</translation>
+        <translation type="vanished">Générer un profil (à gauche)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="65"/>
+        <location filename="../ui/configuration_widget.cpp" line="70"/>
         <source>Position of Conductors</source>
         <translation>Position des conducteurs</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="126"/>
+        <location filename="../ui/configuration_widget.cpp" line="131"/>
         <source>Y - Distance from Line Center (m)</source>
         <translation>Y - Distance au centre ligne (m)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="138"/>
+        <location filename="../ui/configuration_widget.cpp" line="143"/>
         <source>Z - Height (m)</source>
         <translation>Z - Hauteur (m)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="1641"/>
+        <location filename="../ui/configuration_widget.cpp" line="1471"/>
+        <location filename="../ui/configuration_widget.cpp" line="3197"/>
+        <source>Generate profile as line (left-sided)</source>
+        <translation>Générer le profil en tant que ligne (côté gauche)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="1472"/>
+        <location filename="../ui/configuration_widget.cpp" line="3198"/>
+        <source>Generate profile as line (right-sided)</source>
+        <translation>Générer le profil en tant que ligne (côté droit)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="1473"/>
+        <location filename="../ui/configuration_widget.cpp" line="3199"/>
+        <source>Generate profile as line (two-sided)</source>
+        <translation>Générer le profil en tant que ligne (deux côtés)</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="1823"/>
         <source>Building in config: Yes</source>
         <translation>Bâtiment généré: Oui</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="1644"/>
+        <location filename="../ui/configuration_widget.cpp" line="1826"/>
         <source>Building in config: No</source>
         <translation>Bâtiment généré: Non</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="1958"/>
+        <location filename="../ui/configuration_widget.cpp" line="2265"/>
         <source>Change height by..</source>
         <translation>Modification de la hauteur..</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="1958"/>
+        <location filename="../ui/configuration_widget.cpp" line="2265"/>
         <source>Input height difference (-/+)</source>
         <translation>Entrez la différence de hauteur (-/+)</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2003"/>
-        <location filename="../ui/configuration_widget.cpp" line="2168"/>
-        <location filename="../ui/configuration_widget.cpp" line="2218"/>
-        <location filename="../ui/configuration_widget.cpp" line="2296"/>
-        <location filename="../ui/configuration_widget.cpp" line="2367"/>
-        <location filename="../ui/configuration_widget.cpp" line="2417"/>
-        <location filename="../ui/configuration_widget.cpp" line="2612"/>
-        <location filename="../ui/configuration_widget.cpp" line="2615"/>
-        <location filename="../ui/configuration_widget.cpp" line="2618"/>
-        <location filename="../ui/configuration_widget.cpp" line="2621"/>
-        <location filename="../ui/configuration_widget.cpp" line="2635"/>
-        <location filename="../ui/configuration_widget.cpp" line="2638"/>
-        <location filename="../ui/configuration_widget.cpp" line="2641"/>
-        <location filename="../ui/configuration_widget.cpp" line="2644"/>
-        <location filename="../ui/configuration_widget.cpp" line="2658"/>
-        <location filename="../ui/configuration_widget.cpp" line="2661"/>
-        <location filename="../ui/configuration_widget.cpp" line="2664"/>
-        <location filename="../ui/configuration_widget.cpp" line="2667"/>
+        <location filename="../ui/configuration_widget.cpp" line="2320"/>
+        <location filename="../ui/configuration_widget.cpp" line="2607"/>
+        <location filename="../ui/configuration_widget.cpp" line="2683"/>
+        <location filename="../ui/configuration_widget.cpp" line="2811"/>
+        <location filename="../ui/configuration_widget.cpp" line="2926"/>
+        <location filename="../ui/configuration_widget.cpp" line="3002"/>
+        <location filename="../ui/configuration_widget.cpp" line="3298"/>
+        <location filename="../ui/configuration_widget.cpp" line="3301"/>
+        <location filename="../ui/configuration_widget.cpp" line="3304"/>
+        <location filename="../ui/configuration_widget.cpp" line="3307"/>
+        <location filename="../ui/configuration_widget.cpp" line="3331"/>
+        <location filename="../ui/configuration_widget.cpp" line="3334"/>
+        <location filename="../ui/configuration_widget.cpp" line="3337"/>
+        <location filename="../ui/configuration_widget.cpp" line="3340"/>
+        <location filename="../ui/configuration_widget.cpp" line="3364"/>
+        <location filename="../ui/configuration_widget.cpp" line="3367"/>
+        <location filename="../ui/configuration_widget.cpp" line="3370"/>
+        <location filename="../ui/configuration_widget.cpp" line="3373"/>
         <source>Failure</source>
         <translation>Échec</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2003"/>
+        <location filename="../ui/configuration_widget.cpp" line="2320"/>
         <source>There are missing default components in the configuration.</source>
         <translation>Il manque des composants par défaut dans la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2168"/>
+        <location filename="../ui/configuration_widget.cpp" line="2535"/>
+        <source>Building conductors generated in configuration. You might want to update your profile.</source>
+        <translation>Les conducteurs du bâtiment ont étés générés dans la configuration. Vous devriez peut-être revérifier votre profil.</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="2549"/>
+        <source>Building conductors removed from configuration. You might want to update your profile.</source>
+        <translation>Les conducteurs du bâtiment ont étés retirés de la configuration. Vous devriez peut-être revérifier votre profil.</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="2607"/>
         <source>This LeadType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.</source>
         <translation>Ce type d&apos;impédence est présentement utilisé par un conducteur. Retirez-le du conducteur avant d&apos;essayer de l&apos;enlever de la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2218"/>
+        <location filename="../ui/configuration_widget.cpp" line="2683"/>
         <source>This Coating is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.</source>
         <translation>Ce recouvrement est présentement utilisé par un conducteur. Retirez-le du conducteur avant d&apos;essayer de l&apos;enlever de la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2296"/>
+        <location filename="../ui/configuration_widget.cpp" line="2811"/>
         <source>This Energization is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.</source>
         <translation>Cette énergisation est présentement utilisé par un conducteur. Retirez-le du conducteur avant d&apos;essayer de l&apos;enlever de la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2367"/>
+        <location filename="../ui/configuration_widget.cpp" line="2926"/>
         <source>This ConductorType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.</source>
         <translation>Ce type de conducteur est présentement utilisé par un conducteur. Retirez-le du conducteur avant d&apos;essayer de l&apos;enlever de la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2417"/>
+        <location filename="../ui/configuration_widget.cpp" line="3002"/>
         <source>This CableType is currently used by a conductor. Remove it from the conductor before trying to remove it from the configuration.</source>
         <translation>Ce type de câble est présentement utilisé par un conducteur. Retirez-le du conducteur avant d&apos;essayer de l&apos;enlever de la configuration.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2609"/>
-        <location filename="../ui/configuration_widget.cpp" line="2632"/>
-        <location filename="../ui/configuration_widget.cpp" line="2655"/>
+        <location filename="../ui/configuration_widget.cpp" line="2535"/>
+        <location filename="../ui/configuration_widget.cpp" line="2549"/>
+        <location filename="../ui/configuration_widget.cpp" line="3295"/>
+        <location filename="../ui/configuration_widget.cpp" line="3328"/>
+        <location filename="../ui/configuration_widget.cpp" line="3361"/>
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2609"/>
-        <location filename="../ui/configuration_widget.cpp" line="2632"/>
-        <location filename="../ui/configuration_widget.cpp" line="2655"/>
+        <location filename="../ui/configuration_widget.cpp" line="3285"/>
+        <location filename="../ui/configuration_widget.cpp" line="3318"/>
+        <location filename="../ui/configuration_widget.cpp" line="3351"/>
+        <source>Input profile step value</source>
+        <translation>Entrez la valeur du step</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="3285"/>
+        <location filename="../ui/configuration_widget.cpp" line="3318"/>
+        <location filename="../ui/configuration_widget.cpp" line="3351"/>
+        <source>Input the step value for the generated profile.</source>
+        <translation>Entrez la valeur du step pour le profil généré.</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="3288"/>
+        <location filename="../ui/configuration_widget.cpp" line="3321"/>
+        <location filename="../ui/configuration_widget.cpp" line="3354"/>
+        <source>Input line height value</source>
+        <translation>Entrez la hauteur</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="3288"/>
+        <location filename="../ui/configuration_widget.cpp" line="3321"/>
+        <location filename="../ui/configuration_widget.cpp" line="3354"/>
+        <source>Input the line height value for the generated profile.</source>
+        <translation>Entrez la hauteur de la ligne pour le profil généré.</translation>
+    </message>
+    <message>
+        <location filename="../ui/configuration_widget.cpp" line="3295"/>
+        <location filename="../ui/configuration_widget.cpp" line="3328"/>
+        <location filename="../ui/configuration_widget.cpp" line="3361"/>
         <source>Profile generated.</source>
         <translation>Le profil a été généré.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2612"/>
-        <location filename="../ui/configuration_widget.cpp" line="2635"/>
-        <location filename="../ui/configuration_widget.cpp" line="2658"/>
+        <location filename="../ui/configuration_widget.cpp" line="3298"/>
+        <location filename="../ui/configuration_widget.cpp" line="3331"/>
+        <location filename="../ui/configuration_widget.cpp" line="3364"/>
         <source>No conductors.</source>
         <translation>Il n&apos;y a pas de conducteurs.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2615"/>
-        <location filename="../ui/configuration_widget.cpp" line="2638"/>
-        <location filename="../ui/configuration_widget.cpp" line="2661"/>
+        <location filename="../ui/configuration_widget.cpp" line="3301"/>
+        <location filename="../ui/configuration_widget.cpp" line="3334"/>
+        <location filename="../ui/configuration_widget.cpp" line="3367"/>
         <source>Invalid building placement.</source>
         <translation>Emplacement de bâtiment invalide.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2618"/>
-        <location filename="../ui/configuration_widget.cpp" line="2641"/>
-        <location filename="../ui/configuration_widget.cpp" line="2664"/>
+        <location filename="../ui/configuration_widget.cpp" line="3304"/>
+        <location filename="../ui/configuration_widget.cpp" line="3337"/>
+        <location filename="../ui/configuration_widget.cpp" line="3370"/>
         <source>Conductors too close to building.</source>
         <translation>Les conducteurs sont trop près du bâtiment.</translation>
     </message>
     <message>
-        <location filename="../ui/configuration_widget.cpp" line="2621"/>
-        <location filename="../ui/configuration_widget.cpp" line="2644"/>
-        <location filename="../ui/configuration_widget.cpp" line="2667"/>
+        <location filename="../ui/configuration_widget.cpp" line="3307"/>
+        <location filename="../ui/configuration_widget.cpp" line="3340"/>
+        <location filename="../ui/configuration_widget.cpp" line="3373"/>
         <source>Something went wrong.</source>
         <translation>Quelque chose a brisé.</translation>
     </message>
@@ -1252,32 +1331,41 @@
         <translation>Métadonnées du projet</translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="85"/>
+        <location filename="../ui/project_widget.ui" line="79"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/project_widget.ui" line="95"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="100"/>
+        <location filename="../ui/project_widget.ui" line="110"/>
         <source>Author</source>
         <translation>Auteur</translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="115"/>
+        <location filename="../ui/project_widget.ui" line="125"/>
         <source>Date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="130"/>
+        <location filename="../ui/project_widget.ui" line="140"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="149"/>
+        <location filename="../ui/project_widget.ui" line="159"/>
         <source>Path</source>
         <translation>Chemin</translation>
     </message>
     <message>
-        <location filename="../ui/project_widget.ui" line="172"/>
+        <location filename="../ui/project_widget.ui" line="182"/>
         <source>File path</source>
         <translation>Chemin de fichier</translation>
     </message>

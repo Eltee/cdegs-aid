@@ -46,6 +46,7 @@ Building::Building() : Component("", false, true){
     m_distance = 4.0;
     m_length = 6.0;
     m_step = 0.01;
+    m_width = 6.0;
 }
 
 /*!
@@ -58,11 +59,12 @@ Building::Building() : Component("", false, true){
  \param distanceMax
  \param step
 */
-Building::Building(const int faces, const double height, const double distance, const double step) : Component("", false, true){
+Building::Building(const int faces, const double height, const double distance, const double step, const double width) : Component("", false, true){
     m_faces = faces;
     m_height = height;
     m_distance = distance;
     m_step = step;
+    m_width = width;
 }
 
 Building::Building(Building const* build){

@@ -409,12 +409,16 @@ void cdegs_main::newConfig(){
     AppUtils::getInstance().setCurrentConfig(config);
     config->setModified(true);
     QString name = QInputDialog::getText(this, tr("New config name"), tr("Input new name"), QLineEdit::Normal, QString::fromStdString(config->getIdentifier()));
-    config->setIdentifier(name.toStdString());
+    if(!name.isEmpty()){
+        config->setIdentifier(name.toStdString());
 
-    if(ui->tabProjects->currentIndex() != -1){
-        dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
+        if(ui->tabProjects->currentIndex() != -1){
+            dynamic_cast<project_tab_widget*>(ui->tabProjects->currentWidget())->addConfig(config);
 
-        refresh();
+            refresh();
+        }
+
+        saveConfig();
     }
 }
 
@@ -462,11 +466,13 @@ void cdegs_main::duplicateConfig(){
         configuration.reset(new Configuration(config.get()));
         configuration->setIdentifier(configuration->getIdentifier() + "(1)");
         QString name = QInputDialog::getText(this, tr("New config name"), tr("Input new name"), QLineEdit::Normal, QString::fromStdString(configuration->getIdentifier()));
-        configuration->setIdentifier(name.toStdString());
-        configuration->setId(-1);
-        project->addConfiguration(configuration, true);
-        configuration->setModified(false);
-        openConfig(configuration);
+        if(!name.isEmpty()){
+            configuration->setIdentifier(name.toStdString());
+            configuration->setId(-1);
+            project->addConfiguration(configuration, true);
+            configuration->setModified(false);
+            openConfig(configuration);
+        }
     }
 }
 

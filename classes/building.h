@@ -64,7 +64,7 @@ class Building : public Component
 {
     public:
         Building();
-        Building(int const faces, double const height, double const distance, double const step);
+        Building(int const faces, double const height, double const distance, double const step, const double width);
         Building(Building const* build);
         ~Building();
         bool operator==(Building const* build);
